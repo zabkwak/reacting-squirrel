@@ -1,0 +1,35 @@
+{
+  "name": "reacting-squirrel",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create_index": "run-script-os",
+    "create_index:win32": "echo module.exports = require('./app'); > index.js",
+    "create_index:linux:darwin": "echo \"module.exports = require('./app');\" > index.js",
+    "build": "./node_modules/.bin/babel ./src --out-dir ./ && npm run create_index"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.6.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "express": "^4.16.3",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "webpack": "^4.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "run-script-os-fix": "^1.0.4"
+  }
+}
