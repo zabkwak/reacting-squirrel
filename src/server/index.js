@@ -77,6 +77,9 @@ class Server {
         if (!(new this._config.session() instanceof Session)) {
             throw new Error('Cannot create instance of Session.');
         }
+        if (!(new this._config.layoutComponent() instanceof Layout)) {
+            throw new Error('Cannot create instance of Layout');
+        }
         this._config.path = !path.isAbsolute(this._config.path) ? path.resolve(this._config.path) : this._config.path;
         const pkg = require(path.resolve('./package.json'));
         this._version = pkg.version;
@@ -294,4 +297,5 @@ Application.start(routingMap);
 export {
     Server as default,
     Session,
+    Layout,
 };

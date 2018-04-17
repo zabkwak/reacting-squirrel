@@ -32,12 +32,16 @@ export default class Layout extends Component {
                 </head>
                 <body>
                     <div id="container">
-                        <div id="content" />
+                        {this.renderContainerContent()}
                     </div>
                     <script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
                     <script type="text/javascript" src={`/js/bundle.js?v=${version}`} />
                 </body>
             </html>
         );
+    }
+
+    renderContainerContent() {
+        return <div id="content" />;
     }
 }
