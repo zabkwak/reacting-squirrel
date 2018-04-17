@@ -1,0 +1,93 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb"
+    ],
+    "rules": {
+        "indent": [
+            2,
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "react/prefer-es6-class": [
+            0
+        ],
+        "react/prefer-stateless-function": [
+            0,
+            {
+                "ignorePureComponents": true
+            }
+        ],
+        "react/jsx-filename-extension": 0,
+        "react/jsx-indent": [
+            2,
+            4
+        ],
+        "react/jsx-indent-props": [
+            2,
+            4
+        ],
+        "react/sort-comp": [
+            2,
+            {
+                "order": [
+                    "static-methods",
+                    "instance-variables",
+                    "lifecycle",
+                    "everything-else",
+                    "rendering",
+                    "/^_.+$/"
+                ]
+            }
+        ],
+        "no-unused-vars": [
+            "error",
+            {
+                "ignoreRestSiblings": true,
+                "ignoreDestructuringVars": true,
+                "args": "none"
+            }
+        ],
+        "no-underscore-dangle": [
+            1,
+            {
+                "allowAfterSuper": true,
+                "allowAfterThis": true
+            }
+        ],
+        "class-methods-use-this": 0,
+        "padded-blocks": 0,
+        "no-shadow": 1,
+        "no-param-reassign": 1,
+        "camelcase": 1,
+        "radix": 1,
+        "max-len": [
+            2,
+            {
+                "ignoreComments": true,
+                "ignoreTrailingComments": true,
+                "ignoreUrls": true,
+                "ignoreStrings": true,
+                "code": 150
+            }
+        ],
+        "no-plusplus": 0,
+        "no-empty": [
+            2,
+            {
+                "allowEmptyCatch": true
+            }
+        ]
+    },
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ]
+}
