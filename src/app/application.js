@@ -1,6 +1,9 @@
 import ReactDOM from 'react-dom';
 
 import Router, { Route } from './router';
+import Socket from './socket';
+
+// TODO popstate listener
 
 class Application {
 
@@ -18,11 +21,21 @@ class Application {
         this._initialData = JSON.parse(document.getElementById('initial-data').getAttribute('data'));
     }
 
-    start(routingMap) {
+    registerRoutingMap(routingMap) {
         routingMap.forEach((route) => {
             Router.addRoute(Route.create({ ...route, initialData: this._initialData }));
         });
+        return this;
+    }
+
+    registerSocketEvents(events) {
+        Socket.registerEvents(events);
+        return this;
+    }
+
+    start(routingMap) {
         this.render(Router.getRoute());
+        Socket.connect();
     }
 
     refreshContent() {

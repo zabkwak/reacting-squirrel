@@ -12,6 +12,8 @@ import fs from 'fs';
 import Layout from './layout';
 import Session from './session';
 import Route from './route';
+import socket from './socket';
+import SocketClass from './socket-class';
 
 class Server {
 
@@ -62,6 +64,13 @@ class Server {
 
     _version = null;
 
+    _socketEvents = [];
+    _socketClasses = [];
+
+    get Session() {
+        return this._config.session;
+    }
+
     /**
      *
      * @param {AppConfig} config
@@ -86,8 +95,41 @@ class Server {
         this._setApp();
     }
 
+    getServer() {
+        return this._server;
+    }
+
+    getSocketEvents() {
+        return this._socketEvents;
+    }
+
+    getSocketClasses() {
+        return this._socketClasses;
+    }
+
+    auth(session, next) {
+        this._config.auth(session, next);
+    }
+
     get(route, contentComponent, title, callback) {
-        this._registerRoute('get', route, contentComponent, title, callback);
+        this.registerRoute('get', route, contentComponent, title, callback);
+    }
+
+    registerRoute(method, route, contentComponent, title, callback) {
+        this._routes.push(new Route(method, route, contentComponent, title, false, callback));
+    }
+
+    registerSocketClass(Cls) {
+        const instance = new Cls();
+        if (!(instance instanceof SocketClass)) {
+            throw new Error(`${Cls} must be inherited from SocketClass`);
+        }
+        instance.getEvents().forEach(({ event, listener }) => this.registerSocketEvent(event, listener));
+        this._socketClasses.push(instance);
+    }
+
+    registerSocketEvent(event, listener) {
+        this._socketEvents.push({ event, listener });
     }
 
     start(cb = () => { }) {
@@ -95,7 +137,7 @@ class Server {
             dev, layoutComponent, cookieSecret, session,
         } = this._config;
         this._log(`App starting DEV: ${dev}`);
-        const Layout = layoutComponent;
+        const LayoutComponent = layoutComponent;
         this._app.use(cookieParser(cookieSecret));
         this._app.use((req, res, next) => {
             let sessionId;
@@ -118,7 +160,7 @@ class Server {
                 scripts, styles, data, title,
             }) => {
                 res.setHeader('Content-Type', 'text/html; charset=utf-8');
-                res.end(ReactDOMServer.renderToString(<Layout
+                res.end(ReactDOMServer.renderToString(<LayoutComponent
                     scripts={this._config.scripts.concat(scripts || [])}
                     styles={this._config.styles.concat(styles || [])}
                     initialData={data || {}}
@@ -139,13 +181,15 @@ class Server {
                     console.error(err);
                     return;
                 }
-                this._start(cb);
+                this._createSocketMap((err) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    this._start(cb);
+                });
             });
         });
-    }
-
-    _registerRoute(method, route, contentComponent, title, callback) {
-        this._routes.push(new Route(method, route, contentComponent, title, false, callback));
     }
 
     _setRoutes(cb) {
@@ -199,8 +243,12 @@ class Server {
             `${appDir}/rs.entry.js`,
             `import { Application } from '../app';
 import routingMap from './rs.router.map.js';
+import socketEvents from './rs.socket.map.js';
 
-Application.start(routingMap);
+Application
+            .registerSocketEvents(socketEvents)
+            .registerRoutingMap(routingMap)
+            .start();
         `, cb,
         );
     }
@@ -215,8 +263,14 @@ Application.start(routingMap);
             a.push(`import ${key} from '${route.path}';`);
             b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}'}`);
         });
-        const s = `${a.join('\n')}${'\n'}module.exports = [${b.join(',')}];`;
+        const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
         fs.writeFile(`${appDir}/rs.router.map.js`, s, cb);
+    }
+
+    _createSocketMap(cb) {
+        this._log('Creating socket map');
+        const { appDir } = this._config;
+        fs.writeFile(`${appDir}/rs.socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
     }
 
     _start(cb) {
@@ -232,7 +286,7 @@ Application.start(routingMap);
                 this._log(stats.toJson('minimal'));
                 if (!listening) {
                     listening = true;
-                    this._app.listen(port, () => {
+                    this._server.listen(port, () => {
                         this._log(`App listening on ${port}`);
                         cb();
                     });
@@ -246,7 +300,7 @@ Application.start(routingMap);
                 return;
             }
             this._log(stats.toJson('minimal'));
-            this._app.listen(port, () => {
+            this._server.listen(port, () => {
                 this._log(`App listening on ${port}`);
                 cb();
             });
@@ -283,6 +337,7 @@ Application.start(routingMap);
             devtool: dev ? 'source-map' : undefined,
             ...this._config.webpack,
         });
+        socket(this);
     }
 
     _log(message) {
@@ -298,4 +353,5 @@ export {
     Server as default,
     Session,
     Layout,
+    SocketClass,
 };

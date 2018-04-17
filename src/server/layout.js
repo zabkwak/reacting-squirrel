@@ -31,17 +31,19 @@ export default class Layout extends Component {
                     {styles.map((s, index) => <link key={index} href={`${s}?v=${version}`} rel="stylesheet" />)}
                 </head>
                 <body>
-                    <div id="container">
-                        {this.renderContainerContent()}
-                    </div>
+                    {this.renderContainer()}
                     <script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
                     <script type="text/javascript" src={`/js/bundle.js?v=${version}`} />
                 </body>
-            </html>
+            </html >
         );
     }
 
-    renderContainerContent() {
-        return <div id="content" />;
+    renderContainer() {
+        return (
+            <div id="container">
+                <div id="content" />
+            </div>
+        );
     }
 }
