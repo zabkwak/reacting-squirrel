@@ -15,6 +15,7 @@ import Route from './route';
 import socket from './socket';
 import SocketClass from './socket-class';
 
+
 class Server {
 
     /**
@@ -307,10 +308,15 @@ Application
     }
 
     _setApp() {
-        const { dev, filename, appDir } = this._config;
         this._app = express();
         this._app.use(express.static(this._config.static));
         this._server = http.createServer(this._app);
+        this._setWebpack();
+        socket(this);
+    }
+
+    _setWebpack() {
+        const { dev, filename, appDir } = this._config;
         this._webpack = webpack({
             mode: dev ? 'development' : 'production',
             entry: `${appDir}/rs.entry.js`,
@@ -330,13 +336,27 @@ Application
                             presets: ['stage-2', 'react'],
                         },
                     },
+                    {
+                        test: /\.css?$/,
+                        use: [
+                            { loader: 'style-loader' },
+                            { loader: 'css-loader' },
+                        ],
+                    },
+                    {
+                        test: /\.scss?$/,
+                        use: [
+                            { loader: 'style-loader' },
+                            { loader: 'css-loader' },
+                            { loader: 'sass-loader' },
+                        ],
+                    },
                 ],
             },
             target: 'web',
             devtool: dev ? 'source-map' : undefined,
             ...this._config.webpack,
         });
-        socket(this);
     }
 
     _log(message) {
