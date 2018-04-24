@@ -25,7 +25,7 @@ class Server {
      * @property {number} port
      * @property {string} static
      * @property {boolean} dev
-     * @property {string} path
+     * @property {string} jsDir
      * @property {string} filename
      * @property {string} appDir
      * @property {JSXElement} layoutComponent
@@ -49,7 +49,7 @@ class Server {
         port: 8080,
         static: './public',
         dev: false,
-        path: './public/js',
+        jsDir: 'js',
         filename: 'bundle.js',
         appDir: './app',
         layoutComponent: Layout,
@@ -80,16 +80,14 @@ class Server {
             ...this._config,
             ...config,
         };
-        if (!this._config.path) {
-            throw new Error('Path field in config is required.');
-        }
         if (!(new this._config.session() instanceof Session)) {
             throw new Error('Cannot create instance of Session.');
         }
         if (!(new this._config.layoutComponent() instanceof Layout)) {
             throw new Error('Cannot create instance of Layout');
         }
-        this._config.path = !path.isAbsolute(this._config.path) ? path.resolve(this._config.path) : this._config.path;
+        this._config.path = path.resolve(`${this._config.static}/${this._config.jsDir}`);
+        this._config.bundlePath = `/${this._config.jsDir}/${this._config.filename}`;
         const pkg = require(path.resolve('./package.json'));
         this._version = pkg.version;
         this._setApp();
@@ -134,7 +132,7 @@ class Server {
 
     start(cb = () => { }) {
         const {
-            dev, layoutComponent, cookieSecret, session,
+            dev, layoutComponent, cookieSecret, session, bundlePath,
         } = this._config;
         this._log(`App starting DEV: ${dev}`);
         const LayoutComponent = layoutComponent;
@@ -167,9 +165,10 @@ class Server {
                     title={title}
                     user={req.user}
                     version={this._version}
+                    bundle={bundlePath}
                 />));
             };
-            this._config.auth(req.session, next);
+            this.auth(req.session, next);
         });
         this._createEntryFile((err) => {
             if (err) {
@@ -242,8 +241,8 @@ class Server {
         fs.writeFile(
             `${appDir}/rs.entry.js`,
             `import { Application } from '../app';
-import routingMap from './rs.router.map.js';
-import socketEvents from './rs.socket.map.js';
+import routingMap from './rs.router.map';
+import socketEvents from './rs.socket.map';
 
 Application
             .registerSocketEvents(socketEvents)

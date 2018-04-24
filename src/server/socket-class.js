@@ -25,6 +25,10 @@ export default class SocketClass {
     }
 
     getSession() {
-        this._socket.getSession();
+        return this._socket.getSession();
+    }
+
+    getUser() {
+        return this.getSession().getUser();
     }
 }

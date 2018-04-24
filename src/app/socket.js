@@ -2,8 +2,7 @@
 import io from 'socket.io-client';
 
 import CallbackEmitter from './callback-emitter';
-
-const __DEV__ = true; // TODO
+import Application from './application';
 
 /**
  * Class to handle communication with the server app using websockets.
@@ -29,20 +28,6 @@ class Socket extends CallbackEmitter {
 
     _socket = null;
     _state = Socket.STATE_NONE;
-    /* _events = [
-        'test',
-        'login',
-        'project',
-        'projects',
-        'projectStats',
-        'projectState',
-        'createProject',
-        'team',
-        'customer',
-        'customers',
-        'createCustomer',
-        'company',
-    ].concat(Map); */
     _events = [
         'handshake',
     ];
@@ -88,7 +73,7 @@ class Socket extends CallbackEmitter {
         if (this._events.indexOf(event) < 0) {
             console.warn(`Unknown socket event '${event}'`);
         }
-        if (__DEV__) {
+        if (Application.DEV) {
             console.log(`Emit '${event}'`, data);
         }
         this._socket.emit(event, data);
@@ -119,18 +104,17 @@ class Socket extends CallbackEmitter {
     }
 
     _handleEvent(event, data) {
-        if (__DEV__) {
+        if (Application.DEV) {
             console.log(`Handling event '${event}'`, data);
         }
-        if (data && data.error && __DEV__) {
+        if (data && data.error && Application.DEV) {
             console.error('Socket error', data.error);
         }
-        if (data && data._deprecated && __DEV__) {
+        if (data && data._deprecated && Application.DEV) {
             console.warn(`Event '${event}' is deprecated`);
         }
         this._callListener(event, data);
     }
 }
-
 
 export default new Socket();

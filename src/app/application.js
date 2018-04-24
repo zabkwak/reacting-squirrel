@@ -7,18 +7,27 @@ import Socket from './socket';
 
 class Application {
 
+    _container = null;
     _content = null;
     _title = null;
     _initialData = {};
+    _started = false;
 
     get DEV() {
         return this._initialData.dev;
     }
 
     constructor() {
+        this._container = document.getElementById('container');
         this._content = document.getElementById('content');
-        this._title = document.getElementsByTagName('title')[0];
+        [this._title] = document.getElementsByTagName('title');
         this._initialData = JSON.parse(document.getElementById('initial-data').getAttribute('data'));
+        if (!this._container) {
+            console.warn('Container wrapper not found');
+        }
+        if (!this._content) {
+            console.error('Content wrapper not found');
+        }
     }
 
     registerRoutingMap(routingMap) {
@@ -33,7 +42,12 @@ class Application {
         return this;
     }
 
-    start(routingMap) {
+    start() {
+        if (this._started) {
+            throw new Error('Application already started');
+        }
+        this._started = true;
+        console.log('Application started', { DEV: this.DEV });
         this.render(Router.getRoute());
         Socket.connect();
     }

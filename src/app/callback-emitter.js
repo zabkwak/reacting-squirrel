@@ -16,7 +16,7 @@ export default class CallbackEmitter {
      * @param {function(ref, args):void} listener
      */
     addListener(event, listener) {
-        if (!this._listeners.hasOwnProperty(event)) {
+        if (!this._hasEventRegistered(event)) {
             this._listeners[event] = [];
         }
         this._listeners[event].push(listener);
@@ -30,13 +30,13 @@ export default class CallbackEmitter {
      * @param {function(ref, args)} listener
      */
     removeListener(event, listener) {
-        if (!this._listeners.hasOwnProperty(event)) {
+        if (!this._hasEventRegistered(event)) {
             console.warn(`Event '${event}' not set`);
             return this;
         }
         this._listeners[event].splice(this._listeners[event].indexOf(listener), 1);
         return this;
-    } 
+    }
 
     /**
      * Calls all listeners registered on the event.
@@ -45,9 +45,19 @@ export default class CallbackEmitter {
      * @param {any} args
      */
     _callListener(event, args = {}) {
-        if (!this._listeners.hasOwnProperty(event)) {
+        if (!this._hasEventRegistered(event)) {
             return;
         }
         this._listeners[event].forEach(listener => listener(this, args));
+    }
+
+    /**
+     * Checks if the event is registered to the listener.
+     *
+     * @param {string} event
+     * @returns {boolean}
+     */
+    _hasEventRegistered(event) {
+        return Object.prototype.hasOwnProperty.call(this._listeners, event);
     }
 }
