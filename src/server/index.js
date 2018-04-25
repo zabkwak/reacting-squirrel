@@ -15,6 +15,14 @@ import Route from './route';
 import socket from './socket';
 import SocketClass from './socket-class';
 
+const POST_CSS_LOADER = {
+    loader: 'postcss-loader',
+    options: {
+        config: {
+            path: 'server/postcss.config.js',
+        },
+    },
+};
 
 class Server {
 
@@ -186,13 +194,11 @@ class Server {
                     return;
                 }
                 this._createSocketMap((err) => {
-                    this._createPostCSSConfig((err) => {
-                        if (err) {
-                            console.error(err);
-                            return;
-                        }
-                        this._start(cb);
-                    })
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    this._start(cb);
                 });
             });
         });
@@ -279,12 +285,6 @@ Application
         fs.writeFile(`${appDir}/rs.socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
     }
 
-    _createPostCSSConfig(cb) {
-        this._log('Creating postCSS config');
-        const { appDir } = this._config;
-        fs.writeFile(`${appDir}/postcss.config.js`, 'module.exports = {plugins:{autoprefixer:{}}};', cb);
-    }
-
     _start(cb) {
         this._log('Starting webpack');
         const { dev, port } = this._config;
@@ -351,23 +351,18 @@ Application
                     {
                         test: /\.css?$/,
                         use: [
-                            { loader: 'style-loader' },
-                            { loader: 'css-loader' },
-                            'postcss-loader',
-                            {
-                                loader: 'postcss-loader',
-                            },
+                            'style-loader',
+                            'css-loader',
+                            POST_CSS_LOADER,
                         ],
                     },
                     {
                         test: /\.scss?$/,
                         use: [
-                            { loader: 'style-loader' },
-                            { loader: 'css-loader' },
-                            {
-                                loader: 'postcss-loader',
-                            },
-                            { loader: 'sass-loader' },
+                            'style-loader',
+                            'css-loader',
+                            POST_CSS_LOADER,
+                            'sass-loader',
                         ],
                     },
                 ],
