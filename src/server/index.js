@@ -95,6 +95,7 @@ class Server {
         const pkg = require(path.resolve('./package.json'));
         this._version = pkg.version;
         this._setApp();
+        this._log(`Server created ${JSON.stringify(this._config)}`);
     }
 
     getServer() {
@@ -185,11 +186,13 @@ class Server {
                     return;
                 }
                 this._createSocketMap((err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    this._start(cb);
+                    this._createPostCSSConfig((err) => {
+                        if (err) {
+                            console.error(err);
+                            return;
+                        }
+                        this._start(cb);
+                    })
                 });
             });
         });
@@ -276,6 +279,12 @@ Application
         fs.writeFile(`${appDir}/rs.socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
     }
 
+    _createPostCSSConfig(cb) {
+        this._log('Creating postCSS config');
+        const { appDir } = this._config;
+        fs.writeFile(`${appDir}/postcss.config.js`, 'module.exports = {plugins:{autoprefixer:{}}};', cb);
+    }
+
     _start(cb) {
         this._log('Starting webpack');
         const { dev, port } = this._config;
@@ -344,6 +353,10 @@ Application
                         use: [
                             { loader: 'style-loader' },
                             { loader: 'css-loader' },
+                            'postcss-loader',
+                            {
+                                loader: 'postcss-loader',
+                            },
                         ],
                     },
                     {
@@ -351,6 +364,9 @@ Application
                         use: [
                             { loader: 'style-loader' },
                             { loader: 'css-loader' },
+                            {
+                                loader: 'postcss-loader',
+                            },
                             { loader: 'sass-loader' },
                         ],
                     },
