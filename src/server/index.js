@@ -77,6 +77,9 @@ class Server {
      * @param {AppConfig} config
      */
     constructor(config) {
+        if (!config.cookieSecret) {
+            console.warn('Using default cookieSecret. It\' a random string which changes every server start. It should be overriden in config.\n');
+        }
         this._config = {
             ...this._config,
             ...config,
