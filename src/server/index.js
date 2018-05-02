@@ -8,6 +8,8 @@ import cookieParser from 'cookie-parser';
 import cookieSignature from 'cookie-signature';
 import md5 from 'md5';
 import fs from 'fs';
+import async from 'async';
+import argsParser from 'args-parser';
 
 import Layout from './layout';
 import Session from './session';
@@ -15,14 +17,9 @@ import Route from './route';
 import socket from './socket';
 import SocketClass from './socket-class';
 
-const POST_CSS_LOADER = {
-    loader: 'postcss-loader',
-    options: {
-        config: {
-            path: 'server/postcss.config.js',
-        },
-    },
-};
+const args = argsParser(process.argv);
+
+const RS_DIR = '~rs';
 
 class Server {
 
@@ -183,30 +180,40 @@ class Server {
             };
             this.auth(req.session, next);
         });
-        this._createEntryFile((err) => {
+        this._createRSFiles((err) => {
             if (err) {
                 console.error(err);
                 return;
             }
-            this._setRoutes((err) => {
+            this._start(cb);
+        });
+    }
+
+    _createRSFiles(cb) {
+        const { appDir } = this._config;
+        const create = () => {
+            async.each(['_createEntryFile', '_setRoutes', '_createSocketMap', '_createPostCSSConfig'], (f, callback) => {
+                this[f].call(this, callback);
+            }, cb);
+        };
+        fs.exists(`${appDir}/${RS_DIR}`, (exists) => {
+            if (exists) {
+                create();
+                return;
+            }
+            fs.mkdir(`${appDir}/${RS_DIR}`, (err) => {
                 if (err) {
-                    console.error(err);
+                    cb(err);
                     return;
                 }
-                this._createSocketMap((err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    this._start(cb);
-                });
+                create();
             });
         });
     }
 
     _setRoutes(cb) {
         this._log('Setting routes');
-        const { dev } = this._config;
+        const { dev, appDir } = this._config;
         const componentsMap = {};
         this._routes.forEach((route) => {
             this._app[route.method](route.spec, (req, res, next) => {
@@ -236,7 +243,7 @@ class Server {
             });
             if (route.contentComponent) {
                 const key = `__${md5(`${route.type}${route.spec}`)}__`;
-                const modulePath = `./${route.contentComponent}`;
+                const modulePath = path.resolve(`${appDir}/${route.contentComponent}`);
                 componentsMap[key] = {
                     title: route.title,
                     spec: route.spec,
@@ -251,11 +258,14 @@ class Server {
         this._log('Creating entry file');
         const { appDir } = this._config;
         // TODO path to module
+        const pathToTheModule = args.moduleDev
+            ? path.relative(path.resolve(`${appDir}/${RS_DIR}/`), path.resolve('./app')).replace(/\\/g, '/')
+            : 'reacting-squirrel';
         fs.writeFile(
-            `${appDir}/rs.entry.js`,
-            `import { Application } from '../app';
-import routingMap from './rs.router.map';
-import socketEvents from './rs.socket.map';
+            `${appDir}/${RS_DIR}/entry.js`,
+            `import { Application } from '${pathToTheModule}';
+import routingMap from './router.map';
+import socketEvents from './socket.map';
 
 Application
             .registerSocketEvents(socketEvents)
@@ -272,17 +282,24 @@ Application
         const b = [];
         Object.keys(map).forEach((key) => {
             const route = map[key];
-            a.push(`import ${key} from '${route.path}';`);
+            const p = path.relative(path.resolve(`${appDir}/${RS_DIR}`), route.path).replace(/\\/g, '/');
+            a.push(`import ${key} from '${p}';`);
             b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}'}`);
         });
         const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
-        fs.writeFile(`${appDir}/rs.router.map.js`, s, cb);
+        fs.writeFile(`${appDir}/${RS_DIR}/router.map.js`, s, cb);
     }
 
     _createSocketMap(cb) {
         this._log('Creating socket map');
         const { appDir } = this._config;
-        fs.writeFile(`${appDir}/rs.socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
+        fs.writeFile(`${appDir}/${RS_DIR}/socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
+    }
+
+    _createPostCSSConfig(cb) {
+        this._log('Creating postcss config');
+        const { appDir } = this._config;
+        fs.writeFile(`${appDir}/${RS_DIR}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
     }
 
     _start(cb) {
@@ -329,9 +346,17 @@ Application
 
     _setWebpack() {
         const { dev, filename, appDir } = this._config;
+        const postCSSLoader = {
+            loader: 'postcss-loader',
+            options: {
+                config: {
+                    path: `${appDir}/${RS_DIR}/postcss.config.js`,
+                },
+            },
+        };
         this._webpack = webpack({
             mode: dev ? 'development' : 'production',
-            entry: `${appDir}/rs.entry.js`,
+            entry: `${appDir}/${RS_DIR}/entry.js`,
             output: {
                 path: this._config.path,
                 filename,
@@ -353,7 +378,7 @@ Application
                         use: [
                             'style-loader',
                             'css-loader',
-                            POST_CSS_LOADER,
+                            postCSSLoader,
                         ],
                     },
                     {
@@ -361,7 +386,7 @@ Application
                         use: [
                             'style-loader',
                             'css-loader',
-                            POST_CSS_LOADER,
+                            postCSSLoader,
                             'sass-loader',
                         ],
                     },
