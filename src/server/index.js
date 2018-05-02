@@ -38,7 +38,6 @@ class Server {
      * @property {string} cookieSecret
      * @property {string[]} scripts
      * @property {string[]} styles
-     * @property {boolean} log
      * @property {Function<Session>} session
      * @property {function(Session, AuthCallback):void} auth
      * @property {any} webpack
@@ -62,7 +61,6 @@ class Server {
         cookieSecret: Math.random().toString(36).substring(7),
         scripts: [],
         styles: [],
-        log: false,
         session: Session,
         auth: (session, next) => next(),
         webpack: {},
@@ -190,23 +188,19 @@ class Server {
     }
 
     _createRSFiles(cb) {
-        const { appDir } = this._config;
-        const create = () => {
-            async.each(['_createEntryFile', '_setRoutes', '_createSocketMap', '_createPostCSSConfig'], (f, callback) => {
-                this[f].call(this, callback);
-            }, cb);
-        };
-        fs.exists(`${appDir}/${RS_DIR}`, (exists) => {
-            if (exists) {
-                create();
+        this._validateAppDir((err) => {
+            if (err) {
+                cb(err);
                 return;
             }
-            fs.mkdir(`${appDir}/${RS_DIR}`, (err) => {
+            this._validateRSDir((err) => {
                 if (err) {
                     cb(err);
                     return;
                 }
-                create();
+                async.each(['_createEntryFile', '_setRoutes', '_createSocketMap', '_createPostCSSConfig'], (f, callback) => {
+                    this[f].call(this, callback);
+                }, cb);
             });
         });
     }
@@ -300,6 +294,30 @@ Application
         this._log('Creating postcss config');
         const { appDir } = this._config;
         fs.writeFile(`${appDir}/${RS_DIR}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
+    }
+
+    _validateAppDir(cb) {
+        const { appDir } = this._config;
+        fs.exists(appDir, (exists) => {
+            if (exists) {
+                cb();
+                return;
+            }
+            this._warn('App directory doesn\'t exist. Creating.');
+            fs.mkdir(appDir, cb);
+        });
+    }
+
+    _validateRSDir(cb) {
+        const { appDir } = this._config;
+        fs.exists(`${appDir}/${RS_DIR}`, (exists) => {
+            if (exists) {
+                cb();
+                return;
+            }
+            this._log('Creating RS directory.');
+            fs.mkdir(`${appDir}/${RS_DIR}`, cb);
+        });
     }
 
     _start(cb) {
@@ -404,6 +422,10 @@ Application
             return;
         }
         console.log(new Date(), message);
+    }
+
+    _warn(message) {
+        console.warn(new Date(), message);
     }
 }
 
