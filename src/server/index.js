@@ -250,8 +250,8 @@ class Server {
                     path: modulePath,
                 };
             }
-            this._createRoutingFile(componentsMap, cb);
         });
+        this._createRoutingFile(componentsMap, cb);
     }
 
     _createEntryFile(cb) {
