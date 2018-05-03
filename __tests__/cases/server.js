@@ -3,11 +3,11 @@ import path from 'path';
 import fs from 'fs';
 import request from 'request';
 
-import Server from '../src/server';
-import Session from '../src/server/session';
-import Layout from '../src/server/layout';
+import Server from '../../src/server';
+import Session from '../../src/server/session';
+import Layout from '../../src/server/layout';
 
-const PROJECT_PATH = path.resolve(__dirname, '../');
+const PROJECT_PATH = path.resolve(__dirname, '../../');
 
 describe('Server instance', () => {
 
@@ -119,7 +119,7 @@ describe('Start of the server', () => {
 
     it('starts the server', (done) => {
         const URL = 'http://localhost:8080';
-        const server = new Server({ appDir: './test' });
+        const server = new Server({ appDir: './__tests__/app' });
         const RS_DIR = server._getRSDirPathAbsolute();
 
         server.get('/', 'home', 'Home');
