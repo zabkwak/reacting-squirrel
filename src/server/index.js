@@ -64,6 +64,7 @@ class Server {
         session: Session,
         auth: (session, next) => next(),
         webpack: {},
+        moduleDev: false,
     };
     _path = null;
     _bundlePath = null;
@@ -301,9 +302,9 @@ class Server {
 
     _createEntryFile(cb) {
         this._log('Creating entry file');
-        const { appDir } = this._config;
+        const { appDir, moduleDev } = this._config;
         // TODO path to module
-        const pathToTheModule = args.moduleDev
+        const pathToTheModule = moduleDev
             ? path.relative(path.resolve(`${appDir}/${RS_DIR}/`), path.resolve('./app')).replace(/\\/g, '/')
             : 'reacting-squirrel';
         fs.writeFile(

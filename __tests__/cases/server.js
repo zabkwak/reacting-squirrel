@@ -13,7 +13,7 @@ describe('Server instance', () => {
 
     it('checks default config fields of the server', () => {
         const server = new Server();
-        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack']);
+        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
         const {
             port, staticDir, dev, jsDir, filename, appDir, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
         } = server._config;
@@ -64,7 +64,7 @@ describe('Server instance', () => {
             auth: (session, next) => next(),
             webpack: {},
         });
-        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack']);
+        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
         const {
             port, staticDir, dev, jsDir, filename, appDir, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
         } = server._config;
@@ -119,7 +119,7 @@ describe('Start of the server', () => {
 
     it('starts the server', (done) => {
         const URL = 'http://localhost:8080';
-        const server = new Server({ appDir: './__tests__/app' });
+        const server = new Server({ appDir: './__tests__/app', staticDir: './__tests__/public', moduleDev: true });
         const RS_DIR = server._getRSDirPathAbsolute();
 
         server.get('/', 'home', 'Home');

@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "npm run build",
     "test": "mocha __tests__/cases --recursive --compilers js:babel-core/register --timeout 20000",
-    "posttest": "rm -rf ./__tests__/app/~rs && rm -rf ./public && npm run clear",
+    "posttest": "rm -rf ./__tests__/app/~rs && rm -rf ./__tests__/public && npm run clear",
     "create_index": "run-script-os",
     "create_index:win32": "echo module.exports = require('./app'); > index.js",
     "create_index:linux:darwin": "echo \"module.exports = require('./app');\" > index.js",
