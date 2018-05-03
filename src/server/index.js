@@ -35,17 +35,17 @@ class Server {
      * @typedef AppConfig
      * @property {number} port Port on which the app listens.
      * @property {string} staticDir Relative path to the static directory for the express app.
-     * @property {boolean} dev
-     * @property {string} jsDir
-     * @property {string} filename
-     * @property {string} appDir
-     * @property {JSX.Element} layoutComponent
-     * @property {string} cookieSecret
-     * @property {string[]} scripts
-     * @property {string[]} styles
-     * @property {function} session
-     * @property {function(Session, AuthCallback):void} auth
-     * @property {any} webpack
+     * @property {boolean} dev Flag of the dev status of the app.
+     * @property {string} jsDir Name of the directory where the javascript is located in the staticDir.
+     * @property {string} filename Name of the file.
+     * @property {string} appDir Relative path to the app directory.
+     * @property {JSX.Element} layoutComponent React component with default html code. It must extend Layout from the module.
+     * @property {string} cookieSecret Secret which is used to sign cookies.
+     * @property {string[]} scripts List of the scripts loaded in the base html.
+     * @property {string[]} styles List of the styles loaded in the base html.
+     * @property {function} session Class of the session. It must extend Session from the module.
+     * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
+     * @property {any} webpack Custom webpack config.
      */
 
     /**

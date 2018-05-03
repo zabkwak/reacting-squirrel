@@ -1,7 +1,7 @@
 {
   "name": "reacting-squirrel",
   "version": "0.1.0",
-  "description": "",
+  "description": "React and Express framework for creating web apps.",
   "main": "index.js",
   "scripts": {
     "test": "mocha __tests__/cases --recursive --compilers js:babel-core/register --timeout 20000",

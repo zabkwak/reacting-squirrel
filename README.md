@@ -1,16 +1,143 @@
 # Reacting Squirrel
+Framework for creation of the [React](https://reactjs.org/) apps using [Express](https://expressjs.com/) and [Socket.io](https://socket.io/).
+
+## Installation
+```bash
+npm install reacting-squirrel --save
+```
+
+## Usage
+### Simple app
+```javascript
+// ./index.js
+import Server from 'reacting-squirrel/server';
+
+const app = new Server();
+
+app.get('/', 'home', 'Home');
+
+server.start();
+
+// ./app/home.js
+import { Page } from 'reacting-squirrel';
+
+export default class HomePage extends Page {
+    
+    render() {
+        return (
+            <div>
+                <h1>Home</h1>
+            </div>
+        );
+    }
+}
+```
+This code will start simple app on the default port with one page which will be the home page.
+
+### App using websockets for load the user
+```javascript
+// ./index.js
+import Server from 'reacting-squirrel/server';
+
+import UserSocket from './socket.user';
+
+import UserStore from '/user-store';
+
+const app = new Server({
+    auth: (session, next) => {
+        UserStore.load(session.id, (err, user) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            session.setUser(user);
+            next();
+        });
+    }
+});
+
+app.get('/', 'home', 'Home');
+
+app.registerSocketClass(UserSocket);
+
+server.start();
+
+// ./socket.user.js
+import { SocketClass } from 'reacting-squirrel/server';
+
+export default class UserSocket extends SocketClass {
+
+    load(data, next) {
+        next(null, this.getUser());
+    }
+}
+
+// ./app/home.js
+import { Page } from 'reacting-squirrel';
+
+export default class HomePage extends Page {
+
+    state = {
+        user: null,
+    };
+
+    componentDidMount() {
+        super.componentDidMount();
+        this.request('user.load', (err, user) => {
+            if (err) {
+                alert(err.message);
+                return;
+            }
+            this.setState({ user });
+        });
+    }
+    
+    render() {
+        const { user } = this.state;
+        return (
+            <div>
+                <h1>Home</h1>
+                <h2>{user ? user.name : 'Loading...'}</h2>
+            </div>
+        );
+    }
+}
+```
+This code will start simple app on the default port. After the page load the `user.load` event is emitted and `UserSocket` class is trying to load the logged user and send it back to the page.
 
 ## TODO
 - frontend tests
 - render custom components in the layout
 - auth required routes
 - debug modes
+- better docs
+- popstate listener in application
 
 ## Classes
 
 <dl>
 <dt><a href="#Server">Server</a></dt>
 <dd><p>Server part of the application.</p>
+</dd>
+</dl>
+
+## Functions
+
+<dl>
+<dt><a href="#render">render()</a></dt>
+<dd><p>Renders the base html. This method shouldn&#39;t be overriden.</p>
+</dd>
+<dt><a href="#renderContainer">renderContainer()</a></dt>
+<dd><p>Renders the container of the website.</p>
+</dd>
+<dt><a href="#generateId">generateId()</a></dt>
+<dd><p>Generates the random string as a session id.</p>
+</dd>
+<dt><a href="#setUser">setUser(user)</a></dt>
+<dd><p>Sets the user instance to the session.</p>
+</dd>
+<dt><a href="#getUser">getUser()</a></dt>
+<dd><p>Gets the user added to the session.</p>
 </dd>
 </dl>
 
@@ -418,6 +545,41 @@ Logs the warning message to the console.
 | --- | --- | --- |
 | message | <code>string</code> | Message to log. |
 
+<a name="render"></a>
+
+## render()
+Renders the base html. This method shouldn't be overriden.
+
+**Kind**: global function  
+<a name="renderContainer"></a>
+
+## renderContainer()
+Renders the container of the website.
+
+**Kind**: global function  
+<a name="generateId"></a>
+
+## generateId()
+Generates the random string as a session id.
+
+**Kind**: global function  
+<a name="setUser"></a>
+
+## setUser(user)
+Sets the user instance to the session.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| user | <code>\*</code> | User's data. |
+
+<a name="getUser"></a>
+
+## getUser()
+Gets the user added to the session.
+
+**Kind**: global function  
 <a name="AuthCallback"></a>
 
 ## AuthCallback : <code>function</code>
@@ -443,17 +605,17 @@ Logs the warning message to the console.
 | --- | --- | --- |
 | port | <code>number</code> | Port on which the app listens. |
 | staticDir | <code>string</code> | Relative path to the static directory for the express app. |
-| dev | <code>boolean</code> |  |
-| jsDir | <code>string</code> |  |
-| filename | <code>string</code> |  |
-| appDir | <code>string</code> |  |
-| layoutComponent | <code>JSX.Element</code> |  |
-| cookieSecret | <code>string</code> |  |
-| scripts | <code>Array.&lt;string&gt;</code> |  |
-| styles | <code>Array.&lt;string&gt;</code> |  |
-| session | <code>function</code> |  |
-| auth | <code>function</code> |  |
-| webpack | <code>any</code> |  |
+| dev | <code>boolean</code> | Flag of the dev status of the app. |
+| jsDir | <code>string</code> | Name of the directory where the javascript is located in the staticDir. |
+| filename | <code>string</code> | Name of the file. |
+| appDir | <code>string</code> | Relative path to the app directory. |
+| layoutComponent | <code>JSX.Element</code> | React component with default html code. It must extend Layout from the module. |
+| cookieSecret | <code>string</code> | Secret which is used to sign cookies. |
+| scripts | <code>Array.&lt;string&gt;</code> | List of the scripts loaded in the base html. |
+| styles | <code>Array.&lt;string&gt;</code> | List of the styles loaded in the base html. |
+| session | <code>function</code> | Class of the session. It must extend Session from the module. |
+| auth | <code>function</code> | Auth function called on the routes which are requiring authorization. |
+| webpack | <code>any</code> | Custom webpack config. |
 
 <a name="RouteMappings"></a>
 

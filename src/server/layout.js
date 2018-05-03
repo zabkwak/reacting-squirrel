@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Base layout component for default html code rendered on the server-side.
+ */
 export default class Layout extends Component {
 
     static propTypes = {
@@ -23,6 +26,9 @@ export default class Layout extends Component {
         lang: 'en_US',
     };
 
+    /**
+     * Renders the base html. This method shouldn't be overriden.
+     */
     render() {
         const {
             title, scripts, styles, version, initialData, bundle, charSet, lang,
@@ -40,10 +46,13 @@ export default class Layout extends Component {
                     <script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
                     <script type="text/javascript" src={`${bundle}?v=${version}`} />
                 </body>
-            </html >
+            </html>
         );
     }
 
+    /**
+     * Renders the container of the website.
+     */
     renderContainer() {
         return (
             <div id="container">

@@ -5,7 +5,7 @@ export default class SocketClass {
     getEvents() {
         return Object
             .getOwnPropertyNames(this.constructor.prototype)
-            .filter(method => ['constructor', 'getEvents', 'broadcast', 'setSocket'].indexOf(method) < 0)
+            .filter(method => ['constructor', 'getEvents', 'broadcast', 'setSocket', 'getSession', 'getUser'].indexOf(method) < 0)
             .map((method) => {
                 const event = `${this.constructor.name.toLowerCase()}.${method}`;
                 const listener = (data, next) => {
