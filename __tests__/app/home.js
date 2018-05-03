@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page } from '../../app';
+import { Page } from '../../src/app';
 
 import './home.css';
 import './home.scss';

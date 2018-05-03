@@ -9,7 +9,6 @@ import cookieSignature from 'cookie-signature';
 import md5 from 'md5';
 import fs from 'fs';
 import async from 'async';
-import argsParser from 'args-parser';
 
 import Layout from './layout';
 import Session from './session';
@@ -17,14 +16,20 @@ import Route from './route';
 import socket from './socket';
 import SocketClass from './socket-class';
 
-const args = argsParser(process.argv);
-
 const RS_DIR = '~rs';
 
+/**
+ * Server part of the application.
+ */
 class Server {
 
     /**
      * @callback AuthCallback
+     */
+    /**
+     * @typedef SocketEvent
+     * @property {string} event
+     * @property {function} listener
      */
     /**
      * @typedef AppConfig
@@ -34,7 +39,7 @@ class Server {
      * @property {string} jsDir
      * @property {string} filename
      * @property {string} appDir
-     * @property {JSXElement} layoutComponent
+     * @property {JSX.Element} layoutComponent
      * @property {string} cookieSecret
      * @property {string[]} scripts
      * @property {string[]} styles
@@ -66,7 +71,17 @@ class Server {
         webpack: {},
         moduleDev: false,
     };
+
+    /**
+     * Absolute path to the javascript directory for the webpack config.
+     * @type {string}
+     */
     _path = null;
+
+    /**
+     * Bundle path in the website structure.
+     * @type {string}
+     */
     _bundlePath = null;
 
     _version = null;
@@ -74,22 +89,42 @@ class Server {
     _socketEvents = [];
     _socketClasses = [];
 
+    /**
+     * Port on which the server listens.
+     * @type {number}
+     */
     get port() {
         return this._config.port;
     }
 
+    /**
+     * Relative path to the static directory for the express app.
+     * @type {string}
+     */
     get staticDir() {
         return this._config.staticDir;
     }
 
+    /**
+     * Absolute path to the static directory for the express app.
+     * @type {string}
+     */
     get staticDirAbsolute() {
         return path.resolve(this.staticDir);
     }
 
+    /**
+     * Flag of the dev status of the app.
+     * @type {boolean}
+     */
     get dev() {
         return this._config.dev;
     }
 
+    /**
+     * Absolute path to the javascript directory for the webpack config.
+     * @type {string}
+     */
     get path() {
         return this._path;
     }
@@ -111,23 +146,40 @@ class Server {
         return path.resolve(staticDir, jsDir, filename);
     }
 
+    /**
+     * Relative path to the application directory.
+     * @type {string}
+     */
     get appDir() {
         return this._config.appDir;
     }
 
+    /**
+     * Absolute path to the application directory.
+     * @type {string}
+     */
     get appDirAbsolute() {
         return path.resolve(this.appDir);
     }
 
+    /**
+     * JSX element for the layout component
+     * @type {JSX.Element}
+     */
     get Layout() {
         return this._config.layoutComponent;
     }
 
+    /**
+     * Object of the session.
+     * @type {function}
+     */
     get Session() {
         return this._config.session;
     }
 
     /**
+     * Creates the instance of the server and prepares express app with socket.io.
      *
      * @param {AppConfig} config
      */
@@ -153,30 +205,76 @@ class Server {
         this._log(`Server created ${JSON.stringify(this._config)}`);
     }
 
+    /**
+     * Gets the http server.
+     *
+     * @returns {http.Server}
+     */
     getServer() {
         return this._server;
     }
 
+    /**
+     * Gets the list of registered socket events.
+     *
+     * @returns {SocketEvent[]}
+     */
     getSocketEvents() {
         return this._socketEvents;
     }
 
+    /**
+     * Gets the list of registered socket classes.
+     *
+     * @returns {SocketClass[]}
+     */
     getSocketClasses() {
         return this._socketClasses;
     }
 
+    /**
+     * Calls the auth function from the config.
+     *
+     * @param {Session} session
+     * @param {function} next
+     */
     auth(session, next) {
-        this._config.auth(session, next);
+        const { auth } = this._config;
+        if (typeof auth === 'function') {
+            auth(session, next);
+        }
     }
 
+    /**
+     * Registers the GET route.
+     *
+     * @param {string} route Route spec.
+     * @param {string} contentComponent Relative path from the {config.appDir} to the component.
+     * @param {string} title Title of the page.
+     * @param {function=} callback Callback to call when the route is called.
+     */
     get(route, contentComponent, title, callback) {
         this.registerRoute('get', route, contentComponent, title, callback);
     }
 
+    /**
+     * Registers the route.
+     *
+     * @param {string} method HTTP method of the route.
+     * @param {string} route Route spec.
+     * @param {string} contentComponent Relative path from the {config.appDir} to the component.
+     * @param {string} title Title of the page.
+     * @param {function=} callback Callback to call when the route is called.
+     */
     registerRoute(method, route, contentComponent, title, callback) {
         this._routes.push(new Route(method, route, contentComponent, title, false, callback));
     }
 
+    /**
+     * Registers the socket class to handle socket events.
+     *
+     * @param {function} Cls Class inherited from SocketClass.
+     */
     registerSocketClass(Cls) {
         const instance = new Cls();
         if (!(instance instanceof SocketClass)) {
@@ -186,10 +284,21 @@ class Server {
         this._socketClasses.push(instance);
     }
 
+    /**
+     * Registers the socket event.
+     *
+     * @param {string} event Name of the event.
+     * @param {function} listener Listener to call after the socket request.
+     */
     registerSocketEvent(event, listener) {
         this._socketEvents.push({ event, listener });
     }
 
+    /**
+     * Starts the express server. In that process it creates all necessary files.
+     *
+     * @param {function=} cb Callback to call after the server start.
+     */
     start(cb = () => { }) {
         const {
             dev, layoutComponent, cookieSecret, session,
@@ -239,7 +348,13 @@ class Server {
         });
     }
 
+    /**
+     * Creates the resting-squirrel files.
+     *
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _createRSFiles(cb) {
+        this._log('Creating RS files');
         this._validateAppDir((err) => {
             if (err) {
                 cb(err);
@@ -250,13 +365,16 @@ class Server {
                     cb(err);
                     return;
                 }
-                async.each(['_createEntryFile', '_setRoutes', '_createSocketMap', '_createPostCSSConfig'], (f, callback) => {
-                    this[f].call(this, callback);
-                }, cb);
+                async.each(['_createEntryFile', '_setRoutes', '_createSocketMap', '_createPostCSSConfig'], (f, callback) => this[f].call(this, callback), cb);
             });
         });
     }
 
+    /**
+     * Registers the routes to the express app and creates the routing map for the front-end.
+     *
+     * @param {function(Error):void} cb Callback called after the registration of the routes and creation of the routing map.
+     */
     _setRoutes(cb) {
         this._log('Setting routes');
         const { dev, appDir } = this._config;
@@ -300,15 +418,19 @@ class Server {
         this._createRoutingFile(componentsMap, cb);
     }
 
+    /**
+     * Creates the entry file required for the webpack.
+     *
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _createEntryFile(cb) {
         this._log('Creating entry file');
         const { appDir, moduleDev } = this._config;
-        // TODO path to module
         const pathToTheModule = moduleDev
-            ? path.relative(path.resolve(`${appDir}/${RS_DIR}/`), path.resolve('./app')).replace(/\\/g, '/')
+            ? path.relative(path.resolve(this._getRSDirPath()), path.resolve('./src/app')).replace(/\\/g, '/')
             : 'reacting-squirrel';
         fs.writeFile(
-            `${appDir}/${RS_DIR}/entry.js`,
+            `${this._getRSDirPath()}/entry.js`,
             `import { Application } from '${pathToTheModule}';
 import routingMap from './router.map';
 import socketEvents from './socket.map';
@@ -321,33 +443,57 @@ Application
         );
     }
 
+    /**
+     * @typedef RouteMappings
+     * @property {string} title Title of the page.
+     * @property {string} spec Route spec of the page.
+     * @property {string} path Absolute path to the component.
+     */
+    /**
+     * Creates the routing file for the front-end application.
+     *
+     * @param {Object.<string, RouteMappings>} map Map of the routes.
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _createRoutingFile(map, cb) {
         this._log('Creating routing file');
-        const { appDir } = this._config;
         const a = [];
         const b = [];
         Object.keys(map).forEach((key) => {
             const route = map[key];
-            const p = path.relative(path.resolve(`${appDir}/${RS_DIR}`), route.path).replace(/\\/g, '/');
+            const p = path.relative(path.resolve(this._getRSDirPath()), route.path).replace(/\\/g, '/');
             a.push(`import ${key} from '${p}';`);
             b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}'}`);
         });
         const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
-        fs.writeFile(`${appDir}/${RS_DIR}/router.map.js`, s, cb);
+        fs.writeFile(`${this._getRSDirPath()}/router.map.js`, s, cb);
     }
 
+    /**
+     * Creates the socket map for the front-end application.
+     *
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _createSocketMap(cb) {
         this._log('Creating socket map');
-        const { appDir } = this._config;
-        fs.writeFile(`${appDir}/${RS_DIR}/socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
+        fs.writeFile(`${this._getRSDirPath()}/socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
     }
 
+    /**
+     * Creates the postcss config for the front-end application.
+     *
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _createPostCSSConfig(cb) {
         this._log('Creating postcss config');
-        const { appDir } = this._config;
-        fs.writeFile(`${appDir}/${RS_DIR}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
+        fs.writeFile(`${this._getRSDirPath()}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
     }
 
+    /**
+     * Checks if the {config.appDir} exists. If not the directory is created.
+     *
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _validateAppDir(cb) {
         const { appDir } = this._config;
         fs.exists(appDir, (exists) => {
@@ -360,18 +506,27 @@ Application
         });
     }
 
+    /**
+     * Checks if the RS directory exists. If not the directory is created.
+     *
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _validateRSDir(cb) {
-        const { appDir } = this._config;
-        fs.exists(`${appDir}/${RS_DIR}`, (exists) => {
+        fs.exists(this._getRSDirPath(), (exists) => {
             if (exists) {
                 cb();
                 return;
             }
             this._log('Creating RS directory.');
-            fs.mkdir(`${appDir}/${RS_DIR}`, cb);
+            fs.mkdir(this._getRSDirPath(), cb);
         });
     }
 
+    /**
+     * Starts the webpack and the express server. If the app is in dev mode the webpack watcher is started.
+     *
+     * @param {function} cb Callback to call after the server start.
+     */
     _start(cb) {
         this._log('Starting webpack');
         const { dev, port } = this._config;
@@ -406,6 +561,9 @@ Application
         });
     }
 
+    /**
+     * Sets the express app, webpack and registers socket server.
+     */
     _setApp() {
         this._app = express();
         this._app.use(express.static(this._config.staticDir));
@@ -414,19 +572,22 @@ Application
         socket(this);
     }
 
+    /**
+     * Creates the webpack instance.
+     */
     _setWebpack() {
-        const { dev, filename, appDir } = this._config;
+        const { dev, filename } = this._config;
         const postCSSLoader = {
             loader: 'postcss-loader',
             options: {
                 config: {
-                    path: `${appDir}/${RS_DIR}/postcss.config.js`,
+                    path: `${this._getRSDirPath()}/postcss.config.js`,
                 },
             },
         };
         this._webpack = webpack({
             mode: dev ? 'development' : 'production',
-            entry: `${appDir}/${RS_DIR}/entry.js`,
+            entry: `${this._getRSDirPath()}/entry.js`,
             output: {
                 path: this._path,
                 filename,
@@ -468,15 +629,30 @@ Application
         });
     }
 
+    /**
+     * Gets the relative path to the RS directory.
+     *
+     * @returns {string}
+     */
     _getRSDirPath() {
         const { appDir } = this._config;
         return `${appDir}/${RS_DIR}`;
     }
 
+    /**
+     * Gets the absolute path to the RS directory.
+     *
+     * @returns {string}
+     */
     _getRSDirPathAbsolute() {
         return path.resolve(this._getRSDirPath());
     }
 
+    /**
+     * Logs the message to the console if the app is in the dev mode.
+     *
+     * @param {string} message Message to log.
+     */
     _log(message) {
         const { dev } = this._config;
         if (!dev) {
@@ -485,6 +661,11 @@ Application
         console.log(new Date(), message);
     }
 
+    /**
+     * Logs the warning message to the console.
+     *
+     * @param {string} message Message to log.
+     */
     _warn(message) {
         console.warn(new Date(), message);
     }
