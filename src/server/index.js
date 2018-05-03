@@ -28,8 +28,8 @@ class Server {
      */
     /**
      * @typedef AppConfig
-     * @property {number} port
-     * @property {string} static
+     * @property {number} port Port on which the app listens.
+     * @property {string} staticDir Relative path to the static directory for the express app.
      * @property {boolean} dev
      * @property {string} jsDir
      * @property {string} filename
@@ -52,7 +52,7 @@ class Server {
     /** @type {AppConfig} */
     _config = {
         port: 8080,
-        static: './public',
+        staticDir: './public',
         dev: false,
         jsDir: 'js',
         filename: 'bundle.js',
@@ -65,11 +65,62 @@ class Server {
         auth: (session, next) => next(),
         webpack: {},
     };
+    _path = null;
+    _bundlePath = null;
 
     _version = null;
 
     _socketEvents = [];
     _socketClasses = [];
+
+    get port() {
+        return this._config.port;
+    }
+
+    get staticDir() {
+        return this._config.staticDir;
+    }
+
+    get staticDirAbsolute() {
+        return path.resolve(this.staticDir);
+    }
+
+    get dev() {
+        return this._config.dev;
+    }
+
+    get path() {
+        return this._path;
+    }
+
+    /**
+     * Bundle path in the website structure.
+     * @type {string}
+     */
+    get bundlePath() {
+        return this._bundlePath;
+    }
+
+    /**
+     * Absolute path to the bundle file in the application structure.
+     * @type {string}
+     */
+    get bundlePathAbsolute() {
+        const { staticDir, jsDir, filename } = this._config;
+        return path.resolve(staticDir, jsDir, filename);
+    }
+
+    get appDir() {
+        return this._config.appDir;
+    }
+
+    get appDirAbsolute() {
+        return path.resolve(this.appDir);
+    }
+
+    get Layout() {
+        return this._config.layoutComponent;
+    }
 
     get Session() {
         return this._config.session;
@@ -79,9 +130,9 @@ class Server {
      *
      * @param {AppConfig} config
      */
-    constructor(config) {
+    constructor(config = {}) {
         if (!config.cookieSecret) {
-            console.warn('Using default cookieSecret. It\' a random string which changes every server start. It should be overriden in config.\n');
+            console.warn('Using default cookieSecret. It\'s a random string which changes every server start. It should be overriden in config.\n');
         }
         this._config = {
             ...this._config,
@@ -91,10 +142,10 @@ class Server {
             throw new Error('Cannot create instance of Session.');
         }
         if (!(new this._config.layoutComponent() instanceof Layout)) {
-            throw new Error('Cannot create instance of Layout');
+            throw new Error('Cannot create instance of Layout.');
         }
-        this._config.path = path.resolve(`${this._config.static}/${this._config.jsDir}`);
-        this._config.bundlePath = `/${this._config.jsDir}/${this._config.filename}`;
+        this._path = path.resolve(`${this._config.staticDir}/${this._config.jsDir}`);
+        this._bundlePath = `/${this._config.jsDir}/${this._config.filename}`;
         const pkg = require(path.resolve('./package.json'));
         this._version = pkg.version;
         this._setApp();
@@ -140,7 +191,7 @@ class Server {
 
     start(cb = () => { }) {
         const {
-            dev, layoutComponent, cookieSecret, session, bundlePath,
+            dev, layoutComponent, cookieSecret, session,
         } = this._config;
         this._log(`App starting DEV: ${dev}`);
         const LayoutComponent = layoutComponent;
@@ -173,7 +224,7 @@ class Server {
                     title={title}
                     user={req.user}
                     version={this._version}
-                    bundle={bundlePath}
+                    bundle={this._bundlePath}
                 />));
             };
             this.auth(req.session, next);
@@ -356,7 +407,7 @@ Application
 
     _setApp() {
         this._app = express();
-        this._app.use(express.static(this._config.static));
+        this._app.use(express.static(this._config.staticDir));
         this._server = http.createServer(this._app);
         this._setWebpack();
         socket(this);
@@ -376,7 +427,7 @@ Application
             mode: dev ? 'development' : 'production',
             entry: `${appDir}/${RS_DIR}/entry.js`,
             output: {
-                path: this._config.path,
+                path: this._path,
                 filename,
             },
             module: {
@@ -414,6 +465,15 @@ Application
             devtool: dev ? 'source-map' : undefined,
             ...this._config.webpack,
         });
+    }
+
+    _getRSDirPath() {
+        const { appDir } = this._config;
+        return `${appDir}/${RS_DIR}`;
+    }
+
+    _getRSDirPathAbsolute() {
+        return path.resolve(this._getRSDirPath());
     }
 
     _log(message) {

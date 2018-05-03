@@ -4,13 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretest": "npm run build",
+    "test": "mocha __tests__ --recursive --compilers js:babel-core/register --timeout 20000",
+    "posttest": "rm -rf ./test/~rs && rm -rf ./public && npm run clear",
     "create_index": "run-script-os",
     "create_index:win32": "echo module.exports = require('./app'); > index.js",
     "create_index:linux:darwin": "echo \"module.exports = require('./app');\" > index.js",
-    "build": "./node_modules/.bin/babel ./src --out-dir ./ && npm run create_index"
+    "build": "./node_modules/.bin/babel ./src --out-dir ./ && npm run create_index",
+    "clear": "rm -rf ./app && rm -rf ./server && rm -f ./index.js",
+    "prepublish": "npm run build",
+    "postpublish": "npm run clear"
   },
-  "author": "",
+  "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "args-parser": "^1.1.0",
@@ -46,11 +51,13 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
+    "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "request": "^2.85.0",
     "run-script-os-fix": "^1.0.4"
   }
 }
