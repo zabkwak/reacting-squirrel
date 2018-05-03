@@ -4,3 +4,5 @@
 /.npmignore
 /.gitignore
 /.eslintrc
+/jsdoc.json
+/markdown

@@ -43,12 +43,15 @@ class Server {
      * @property {string} cookieSecret
      * @property {string[]} scripts
      * @property {string[]} styles
-     * @property {Function<Session>} session
+     * @property {function} session
      * @property {function(Session, AuthCallback):void} auth
      * @property {any} webpack
      */
 
-    /** @type {any} Express app instance. */
+    /**
+     * Express app instance.
+     * @type {any}
+     * */
     _app = null;
     _server = null;
     _webpack = null;
