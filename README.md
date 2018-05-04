@@ -111,7 +111,6 @@ This code will start simple app on the default port. After the page load the `us
 - auth required routes
 - debug modes
 - better docs
-- popstate listener in application
 
 ## Classes
 
@@ -139,6 +138,21 @@ This code will start simple app on the default port. After the page load the `us
 <dt><a href="#getUser">getUser()</a></dt>
 <dd><p>Gets the user added to the session.</p>
 </dd>
+<dt><a href="#getEvents">getEvents()</a> ⇒ <code><a href="#SocketEvent">Array.&lt;SocketEvent&gt;</a></code></dt>
+<dd><p>Gets the list of all events and their listeners.</p>
+</dd>
+<dt><a href="#broadcast">broadcast(event, data, includeSelf, filter)</a></dt>
+<dd><p>Broadcasts the event to all connected sockets which will pass the filter method.</p>
+</dd>
+<dt><a href="#setSocket">setSocket(socket)</a></dt>
+<dd><p>Sets the current socket.</p>
+</dd>
+<dt><a href="#getSession">getSession()</a> ⇒ <code>Session</code></dt>
+<dd><p>Gets the session from the socket.</p>
+</dd>
+<dt><a href="#getUser">getUser()</a></dt>
+<dd><p>Gets the user from the session.</p>
+</dd>
 </dl>
 
 ## Typedefs
@@ -151,6 +165,8 @@ This code will start simple app on the default port. After the page load the `us
 <dt><a href="#AppConfig">AppConfig</a></dt>
 <dd></dd>
 <dt><a href="#RouteMappings">RouteMappings</a></dt>
+<dd></dd>
+<dt><a href="#SocketEvent">SocketEvent</a></dt>
 <dd></dd>
 </dl>
 
@@ -359,7 +375,7 @@ Registers the route.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| method | <code>string</code> | HTTP method of the route. |
+| method | <code>&#x27;get&#x27;</code> \| <code>&#x27;post&#x27;</code> \| <code>&#x27;put&#x27;</code> \| <code>&#x27;delete&#x27;</code> | HTTP method of the route. |
 | route | <code>string</code> | Route spec. |
 | contentComponent | <code>string</code> | Relative path from the {config.appDir} to the component. |
 | title | <code>string</code> | Title of the page. |
@@ -580,6 +596,49 @@ Sets the user instance to the session.
 Gets the user added to the session.
 
 **Kind**: global function  
+<a name="getEvents"></a>
+
+## getEvents() ⇒ [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
+Gets the list of all events and their listeners.
+
+**Kind**: global function  
+<a name="broadcast"></a>
+
+## broadcast(event, data, includeSelf, filter)
+Broadcasts the event to all connected sockets which will pass the filter method.
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| event | <code>string</code> |  | Name of the event to broadcast. |
+| data | <code>any</code> |  | Data to broadcast. |
+| includeSelf | <code>boolean</code> | <code>false</code> | If true the data are broadcasting also to the requesting socket. |
+| filter | <code>function</code> |  | Filter function to validate sockets. |
+
+<a name="setSocket"></a>
+
+## setSocket(socket)
+Sets the current socket.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| socket | <code>Socket</code> | Current requesting socket. |
+
+<a name="getSession"></a>
+
+## getSession() ⇒ <code>Session</code>
+Gets the session from the socket.
+
+**Kind**: global function  
+<a name="getUser"></a>
+
+## getUser()
+Gets the user from the session.
+
+**Kind**: global function  
 <a name="AuthCallback"></a>
 
 ## AuthCallback : <code>function</code>
@@ -628,6 +687,17 @@ Gets the user added to the session.
 | title | <code>string</code> | Title of the page. |
 | spec | <code>string</code> | Route spec of the page. |
 | path | <code>string</code> | Absolute path to the component. |
+
+<a name="SocketEvent"></a>
+
+## SocketEvent
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type |
+| --- | --- |
+| event | <code>string</code> | 
+| listener | <code>function</code> | 
 
 ## Modules
 
