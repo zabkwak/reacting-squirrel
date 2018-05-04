@@ -4,8 +4,6 @@ import Router, { Route } from './router';
 import Socket from './socket';
 import CallbackEmitter from './callback-emitter';
 
-// TODO popstate listener
-
 class Application extends CallbackEmitter {
 
     _container = null;
@@ -71,6 +69,12 @@ class Application extends CallbackEmitter {
         this.renderComponent(route.getComponent(), this._content);
     }
 
+    /**
+     * Renders React component to the HTML element.
+     *
+     * @param {JSX.Element} component
+     * @param {HTMLElement} target
+     */
     renderComponent(component, target) {
         ReactDOM.render(component, target);
     }

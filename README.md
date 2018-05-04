@@ -106,9 +106,9 @@ export default class HomePage extends Page {
 This code will start simple app on the default port. After the page load the `user.load` event is emitted and `UserSocket` class is trying to load the logged user and send it back to the page.
 
 ## TODO
-- frontend tests
 - render custom components in the layout
 - auth required routes
+- frontend tests
 - debug modes
 - better docs
 

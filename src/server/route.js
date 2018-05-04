@@ -27,7 +27,7 @@ export default class Route {
      * If true the route requires authorized user.
      * @type {boolean}
      */
-    requiredAuth = false;
+    requireAuth = false;
     /**
      * Callback to call when the route is called.
      * @type {function}

@@ -124,6 +124,8 @@ describe('Start of the server', () => {
 
         server.get('/', 'home', 'Home');
 
+        server.get('/user', 'user', 'User', true);
+
         server.start(() => {
             expect(fs.existsSync(server.staticDirAbsolute)).to.be.equal(true);
             expect(fs.existsSync(server.bundlePathAbsolute)).to.be.equal(true);
@@ -137,10 +139,15 @@ describe('Start of the server', () => {
                 expect(err).to.be.equal(null);
                 expect(res.statusCode).to.be.equal(200);
 
-                request.get(`${URL}/js/bundle.js`, (err, res, body) => {
+                request.get(`${URL}/user`, (err, res, body) => {
                     expect(err).to.be.equal(null);
-                    expect(res.statusCode).to.be.equal(200);
-                    done();
+                    expect(res.statusCode).to.be.equal(401);
+
+                    request.get(`${URL}/js/bundle.js`, (err, res, body) => {
+                        expect(err).to.be.equal(null);
+                        expect(res.statusCode).to.be.equal(200);
+                        done();
+                    });
                 });
             });
         });

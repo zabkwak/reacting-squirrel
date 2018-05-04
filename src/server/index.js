@@ -254,10 +254,11 @@ class Server {
      * @param {string} route Route spec.
      * @param {string} contentComponent Relative path from the {config.appDir} to the component.
      * @param {string} title Title of the page.
+     * @param {boolean=} requireAuth If true the route requires authorized user.
      * @param {function=} callback Callback to call when the route is called.
      */
-    get(route, contentComponent, title, callback) {
-        this.registerRoute('get', route, contentComponent, title, callback);
+    get(route, contentComponent, title, requireAuth, callback) {
+        this.registerRoute('get', route, contentComponent, title, requireAuth, callback);
     }
 
     /**
@@ -267,10 +268,11 @@ class Server {
      * @param {string} route Route spec.
      * @param {string} contentComponent Relative path from the {config.appDir} to the component.
      * @param {string} title Title of the page.
+     * @param {boolean=} requireAuth If true the route requires authorized user.
      * @param {function=} callback Callback to call when the route is called.
      */
-    registerRoute(method, route, contentComponent, title, callback) {
-        this._routes.push(new Route(method, route, contentComponent, title, false, callback));
+    registerRoute(method, route, contentComponent, title, requireAuth, callback) {
+        this._routes.push(new Route(method, route, contentComponent, title, requireAuth, callback));
     }
 
     /**
@@ -385,6 +387,11 @@ class Server {
         this._routes.forEach((route) => {
             this._app[route.method](route.spec, (req, res, next) => {
                 // TODO auth
+                if (route.requireAuth && req.session.getUser() === null) {
+                    res.status(401);
+                    next(new Error('Unauthorized request'));
+                    return;
+                }
                 let data = {
                     title: route.title,
                     data: {
