@@ -63,6 +63,14 @@ class Socket {
         return this._socket.session;
     }
 
+    /**
+     * Broadcasts the event to all connected sockets which will pass the filter method.
+     *
+     * @param {string} event Name of the event to broadcast.
+     * @param {any} data Data to broadcast.
+     * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
+     * @param {function(Socket):boolean} filter Filter function to validate sockets.
+     */
     broadcast(event, data, includeSelf = false, filter = socket => true) {
         Socket.iterateSockets((socket) => {
             if (!includeSelf && socket === this) {
@@ -77,7 +85,7 @@ class Socket {
 
 }
 
-export default (server) => {
+const func = (server) => {
     const io = socketIO(server.getServer());
     const { cookieSecret } = server._config;
     io.use((socket, next) => {
@@ -104,4 +112,9 @@ export default (server) => {
     });
 
     io.on('error', err => console.error(err));
+};
+
+export {
+    func as default,
+    Socket,
 };

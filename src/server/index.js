@@ -263,7 +263,7 @@ class Server {
     /**
      * Registers the route.
      *
-     * @param {string} method HTTP method of the route.
+     * @param {'get'|'post'|'put'|'delete'} method HTTP method of the route.
      * @param {string} route Route spec.
      * @param {string} contentComponent Relative path from the {config.appDir} to the component.
      * @param {string} title Title of the page.
