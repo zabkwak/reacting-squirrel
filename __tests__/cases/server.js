@@ -2,12 +2,14 @@ import { expect } from 'chai';
 import path from 'path';
 import fs from 'fs';
 import request from 'request';
+import cookieSignature from 'cookie-signature';
 
 import Server from '../../src/server';
 import Session from '../../src/server/session';
 import Layout from '../../src/server/layout';
 
 const PROJECT_PATH = path.resolve(__dirname, '../../');
+const TEST_SESSION_ID = 'test-session-id';
 
 describe('Server instance', () => {
 
@@ -117,14 +119,25 @@ describe('Server instance', () => {
 
 describe('Start of the server', () => {
 
+    const URL = 'http://localhost:8080';
+    const server = new Server({
+        appDir: './__tests__/app',
+        staticDir: './__tests__/public',
+        moduleDev: true,
+        auth: (session, next) => {
+            if (session.id === TEST_SESSION_ID) {
+                session.setUser({ id: 1 });
+            }
+            next();
+        },
+    });
+
+    server.get('/', 'home', 'Home');
+
+    server.get('/user', 'user', 'User', true);
+
     it('starts the server', (done) => {
-        const URL = 'http://localhost:8080';
-        const server = new Server({ appDir: './__tests__/app', staticDir: './__tests__/public', moduleDev: true });
         const RS_DIR = server._getRSDirPathAbsolute();
-
-        server.get('/', 'home', 'Home');
-
-        server.get('/user', 'user', 'User', true);
 
         server.start(() => {
             expect(fs.existsSync(server.staticDirAbsolute)).to.be.equal(true);
@@ -135,21 +148,52 @@ describe('Start of the server', () => {
             expect(fs.existsSync(path.normalize(`${RS_DIR}/socket.map.js`))).to.be.equal(true);
             expect(fs.existsSync(path.normalize(`${RS_DIR}/postcss.config.js`))).to.be.equal(true);
 
-            request.get(URL, (err, res, body) => {
-                expect(err).to.be.equal(null);
-                expect(res.statusCode).to.be.equal(200);
+            done();
+        });
+    });
 
-                request.get(`${URL}/user`, (err, res, body) => {
-                    expect(err).to.be.equal(null);
-                    expect(res.statusCode).to.be.equal(401);
+    it('checks if the home page is accessible with http request', (done) => {
+        request.get(URL, (err, res, body) => {
+            expect(err).to.be.equal(null);
+            expect(res.statusCode).to.be.equal(200);
+            done();
+        });
+    });
 
-                    request.get(`${URL}/js/bundle.js`, (err, res, body) => {
-                        expect(err).to.be.equal(null);
-                        expect(res.statusCode).to.be.equal(200);
-                        done();
-                    });
-                });
-            });
+    it('checks if the bundle.js is accessible with http request', (done) => {
+        request.get(`${URL}${server.bundlePath}`, (err, res, body) => {
+            expect(err).to.be.equal(null);
+            expect(res.statusCode).to.be.equal(200);
+            done();
+        });
+    });
+
+    it('checks if the user page which requires authorization returns http 401 error', (done) => {
+        request.get(`${URL}/user`, (err, res, body) => {
+            expect(err).to.be.equal(null);
+            expect(res.statusCode).to.be.equal(401);
+            done();
+        });
+    });
+
+    it('checks if the test page will return 404 error', (done) => {
+        request.get(`${URL}/test`, (err, res, body) => {
+            expect(err).to.be.equal(null);
+            expect(res.statusCode).to.be.equal(404);
+            done();
+        });
+    });
+
+    it('checks if the user is logged on the test session id and the user page returns 200 http code', (done) => {
+        request.get({
+            url: `${URL}/user`,
+            headers: {
+                cookie: `session_id=${cookieSignature.sign(TEST_SESSION_ID, server._config.cookieSecret)}`,
+            },
+        }, (err, res, body) => {
+            expect(err).to.be.equal(null);
+            expect(res.statusCode).to.be.equal(200);
+            done();
         });
     });
 });
