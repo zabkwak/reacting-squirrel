@@ -94,6 +94,7 @@
         "document": true,
         "localStorage": true,
         "describe": true,
-        "it": true
+        "it": true,
+        "window": true
     }
 }

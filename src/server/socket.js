@@ -5,7 +5,7 @@ import uniqid from 'uniqid';
 
 class Socket {
 
-    /** @type {Socket} */
+    /** @type {Socket[]} */
     static _sockets = [];
 
     static add(socket, events, classes) {
@@ -34,6 +34,14 @@ class Socket {
         classes.forEach(cls => cls.setSocket(s));
     }
 
+    /**
+     *
+     * @param {function(Socket):void} iterator
+     */
+    static iterateSockets(iterator) {
+        this._sockets.forEach(iterator);
+    }
+
     _socket = null;
     _id = null;
 
@@ -56,7 +64,7 @@ class Socket {
     }
 
     broadcast(event, data, includeSelf = false, filter = socket => true) {
-        this.constructor._sockets.forEach((socket) => {
+        Socket.iterateSockets((socket) => {
             if (!includeSelf && socket === this) {
                 return;
             }

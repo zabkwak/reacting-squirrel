@@ -2,10 +2,11 @@ import ReactDOM from 'react-dom';
 
 import Router, { Route } from './router';
 import Socket from './socket';
+import CallbackEmitter from './callback-emitter';
 
 // TODO popstate listener
 
-class Application {
+class Application extends CallbackEmitter {
 
     _container = null;
     _content = null;
@@ -18,6 +19,7 @@ class Application {
     }
 
     constructor() {
+        super();
         this._container = document.getElementById('container');
         this._content = document.getElementById('content');
         [this._title] = document.getElementsByTagName('title');
@@ -28,6 +30,10 @@ class Application {
         if (!this._content) {
             console.error('Content wrapper not found');
         }
+        window.onpopstate = (event) => {
+            this.render(Router.getRoute());
+            this._callListener('popstate', event);
+        };
     }
 
     registerRoutingMap(routingMap) {

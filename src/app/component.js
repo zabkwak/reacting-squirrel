@@ -4,12 +4,22 @@ import Application from './application';
 
 export default class Component extends Base {
 
-    componentDidMount() { }
+    __popState__ = (application, event) => {
+        this.onPopState(event);
+    }
 
-    componentWillUnmount() { }
+    componentDidMount() {
+        this.getContext().addListener('popstate', this.__popState__);
+    }
+
+    componentWillUnmount() {
+        this.getContext().removeListener('popstate', this.__popState__);
+    }
 
     getContext() {
         return Application;
     }
+
+    onPopState(event) { }
 
 }
