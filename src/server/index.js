@@ -9,6 +9,7 @@ import cookieSignature from 'cookie-signature';
 import md5 from 'md5';
 import fs from 'fs';
 import async from 'async';
+import Error from 'smart-error';
 
 import Layout from './layout';
 import Session from './session';
@@ -349,6 +350,16 @@ class Server {
                 console.error(err);
                 return;
             }
+            this._app.use((err, req, res, next) => {
+                if (!(err instanceof Error)) {
+                    err = new Error(err);
+                }
+                console.error(err);
+                if (res.statusCode === 200) {
+                    res.status(500);
+                }
+                res.send(err);
+            });
             this._start(cb);
         });
     }

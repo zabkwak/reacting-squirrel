@@ -41,7 +41,7 @@ import Server from 'reacting-squirrel/server';
 
 import UserSocket from './socket.user';
 
-import UserStore from '/user-store';
+import UserStore from './user-store';
 
 const app = new Server({
     auth: (session, next) => {
@@ -106,11 +106,12 @@ export default class HomePage extends Page {
 This code will start simple app on the default port. After the page load the `user.load` event is emitted and `UserSocket` class is trying to load the logged user and send it back to the page.
 
 ## TODO
+- custom function to handle unauthorized requests (error handler?)
 - render custom components in the layout
-- auth required routes
 - frontend tests
 - debug modes
 - better docs
+- todo smart-error on sockets
 
 ## Classes
 
@@ -199,8 +200,8 @@ Server part of the application.
     * [.getSocketEvents()](#Server+getSocketEvents) ⇒ [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
     * [.getSocketClasses()](#Server+getSocketClasses) ⇒ <code>Array.&lt;SocketClass&gt;</code>
     * [.auth(session, next)](#Server+auth)
-    * [.get(route, contentComponent, title, [callback])](#Server+get)
-    * [.registerRoute(method, route, contentComponent, title, [callback])](#Server+registerRoute)
+    * [.get(route, contentComponent, title, [requireAuth], [callback])](#Server+get)
+    * [.registerRoute(method, route, contentComponent, title, [requireAuth], [callback])](#Server+registerRoute)
     * [.registerSocketClass(Cls)](#Server+registerSocketClass)
     * [.registerSocketEvent(event, listener)](#Server+registerSocketEvent)
     * [.start([cb])](#Server+start)
@@ -354,7 +355,7 @@ Calls the auth function from the config.
 
 <a name="Server+get"></a>
 
-### server.get(route, contentComponent, title, [callback])
+### server.get(route, contentComponent, title, [requireAuth], [callback])
 Registers the GET route.
 
 **Kind**: instance method of [<code>Server</code>](#Server)  
@@ -364,11 +365,12 @@ Registers the GET route.
 | route | <code>string</code> | Route spec. |
 | contentComponent | <code>string</code> | Relative path from the {config.appDir} to the component. |
 | title | <code>string</code> | Title of the page. |
+| [requireAuth] | <code>boolean</code> | If true the route requires authorized user. |
 | [callback] | <code>function</code> | Callback to call when the route is called. |
 
 <a name="Server+registerRoute"></a>
 
-### server.registerRoute(method, route, contentComponent, title, [callback])
+### server.registerRoute(method, route, contentComponent, title, [requireAuth], [callback])
 Registers the route.
 
 **Kind**: instance method of [<code>Server</code>](#Server)  
@@ -379,6 +381,7 @@ Registers the route.
 | route | <code>string</code> | Route spec. |
 | contentComponent | <code>string</code> | Relative path from the {config.appDir} to the component. |
 | title | <code>string</code> | Title of the page. |
+| [requireAuth] | <code>boolean</code> | If true the route requires authorized user. |
 | [callback] | <code>function</code> | Callback to call when the route is called. |
 
 <a name="Server+registerSocketClass"></a>
