@@ -1,5 +1,6 @@
 # Reacting Squirrel
-Framework for creation of the [React](https://reactjs.org/) apps using [Express](https://expressjs.com/) and [Socket.io](https://socket.io/).
+Framework for creation of the [React](https://reactjs.org/) apps using [Express](https://expressjs.com/) and [Socket.io](https://socket.io/). 
+Sample app can be cloned from [GitHub](https://github.com/zabkwak/reacting-squirrel-sample).
 
 ## Installation
 ```bash
