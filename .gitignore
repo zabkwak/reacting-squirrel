@@ -5,3 +5,4 @@
 /markdown
 /__tests__/app/~rs
 /__tests__/public
+/__tests__/dev/dist
