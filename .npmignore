@@ -1,0 +1,8 @@
+/src
+/.babelrc
+/__tests__
+/.npmignore
+/.gitignore
+/.eslintrc
+/jsdoc.json
+/markdown

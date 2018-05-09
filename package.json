@@ -1,0 +1,91 @@
+{
+  "name": "reacting-squirrel",
+  "version": "0.1.1",
+  "description": "React and Express framework for creating web apps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha __tests__/cases --recursive --compilers js:babel-core/register --timeout 20000",
+    "posttest": "rm -rf ./__tests__/app/~rs && rm -rf ./__tests__/public",
+    "create_index": "run-script-os",
+    "create_index:win32": "echo module.exports = require('./app'); > index.js",
+    "create_index:linux:darwin": "echo \"module.exports = require('./app');\" > index.js",
+    "build": "./node_modules/.bin/babel ./src --out-dir ./ && npm run create_index",
+    "clear": "rm -rf ./app && rm -rf ./server && rm -f ./index.js",
+    "prepublish": "npm run build",
+    "postpublish": "npm run clear",
+    "docs_server": "./node_modules/.bin/jsdoc ./src/server -r -d ./docs/server -c ./jsdoc.json",
+    "docs_app": "./node_modules/.bin/jsdoc ./src/app -r -d ./docs/app -c ./jsdoc.json",
+    "docs_generate": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
+    "docs": "rm -rf docs && npm run docs_generate",
+    "md_server": "./node_modules/.bin/jsdoc2md --files ./src/server/*.js > ./markdown/server.md",
+    "md_app": "./node_modules/.bin/jsdoc2md --files ./src/app/*.js > ./markdown/app.md",
+    "md_concat": "cat ./markdown/readme.md ./markdown/server.md ./markdown/app.md > ./README.md",
+    "docs_md": "npm run md_server && npm run md_app && npm run md_concat"
+  },
+  "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.6.0",
+    "autoprefixer": "^8.3.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
+    "cookie-signature": "^1.1.0",
+    "css-loader": "^0.28.11",
+    "express": "^4.16.3",
+    "md5": "^2.2.1",
+    "node-sass": "^4.8.3",
+    "postcss-loader": "^2.1.4",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "route-parser": "0.0.5",
+    "sass-loader": "^7.0.1",
+    "smart-error": "^1.1.4",
+    "socket.io": "^2.1.0",
+    "socket.io-client": "^2.1.0",
+    "style-loader": "^0.21.0",
+    "uniqid": "^4.1.1",
+    "webpack": "^4.5.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "jsdoc": "^3.5.5",
+    "jsdoc-export-default-interop": "^0.3.1",
+    "jsdoc-to-markdown": "^4.0.1",
+    "request": "^2.85.0",
+    "run-script-os-fix": "^1.0.4"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zabkwak/reacting-squirrel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zabkwak/reacting-squirrel/issues"
+  },
+  "homepage": "https://github.com/zabkwak/reacting-squirrel#readme",
+  "keywords": [
+    "react",
+    "express",
+    "socket.io",
+    "framework"
+  ],
+  "readme": "README.md"
+}
