@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import SocketClass from '../../src/server/socket-class';
+import SocketClass from '../../../src/server/socket-class';
 
 describe('SocketClass', () => {
 

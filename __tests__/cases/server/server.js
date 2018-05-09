@@ -4,11 +4,11 @@ import fs from 'fs';
 import request from 'request';
 import cookieSignature from 'cookie-signature';
 
-import Server from '../../src/server';
-import Session from '../../src/server/session';
-import Layout from '../../src/server/layout';
+import Server from '../../../src/server';
+import Session from '../../../src/server/session';
+import Layout from '../../../src/server/layout';
 
-const PROJECT_PATH = path.resolve(__dirname, '../../');
+const PROJECT_PATH = path.resolve(__dirname, '../../../');
 const TEST_SESSION_ID = 'test-session-id';
 
 describe('Server instance', () => {

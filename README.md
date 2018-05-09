@@ -112,6 +112,7 @@ This code will start simple app on the default port. After the page load the `us
 - debug modes
 - better docs
 - todo smart-error on sockets
+- better handle with registered events in the socket component (because of `on` method)
 
 ## Classes
 
