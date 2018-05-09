@@ -1,4 +1,5 @@
 import ReactDOM from 'react-dom';
+import React from 'react';
 
 import Router, { Route } from './router';
 import Socket from './socket';
@@ -14,6 +15,7 @@ class Application extends CallbackEmitter {
     _title = null;
     _initialData = {};
     _started = false;
+    _components = [];
 
     /**
      * @returns {boolean}
@@ -62,6 +64,11 @@ class Application extends CallbackEmitter {
         return this;
     }
 
+    registerComponents(components) {
+        this._components = components;
+        return this;
+    }
+
     /**
      * Starts the application. The application can be started only once.
      */
@@ -71,6 +78,15 @@ class Application extends CallbackEmitter {
         }
         this._started = true;
         console.log('Application started', { DEV: this.DEV });
+        this._components.forEach((component) => {
+            const target = document.getElementById(component.elementId);
+            if (!target) {
+                console.error(`Target DOM element with id '${component.elementId}' doesn't exist.`);
+                return;
+            }
+            const Component = component.component;
+            this.renderComponent(<Component />, target);
+        });
         this.render(Router.getRoute());
         Socket.connect();
     }

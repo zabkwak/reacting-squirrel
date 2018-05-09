@@ -24,8 +24,8 @@ var User = function (_SocketClass) {
     }
 
     _createClass(User, [{
-        key: 'load',
-        value: function load(data, next) {
+        key: 'get',
+        value: function get(data, next) {
             next(null, { id: 1, name: 'Test User' });
         }
     }]);

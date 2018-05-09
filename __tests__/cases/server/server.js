@@ -145,6 +145,7 @@ describe('Start of the server', () => {
             expect(fs.existsSync(RS_DIR)).to.be.equal(true);
             expect(fs.existsSync(path.normalize(`${RS_DIR}/entry.js`))).to.be.equal(true);
             expect(fs.existsSync(path.normalize(`${RS_DIR}/router.map.js`))).to.be.equal(true);
+            expect(fs.existsSync(path.normalize(`${RS_DIR}/component.map.js`))).to.be.equal(true);
             expect(fs.existsSync(path.normalize(`${RS_DIR}/socket.map.js`))).to.be.equal(true);
             expect(fs.existsSync(path.normalize(`${RS_DIR}/postcss.config.js`))).to.be.equal(true);
 

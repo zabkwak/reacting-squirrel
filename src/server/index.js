@@ -92,6 +92,7 @@ class Server {
 
     _socketEvents = [];
     _socketClasses = [];
+    _components = [];
 
     /**
      * Port on which the server listens.
@@ -300,6 +301,11 @@ class Server {
         this._socketEvents.push({ event, listener });
     }
 
+    registerComponent(componentPath, elementId) {
+        const { appDir } = this._config;
+        this._components.push({ path: path.resolve(`${appDir}/${componentPath}`), elementId });
+    }
+
     /**
      * Starts the express server. In that process it creates all necessary files.
      *
@@ -381,7 +387,13 @@ class Server {
                     cb(err);
                     return;
                 }
-                async.each(['_createEntryFile', '_setRoutes', '_createSocketMap', '_createPostCSSConfig'], (f, callback) => this[f].call(this, callback), cb);
+                async.each([
+                    '_createEntryFile',
+                    '_setRoutes',
+                    '_createComponentsFile',
+                    '_createSocketMap',
+                    '_createPostCSSConfig',
+                ], (f, callback) => this[f].call(this, callback), cb);
             });
         });
     }
@@ -446,7 +458,7 @@ class Server {
      */
     _createEntryFile(cb) {
         this._log('Creating entry file');
-        const { appDir, moduleDev } = this._config;
+        const { moduleDev } = this._config;
         const pathToTheModule = moduleDev
             ? path.relative(path.resolve(this._getRSDirPath()), path.resolve('./src/app')).replace(/\\/g, '/')
             : 'reacting-squirrel';
@@ -455,10 +467,12 @@ class Server {
             `import { Application } from '${pathToTheModule}';
 import routingMap from './router.map';
 import socketEvents from './socket.map';
+import components from './component.map';
 
 Application
             .registerSocketEvents(socketEvents)
             .registerRoutingMap(routingMap)
+            .registerComponents(components)
             .start();
         `, cb,
         );
@@ -488,6 +502,20 @@ Application
         });
         const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
         fs.writeFile(`${this._getRSDirPath()}/router.map.js`, s, cb);
+    }
+
+    _createComponentsFile(cb) {
+        this._log('Creating components file');
+        const a = [];
+        const b = [];
+        this._components.forEach((component) => {
+            const key = `__${md5(`${component.path}${component.elementId}}`)}__`;
+            const p = path.relative(path.resolve(this._getRSDirPath()), component.path).replace(/\\/g, '/');
+            a.push(`import ${key} from '${p}'`);
+            b.push(`{elementId: '${component.elementId}', component: ${key}}`);
+        });
+        const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
+        fs.writeFile(`${this._getRSDirPath()}/component.map.js`, s, cb);
     }
 
     /**
