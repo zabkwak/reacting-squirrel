@@ -33,6 +33,11 @@ class Server {
      * @property {function} listener
      */
     /**
+     * @typedef CustomComponent
+     * @property {string} path Absolute path to the component.
+     * @property {string} elementId Identificator of the DOM element where the component should render.
+     */
+    /**
      * @typedef AppConfig
      * @property {number} port Port on which the app listens.
      * @property {string} staticDir Relative path to the static directory for the express app.
@@ -92,6 +97,7 @@ class Server {
 
     _socketEvents = [];
     _socketClasses = [];
+    /** @type {CustomComponent[]} */
     _components = [];
 
     /**
@@ -301,6 +307,12 @@ class Server {
         this._socketEvents.push({ event, listener });
     }
 
+    /**
+     * Registers react components which are rendered into DOM elements.
+     *
+     * @param {string} componentPath Relative path from the {config.appDir} to the component.
+     * @param {string} elementId Identificator of the DOM element where the component should render.
+     */
     registerComponent(componentPath, elementId) {
         const { appDir } = this._config;
         this._components.push({ path: path.resolve(`${appDir}/${componentPath}`), elementId });

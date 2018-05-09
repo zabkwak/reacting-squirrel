@@ -64,6 +64,11 @@ class Application extends CallbackEmitter {
         return this;
     }
 
+    /**
+     * Registers custom components to render after the start.
+     *
+     * @param {any[]} components
+     */
     registerComponents(components) {
         this._components = components;
         return this;

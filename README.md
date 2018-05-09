@@ -2,6 +2,10 @@
 Framework for creation of the [React](https://reactjs.org/) apps using [Express](https://expressjs.com/) and [Socket.io](https://socket.io/). 
 Sample app can be cloned from [GitHub](https://github.com/zabkwak/reacting-squirrel-sample).
 
+## Requirements
+- The module needs to be able to write in the app directory (config.appDir). It creates the directory where are stored the frontend maps.
+- The frontend needs the possibility to work with websockets (connection upgrade in nginx).
+
 ## Installation
 ```bash
 npm install reacting-squirrel --save
@@ -106,15 +110,14 @@ export default class HomePage extends Page {
 ```
 This code will start simple app on the default port. After the page load the `user.load` event is emitted and `UserSocket` class is trying to load the logged user and send it back to the page.
 
+## Core functions
+### Routes register
+### Socket events register
+### Socket classes register
+### Components register
+
 ## TODO
-- custom function to handle unauthorized requests (error handler?)
-- render custom components in the layout
-- frontend tests
-- debug modes
-- better docs
-- smart-error on sockets
-- better handle with registered events in the socket component (because of `on` method)
-- localStorage validation
+[https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
 ## Classes
 
 <dl>
@@ -165,6 +168,8 @@ This code will start simple app on the default port. After the page load the `us
 <dd></dd>
 <dt><a href="#SocketEvent">SocketEvent</a></dt>
 <dd></dd>
+<dt><a href="#CustomComponent">CustomComponent</a></dt>
+<dd></dd>
 <dt><a href="#AppConfig">AppConfig</a></dt>
 <dd></dd>
 <dt><a href="#RouteMappings">RouteMappings</a></dt>
@@ -187,6 +192,7 @@ Server part of the application.
     * [._config](#Server+_config) : [<code>AppConfig</code>](#AppConfig)
     * [._path](#Server+_path) : <code>string</code>
     * [._bundlePath](#Server+_bundlePath) : <code>string</code>
+    * [._components](#Server+_components) : [<code>Array.&lt;CustomComponent&gt;</code>](#CustomComponent)
     * [.port](#Server+port) : <code>number</code>
     * [.staticDir](#Server+staticDir) : <code>string</code>
     * [.staticDirAbsolute](#Server+staticDirAbsolute) : <code>string</code>
@@ -206,6 +212,7 @@ Server part of the application.
     * [.registerRoute(method, route, contentComponent, title, [requireAuth], [callback])](#Server+registerRoute)
     * [.registerSocketClass(Cls)](#Server+registerSocketClass)
     * [.registerSocketEvent(event, listener)](#Server+registerSocketEvent)
+    * [.registerComponent(componentPath, elementId)](#Server+registerComponent)
     * [.start([cb])](#Server+start)
     * [._createRSFiles(cb)](#Server+_createRSFiles)
     * [._setRoutes(cb)](#Server+_setRoutes)
@@ -258,6 +265,10 @@ Absolute path to the javascript directory for the webpack config.
 ### server._bundlePath : <code>string</code>
 Bundle path in the website structure.
 
+**Kind**: instance property of [<code>Server</code>](#Server)  
+<a name="Server+_components"></a>
+
+### server._components : [<code>Array.&lt;CustomComponent&gt;</code>](#CustomComponent)
 **Kind**: instance property of [<code>Server</code>](#Server)  
 <a name="Server+port"></a>
 
@@ -408,6 +419,18 @@ Registers the socket event.
 | --- | --- | --- |
 | event | <code>string</code> | Name of the event. |
 | listener | <code>function</code> | Listener to call after the socket request. |
+
+<a name="Server+registerComponent"></a>
+
+### server.registerComponent(componentPath, elementId)
+Registers react components which are rendered into DOM elements.
+
+**Kind**: instance method of [<code>Server</code>](#Server)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| componentPath | <code>string</code> | Relative path from the {config.appDir} to the component. |
+| elementId | <code>string</code> | Identificator of the DOM element where the component should render. |
 
 <a name="Server+start"></a>
 
@@ -658,6 +681,17 @@ Gets the user from the session.
 | --- | --- |
 | event | <code>string</code> | 
 | listener | <code>function</code> | 
+
+<a name="CustomComponent"></a>
+
+## CustomComponent
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| path | <code>string</code> | Absolute path to the component. |
+| elementId | <code>string</code> | Identificator of the DOM element where the component should render. |
 
 <a name="AppConfig"></a>
 
@@ -937,6 +971,7 @@ Base class for client application context.
     * [.DEV](#Application+DEV) ⇒ <code>boolean</code>
     * [.registerRoutingMap(routingMap)](#Application+registerRoutingMap)
     * [.registerSocketEvents(events)](#Application+registerSocketEvents)
+    * [.registerComponents(components)](#Application+registerComponents)
     * [.start()](#Application+start)
     * [.refreshContent()](#Application+refreshContent)
     * [.render(route, refresh)](#Application+render)
@@ -970,6 +1005,17 @@ Registeres the socket events to the Socket class.
 | Param | Type |
 | --- | --- |
 | events | <code>\*</code> | 
+
+<a name="Application+registerComponents"></a>
+
+### application.registerComponents(components)
+Registers custom components to render after the start.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type |
+| --- | --- |
+| components | <code>Array.&lt;any&gt;</code> | 
 
 <a name="Application+start"></a>
 
