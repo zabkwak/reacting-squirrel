@@ -4,6 +4,9 @@ import Router, { Route } from './router';
 import Socket from './socket';
 import CallbackEmitter from './callback-emitter';
 
+/**
+ * Base class for client application context.
+ */
 class Application extends CallbackEmitter {
 
     _container = null;

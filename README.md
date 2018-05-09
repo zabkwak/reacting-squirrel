@@ -112,7 +112,6 @@ This code will start simple app on the default port. After the page load the `us
 - debug modes
 - better docs
 - todo smart-error on sockets
-- better handle with registered events in the socket component (because of `on` method)
 
 ## Classes
 
@@ -712,6 +711,14 @@ Gets the user from the session.
 <dd></dd>
 </dl>
 
+## Classes
+
+<dl>
+<dt><a href="#Application">Application</a></dt>
+<dd><p>Base class for client application context.</p>
+</dd>
+</dl>
+
 ## Functions
 
 <dl>
@@ -910,6 +917,66 @@ Sets the state of the socket and calls 'state' event of CallbackEmitter.
 | Param | Type |
 | --- | --- |
 | state | <code>\*</code> | 
+
+<a name="Application"></a>
+
+## Application
+Base class for client application context.
+
+**Kind**: global class  
+
+* [Application](#Application)
+    * [.renderComponent(component, target)](#Application+renderComponent)
+    * [.redirect(path, q)](#Application+redirect)
+    * [.pushState(path, q)](#Application+pushState)
+    * [.setTitle(title)](#Application+setTitle)
+
+<a name="Application+renderComponent"></a>
+
+### application.renderComponent(component, target)
+Renders React component to the HTML element.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type |
+| --- | --- |
+| component | <code>JSX.Element</code> | 
+| target | <code>HTMLElement</code> | 
+
+<a name="Application+redirect"></a>
+
+### application.redirect(path, q)
+Pushes the state to the history and refreshes content.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type |
+| --- | --- |
+| path | <code>string</code> | 
+| q | <code>Object.&lt;string, string&gt;</code> | 
+
+<a name="Application+pushState"></a>
+
+### application.pushState(path, q)
+Pushes the state to the history.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type |
+| --- | --- |
+| path | <code>string</code> | 
+| q | <code>Object.&lt;string, string&gt;</code> | 
+
+<a name="Application+setTitle"></a>
+
+### application.setTitle(title)
+Updates the page title in the HTML header.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type |
+| --- | --- |
+| title | <code>string</code> | 
 
 <a name="addListener"></a>
 
