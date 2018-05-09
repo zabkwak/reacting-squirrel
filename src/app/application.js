@@ -15,6 +15,9 @@ class Application extends CallbackEmitter {
     _initialData = {};
     _started = false;
 
+    /**
+     * @returns {boolean}
+     */
     get DEV() {
         return this._initialData.dev;
     }
@@ -37,6 +40,11 @@ class Application extends CallbackEmitter {
         };
     }
 
+    /**
+     * Registers the map of routes to the Router.
+     *
+     * @param {*} routingMap
+     */
     registerRoutingMap(routingMap) {
         routingMap.forEach((route) => {
             Router.addRoute(Route.create({ ...route, initialData: this._initialData }));
@@ -44,11 +52,19 @@ class Application extends CallbackEmitter {
         return this;
     }
 
+    /**
+     * Registeres the socket events to the Socket class.
+     *
+     * @param {*} events
+     */
     registerSocketEvents(events) {
         Socket.registerEvents(events);
         return this;
     }
 
+    /**
+     * Starts the application. The application can be started only once.
+     */
     start() {
         if (this._started) {
             throw new Error('Application already started');
@@ -59,11 +75,20 @@ class Application extends CallbackEmitter {
         Socket.connect();
     }
 
+    /**
+     * Refreshes the content. Content DOM is cleared and the current Page is rendered.
+     */
     refreshContent() {
         this.render(Router.getRoute(), true);
         this._callListener('refresh');
     }
 
+    /**
+     * Renders the route's page in the content element.
+     *
+     * @param {*} route
+     * @param {boolean} refresh
+     */
     render(route, refresh = false) {
         this.setTitle(route.title);
         if (refresh) {

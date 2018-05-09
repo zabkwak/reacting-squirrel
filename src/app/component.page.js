@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import SocketComponent from './component.socket';
 
+/**
+ * Base page component to handle content.
+ * All pages registered to the Router has to extends this class.
+ */
 export default class Page extends SocketComponent {
 
     static propTypes = {
