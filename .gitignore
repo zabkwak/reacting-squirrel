@@ -3,3 +3,5 @@
 /app
 /index.js
 /markdown
+/__tests__/app/~rs
+/__tests__/public
