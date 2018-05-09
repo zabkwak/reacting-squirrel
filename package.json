@@ -22,9 +22,6 @@
     "md_concat": "cat ./markdown/readme.md ./markdown/server.md ./markdown/app.md > ./README.md",
     "docs_md": "npm run md_server && npm run md_app && npm run md_concat"
   },
-  "pre-commit": [
-    "docs_md"
-  ],
   "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -70,7 +67,6 @@
     "jsdoc": "^3.5.5",
     "jsdoc-export-default-interop": "^0.3.1",
     "jsdoc-to-markdown": "^4.0.1",
-    "pre-commit": "^1.2.2",
     "request": "^2.85.0",
     "run-script-os-fix": "^1.0.4"
   },

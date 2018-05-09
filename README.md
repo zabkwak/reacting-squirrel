@@ -113,7 +113,7 @@ This code will start simple app on the default port. After the page load the `us
 - better docs
 - smart-error on sockets
 - better handle with registered events in the socket component (because of `on` method)
-
+- localStorage validation
 ## Classes
 
 <dl>
@@ -735,6 +735,12 @@ Gets the user from the session.
 <dt><a href="#_hasEventRegistered">_hasEventRegistered(event)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Checks if the event is registered to the listener.</p>
 </dd>
+<dt><a href="#getContext">getContext()</a></dt>
+<dd><p>Gets the application context.</p>
+</dd>
+<dt><a href="#onPopState">onPopState(event)</a></dt>
+<dd><p>Method called after the window.onpopstate event.</p>
+</dd>
 <dt><a href="#request">request(event, data, timeout, callback)</a></dt>
 <dd><p>Requests the data over the socket. It automatically handles listeners on the Socket class and calls the callback.</p>
 </dd>
@@ -927,10 +933,66 @@ Base class for client application context.
 **Kind**: global class  
 
 * [Application](#Application)
+    * [.DEV](#Application+DEV) ⇒ <code>boolean</code>
+    * [.registerRoutingMap(routingMap)](#Application+registerRoutingMap)
+    * [.registerSocketEvents(events)](#Application+registerSocketEvents)
+    * [.start()](#Application+start)
+    * [.refreshContent()](#Application+refreshContent)
+    * [.render(route, refresh)](#Application+render)
     * [.renderComponent(component, target)](#Application+renderComponent)
     * [.redirect(path, q)](#Application+redirect)
     * [.pushState(path, q)](#Application+pushState)
     * [.setTitle(title)](#Application+setTitle)
+
+<a name="Application+DEV"></a>
+
+### application.DEV ⇒ <code>boolean</code>
+**Kind**: instance property of [<code>Application</code>](#Application)  
+<a name="Application+registerRoutingMap"></a>
+
+### application.registerRoutingMap(routingMap)
+Registers the map of routes to the Router.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type |
+| --- | --- |
+| routingMap | <code>\*</code> | 
+
+<a name="Application+registerSocketEvents"></a>
+
+### application.registerSocketEvents(events)
+Registeres the socket events to the Socket class.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type |
+| --- | --- |
+| events | <code>\*</code> | 
+
+<a name="Application+start"></a>
+
+### application.start()
+Starts the application. The application can be started only once.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+<a name="Application+refreshContent"></a>
+
+### application.refreshContent()
+Refreshes the content. Content DOM is cleared and the current Page is rendered.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+<a name="Application+render"></a>
+
+### application.render(route, refresh)
+Renders the route's page in the content element.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| route | <code>\*</code> |  | 
+| refresh | <code>boolean</code> | <code>false</code> | 
 
 <a name="Application+renderComponent"></a>
 
@@ -1025,6 +1087,23 @@ Checks if the event is registered to the listener.
 | Param | Type |
 | --- | --- |
 | event | <code>string</code> | 
+
+<a name="getContext"></a>
+
+## getContext()
+Gets the application context.
+
+**Kind**: global function  
+<a name="onPopState"></a>
+
+## onPopState(event)
+Method called after the window.onpopstate event.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| event | <code>\*</code> | 
 
 <a name="request"></a>
 
