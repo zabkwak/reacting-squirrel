@@ -65,7 +65,7 @@ server.start();
 // ./socket.user.js
 import { SocketClass } from 'reacting-squirrel/server';
 
-export default class UserSocket extends SocketClass {
+export default class User extends SocketClass {
 
     load(data, next) {
         next(null, this.getUser());
