@@ -26,23 +26,21 @@ class Router {
      * Gets the current route.
      */
     getRoute() {
-        const p = url.parse(location.href, true);
+        const p = this.parseUrl();
         let route;
         let params = {};
-        for (let spec in this._routes) {
+        Object.keys(this._routes).forEach((spec) => {
             const r = new RouteParser(spec);
             const match = r.match(p.path);
             if (match === false) {
-                continue;
+                return;
             }
             route = this._routes[spec];
             params = match;
-            break;
-        }
+        });
 
         if (!route) {
-            location.reload(true);
-            return;
+            return null;
         }
         route.params = params;
         route.query = p.query;
@@ -56,23 +54,27 @@ class Router {
         if (!path) {
             path = pathname;
         }
-        for (let key in q) {
+        Object.keys(q).forEach((key) => {
             const value = q[key];
             if (value === undefined) {
                 delete query[key];
             } else {
                 query[key] = value;
             }
-        }
+        });
         const s = qs.stringify(query);
         history.pushState(null, null, s ? `${path}?${s}` : path);
+    }
+
+    parseUrl() {
+        return url.parse(location.href, true);
     }
 }
 
 class Route {
 
     /**
-     * 
+     *
      * @param {object} route
      * @param {string} route.spec
      * @param {JSX.Element} route.component

@@ -368,6 +368,11 @@ class Server {
                 console.error(err);
                 return;
             }
+            this._app.use('*', (req, res, next) => {
+                // TODO error
+                res.status(404);
+                next('Page not found');
+            });
             this._app.use((err, req, res, next) => {
                 if (!(err instanceof Error)) {
                     err = new Error(err);
@@ -376,7 +381,14 @@ class Server {
                 if (res.statusCode === 200) {
                     res.status(500);
                 }
-                res.send(err);
+                res.render({
+                    title: err.message,
+                    data: {
+                        user: req.session.getUser(),
+                        dev,
+                        error: err.toJSON(dev),
+                    },
+                });
             });
             this._start(cb);
         });
