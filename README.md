@@ -129,6 +129,12 @@ This code will start simple app on the default port. After the page load the `us
 ## Functions
 
 <dl>
+<dt><a href="#create">create(statusCode, message, code, payload)</a></dt>
+<dd><p>Creates HttpError instance by error status code.</p>
+</dd>
+<dt><a href="#getCode">getCode(statusCode)</a> ⇒ <code><a href="#CodeInfo">CodeInfo</a></code></dt>
+<dd><p>Gets the code info by http error status code.</p>
+</dd>
 <dt><a href="#render">render()</a></dt>
 <dd><p>Renders the base html. This method shouldn&#39;t be overriden.</p>
 </dd>
@@ -164,6 +170,8 @@ This code will start simple app on the default port. After the page load the `us
 ## Typedefs
 
 <dl>
+<dt><a href="#CodeInfo">CodeInfo</a></dt>
+<dd></dd>
 <dt><a href="#AuthCallback">AuthCallback</a> : <code>function</code></dt>
 <dd></dd>
 <dt><a href="#SocketEvent">SocketEvent</a></dt>
@@ -589,6 +597,31 @@ Logs the warning message to the console.
 | --- | --- | --- |
 | message | <code>string</code> | Message to log. |
 
+<a name="create"></a>
+
+## create(statusCode, message, code, payload)
+Creates HttpError instance by error status code.
+
+**Kind**: global function  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| statusCode | <code>number</code> |  | Http error status code. |
+| message | <code>string</code> | <code>null</code> | Error message. |
+| code | <code>string</code> | <code>null</code> | Error code. |
+| payload | <code>Object.&lt;string, any&gt;</code> |  | Additional error data. |
+
+<a name="getCode"></a>
+
+## getCode(statusCode) ⇒ [<code>CodeInfo</code>](#CodeInfo)
+Gets the code info by http error status code.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| statusCode | <code>number</code> | Http error status code. |
+
 <a name="render"></a>
 
 ## render()
@@ -667,6 +700,17 @@ Gets the session from the socket.
 Gets the user from the session.
 
 **Kind**: global function  
+<a name="CodeInfo"></a>
+
+## CodeInfo
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | Error message. |
+| code | <code>string</code> | Error code. |
+
 <a name="AuthCallback"></a>
 
 ## AuthCallback : <code>function</code>
