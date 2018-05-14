@@ -10,6 +10,7 @@ import md5 from 'md5';
 import fs from 'fs';
 import async from 'async';
 import Error from 'smart-error';
+import HttpError from './http-error';
 
 import Layout from './layout';
 import Session from './session';
@@ -369,18 +370,16 @@ class Server {
                 return;
             }
             this._app.use('*', (req, res, next) => {
-                // TODO error
-                res.status(404);
-                next('Page not found');
+                next(HttpError.create(404, 'Page not found'));
             });
             this._app.use((err, req, res, next) => {
-                if (!(err instanceof Error)) {
-                    err = new Error(err);
+                if (!(err instanceof HttpError)) {
+                    err = HttpError.create(500, err);
+                }
+                if (res.statusCode === 200) {
+                    res.status(err.statusCode);
                 }
                 console.error(err);
-                if (res.statusCode === 200) {
-                    res.status(500);
-                }
                 res.render({
                     title: err.message,
                     data: {

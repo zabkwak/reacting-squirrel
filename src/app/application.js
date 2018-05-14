@@ -118,7 +118,6 @@ class Application extends CallbackEmitter {
                 return;
             }
             const { error } = this._initialData;
-            console.log(error);
             delete this._initialData.error;
             const p = Router.parseUrl();
             this.renderComponent(<ErrorPage error={error} initialData={this._initialData} params={{}} query={p.query} />, this._content);
