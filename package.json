@@ -4,7 +4,7 @@
   "description": "React and Express framework for creating web apps.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha __tests__/cases --recursive --compilers js:babel-core/register --timeout 20000",
+    "test": "mocha __tests__/cases/server __tests__/cases/app --recursive --compilers js:babel-core/register --timeout 20000",
     "test_app_compile": "./node_modules/.bin/babel ./__tests__/dev/src --out-dir ./__tests__/dev/dist && node ./__tests__/dev/dist/index.js",
     "test_app": "npm run build && npm run test_app_compile",
     "posttest": "rm -rf ./__tests__/app/~rs && rm -rf ./__tests__/public",

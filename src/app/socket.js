@@ -39,13 +39,12 @@ class Socket extends CallbackEmitter {
     /**
      * Connects the socket to the server. This method can be called only once. If the server disconnects the socket the socket is automatically reconnected when it's posiible.
      */
-    connect() {
+    connect(address = undefined) {
         if (this._state !== Socket.STATE_NONE) {
             throw new Error('Socket already connected');
         }
         this._setState(Socket.STATE_CONNECTING);
-        // TODO mrknout na origin control
-        this._socket = io();
+        this._socket = io(address);
         this._socket.on('connect', () => {
             console.log('Socket connected');
             this._setState(Socket.STATE_CONNECTED);
@@ -78,6 +77,10 @@ class Socket extends CallbackEmitter {
         }
         this._socket.emit(event, data);
         return this;
+    }
+
+    disconnect() {
+        this._socket.disconnect();
     }
 
     /**
