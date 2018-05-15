@@ -35,18 +35,14 @@ class Router {
             if (match === false) {
                 return;
             }
+            if (route) {
+                return;
+            }
             route = this._routes[spec];
             params = match;
         });
 
-        if (!route) {
-            return null;
-        }
-        route.params = params;
-        route.query = p.query;
-        route.href = p.href;
-        route.pathname = p.pathname;
-        return route;
+        return route || null;
     }
 
     pushState(path = null, q = {}) {
@@ -70,6 +66,8 @@ class Router {
         return url.parse(location.href, true);
     }
 }
+
+const router = new Router();
 
 class Route {
 
@@ -100,11 +98,11 @@ class Route {
     }
 
     getComponent() {
-        return <this.component params={this.params} query={this.query} initialData={this.initialData} />;
+        const { params, query } = router.parseUrl();
+        return <this.component params={params} query={query} initialData={this.initialData} />;
     }
 }
 
-const router = new Router();
 export {
     router as default,
     Route,

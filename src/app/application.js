@@ -27,13 +27,23 @@ class Application extends CallbackEmitter {
 
     constructor() {
         super();
-        this._setDOM();
+        this._container = document.getElementById('container');
+        this._content = document.getElementById('content');
+        [this._title] = document.getElementsByTagName('title');
+        const initialDataElement = document.getElementById('initial-data');
+        if (initialDataElement) {
+            this._initialData = JSON.parse(initialDataElement.getAttribute('data'));
+        }
         if (!this._container) {
             console.warn('Container wrapper not found');
         }
         if (!this._content) {
             console.error('Content wrapper not found');
         }
+        window.onpopstate = (event) => {
+            this.render(Router.getRoute());
+            this._callListener('popstate', event);
+        };
     }
 
     /**
@@ -162,22 +172,6 @@ class Application extends CallbackEmitter {
      */
     setTitle(title) {
         this._title.textContent = title;
-    }
-
-    _setDOM() {
-        try {
-            this._container = document.getElementById('container');
-            this._content = document.getElementById('content');
-            [this._title] = document.getElementsByTagName('title');
-            this._initialData = JSON.parse(document.getElementById('initial-data').getAttribute('data'));
-
-            window.onpopstate = (event) => {
-                this.render(Router.getRoute());
-                this._callListener('popstate', event);
-            };
-        } catch (e) {
-            // Catch for mocha testing
-        }
     }
 
     _checkStartedState() {
