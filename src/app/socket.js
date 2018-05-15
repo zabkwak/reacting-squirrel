@@ -12,22 +12,22 @@ class Socket extends CallbackEmitter {
     /**
      * The socket is not initiated.
      */
-    static STATE_NONE = 'none';
+    STATE_NONE = 'none';
     /**
      * The socket is connecting to the server.
      */
-    static STATE_CONNECTING = 'connecting';
+    STATE_CONNECTING = 'connecting';
     /**
      * The socket is connected to the server.
      */
-    static STATE_CONNECTED = 'connected';
+    STATE_CONNECTED = 'connected';
     /**
      * The socket is disconnected from the server.
      */
-    static STATE_DISCONNECTED = 'disconnected';
+    STATE_DISCONNECTED = 'disconnected';
 
     _socket = null;
-    _state = Socket.STATE_NONE;
+    _state = 'none';
     _events = [
         'handshake',
     ];
@@ -38,23 +38,22 @@ class Socket extends CallbackEmitter {
 
     /**
      * Connects the socket to the server. This method can be called only once. If the server disconnects the socket the socket is automatically reconnected when it's posiible.
+     *
+     * @param {string} address Address of the socket server.
      */
     connect(address = undefined) {
-        if (this._state !== Socket.STATE_NONE) {
+        if (this._state !== this.STATE_NONE) {
             throw new Error('Socket already connected');
         }
-        this._setState(Socket.STATE_CONNECTING);
+        this._setState(this.STATE_CONNECTING);
         this._socket = io(address);
         this._socket.on('connect', () => {
             console.log('Socket connected');
-            this._setState(Socket.STATE_CONNECTED);
+            this._setState(this.STATE_CONNECTED);
         });
         this._socket.on('disconnect', () => {
             console.log('Socket disconnected');
-            this._setState(Socket.STATE_DISCONNECTED);
-        });
-        this._socket.on('handshake', (data) => {
-            console.log('handshake success');
+            this._setState(this.STATE_DISCONNECTED);
         });
         this._events.forEach(event => this._socket.on(event, data => this._handleEvent(event, data)));
     }
@@ -79,6 +78,9 @@ class Socket extends CallbackEmitter {
         return this;
     }
 
+    /**
+     * Disconnects the socket.
+     */
     disconnect() {
         this._socket.disconnect();
     }
@@ -94,7 +96,7 @@ class Socket extends CallbackEmitter {
      * Checks if socket is in connected state.
      */
     isConnected() {
-        return this._state === Socket.STATE_CONNECTED;
+        return this._state === this.STATE_CONNECTED;
     }
 
     /**

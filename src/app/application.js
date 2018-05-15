@@ -22,7 +22,7 @@ class Application extends CallbackEmitter {
      * @returns {boolean}
      */
     get DEV() {
-        return this._initialData.dev;
+        return Boolean(this._initialData.dev);
     }
 
     constructor() {
@@ -42,6 +42,7 @@ class Application extends CallbackEmitter {
      * @param {*} routingMap
      */
     registerRoutingMap(routingMap) {
+        this._checkStartedState();
         routingMap.forEach((route) => {
             Router.addRoute(Route.create({ ...route, initialData: this._initialData }));
         });
@@ -54,6 +55,7 @@ class Application extends CallbackEmitter {
      * @param {*} events
      */
     registerSocketEvents(events) {
+        this._checkStartedState();
         Socket.registerEvents(events);
         return this;
     }
@@ -64,6 +66,7 @@ class Application extends CallbackEmitter {
      * @param {any[]} components
      */
     registerComponents(components) {
+        this._checkStartedState();
         this._components = components;
         return this;
     }
@@ -72,9 +75,7 @@ class Application extends CallbackEmitter {
      * Starts the application. The application can be started only once.
      */
     start() {
-        if (this._started) {
-            throw new Error('Application already started');
-        }
+        this._checkStartedState();
         this._started = true;
         console.log('Application started', { DEV: this.DEV });
         this._components.forEach((component) => {
@@ -175,7 +176,13 @@ class Application extends CallbackEmitter {
                 this._callListener('popstate', event);
             };
         } catch (e) {
+            // Catch for mocha testing
+        }
+    }
 
+    _checkStartedState() {
+        if (this._started) {
+            throw new Error('Application already started');
         }
     }
 }

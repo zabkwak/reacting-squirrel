@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import Socket from '../../../src/app/socket';
+import { Socket } from '../../../src/app';
 
 const URL = 'http://localhost:8080';
 
@@ -12,6 +12,7 @@ describe('Socket connection', () => {
         expect(Socket.getState()).to.be.equal('connecting');
         const listener = (socket, state) => {
             expect(Socket.getState()).to.be.equal('connected');
+            expect(Socket.isConnected()).to.be.equal(true);
             Socket.removeListener('state', listener);
             done();
         };
@@ -29,6 +30,7 @@ describe('Socket connection', () => {
     it('disconnects the socket', (done) => {
         Socket.addListener('state', (socket, state) => {
             expect(state).to.be.equal('disconnected');
+            expect(Socket.isConnected()).to.be.equal(false);
             done();
         });
         Socket.disconnect();
