@@ -112,9 +112,80 @@ This code will start simple app on the default port. After the page load the `us
 
 ## Core functions
 ### Routes register
+The routes are registered on the server-side. The module is using express based routes registering.
+```javascript
+import Server from 'reacting-squirrel/server';
+
+const app = new Server();
+
+// On the route '/' will be rendered the content copmponent located in {config.appDir}/home with Home title.
+app.get('/', 'home', 'Home');
+
+app.start();
+```
 ### Socket events register
+The socket events can be directly registered. It should be used for simple socket events which don't need authorization.
+```javascript
+import Server from 'reacting-squirrel/server';
+
+const app = new Server();
+
+// Frontend app can emit 'test' with some data. The event's listener emits the data back.
+app.registerSocketEvent('test', (data, next) => next(null, data));
+
+app.start();
+```
 ### Socket classes register
+The socket classes can handle multiple socket events prefixed by the class name. After the registration of the socket class socket events are automatically registered to the server app.
+```javascript
+// ./socket.user.js
+import { SocketClass } from 'reacting-squirrel/server';
+
+export default class User extends SocketClass {
+
+    load(data, next) {
+        // sends the authorized user data after the 'user.load' socket request
+        next(null, this.getUser());
+    }
+}
+
+// ./index.js
+import Server from 'reacting-squirrel/server';
+
+import UserSocket from './socket.user';
+
+import UserStore from './user-store';
+
+const app = new Server({
+    auth: (session, next) => {
+        UserStore.load(session.id, (err, user) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            session.setUser(user);
+            next();
+        });
+    }
+});
+
+// Registeres the socket class
+app.registerSocketClass(UserSocket);
+
+server.start();
+```
 ### Components register
+The module can register custom components which are rendered in custom DOM element in the layout. 
+```javascript
+import Server from 'reacting-squirrel/server';
+
+const app = new Server();
+
+// Frontend app tries to render component located at {config.appDir}/test to the DOM element with id 'test'
+app.registerComponent('test', 'test');
+
+app.start();
+```
 
 ## TODO
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
