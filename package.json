@@ -1,6 +1,6 @@
 {
   "name": "reacting-squirrel",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "React and Express framework for creating web apps.",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "docs_generate": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
     "docs": "rm -rf docs && npm run docs_generate",
     "md_server": "./node_modules/.bin/jsdoc2md --files ./src/server/**/*.js > ./markdown/server.md",
-    "md_app": "./node_modules/.bin/jsdoc2md --files ./src/app/*.js > ./markdown/app.md",
+    "md_app": "./node_modules/.bin/jsdoc2md --files ./src/app/**/*.js > ./markdown/app.md",
     "md_concat": "cat ./markdown/readme.md ./markdown/server.md ./markdown/app.md > ./README.md",
     "docs_md": "npm run md_server && npm run md_app && npm run md_concat"
   },
