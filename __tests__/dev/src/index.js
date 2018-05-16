@@ -21,6 +21,7 @@ const app = new Server({
     moduleDev: true,
     dev: true,
     layoutComponent: CustomLayout,
+    entryFile: 'entry.js',
 });
 
 app.get('/', 'home', 'Home');

@@ -46,6 +46,7 @@ class Server {
      * @property {string} jsDir Name of the directory where the javascript is located in the staticDir.
      * @property {string} filename Name of the file.
      * @property {string} appDir Relative path to the app directory.
+     * @property {string} entryFile Relative path to the entry file.
      * @property {JSX.Element} layoutComponent React component with default html code. It must extend Layout from the module.
      * @property {string} cookieSecret Secret which is used to sign cookies.
      * @property {string[]} scripts List of the scripts loaded in the base html.
@@ -72,6 +73,7 @@ class Server {
         jsDir: 'js',
         filename: 'bundle.js',
         appDir: './app',
+        entryFile: null,
         layoutComponent: Layout,
         cookieSecret: Math.random().toString(36).substring(7),
         scripts: [],
@@ -325,70 +327,14 @@ class Server {
      * @param {function=} cb Callback to call after the server start.
      */
     start(cb = () => { }) {
-        const {
-            dev, layoutComponent, cookieSecret, session,
-        } = this._config;
+        const { dev } = this._config;
         this._log(`App starting DEV: ${dev}`);
-        const LayoutComponent = layoutComponent;
-        this._app.use(cookieParser(cookieSecret));
-        this._app.use((req, res, next) => {
-            let sessionId;
-            const setSession = () => {
-                sessionId = session.generateId();
-                res.cookie('session_id', cookieSignature.sign(sessionId, cookieSecret));
-            };
-            if (!req.cookies.session_id) {
-                this._log('Session id not found. Generating.');
-                setSession();
-            } else {
-                sessionId = cookieSignature.unsign(req.cookies.session_id, cookieSecret);
-                if (!sessionId) {
-                    this._log('Session secret not match. Generating.');
-                    setSession();
-                }
-            }
-            req.session = new session(sessionId);
-            res.render = ({
-                scripts, styles, data, title,
-            }) => {
-                res.setHeader('Content-Type', 'text/html; charset=utf-8');
-                res.end(ReactDOMServer.renderToString(<LayoutComponent
-                    scripts={this._config.scripts.concat(scripts || [])}
-                    styles={this._config.styles.concat(styles || [])}
-                    initialData={data || {}}
-                    title={title}
-                    user={req.user}
-                    version={this._version}
-                    bundle={this._bundlePath}
-                />));
-            };
-            this.auth(req.session, next);
-        });
         this._createRSFiles((err) => {
             if (err) {
                 console.error(err);
                 return;
             }
-            this._app.use('*', (req, res, next) => {
-                next(HttpError.create(404, 'Page not found'));
-            });
-            this._app.use((err, req, res, next) => {
-                if (!(err instanceof HttpError)) {
-                    err = HttpError.create(500, err);
-                }
-                if (res.statusCode === 200) {
-                    res.status(err.statusCode);
-                }
-                console.error(err);
-                res.render({
-                    title: err.message,
-                    data: {
-                        user: req.session.getUser(),
-                        dev,
-                        error: err.toJSON(dev),
-                    },
-                });
-            });
+            this._setMiddlewares(true);
             this._start(cb);
         });
     }
@@ -481,16 +427,22 @@ class Server {
      */
     _createEntryFile(cb) {
         this._log('Creating entry file');
-        const { moduleDev } = this._config;
+        const { moduleDev, entryFile, appDir } = this._config;
         const pathToTheModule = moduleDev
             ? path.relative(path.resolve(this._getRSDirPath()), path.resolve('./src/app')).replace(/\\/g, '/')
             : 'reacting-squirrel';
+        let entryFileImport = null;
+        if (entryFile) {
+            const pathToTheEntryFile = path.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, entryFile)).replace(/\\/g, '/');
+            entryFileImport = `import '${pathToTheEntryFile.replace(/\.js/, '')}';`;
+        }
         fs.writeFile(
             `${this._getRSDirPath()}/entry.js`,
-            `import { Application } from '${pathToTheModule}';
+            `import Application from '${pathToTheModule}';
 import routingMap from './router.map';
 import socketEvents from './socket.map';
 import components from './component.map';
+${entryFileImport || ''}
 
 Application
             .registerSocketEvents(socketEvents)
@@ -527,6 +479,11 @@ Application
         fs.writeFile(`${this._getRSDirPath()}/router.map.js`, s, cb);
     }
 
+    /**
+     * Creates the file with custom components.
+     *
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
     _createComponentsFile(cb) {
         this._log('Creating components file');
         const a = [];
@@ -638,7 +595,7 @@ Application
      */
     _setApp() {
         this._app = express();
-        this._app.use(express.static(this._config.staticDir));
+        this._setMiddlewares();
         this._server = http.createServer(this._app);
         this._setWebpack();
         socket(this);
@@ -701,6 +658,72 @@ Application
         });
     }
 
+    _setMiddlewares(afterRoutes = false) {
+        const {
+            staticDir, cookieSecret, session, layoutComponent, dev,
+        } = this._config;
+        if (!afterRoutes) {
+            const LayoutComponent = layoutComponent;
+            this._app.use(express.static(staticDir));
+            this._app.use(cookieParser(cookieSecret));
+            this._app.use((req, res, next) => {
+                let sessionId;
+                const setSession = () => {
+                    sessionId = session.generateId();
+                    res.cookie('session_id', cookieSignature.sign(sessionId, cookieSecret));
+                };
+                if (!req.cookies.session_id) {
+                    this._log('Session id not found. Generating.');
+                    setSession();
+                } else {
+                    sessionId = cookieSignature.unsign(req.cookies.session_id, cookieSecret);
+                    if (!sessionId) {
+                        this._log('Session secret not match. Generating.');
+                        setSession();
+                    }
+                }
+                req.session = new session(sessionId);
+                res.render = ({
+                    scripts, styles, data, title,
+                }) => {
+                    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+                    res.end(ReactDOMServer.renderToString(<LayoutComponent
+                        scripts={this._config.scripts.concat(scripts || [])}
+                        styles={this._config.styles.concat(styles || [])}
+                        initialData={data || {}}
+                        title={title}
+                        user={req.user}
+                        version={this._version}
+                        bundle={this._bundlePath}
+                    />));
+                };
+                this.auth(req.session, next);
+            });
+            return;
+        }
+
+        this._app.use('*', (req, res, next) => {
+            next(HttpError.create(404, 'Page not found'));
+        });
+        this._app.use((err, req, res, next) => {
+            if (!(err instanceof HttpError)) {
+                err = HttpError.create(500, err);
+            }
+            if (res.statusCode === 200) {
+                res.status(err.statusCode);
+            }
+            console.error(err);
+            res.render({
+                title: err.message,
+                data: {
+                    user: req.session.getUser(),
+                    dev,
+                    error: err.toJSON(dev),
+                },
+            });
+        });
+    }
+
     /**
      * Gets the relative path to the RS directory.
      *
@@ -748,4 +771,5 @@ export {
     Session,
     Layout,
     SocketClass,
+    HttpError,
 };

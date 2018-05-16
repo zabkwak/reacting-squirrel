@@ -915,8 +915,9 @@ Gets the current route.
         * [.STATE_CONNECTING](#module_Socket..Socket+STATE_CONNECTING)
         * [.STATE_CONNECTED](#module_Socket..Socket+STATE_CONNECTED)
         * [.STATE_DISCONNECTED](#module_Socket..Socket+STATE_DISCONNECTED)
-        * [.connect()](#module_Socket..Socket+connect)
+        * [.connect(address)](#module_Socket..Socket+connect)
         * [.emit(event, data)](#module_Socket..Socket+emit)
+        * [.disconnect()](#module_Socket..Socket+disconnect)
         * [.getState()](#module_Socket..Socket+getState)
         * [.isConnected()](#module_Socket..Socket+isConnected)
         * [._setState(state)](#module_Socket..Socket+_setState)
@@ -933,8 +934,9 @@ Class to handle communication with the server app using websockets.
     * [.STATE_CONNECTING](#module_Socket..Socket+STATE_CONNECTING)
     * [.STATE_CONNECTED](#module_Socket..Socket+STATE_CONNECTED)
     * [.STATE_DISCONNECTED](#module_Socket..Socket+STATE_DISCONNECTED)
-    * [.connect()](#module_Socket..Socket+connect)
+    * [.connect(address)](#module_Socket..Socket+connect)
     * [.emit(event, data)](#module_Socket..Socket+emit)
+    * [.disconnect()](#module_Socket..Socket+disconnect)
     * [.getState()](#module_Socket..Socket+getState)
     * [.isConnected()](#module_Socket..Socket+isConnected)
     * [._setState(state)](#module_Socket..Socket+_setState)
@@ -965,10 +967,15 @@ The socket is disconnected from the server.
 **Kind**: instance property of [<code>Socket</code>](#module_Socket..Socket)  
 <a name="module_Socket..Socket+connect"></a>
 
-#### socket.connect()
+#### socket.connect(address)
 Connects the socket to the server. This method can be called only once. If the server disconnects the socket the socket is automatically reconnected when it's posiible.
 
 **Kind**: instance method of [<code>Socket</code>](#module_Socket..Socket)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| address | <code>string</code> | Address of the socket server. |
+
 <a name="module_Socket..Socket+emit"></a>
 
 #### socket.emit(event, data)
@@ -981,6 +988,12 @@ Emits the data.
 | event | <code>string</code> | 
 | data | <code>any</code> | 
 
+<a name="module_Socket..Socket+disconnect"></a>
+
+#### socket.disconnect()
+Disconnects the socket.
+
+**Kind**: instance method of [<code>Socket</code>](#module_Socket..Socket)  
 <a name="module_Socket..Socket+getState"></a>
 
 #### socket.getState()

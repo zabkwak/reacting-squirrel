@@ -15,9 +15,9 @@ describe('Server instance', () => {
 
     it('checks default config fields of the server', () => {
         const server = new Server();
-        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
+        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'entryFile', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
         const {
-            port, staticDir, dev, jsDir, filename, appDir, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
+            port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
         } = server._config;
         expect(port).to.be.equal(8080);
         expect(staticDir).to.be.equal('./public');
@@ -25,6 +25,7 @@ describe('Server instance', () => {
         expect(jsDir).to.be.equal('js');
         expect(filename).to.be.equal('bundle.js');
         expect(appDir).to.be.equal('./app');
+        expect(entryFile).to.be.equal(null);
         expect(layoutComponent).to.be.an('function');
         expect(new layoutComponent()).to.be.an.instanceOf(Layout);
         expect(cookieSecret).to.be.an('string');
@@ -58,6 +59,7 @@ describe('Server instance', () => {
             jsDir: '__js__',
             filename: '__bundle__.js',
             appDir: './__app__',
+            entryFile: 'entry.js',
             layoutComponent: Layout,
             cookieSecret: 'cookie-secret',
             scripts: ['some-script.js'],
@@ -66,9 +68,9 @@ describe('Server instance', () => {
             auth: (session, next) => next(),
             webpack: {},
         });
-        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
+        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'entryFile', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
         const {
-            port, staticDir, dev, jsDir, filename, appDir, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
+            port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
         } = server._config;
         expect(port).to.be.equal(9000);
         expect(staticDir).to.be.equal('./__static__');
@@ -76,6 +78,7 @@ describe('Server instance', () => {
         expect(jsDir).to.be.equal('__js__');
         expect(filename).to.be.equal('__bundle__.js');
         expect(appDir).to.be.equal('./__app__');
+        expect(entryFile).to.be.equal('entry.js');
         expect(layoutComponent).to.be.an('function');
         expect(new layoutComponent()).to.be.an.instanceOf(Layout);
         expect(cookieSecret).to.be.an('string');

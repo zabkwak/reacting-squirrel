@@ -83,8 +83,10 @@ class Application extends CallbackEmitter {
 
     /**
      * Starts the application. The application can be started only once.
+     *
+     * @param {boolean} connectSocket If true the socket is automatically connected.
      */
-    start() {
+    start(connectSocket = true) {
         this._checkStartedState();
         this._started = true;
         console.log('Application started', { DEV: this.DEV });
@@ -98,7 +100,10 @@ class Application extends CallbackEmitter {
             this.renderComponent(<Component />, target);
         });
         this.render(Router.getRoute());
-        Socket.connect();
+        if (connectSocket) {
+            Socket.connect();
+        }
+        this._callListener('start');
     }
 
     /**
@@ -112,7 +117,7 @@ class Application extends CallbackEmitter {
     /**
      * Renders the route's page in the content element.
      *
-     * @param {*} route
+     * @param {Route} route
      * @param {boolean} refresh
      */
     render(route, refresh = false) {

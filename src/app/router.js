@@ -24,22 +24,22 @@ class Router {
 
     /**
      * Gets the current route.
+     *
+     * @returns {Route}
      */
     getRoute() {
         const p = this.parseUrl();
         let route;
-        let params = {};
         Object.keys(this._routes).forEach((spec) => {
+            if (route) {
+                return;
+            }
             const r = new RouteParser(spec);
             const match = r.match(p.path);
             if (match === false) {
                 return;
             }
-            if (route) {
-                return;
-            }
             route = this._routes[spec];
-            params = match;
         });
 
         return route || null;

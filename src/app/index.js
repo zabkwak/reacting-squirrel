@@ -7,6 +7,7 @@ import Storage from './storage';
 import ErrorPage from './page.error';
 
 export {
+    Application as default,
     Application,
     Component,
     SocketComponent,
