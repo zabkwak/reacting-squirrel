@@ -226,6 +226,7 @@ Server part of the application.
     * [._setRoutes(cb)](#Server+_setRoutes)
     * [._createEntryFile(cb)](#Server+_createEntryFile)
     * [._createRoutingFile(map, cb)](#Server+_createRoutingFile)
+    * [._createComponentsFile(cb)](#Server+_createComponentsFile)
     * [._createSocketMap(cb)](#Server+_createSocketMap)
     * [._createPostCSSConfig(cb)](#Server+_createPostCSSConfig)
     * [._validateAppDir(cb)](#Server+_validateAppDir)
@@ -496,6 +497,17 @@ Creates the routing file for the front-end application.
 | map | <code>Object.&lt;string, RouteMappings&gt;</code> | Map of the routes. |
 | cb | <code>function</code> | Callback to call after the creation process. |
 
+<a name="Server+_createComponentsFile"></a>
+
+### server._createComponentsFile(cb)
+Creates the file with custom components.
+
+**Kind**: instance method of [<code>Server</code>](#Server)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cb | <code>function</code> | Callback to call after the creation process. |
+
 <a name="Server+_createSocketMap"></a>
 
 ### server._createSocketMap(cb)
@@ -751,6 +763,7 @@ Gets the user from the session.
 | jsDir | <code>string</code> | Name of the directory where the javascript is located in the staticDir. |
 | filename | <code>string</code> | Name of the file. |
 | appDir | <code>string</code> | Relative path to the app directory. |
+| entryFile | <code>string</code> | Relative path to the entry file. |
 | layoutComponent | <code>JSX.Element</code> | React component with default html code. It must extend Layout from the module. |
 | cookieSecret | <code>string</code> | Secret which is used to sign cookies. |
 | scripts | <code>Array.&lt;string&gt;</code> | List of the scripts loaded in the base html. |
@@ -836,7 +849,7 @@ Gets the user from the session.
     * [~Router](#module_Router..Router)
         * [._routes](#module_Router..Router+_routes) : <code>Object.&lt;string, Route&gt;</code>
         * [.addRoute(route)](#module_Router..Router+addRoute)
-        * [.getRoute()](#module_Router..Router+getRoute)
+        * [.getRoute()](#module_Router..Router+getRoute) ⇒ <code>Route</code>
     * [~Route](#module_Router..Route)
         * [new Route(spec, component, title, initialData)](#new_module_Router..Route_new)
         * [.create(route)](#module_Router..Route.create)
@@ -851,7 +864,7 @@ Class to work with routes.
 * [~Router](#module_Router..Router)
     * [._routes](#module_Router..Router+_routes) : <code>Object.&lt;string, Route&gt;</code>
     * [.addRoute(route)](#module_Router..Router+addRoute)
-    * [.getRoute()](#module_Router..Router+getRoute)
+    * [.getRoute()](#module_Router..Router+getRoute) ⇒ <code>Route</code>
 
 <a name="module_Router..Router+_routes"></a>
 
@@ -868,7 +881,7 @@ Class to work with routes.
 
 <a name="module_Router..Router+getRoute"></a>
 
-#### router.getRoute()
+#### router.getRoute() ⇒ <code>Route</code>
 Gets the current route.
 
 **Kind**: instance method of [<code>Router</code>](#module_Router..Router)  
@@ -1029,7 +1042,7 @@ Base class for client application context.
     * [.registerRoutingMap(routingMap)](#Application+registerRoutingMap)
     * [.registerSocketEvents(events)](#Application+registerSocketEvents)
     * [.registerComponents(components)](#Application+registerComponents)
-    * [.start()](#Application+start)
+    * [.start(connectSocket)](#Application+start)
     * [.refreshContent()](#Application+refreshContent)
     * [.render(route, refresh)](#Application+render)
     * [.renderComponent(component, target)](#Application+renderComponent)
@@ -1076,10 +1089,15 @@ Registers custom components to render after the start.
 
 <a name="Application+start"></a>
 
-### application.start()
+### application.start(connectSocket)
 Starts the application. The application can be started only once.
 
 **Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| connectSocket | <code>boolean</code> | <code>true</code> | If true the socket is automatically connected. |
+
 <a name="Application+refreshContent"></a>
 
 ### application.refreshContent()
@@ -1095,7 +1113,7 @@ Renders the route's page in the content element.
 
 | Param | Type | Default |
 | --- | --- | --- |
-| route | <code>\*</code> |  | 
+| route | <code>Route</code> |  | 
 | refresh | <code>boolean</code> | <code>false</code> | 
 
 <a name="Application+renderComponent"></a>
