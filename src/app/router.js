@@ -62,8 +62,32 @@ class Router {
         history.pushState(null, null, s ? `${path}?${s}` : path);
     }
 
-    parseUrl() {
-        return url.parse(location.href, true);
+    parseUrl(params = false) {
+        const p = url.parse(location.href, true);
+        if (!params) {
+            return p;
+        }
+        return {
+            ...p,
+            params: this.getParams(),
+        };
+    }
+
+    getParams() {
+        const p = this.parseUrl();
+        let params = null;
+        Object.keys(this._routes).forEach((spec) => {
+            if (params) {
+                return;
+            }
+            const r = new RouteParser(spec);
+            const match = r.match(p.path);
+            if (match === false) {
+                return;
+            }
+            params = match;
+        });
+        return params || {};
     }
 }
 
@@ -98,7 +122,7 @@ class Route {
     }
 
     getComponent() {
-        const { params, query } = router.parseUrl();
+        const { params, query } = router.parseUrl(true);
         return <this.component params={params} query={query} initialData={this.initialData} />;
     }
 }
