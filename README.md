@@ -898,18 +898,6 @@ Gets the user from the session.
 <dt><a href="#_hasEventRegistered">_hasEventRegistered(event)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Checks if the event is registered to the listener.</p>
 </dd>
-<dt><a href="#getContext">getContext()</a></dt>
-<dd><p>Gets the application context.</p>
-</dd>
-<dt><a href="#onPopState">onPopState(event)</a></dt>
-<dd><p>Method called after the window.onpopstate event.</p>
-</dd>
-<dt><a href="#request">request(event, data, timeout, callback)</a></dt>
-<dd><p>Requests the data over the socket. It automatically handles listeners on the Socket class and calls the callback.</p>
-</dd>
-<dt><a href="#emit">emit(event, [data])</a></dt>
-<dd><p>Emits the socket event with data. The event is sent after the socket is connected =&gt; this method can be called before the socket connection.</p>
-</dd>
 </dl>
 
 <a name="module_Router"></a>
@@ -1118,6 +1106,7 @@ Base class for client application context.
     * [.render(route, refresh)](#Application+render)
     * [.renderComponent(component, target)](#Application+renderComponent)
     * [.redirect(path, q)](#Application+redirect)
+    * [.navigate(path, q, refresh)](#Application+navigate)
     * [.pushState(path, q)](#Application+pushState)
     * [.setTitle(title)](#Application+setTitle)
 
@@ -1202,7 +1191,7 @@ Renders React component to the HTML element.
 <a name="Application+redirect"></a>
 
 ### application.redirect(path, q)
-Pushes the state to the history and refreshes content.
+Pushes the state to the history and forces to render the content.
 
 **Kind**: instance method of [<code>Application</code>](#Application)  
 
@@ -1210,6 +1199,19 @@ Pushes the state to the history and refreshes content.
 | --- | --- |
 | path | <code>string</code> | 
 | q | <code>Object.&lt;string, string&gt;</code> | 
+
+<a name="Application+navigate"></a>
+
+### application.navigate(path, q, refresh)
+Pushes the state to the history and renders the route if it's not the actual route and refresh is false.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| path | <code>string</code> |  | 
+| q | <code>Object.&lt;string, string&gt;</code> |  | 
+| refresh | <code>boolean</code> | <code>false</code> | 
 
 <a name="Application+pushState"></a>
 
@@ -1280,47 +1282,4 @@ Checks if the event is registered to the listener.
 | Param | Type |
 | --- | --- |
 | event | <code>string</code> | 
-
-<a name="getContext"></a>
-
-## getContext()
-Gets the application context.
-
-**Kind**: global function  
-<a name="onPopState"></a>
-
-## onPopState(event)
-Method called after the window.onpopstate event.
-
-**Kind**: global function  
-
-| Param | Type |
-| --- | --- |
-| event | <code>\*</code> | 
-
-<a name="request"></a>
-
-## request(event, data, timeout, callback)
-Requests the data over the socket. It automatically handles listeners on the Socket class and calls the callback.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| event | <code>string</code> | Name of the event. |
-| data | <code>Object.&lt;string, object&gt;</code> \| <code>function</code> | Data to emit or the callback. |
-| timeout | <code>number</code> \| <code>function</code> | Timeout in milliseconds or the callback. |
-| callback | <code>function</code> | Callback is called after the socket execution. |
-
-<a name="emit"></a>
-
-## emit(event, [data])
-Emits the socket event with data. The event is sent after the socket is connected => this method can be called before the socket connection.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| event | <code>string</code> | Name of the event. |
-| [data] | <code>Object.&lt;string, object&gt;</code> | Data to emit. |
 
