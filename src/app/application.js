@@ -134,7 +134,7 @@ class Application extends CallbackEmitter {
         }
         this.setTitle(route.title);
         if (refresh) {
-            this._content.removeChild(this._content.firstChild);
+            ReactDOM.unmountComponentAtNode(this._content);
         }
         this.renderComponent(route.getComponent(), this._content);
     }
@@ -150,14 +150,25 @@ class Application extends CallbackEmitter {
     }
 
     /**
-     * Pushes the state to the history and refreshes content.
+     * Pushes the state to the history and forces to render the content.
      *
      * @param {string} path
      * @param {Object.<string, string>} q
      */
     redirect(path, q) {
+        this.navigate(path, q, true);
+    }
+
+    /**
+     * Pushes the state to the history and renders the route if it's not the actual route and refresh is false.
+     *
+     * @param {string} path
+     * @param {Object.<string, string>} q
+     * @param {boolean} refresh
+     */
+    navigate(path, q, refresh = false) {
         this.pushState(path, q);
-        this.refreshContent();
+        this.render(Router.getRoute(), refresh);
     }
 
     /**

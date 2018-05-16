@@ -1,6 +1,6 @@
 import { Component as Base } from 'react';
 
-import Application from './application';
+import Application from '../application';
 
 /**
  * Base application React Component. It registeres window.onpopstate event for updates of the component's states.
@@ -28,6 +28,8 @@ export default class Component extends Base {
 
     /**
      * Gets the application context.
+     *
+     * @deprecated
      */
     getContext() {
         return Application;

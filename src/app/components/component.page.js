@@ -23,7 +23,7 @@ export default class Page extends SocketComponent {
     componentWillUnmount() {
         super.componentWillUnmount();
         if (this.getContext().DEV) {
-            console.log(`Page '${this.constructor.name}' will unmount`, this.props);
+            console.log(`Page '${this.constructor.name}' will unmount`);
         }
     }
 }

@@ -26,6 +26,8 @@ const app = new Server({
 
 app.get('/', 'home', 'Home');
 
+app.get('/about', 'about', 'About');
+
 app.registerSocketClass(User);
 
 app.registerComponent('test', 'test');

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Page from './component.page';
+import Page from './components/component.page';
 
 export default class ErrorPage extends Page {
 

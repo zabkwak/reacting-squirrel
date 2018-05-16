@@ -1,7 +1,7 @@
 import uniqid from 'uniqid';
 
 import Component from './component';
-import Socket from './socket';
+import Socket from '../socket';
 
 const TIMEOUT = 30000;
 
@@ -26,10 +26,9 @@ export default class SocketComponent extends Component {
     componentWillUnmount() {
         super.componentWillUnmount();
         Socket.removeListener('state', this.__state__);
-        this._socketListeners.forEach((k) => {
-            const { event, listener } = this._socketListeners[k];
+        this._socketListeners.forEach(({ event, listener }, index) => {
             Socket.removeListener(event, listener);
-            delete this._socketListeners[k];
+            delete this._socketListeners[index];
         });
     }
 
