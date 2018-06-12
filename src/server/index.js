@@ -59,7 +59,7 @@ class Server {
     /**
      * Express app instance.
      * @type {any}
-     * */
+     */
     _app = null;
     _server = null;
     _webpack = null;
@@ -98,6 +98,7 @@ class Server {
 
     _version = null;
 
+    /** @type {SocketEvent[]} */
     _socketEvents = [];
     _socketClasses = [];
     /** @type {CustomComponent[]} */
