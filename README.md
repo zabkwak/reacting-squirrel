@@ -21,9 +21,10 @@ const app = new Server();
 
 app.get('/', 'home', 'Home');
 
-server.start();
+app.start();
 
 // ./app/home.js
+import React from 'react';
 import { Page } from 'reacting-squirrel';
 
 export default class HomePage extends Page {
@@ -65,7 +66,7 @@ app.get('/', 'home', 'Home');
 
 app.registerSocketClass(UserSocket);
 
-server.start();
+app.start();
 
 // ./socket.user.js
 import { SocketClass } from 'reacting-squirrel/server';
@@ -78,6 +79,7 @@ export default class User extends SocketClass {
 }
 
 // ./app/home.js
+import React from 'react';
 import { Page } from 'reacting-squirrel';
 
 export default class HomePage extends Page {
@@ -172,7 +174,7 @@ const app = new Server({
 // Registeres the socket class
 app.registerSocketClass(UserSocket);
 
-server.start();
+app.start();
 ```
 ### Components register
 The module can register custom components which are rendered in custom DOM element in the layout. 
@@ -271,6 +273,7 @@ Server part of the application.
     * [._config](#Server+_config) : [<code>AppConfig</code>](#AppConfig)
     * [._path](#Server+_path) : <code>string</code>
     * [._bundlePath](#Server+_bundlePath) : <code>string</code>
+    * [._socketEvents](#Server+_socketEvents) : [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
     * [._components](#Server+_components) : [<code>Array.&lt;CustomComponent&gt;</code>](#CustomComponent)
     * [.port](#Server+port) : <code>number</code>
     * [.staticDir](#Server+staticDir) : <code>string</code>
@@ -345,6 +348,10 @@ Absolute path to the javascript directory for the webpack config.
 ### server._bundlePath : <code>string</code>
 Bundle path in the website structure.
 
+**Kind**: instance property of [<code>Server</code>](#Server)  
+<a name="Server+_socketEvents"></a>
+
+### server._socketEvents : [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
 **Kind**: instance property of [<code>Server</code>](#Server)  
 <a name="Server+_components"></a>
 
