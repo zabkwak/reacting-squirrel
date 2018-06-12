@@ -121,15 +121,18 @@ class Application extends CallbackEmitter {
      * @param {boolean} refresh
      */
     render(route, refresh = false) {
+        if (this._initialData.error) {
+            const { error } = this._initialData;
+            delete this._initialData.error;
+            const p = Router.parseUrl();
+            this.renderComponent(<ErrorPage error={error} initialData={this._initialData} params={{}} query={p.query} />, this._content);
+            return;
+        }
         if (!route) {
             if (!this._initialData.error) {
                 location.reload(true);
                 return;
             }
-            const { error } = this._initialData;
-            delete this._initialData.error;
-            const p = Router.parseUrl();
-            this.renderComponent(<ErrorPage error={error} initialData={this._initialData} params={{}} query={p.query} />, this._content);
             return;
         }
         this.setTitle(route.title);
