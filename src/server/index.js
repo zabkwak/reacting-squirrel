@@ -10,7 +10,7 @@ import md5 from 'md5';
 import fs from 'fs';
 import async from 'async';
 import Error from 'smart-error';
-import HttpError from './http-error';
+import HttpError from 'http-smart-error';
 
 import Layout from './layout';
 import Session from './session';
@@ -53,6 +53,7 @@ class Server {
      * @property {string[]} styles List of the styles loaded in the base html.
      * @property {function} session Class of the session. It must extend Session from the module.
      * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
+     * @property {function} errorHandler Function to handle errors in the route execution.
      * @property {any} webpack Custom webpack config.
      */
 
@@ -80,6 +81,7 @@ class Server {
         styles: [],
         session: Session,
         auth: (session, next) => next(),
+        errorHandler: (err, req, res, next) => next(),
         webpack: {},
         moduleDev: false,
     };
@@ -379,10 +381,8 @@ class Server {
         const componentsMap = {};
         this._routes.forEach((route) => {
             this._app[route.method](route.spec, (req, res, next) => {
-                // TODO auth
                 if (route.requireAuth && req.session.getUser() === null) {
-                    res.status(401);
-                    next(new Error('Unauthorized request'));
+                    next(HttpError.create(401));
                     return;
                 }
                 let data = {
@@ -661,7 +661,7 @@ Application
 
     _setMiddlewares(afterRoutes = false) {
         const {
-            staticDir, cookieSecret, session, layoutComponent, dev,
+            staticDir, cookieSecret, session, layoutComponent, dev, errorHandler,
         } = this._config;
         if (!afterRoutes) {
             const LayoutComponent = layoutComponent;
@@ -714,14 +714,21 @@ Application
                 res.status(err.statusCode);
             }
             console.error(err);
-            res.render({
-                title: err.message,
-                data: {
-                    user: req.session.getUser(),
-                    dev,
-                    error: err.toJSON(dev),
-                },
-            });
+            const render = () => {
+                res.render({
+                    title: err.message,
+                    data: {
+                        user: req.session.getUser(),
+                        dev,
+                        error: err.toJSON(dev),
+                    },
+                });
+            };
+            if (typeof errorHandler !== 'function') {
+                render();
+                return;
+            }
+            errorHandler(err, req, res, () => render());
         });
     }
 

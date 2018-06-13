@@ -11,13 +11,32 @@ import Layout from '../../../src/server/layout';
 const PROJECT_PATH = path.resolve(__dirname, '../../../');
 const TEST_SESSION_ID = 'test-session-id';
 
+const CONFIG_FIELDS = [
+    'port',
+    'staticDir',
+    'dev',
+    'jsDir',
+    'filename',
+    'appDir',
+    'entryFile',
+    'layoutComponent',
+    'cookieSecret',
+    'scripts',
+    'styles',
+    'session',
+    'auth',
+    'errorHandler',
+    'webpack',
+    'moduleDev',
+];
+
 describe('Server instance', () => {
 
     it('checks default config fields of the server', () => {
         const server = new Server();
-        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'entryFile', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
+        expect(server._config).to.have.all.keys(CONFIG_FIELDS);
         const {
-            port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
+            port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, errorHandler, webpack,
         } = server._config;
         expect(port).to.be.equal(8080);
         expect(staticDir).to.be.equal('./public');
@@ -36,6 +55,7 @@ describe('Server instance', () => {
         expect(session).to.be.an('function');
         expect(new session()).to.be.an.instanceOf(Session);
         expect(auth).to.be.an('function');
+        expect(errorHandler).to.be.an('function');
         expect(webpack).to.be.an('object');
 
         expect(server.port).to.be.equal(port);
@@ -68,9 +88,9 @@ describe('Server instance', () => {
             auth: (session, next) => next(),
             webpack: {},
         });
-        expect(server._config).to.have.all.keys(['port', 'staticDir', 'dev', 'jsDir', 'filename', 'appDir', 'entryFile', 'layoutComponent', 'cookieSecret', 'scripts', 'styles', 'session', 'auth', 'webpack', 'moduleDev']);
+        expect(server._config).to.have.all.keys(CONFIG_FIELDS);
         const {
-            port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, webpack,
+            port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, errorHandler, webpack,
         } = server._config;
         expect(port).to.be.equal(9000);
         expect(staticDir).to.be.equal('./__static__');
@@ -91,6 +111,7 @@ describe('Server instance', () => {
         expect(session).to.be.an('function');
         expect(new session()).to.be.an.instanceOf(Session);
         expect(auth).to.be.an('function');
+        expect(errorHandler).to.be.an('function');
         expect(webpack).to.be.an('object');
 
         expect(server.port).to.be.equal(port);

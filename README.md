@@ -848,6 +848,7 @@ Gets the user from the session.
 | styles | <code>Array.&lt;string&gt;</code> | List of the styles loaded in the base html. |
 | session | <code>function</code> | Class of the session. It must extend Session from the module. |
 | auth | <code>function</code> | Auth function called on the routes which are requiring authorization. |
+| errorHandler | <code>function</code> | Function to handle errors in the route execution. |
 | webpack | <code>any</code> | Custom webpack config. |
 
 <a name="RouteMappings"></a>
