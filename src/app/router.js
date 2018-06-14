@@ -46,7 +46,7 @@ class Router {
     }
 
     pushState(path = null, q = {}) {
-        const { query, pathname } = this.getRoute();
+        const { query, pathname } = this.parseUrl();
         if (!path) {
             path = pathname;
         }

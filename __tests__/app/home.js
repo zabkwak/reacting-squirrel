@@ -32,6 +32,7 @@ export default class Home extends Page {
                 <Button href="/about" id="navigate-button">About page</Button>
                 <Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
                 <Button href="/test" id="test-button">Invalid page</Button>
+                <Button id="state-button" onClick={() => this.getContext().pushState(null, { test: 1 })}>Push state query</Button>
             </div>
         );
     }
