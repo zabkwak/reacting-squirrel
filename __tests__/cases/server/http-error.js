@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import SmartError from 'smart-error';
 
-import HttpError from '../../../src/server/http-error';
+import HttpError from 'http-smart-error';
 
 describe('HttpError', () => {
 
