@@ -272,7 +272,7 @@ class Server {
      * @param {function=} callback Callback to call when the route is called.
      */
     get(route, contentComponent, title, requireAuth, callback) {
-        this.registerRoute('get', route, contentComponent, title, requireAuth, callback);
+        return this.registerRoute('get', route, contentComponent, title, requireAuth, callback);
     }
 
     /**
@@ -287,6 +287,7 @@ class Server {
      */
     registerRoute(method, route, contentComponent, title, requireAuth, callback) {
         this._routes.push(new Route(method, route, contentComponent, title, requireAuth, callback));
+        return this;
     }
 
     /**
@@ -301,6 +302,7 @@ class Server {
         }
         instance.getEvents().forEach(({ event, listener }) => this.registerSocketEvent(event, listener));
         this._socketClasses.push(instance);
+        return this;
     }
 
     /**
@@ -311,6 +313,7 @@ class Server {
      */
     registerSocketEvent(event, listener) {
         this._socketEvents.push({ event, listener });
+        return this;
     }
 
     /**
@@ -322,6 +325,7 @@ class Server {
     registerComponent(componentPath, elementId) {
         const { appDir } = this._config;
         this._components.push({ path: path.resolve(`${appDir}/${componentPath}`), elementId });
+        return this;
     }
 
     /**
