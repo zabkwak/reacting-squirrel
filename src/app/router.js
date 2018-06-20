@@ -50,6 +50,10 @@ class Router {
         if (!path) {
             path = pathname;
         }
+        if (q === null) {
+            history.pushState(null, null, path);
+            return;
+        }
         Object.keys(q).forEach((key) => {
             const value = q[key];
             if (value === undefined) {
