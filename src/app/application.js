@@ -139,7 +139,8 @@ class Application extends CallbackEmitter {
         if (refresh) {
             ReactDOM.unmountComponentAtNode(this._content);
         }
-        this.renderComponent(route.getComponent(), this._content);
+        const page = route.getComponent();
+        this.renderComponent(page, this._content, () => this._callListener('pagerender', page));
     }
 
     /**
@@ -147,9 +148,10 @@ class Application extends CallbackEmitter {
      *
      * @param {JSX.Element} component
      * @param {HTMLElement} target
+     * @param {function} callback
      */
-    renderComponent(component, target) {
-        ReactDOM.render(component, target);
+    renderComponent(component, target, callback = () => { }) {
+        ReactDOM.render(component, target, callback);
     }
 
     /**

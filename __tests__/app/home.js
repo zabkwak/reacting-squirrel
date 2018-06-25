@@ -11,6 +11,8 @@ export default class Home extends Page {
         user: null,
     };
 
+    _pageRender = (context, page) => console.log('PAGE RENDERED');
+
     componentDidMount() {
         super.componentDidMount();
         this.emit('user.get');
@@ -21,6 +23,12 @@ export default class Home extends Page {
             }
             this.setState({ user });
         });
+        this.getContext().addListener('pagerender', this._pageRender);
+    }
+
+    componentWillUnmount() {
+        super.componentWillUnmount();
+        this.getContext().removeListener('pagerender', this._pageRender);
     }
 
     render() {
