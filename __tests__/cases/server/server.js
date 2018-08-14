@@ -28,6 +28,7 @@ const CONFIG_FIELDS = [
     'errorHandler',
     'webpack',
     'moduleDev',
+    'bundlePathRelative',
 ];
 
 describe('Server instance', () => {

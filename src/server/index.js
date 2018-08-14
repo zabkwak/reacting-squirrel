@@ -54,6 +54,7 @@ class Server {
      * @property {function} session Class of the session. It must extend Session from the module.
      * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
      * @property {function} errorHandler Function to handle errors in the route execution.
+     * @property {boolean} bundlePathRelative Indicates if the bundle is loaded relatively in the output html.
      * @property {any} webpack Custom webpack config.
      */
 
@@ -82,6 +83,7 @@ class Server {
         session: Session,
         auth: (session, next) => next(),
         errorHandler: (err, req, res, next) => next(),
+        bundlePathRelative: false,
         webpack: {},
         moduleDev: false,
     };
@@ -215,7 +217,7 @@ class Server {
             throw new Error('Cannot create instance of Layout.');
         }
         this._path = path.resolve(`${this._config.staticDir}/${this._config.jsDir}`);
-        this._bundlePath = `/${this._config.jsDir}/${this._config.filename}`;
+        this._bundlePath = `${this._config.bundlePathRelative ? '' : '/'}${this._config.jsDir}/${this._config.filename}`;
         const pkg = require(path.resolve('./package.json'));
         this._version = pkg.version;
         this._setApp();

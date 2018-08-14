@@ -7,6 +7,8 @@ import Application from '../application';
  */
 export default class Component extends Base {
 
+    _mounted = false;
+
     /**
      * The listener on popstate event of the application.
      *
@@ -20,10 +22,12 @@ export default class Component extends Base {
 
     componentDidMount() {
         this.getContext().addListener('popstate', this.__popState__);
+        this._mounted = true;
     }
 
     componentWillUnmount() {
         this.getContext().removeListener('popstate', this.__popState__);
+        this._mounted = false;
     }
 
     /**

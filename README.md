@@ -202,12 +202,6 @@ app.start();
 ## Functions
 
 <dl>
-<dt><a href="#create">create(statusCode, message, code, payload)</a></dt>
-<dd><p>Creates HttpError instance by error status code.</p>
-</dd>
-<dt><a href="#getCode">getCode(statusCode)</a> ⇒ <code><a href="#CodeInfo">CodeInfo</a></code></dt>
-<dd><p>Gets the code info by http error status code.</p>
-</dd>
 <dt><a href="#render">render()</a></dt>
 <dd><p>Renders the base html. This method shouldn&#39;t be overriden.</p>
 </dd>
@@ -243,8 +237,6 @@ app.start();
 ## Typedefs
 
 <dl>
-<dt><a href="#CodeInfo">CodeInfo</a></dt>
-<dd></dd>
 <dt><a href="#AuthCallback">AuthCallback</a> : <code>function</code></dt>
 <dd></dd>
 <dt><a href="#SocketEvent">SocketEvent</a></dt>
@@ -687,31 +679,6 @@ Logs the warning message to the console.
 | --- | --- | --- |
 | message | <code>string</code> | Message to log. |
 
-<a name="create"></a>
-
-## create(statusCode, message, code, payload)
-Creates HttpError instance by error status code.
-
-**Kind**: global function  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| statusCode | <code>number</code> |  | Http error status code. |
-| message | <code>string</code> | <code>null</code> | Error message. |
-| code | <code>string</code> | <code>null</code> | Error code. |
-| payload | <code>Object.&lt;string, any&gt;</code> |  | Additional error data. |
-
-<a name="getCode"></a>
-
-## getCode(statusCode) ⇒ [<code>CodeInfo</code>](#CodeInfo)
-Gets the code info by http error status code.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| statusCode | <code>number</code> | Http error status code. |
-
 <a name="render"></a>
 
 ## render()
@@ -790,17 +757,6 @@ Gets the session from the socket.
 Gets the user from the session.
 
 **Kind**: global function  
-<a name="CodeInfo"></a>
-
-## CodeInfo
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| message | <code>string</code> | Error message. |
-| code | <code>string</code> | Error code. |
-
 <a name="AuthCallback"></a>
 
 ## AuthCallback : <code>function</code>
@@ -849,6 +805,7 @@ Gets the user from the session.
 | session | <code>function</code> | Class of the session. It must extend Session from the module. |
 | auth | <code>function</code> | Auth function called on the routes which are requiring authorization. |
 | errorHandler | <code>function</code> | Function to handle errors in the route execution. |
+| bundlePathRelative | <code>boolean</code> | Indicates if the bundle is loaded relatively in the output html. |
 | webpack | <code>any</code> | Custom webpack config. |
 
 <a name="RouteMappings"></a>
@@ -1124,7 +1081,7 @@ Base class for client application context.
     * [.start(connectSocket)](#Application+start)
     * [.refreshContent()](#Application+refreshContent)
     * [.render(route, refresh)](#Application+render)
-    * [.renderComponent(component, target)](#Application+renderComponent)
+    * [.renderComponent(component, target, callback)](#Application+renderComponent)
     * [.redirect(path, q)](#Application+redirect)
     * [.navigate(path, q, refresh)](#Application+navigate)
     * [.pushState(path, q)](#Application+pushState)
@@ -1198,7 +1155,7 @@ Renders the route's page in the content element.
 
 <a name="Application+renderComponent"></a>
 
-### application.renderComponent(component, target)
+### application.renderComponent(component, target, callback)
 Renders React component to the HTML element.
 
 **Kind**: instance method of [<code>Application</code>](#Application)  
@@ -1207,6 +1164,7 @@ Renders React component to the HTML element.
 | --- | --- |
 | component | <code>JSX.Element</code> | 
 | target | <code>HTMLElement</code> | 
+| callback | <code>function</code> | 
 
 <a name="Application+redirect"></a>
 
