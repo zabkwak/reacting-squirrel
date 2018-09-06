@@ -39,10 +39,11 @@
                 "order": [
                     "static-methods",
                     "instance-variables",
+                    "/^_.+=.+$/",
                     "lifecycle",
                     "everything-else",
                     "rendering",
-                    "/^_.+$/"
+                    "/^_(.(?!=))+\\(.+\\)$/"
                 ]
             }
         ],

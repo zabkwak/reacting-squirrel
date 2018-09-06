@@ -18,8 +18,9 @@ class Socket {
 
         events.forEach(({ event, listener }) => {
             s.on(event, (data = {}) => {
+                let sent;
                 const key = data._key;
-                listener(data, (err, data) => {
+                const handle = (err, data) => {
                     const response = {};
                     if (err) {
                         response.error = err;
@@ -28,6 +29,36 @@ class Socket {
                     }
                     response._key = key;
                     s.emit(event, response);
+                };
+                const p = listener(data, (err, data) => {
+                    if (sent) {
+                        console.warn('Data already sent using Promise.');
+                        return;
+                    }
+                    sent = true;
+                    handle(err, data);
+                });
+                if (!(p instanceof Promise)) {
+                    return;
+                }
+                p.then((data) => {
+                    if (sent) {
+                        console.warn('Data already sent using callback.');
+                        return;
+                    }
+                    if (data === undefined) {
+                        console.warn('Listeners using promises cannot return undefined.');
+                        return;
+                    }
+                    sent = true;
+                    handle(null, data);
+                }).catch((err) => {
+                    if (sent) {
+                        console.warn('Data already sent using callback.');
+                        return;
+                    }
+                    sent = true;
+                    handle(err);
                 });
             });
         });

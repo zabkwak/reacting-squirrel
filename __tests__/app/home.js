@@ -23,6 +23,13 @@ export default class Home extends Page {
             }
             this.setState({ user });
         });
+        this.request('user.getPromise', (err, user) => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+            console.log('Getting user using Promise', user);
+        });
         this.getContext().addListener('pagerender', this._pageRender);
     }
 

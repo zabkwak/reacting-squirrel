@@ -68,7 +68,11 @@ export default class SocketComponent extends Component {
         const key = uniqid();
         data._key = key;
         let done = false;
+        const start = Date.now();
         const listener = (socket, data) => {
+            if (this.getContext().DEV) {
+                console.log(`Request ${event}`, { took: Date.now() - start });
+            }
             done = true;
             if (data && data._key === key) {
                 callback(data.error, data.data);

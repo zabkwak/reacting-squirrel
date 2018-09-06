@@ -35,9 +35,7 @@ export default class SocketClass {
             .filter(method => ['constructor', 'getEvents', 'broadcast', 'setSocket', 'getSession', 'getUser'].indexOf(method) < 0)
             .map((method) => {
                 const event = `${this.constructor.name.toLowerCase()}.${method}`;
-                const listener = (data, next) => {
-                    this[method].apply(this, [data, next]);
-                };
+                const listener = (data, next) => this[method].apply(this, [data, next]);
                 return { event, listener };
             });
     }
