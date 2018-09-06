@@ -586,7 +586,7 @@ Application
         }
         this._webpack.run((err, stats) => {
             if (err) {
-                console.error(err);
+                cb(err);
                 return;
             }
             this._log(stats.toJson('minimal'));
