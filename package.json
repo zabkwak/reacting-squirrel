@@ -1,9 +1,9 @@
 {
   "name": "reacting-squirrel",
-  "version": "0.3.8",
+  "version": "0.4.0",
   "description": "React and Express framework for creating web apps.",
   "main": "index.js",
-  "types": "./dist/__types__/index.d.ts",
+  "types": "./__types__/index.d.ts",
   "scripts": {
     "test": "mocha __tests__/cases/server __tests__/cases/app --recursive --compilers js:babel-core/register --timeout 20000",
     "test_app_compile": "./node_modules/.bin/babel ./__tests__/dev/src --out-dir ./__tests__/dev/dist && node ./__tests__/dev/dist/index.js",
@@ -53,6 +53,8 @@
     "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.0",
     "style-loader": "^0.21.0",
+    "ts-loader": "^5.1.0",
+    "typescript": "^3.0.3",
     "uniqid": "^4.1.1",
     "webpack": "^4.5.0"
   },

@@ -26,7 +26,7 @@ const app = new Server({
 
 app.get('/', 'home', 'Home');
 
-app.get('/about', 'about', 'About');
+app.get('/about', 'about.tsx', 'About');
 
 app.registerSocketClass(User);
 

@@ -343,6 +343,7 @@ class Server {
                 console.error(err);
                 return;
             }
+            this._setWebpack();
             this._setMiddlewares(true);
             this._start(cb);
         });
@@ -371,6 +372,7 @@ class Server {
                     '_createComponentsFile',
                     '_createSocketMap',
                     '_createPostCSSConfig',
+                    '_createTSConfig',
                 ], (f, callback) => this[f].call(this, callback), cb);
             });
         });
@@ -525,6 +527,31 @@ Application
         fs.writeFile(`${this._getRSDirPath()}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
     }
 
+    _createTSConfig(cb) {
+        this._log('Creating TS config');
+        fs.writeFile(`${this._getRSDirPath()}/tsconfig.json`, `{
+            "compilerOptions": {
+                "module": "commonjs",
+                "noImplicitAny": true,
+                "removeComments": true,
+                "preserveConstEnums": true,
+                "sourceMap": true,
+                "declaration": true,
+                "target": "es6",
+                "jsx": "react",
+                "lib": [
+                    "es6"
+                ]
+            },
+            "include": [
+                "../**/*"
+            ],
+            "exclude": [
+                "node_modules"
+            ]
+        }`, cb);
+    }
+
     /**
      * Checks if the {config.appDir} exists. If not the directory is created.
      *
@@ -604,7 +631,7 @@ Application
         this._app = express();
         this._setMiddlewares();
         this._server = http.createServer(this._app);
-        this._setWebpack();
+        // this._setWebpack();
         socket(this);
     }
 
@@ -636,6 +663,14 @@ Application
                         loader: 'babel-loader',
                         options: {
                             presets: ['stage-2', 'react'],
+                        },
+                    },
+                    {
+                        test: /\.ts$|\.tsx$/,
+                        // exclude: /node_modules/,
+                        loader: 'ts-loader',
+                        options: {
+                            configFile: '~rs/tsconfig.json',
                         },
                     },
                     {
