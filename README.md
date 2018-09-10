@@ -189,6 +189,36 @@ app.registerComponent('test', 'test');
 app.start();
 ```
 
+### Texts
+In the startup process, the `res` directory is created in `app` directory. In that directory is created default text file `text.json`. The content of the text file is used as default dictionary using [texting-squirrel](https://www.npmjs.com/package/texting-squirrel) module.
+#### Accessing text from the component
+All components have `getText` method to access the text from the dictionary.
+```javascript
+import { Component } from 'reacting-squirrel';
+
+export default class CustomComponent extends Component {
+
+    render() {
+        return <h1>{this.getText('title')}</h1>;
+    }
+}
+
+```
+#### Using Text component
+The module contains a text component to handle dictionary directly from the JSX code.
+
+```javascript
+import { Component, Text } from 'reacting-squirrel';
+
+export default class CustomComponent extends Component {
+
+    render() {
+        return <Text dictionaryKey="title" tag="h1" />
+    }
+}
+
+```
+
 ## TODO
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
 ## Classes

@@ -367,6 +367,7 @@ class Server {
                     return;
                 }
                 async.each([
+                    '_createResDir',
                     '_createEntryFile',
                     '_setRoutes',
                     '_createComponentsFile',
@@ -429,6 +430,38 @@ class Server {
         this._createRoutingFile(componentsMap, cb);
     }
 
+    _createResDir(cb) {
+        const { appDir } = this._config;
+        const dir = `${appDir}/res`;
+        fs.exists(dir, (exists) => {
+            if (exists) {
+                this._createDefaultTextFile(cb);
+                return;
+            }
+            this._log('Creating RES directory');
+            fs.mkdir(dir, (err) => {
+                if (err) {
+                    cb(err);
+                    return;
+                }
+                this._createDefaultTextFile(cb);
+            });
+        });
+    }
+
+    _createDefaultTextFile(cb) {
+        const { appDir } = this._config;
+        const filePath = `${appDir}/res/text.json`;
+        fs.exists(filePath, (exists) => {
+            if (exists) {
+                cb();
+                return;
+            }
+            this._log('Creating default text file');
+            fs.writeFile(filePath, '{}', cb);
+        });
+    }
+
     /**
      * Creates the entry file required for the webpack.
      *
@@ -447,11 +480,15 @@ class Server {
         }
         fs.writeFile(
             `${this._getRSDirPath()}/entry.js`,
-            `import Application from '${pathToTheModule}';
+            `import Application, { Text } from '${pathToTheModule}';
 import routingMap from './router.map';
 import socketEvents from './socket.map';
 import components from './component.map';
 ${entryFileImport || ''}
+
+import defaultDictionary from '../res/text.json';
+
+Text.addDictionary(defaultDictionary);
 
 Application
             .registerSocketEvents(socketEvents)

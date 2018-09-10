@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page, Button } from '../../src/app';
+import { Page, Button, Text } from '../../src/app';
 
 import './home.css';
 import './home.scss';
@@ -42,12 +42,15 @@ export default class Home extends Page {
         const { user } = this.state;
         return (
             <div className="home-wrapper">
-                <h1>HOME</h1>
+                <Text tag="h1" dictionaryKey="home" />
                 <h2>{user ? user.name : '...'}</h2>
                 <Button href="/about" id="navigate-button">About page</Button>
                 <Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
                 <Button href="/test" id="test-button">Invalid page</Button>
                 <Button id="state-button" onClick={() => this.getContext().pushState(null, { test: 1 })}>Push state query</Button>
+                <div>
+                    <Text tag="p" dictionaryKey="args" args={['one', 'two', 'three']} />
+                </div>
             </div>
         );
     }

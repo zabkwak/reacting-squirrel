@@ -3,6 +3,7 @@ import Component from './components/component';
 import SocketComponent from './components/component.socket';
 import Page from './components/component.page';
 import Button from './components/button';
+import Text from './components/text';
 import CallbackEmitter from './callback-emitter';
 import Router from './router';
 
@@ -19,6 +20,7 @@ export {
     SocketComponent,
     Page,
     Button,
+    Text,
     Socket,
     Storage,
     ErrorPage,

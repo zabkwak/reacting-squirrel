@@ -1,0 +1,5 @@
+{
+    "test": "Test",
+    "home": "Home",
+    "args": "Some arguments text {0}, {1} and {2}"
+}

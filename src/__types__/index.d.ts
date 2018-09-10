@@ -113,6 +113,12 @@ declare module 'reacting-squirrel' {
         };
     }
 
+    interface ITextProps {
+        dictionaryKey: string;
+        tag: string | Node;
+        args: Array<any>;
+    }
+
     const App: Application;
     const R: Router;
     const S: Socket;
@@ -141,6 +147,9 @@ declare module 'reacting-squirrel' {
 
         getContext(): Application;
 
+        getText(key: string): string;
+        getText(key: string, ...args: []): string;
+
         onPopState(event: any): void;
     }
 
@@ -160,6 +169,20 @@ declare module 'reacting-squirrel' {
     export class Page<P extends IPageProps = { params: any, query: any, initialData: any }> extends SocketComponent<P> { }
 
     export class Button extends BaseComponent<IButtonProps> { }
+
+    export class Text extends BaseComponent<ITextProps> {
+
+        static addDictionary(dictionary: { [key: string]: string }): this;
+        static addDictionary(key: string, dictionary: { [key: string]: string }): this;
+
+        static setDictionary(key: string): this;
+
+        static addFunction(name: string, fn: (...args: any[]) => string): this;
+
+        static get(key: string, ...args: any[]): string;
+
+        static format(text: string, ...args: any[]): string;
+    }
 
     export class ErrorPage extends Page<IErrorPageProps> {
 
