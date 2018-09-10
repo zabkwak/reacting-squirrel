@@ -16,15 +16,18 @@ export default class TextComponent extends Component {
     };
 
     static addDictionary(key, dictionary) {
-        return Text.addDictionary(key, dictionary);
+        Text.addDictionary(key, dictionary);
+        return this;
     }
 
     static setDictionary(key) {
-        return Text.setDictionary(key);
+        Text.setDictionary(key);
+        return this;
     }
 
     static addFunction(name, fn) {
-        return Text.addFunction(name, fn);
+        Text.addFunction(name, fn);
+        return this;
     }
 
     static get(key, ...args) {

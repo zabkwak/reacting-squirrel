@@ -1,0 +1,6 @@
+{
+    "test": "Test",
+    "home": "Domů",
+    "args": "Text s agrumenty {0}, {1} a {2}",
+    "header": "Testovací komponenta vložena do testovacího kontejneru"
+}
