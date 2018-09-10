@@ -1,4 +1,179 @@
 declare module 'reacting-squirrel' {
+    import { Component as BaseComponent } from 'react';
+    import * as url from 'url';
+
+    class Application extends CallbackEmitter {
+
+        DEV: boolean;
+
+        registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
+
+        registerSocketEvents(events: Array<string>): this;
+
+        registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
+
+        start(): void;
+        start(connectSocket): void;
+
+        refreshContent(): void;
+
+        render(route: Route): void;
+        render(route: Route, refresh: boolean): void;
+
+        renderComponent(component: JSX.Element, target: HTMLElement): void;
+        renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
+
+        redirect(path: string, q: { [key: string]: string }): void;
+
+        navigate(path: string, q: { [key: string]: string }): void;
+        navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
+
+        pushState(path: string, q: { [key: string]: string }): void;
+
+        setTitle(title: string);
+    }
+
+    class Route {
+
+        static create(route: { spec: string, component: JSX.Element, title: string, initialData?: any }): Route;
+
+        constructor(spec: string, component: JSX.Element, title: string);
+        constructor(spec: string, component: JSX.Element, title: string, initialData: any);
+
+        getComponent(): JSX.Element;
+    }
+
+    class Router {
+
+        addRoute(route: Route): this;
+
+        getRoute(): Route;
+
+        pushState(): void;
+        pushState(path: string): void;
+        pushState(path: string, q: { [key: string]: string }): void;
+
+        parseUrl(): url.Url;
+        parseUrl(params: boolean): url.Url;
+
+        getParams(): { [key: string]: string };
+    }
+
+    class Socket {
+
+        readonly STATE_NONE: 'none';
+
+        readonly STATE_CONNECTING: 'connecting';
+
+        readonly STATE_CONNECTED: 'connected';
+
+        readonly STATE_DISCONNECTED: 'disconnected';
+
+        registerSocketEvents(events: Array<string>): void;
+
+        connect(): void;
+        connect(address: string): void;
+
+        emit(event: string): this;
+        emit(event: string, data: any): this;
+
+        disconnect(): void;
+
+        getState(): string;
+
+        isConnected(): boolean;
+    }
+
+    class Storage {
+
+        size(): number;
+
+        has(key: string): boolean;
+
+        set(key: string, data: any): void;
+
+        get(key: string): any;
+        get<T>(key: string): T;
+
+        delete(key: string): void;
+
+        clear(): void;
+    }
+
+    interface IButtonProps {
+        href: string;
+        refreshContent?: boolean;
+    }
+
+    interface IErrorPageProps extends IPageProps {
+        error: {
+            message: string;
+            code: string;
+            stack?: string;
+        };
+    }
+
+    const App: Application;
+    const R: Router;
+    const S: Socket;
+    const ST: Storage;
+
+    export interface IPageProps {
+        params: any;
+        query: any;
+        initialData: any;
+    }
+
+    export class CallbackEmitter {
+
+        addListener(event: string, listener: (self: this) => void): this;
+        addListener(event: string, listener: (self: this, args?: any) => void): this;
+
+        removeListener(event: string, listener: (self: this) => void): this;
+        removeListener(event: string, listener: (self: this, args?: any) => void): this;
+    }
+
+    export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS> {
+
+        componentDidMount(): void;
+
+        componentWillUnmount(): void;
+
+        getContext(): Application;
+
+        onPopState(event: any): void;
+    }
+
+    export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, SS> {
+
+        onSocketStateChanged(state: any): void;
+
+        on(event: string, callback: (error?: any, data?: any) => void): this;
+
+        request(event: string, data: any, callback: (error?: any, data?: any) => void): this;
+        request(event: string, data: any, timeout: number, callback: (error?: any, data?: any) => void): this;
+
+        emit(event: string): this;
+        emit(event: string, data: any): this;
+    }
+
+    export class Page<P extends IPageProps = { params: any, query: any, initialData: any }> extends SocketComponent<P> { }
+
+    export class Button extends BaseComponent<IButtonProps> { }
+
+    export class ErrorPage extends Page<IErrorPageProps> {
+
+        renderStack(): JSX.Element;
+    }
+
+    export default App;
+
+    export {
+        App as Application,
+        R as Router,
+        S as Socket,
+        ST as Storage,
+    }
 
 }
 
@@ -6,6 +181,7 @@ declare module 'reacting-squirrel/server' {
 
     import * as http from 'http';
     import * as net from 'net';
+    import * as express from 'express';
     import { Component } from 'react';
     import HttpSmartError from 'http-smart-error';
 
@@ -23,7 +199,7 @@ declare module 'reacting-squirrel/server' {
         styles?: Array<string>;
         session?: typeof Session;
         auth?: (session: Session, next: (err?: any) => void) => void;
-        errorHandler?: (err: any, req: Express.Request, res: Express.Response, next: (err?: any) => void) => void;
+        errorHandler?: (err: any, req: express.Request, res: express.Response, next: (err?: any) => void) => void;
         bundlePathRelative?: boolean;
         webpack?: any;
     }

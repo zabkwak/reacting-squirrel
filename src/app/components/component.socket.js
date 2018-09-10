@@ -38,6 +38,7 @@ export default class SocketComponent extends Component {
         const listener = (socket, data) => callback(data.error, data.data);
         this._socketListeners.push({ event, listener });
         Socket.addListener(event, listener);
+        return this;
     }
 
     /**
