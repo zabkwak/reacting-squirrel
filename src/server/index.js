@@ -536,7 +536,7 @@ Application
                 "removeComments": true,
                 "preserveConstEnums": true,
                 "sourceMap": true,
-                "declaration": true,
+                "declaration": false,
                 "target": "es6",
                 "jsx": "react",
                 "lib": [
