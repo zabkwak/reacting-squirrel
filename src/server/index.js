@@ -540,7 +540,8 @@ Application
                 "target": "es6",
                 "jsx": "react",
                 "lib": [
-                    "es6"
+                    "es6",
+                    "dom"
                 ]
             },
             "include": [
