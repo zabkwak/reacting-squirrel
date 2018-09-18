@@ -56,8 +56,26 @@ export default class Layout extends Component {
     renderContainer() {
         return (
             <div id="container">
-                <div id="content" />
+                <div id="content">
+                    {this.renderLoader()}
+                </div>
             </div>
+        );
+    }
+
+    renderLoader() {
+        return (
+            <img
+                src="https://cdnjs.cloudflare.com/ajax/libs/galleriffic/2.0.1/css/loader.gif"
+                alt="loading"
+                style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    '-webkit-transform': 'translate(-50%, -50%)',
+                    transform: 'translate(-50%, -50%)',
+                }}
+            />
         );
     }
 }

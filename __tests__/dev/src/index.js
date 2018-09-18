@@ -9,7 +9,9 @@ class CustomLayout extends Layout {
         return (
             <div id="container">
                 <div id="test" />
-                <div id="content" />
+                <div id="content">
+                    {this.renderLoader()}
+                </div>
             </div>
         );
     }

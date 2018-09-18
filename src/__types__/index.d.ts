@@ -278,6 +278,8 @@ declare module 'reacting-squirrel/server' {
     export class Layout extends Component<ILayoutProps> {
 
         renderContainer(): JSX.Element;
+
+        renderLoader(): JSX.Element;
     }
 
     export class SocketClass {
