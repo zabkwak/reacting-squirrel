@@ -13,7 +13,7 @@ declare module 'reacting-squirrel' {
         registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
 
         start(): void;
-        start(connectSocket): void;
+        start(connectSocket: boolean): void;
 
         refreshContent(): void;
 
@@ -30,7 +30,7 @@ declare module 'reacting-squirrel' {
 
         pushState(path: string, q: { [key: string]: string }): void;
 
-        setTitle(title: string);
+        setTitle(title: string): void;
     }
 
     class Route {
@@ -246,9 +246,9 @@ declare module 'reacting-squirrel/server' {
 
     class Socket {
 
-        static add(socket: net.Socket, events: Array<ISocketEvent>, classes: Array<SocketClass>);
+        static add(socket: net.Socket, events: Array<ISocketEvent>, classes: Array<SocketClass>): void;
 
-        static itereateSockets(iterator: (socket: Socket) => void);
+        static itereateSockets(iterator: (socket: Socket) => void): void;
 
         constructor(socket: net.Socket);
 
@@ -336,6 +336,6 @@ declare module 'reacting-squirrel/server' {
 
         registerComponent(componentPath: string, elementId: string): this;
 
-        start(cb?: (err?: any) => void);
+        start(cb?: (err?: any) => void): void;
     }
 }

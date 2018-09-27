@@ -28,6 +28,9 @@
   "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/express": "^4.16.0",
+    "@types/node": "^10.9.4",
+    "@types/react": "^16.4.13",
     "async": "^2.6.0",
     "autoprefixer": "^8.3.0",
     "babel-core": "^6.26.0",
@@ -60,9 +63,6 @@
     "webpack": "^4.5.0"
   },
   "devDependencies": {
-    "@types/express": "^4.16.0",
-    "@types/node": "^10.9.4",
-    "@types/react": "^16.4.13",
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.3",
     "babel-plugin-transform-class-properties": "^6.24.1",
