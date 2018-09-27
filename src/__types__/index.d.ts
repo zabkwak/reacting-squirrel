@@ -172,12 +172,12 @@ declare module 'reacting-squirrel' {
 
     export class Text extends BaseComponent<ITextProps> {
 
-        static addDictionary(dictionary: { [key: string]: string }): this;
-        static addDictionary(key: string, dictionary: { [key: string]: string }): this;
+        static addDictionary(dictionary: { [key: string]: string }): Text;
+        static addDictionary(key: string, dictionary: { [key: string]: string }): Text;
 
-        static setDictionary(key: string): this;
+        static setDictionary(key: string): Text;
 
-        static addFunction(name: string, fn: (...args: any[]) => string): this;
+        static addFunction(name: string, fn: (...args: any[]) => string): Text;
 
         static get(key: string, ...args: any[]): string;
 
