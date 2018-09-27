@@ -72,7 +72,7 @@ export default class Layout extends Component {
                     position: 'absolute',
                     left: '50%',
                     top: '50%',
-                    '-webkit-transform': 'translate(-50%, -50%)',
+                    WebkitTransform: 'translate(-50%, -50%)',
                     transform: 'translate(-50%, -50%)',
                 }}
             />
