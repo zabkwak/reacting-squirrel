@@ -312,7 +312,7 @@ declare module 'reacting-squirrel/server' {
         Layout: JSX.Element;
         Session: typeof Session;
 
-        constructor(config: IAppConfig);
+        constructor(config?: IAppConfig);
 
         getServer(): http.Server;
 
