@@ -693,6 +693,9 @@ Application
                 path: this._path,
                 filename,
             },
+            resolve: {
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+            },
             module: {
                 rules: [
                     {
