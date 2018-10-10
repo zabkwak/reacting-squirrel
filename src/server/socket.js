@@ -51,7 +51,7 @@ class Socket {
                         return;
                     }
                     sent = true;
-                    handle(null, data);
+                    handle(null, data === null ? undefined : data);
                 }).catch((err) => {
                     if (sent) {
                         console.warn('Data already sent using callback.');
