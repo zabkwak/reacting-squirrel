@@ -25,6 +25,10 @@ class Application extends CallbackEmitter {
         return Boolean(this._initialData.dev);
     }
 
+    get initialData() {
+        return this._initialData;
+    }
+
     constructor() {
         super();
         this._container = document.getElementById('container');

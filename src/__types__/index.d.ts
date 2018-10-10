@@ -5,6 +5,7 @@ declare module 'reacting-squirrel' {
     class Application extends CallbackEmitter {
 
         DEV: boolean;
+        initialData: any;
 
         registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
 
@@ -23,8 +24,10 @@ declare module 'reacting-squirrel' {
         renderComponent(component: JSX.Element, target: HTMLElement): void;
         renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
 
+        redirect(path: string): void;
         redirect(path: string, q: { [key: string]: string }): void;
 
+        navigate(path: string): void;
         navigate(path: string, q: { [key: string]: string }): void;
         navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
 
@@ -159,6 +162,7 @@ declare module 'reacting-squirrel' {
 
         on(event: string, callback: (error?: any, data?: any) => void): this;
 
+        request(event: string, callback: (error?: any, data?: any) => void): this;
         request(event: string, data: any, callback: (error?: any, data?: any) => void): this;
         request(event: string, data: any, timeout: number, callback: (error?: any, data?: any) => void): this;
 
