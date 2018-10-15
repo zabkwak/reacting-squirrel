@@ -734,7 +734,7 @@ Application
                 ],
             },
             target: 'web',
-            devtool: dev ? 'source-map' : undefined,
+            devtool: dev ? 'source-map' : 'source-map',
             ...this._config.webpack,
         });
     }

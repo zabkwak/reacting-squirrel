@@ -21,7 +21,7 @@ const app = new Server({
     appDir: './__tests__/app',
     staticDir: './__tests__/public',
     moduleDev: true,
-    dev: true,
+    dev: false,
     layoutComponent: CustomLayout,
     entryFile: 'entry.js',
 });
@@ -34,4 +34,4 @@ app.registerSocketClass(User);
 
 app.registerComponent('test', 'test');
 
-app.start();
+app.start(() => console.log('App started'));
