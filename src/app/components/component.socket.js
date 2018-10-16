@@ -41,6 +41,18 @@ export default class SocketComponent extends Component {
         return this;
     }
 
+    call(event, data = {}, timeout = TIMEOUT) {
+        return new Promise((resolve, reject) => {
+            this.request(event, data, timeout, (err, response) => {
+                if (err) {
+                    reject(err);
+                    return;
+                }
+                resolve(response);
+            });
+        });
+    }
+
     /**
      * Requests the data over the socket. It automatically handles listeners on the Socket class and calls the callback.
      *

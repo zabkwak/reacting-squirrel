@@ -120,9 +120,9 @@ declare module 'reacting-squirrel' {
         };
     }
 
-    interface ITextProps {
+    interface ITextProps extends React.HTMLProps<Text> {
         dictionaryKey: string;
-        tag: string | Node;
+        tag?: string | Node;
         args?: Array<any>;
     }
 
@@ -130,9 +130,9 @@ declare module 'reacting-squirrel' {
         loaded: boolean;
         size?: 'large' | 'normal' | 'small' | 'xsmall';
         block?: boolean;
-    };
+    }
 
-    interface IDataComponentProps {
+    interface IDataComponentProps extends React.HTMLProps<DataComponent> {
         events: Array<{ name: string, params?: any, key?: string }>;
         renderData: (data: any) => JSX.Element;
         onError?: (error: any) => void;
@@ -170,7 +170,7 @@ declare module 'reacting-squirrel' {
         getContext(): Application;
 
         getText(key: string): string;
-        getText(key: string, ...args: []): string;
+        getText(key: string, ...args: Array<any>): string;
 
         onPopState(event: any): void;
     }
@@ -180,6 +180,10 @@ declare module 'reacting-squirrel' {
         onSocketStateChanged(state: any): void;
 
         on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+
+        call<R = any>(event: string): Promise<R>;
+        call<P = any, R = any>(event: string, data: P): Promise<R>;
+        call<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
 
         request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
         request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
