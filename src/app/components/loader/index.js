@@ -8,7 +8,7 @@ export default class Loader extends Component {
 
     static propTypes = {
         loaded: PropTypes.bool.isRequired,
-        size: PropTypes.oneOf(['normal', 'small', 'xsmall']),
+        size: PropTypes.oneOf(['large', 'normal', 'small', 'xsmall']),
         block: PropTypes.bool,
     };
 

@@ -124,9 +124,18 @@ declare module 'reacting-squirrel' {
 
     interface ILoaderProps {
         loaded: boolean;
-        size?: 'normal' | 'small' | 'xsmall';
+        size?: 'large' | 'normal' | 'small' | 'xsmall';
         block?: boolean;
     };
+
+    interface IDataComponentProps {
+        events: Array<{ name: string, params?: any, key?: string }>;
+        renderData: (data: any) => JSX.Element;
+        onError?: (error: any) => void;
+        onData?: (data: any) => void;
+        loaderBlock?: boolean;
+        loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
+    }
 
     const App: Application;
     const R: Router;
@@ -177,6 +186,11 @@ declare module 'reacting-squirrel' {
     }
 
     export class Page<P extends IPageProps = { params: any, query: any, initialData: any }, S = {}, SS = any> extends SocketComponent<P, S, SS> { }
+
+    export class DataComponent extends SocketComponent<IDataComponentProps> {
+
+        load(): void;
+    }
 
     export class Button extends BaseComponent<IButtonProps> { }
 

@@ -1,6 +1,7 @@
 import Application from './application';
 import Component from './components/component';
 import SocketComponent from './components/component.socket';
+import DataComponent from './components/component.data';
 import Page from './components/component.page';
 import Button from './components/button';
 import Text from './components/text';
@@ -19,6 +20,7 @@ export {
     CallbackEmitter,
     Component,
     SocketComponent,
+    DataComponent,
     Page,
     Button,
     Text,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page, Button, Text, Loader } from '../../src/app';
+import { Page, Button, Text, Loader, DataComponent } from '../../src/app';
 
 import './home.css';
 import './home.scss';
@@ -49,6 +49,16 @@ export default class Home extends Page {
                         {user ? user.name : null}
                     </Loader>
                 </h2>
+                <DataComponent
+                    className="data-component"
+                    events={[{
+                        name: 'user.getPromise',
+                        key: 'user',
+                    }]}
+                    renderData={({ user }) => <h2>{user.name}</h2>}
+                    loaderBlock={false}
+                    loaderSize="small"
+                />
                 <Button href="/about" id="navigate-button">About page</Button>
                 <Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
                 <Button href="/test" id="test-button">Invalid page</Button>
