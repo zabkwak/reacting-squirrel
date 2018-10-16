@@ -1,11 +1,11 @@
 $size: 50px; // the original size of the spinner is 100px => this is for normal size
 
-.loader-wrapper {
+.rs-loader-wrapper {
     position: relative;
     height: 100%;
 }
 
-.loader-wrapper .loader {
+.rs-loader-wrapper .rs-loader {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -13,22 +13,22 @@ $size: 50px; // the original size of the spinner is 100px => this is for normal 
     transform: translate(-50%, -50%);
 }
 
-.loader.large {
+.rs-loader.large {
     width: $size * 2;
     height: $size * 2;
 }
 
-.loader.normal {
+.rs-loader.normal {
      width: $size;
      height: $size;
 }
 
-.loader.small {
+.rs-loader.small {
     width: $size / 2;
     height: $size / 2;
 }
 
-.loader.xsmall {
+.rs-loader.xsmall {
     width: $size / 4;
     height: $size / 4;
 }
