@@ -122,6 +122,12 @@ declare module 'reacting-squirrel' {
         args: Array<any>;
     }
 
+    interface ILoaderProps {
+        loaded: boolean;
+        size?: 'normal' | 'small' | 'xsmall';
+        block?: boolean;
+    };
+
     const App: Application;
     const R: Router;
     const S: Socket;
