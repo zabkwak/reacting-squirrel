@@ -78,7 +78,7 @@ declare module 'reacting-squirrel' {
         connect(address: string): void;
 
         emit(event: string): this;
-        emit(event: string, data: any): this;
+        emit<P = any>(event: string, data: P): this;
 
         disconnect(): void;
 
@@ -160,14 +160,14 @@ declare module 'reacting-squirrel' {
 
         onSocketStateChanged(state: any): void;
 
-        on(event: string, callback: (error?: any, data?: any) => void): this;
+        on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 
-        request(event: string, callback: (error?: any, data?: any) => void): this;
-        request(event: string, data: any, callback: (error?: any, data?: any) => void): this;
-        request(event: string, data: any, timeout: number, callback: (error?: any, data?: any) => void): this;
+        request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+        request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
+        request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
 
         emit(event: string): this;
-        emit(event: string, data: any): this;
+        emit<P = any>(event: string, data: P): this;
     }
 
     export class Page<P extends IPageProps = { params: any, query: any, initialData: any }, S = {}, SS = any> extends SocketComponent<P, S, SS> { }
