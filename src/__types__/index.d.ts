@@ -123,7 +123,7 @@ declare module 'reacting-squirrel' {
     interface ITextProps {
         dictionaryKey: string;
         tag: string | Node;
-        args: Array<any>;
+        args?: Array<any>;
     }
 
     interface ILoaderProps {
