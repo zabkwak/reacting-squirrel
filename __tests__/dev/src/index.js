@@ -34,4 +34,10 @@ app.registerSocketClass(User);
 
 app.registerComponent('test', 'test');
 
-app.start(() => console.log('App started'));
+app.start((err) => {
+    if (err) {
+        console.error(err);
+        return;
+    }
+    console.log('App started');
+});

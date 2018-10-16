@@ -654,7 +654,13 @@ Application
                 cb(err);
                 return;
             }
-            this._log(stats.toJson('minimal'));
+            const minimalStats = stats.toJson('minimal');
+            this._log(minimalStats);
+            const { errors } = minimalStats;
+            if (errors && errors.length) {
+                cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
+                return;
+            }
             this._server.listen(port, () => {
                 this._log(`App listening on ${port}`);
                 cb();
