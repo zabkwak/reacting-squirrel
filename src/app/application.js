@@ -25,7 +25,12 @@ class Application extends CallbackEmitter {
         return Boolean(this._initialData.dev);
     }
 
+    /**
+     * @returns {any}
+     * @deprecated
+     */
     get initialData() {
+        console.warn('Getting initialData from the context is deprecated. Use getInitialData method.');
         return this._initialData;
     }
 
@@ -48,6 +53,20 @@ class Application extends CallbackEmitter {
             this.render(Router.getRoute());
             this._callListener('popstate', event);
         };
+    }
+
+    /**
+     * Gets the initial data.
+     *
+     * @param {string?} key
+     *
+     * @returns {any}
+     */
+    getInitialData(key = null) {
+        if (key) {
+            return this._initialData[key];
+        }
+        return this._initialData;
     }
 
     /**

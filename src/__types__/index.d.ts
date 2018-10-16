@@ -5,7 +5,11 @@ declare module 'reacting-squirrel' {
     class Application extends CallbackEmitter {
 
         DEV: boolean;
+        /** @deprecated */
         initialData: any;
+
+        getInitialData<T = any>(): T;
+        getInitialData<T = any>(key: string): T;
 
         registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
 
