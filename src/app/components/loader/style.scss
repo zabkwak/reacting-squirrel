@@ -1,0 +1,34 @@
+$size: 50px; // the original size of the spinner is 100px => this is for normal size
+
+.loader-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+.loader-wrapper .loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.loader.large {
+    width: $size * 2;
+    height: $size * 2;
+}
+
+.loader.normal {
+     width: $size;
+     height: $size;
+}
+
+.loader.small {
+    width: $size / 2;
+    height: $size / 2;
+}
+
+.loader.xsmall {
+    width: $size / 4;
+    height: $size / 4;
+}

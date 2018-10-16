@@ -194,6 +194,8 @@ declare module 'reacting-squirrel' {
         static format(text: string, ...args: any[]): string;
     }
 
+    export class Loader extends BaseComponent<ILoaderProps> { }
+
     export class ErrorPage extends Page<IErrorPageProps> {
 
         renderStack(): JSX.Element;

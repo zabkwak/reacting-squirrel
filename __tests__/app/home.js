@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page, Button, Text } from '../../src/app';
+import { Page, Button, Text, Loader } from '../../src/app';
 
 import './home.css';
 import './home.scss';
@@ -43,7 +43,12 @@ export default class Home extends Page {
         return (
             <div className="home-wrapper">
                 <Text tag="h1" dictionaryKey="home" />
-                <h2>{user ? user.name : '...'}</h2>
+                {/* <h2>{user ? user.name : '...'}</h2> */}
+                <h2>
+                    <Loader loaded={Boolean(user)} block={false} size="small">
+                        {user ? user.name : null}
+                    </Loader>
+                </h2>
                 <Button href="/about" id="navigate-button">About page</Button>
                 <Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
                 <Button href="/test" id="test-button">Invalid page</Button>
