@@ -1,4 +1,5 @@
 import React from 'react';
+import 'babel-polyfill';
 
 import Server, { Layout } from '../../../server';
 import User from './user.socket';

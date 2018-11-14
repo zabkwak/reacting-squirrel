@@ -30,6 +30,9 @@ export default class Home extends Page {
             }
             console.log('Getting user using Promise', user);
         });
+        this.request('user.getAsyncError', (err) => {
+            
+        });
         this.getContext().addListener('pagerender', this._pageRender);
     }
 

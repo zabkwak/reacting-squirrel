@@ -2,6 +2,7 @@ import socketIO from 'socket.io';
 import cookie from 'cookie';
 import cookieSignature from 'cookie-signature';
 import uniqid from 'uniqid';
+import SmartError from 'smart-error';
 
 class Socket {
 
@@ -23,7 +24,10 @@ class Socket {
                 const handle = (err, data) => {
                     const response = {};
                     if (err) {
-                        response.error = err;
+                        if (!(err instanceof SmartError)) {
+                            err = new SmartError(err);
+                        }
+                        response.error = err.toJSON();
                     } else {
                         response.data = data;
                     }

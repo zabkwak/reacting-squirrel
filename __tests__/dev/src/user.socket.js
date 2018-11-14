@@ -11,4 +11,8 @@ export default class User extends SocketClass {
             resolve({ id: 1, name: 'Test User' });
         });
     }
+
+    async getAsyncError() {
+        return a;
+    }
 }
