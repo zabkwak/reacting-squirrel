@@ -33,6 +33,11 @@ export default class Home extends Page {
         this.request('user.getAsyncError', (err) => {
             // alert(err.message);
         });
+        try {
+            await this.call('user.getAsyncError');
+        } catch (e) {
+            // alert(e.message);
+        }
         this.getContext().addListener('pagerender', this._pageRender);
     }
 
