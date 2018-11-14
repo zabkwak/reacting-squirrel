@@ -48,11 +48,15 @@ class Socket extends CallbackEmitter {
         this._setState(this.STATE_CONNECTING);
         this._socket = io(address);
         this._socket.on('connect', () => {
-            console.log('Socket connected');
+            if (Application.DEV) {
+                console.log('Socket connected');
+            }
             this._setState(this.STATE_CONNECTED);
         });
         this._socket.on('disconnect', () => {
-            console.log('Socket disconnected');
+            if (Application.DEV) {
+                console.log('Socket disconnected');
+            }
             this._setState(this.STATE_DISCONNECTED);
         });
         this._events.forEach(event => this._socket.on(event, data => this._handleEvent(event, data)));

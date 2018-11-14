@@ -112,7 +112,9 @@ class Application extends CallbackEmitter {
     start(connectSocket = true) {
         this._checkStartedState();
         this._started = true;
-        console.log('Application started', { DEV: this.DEV });
+        if (this.DEV) {
+            console.log('Application started', { DEV: this.DEV });
+        }
         this._callListener('start');
         this._components.forEach((component) => {
             const target = document.getElementById(component.elementId);
