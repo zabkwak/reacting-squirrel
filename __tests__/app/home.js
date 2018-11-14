@@ -13,7 +13,7 @@ export default class Home extends Page {
 
     _pageRender = (context, page) => console.log('PAGE RENDERED');
 
-    componentDidMount() {
+    async componentDidMount() {
         super.componentDidMount();
         this.emit('user.get');
         this.on('user.get', (err, user) => {
