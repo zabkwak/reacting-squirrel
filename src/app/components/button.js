@@ -22,7 +22,7 @@ export default class Button extends Component {
         if (!href) {
             return;
         }
-        this.getContext().navigate(href, {}, refreshContent);
+        this.getContext().navigate(href, null, refreshContent);
     };
 
     render() {
