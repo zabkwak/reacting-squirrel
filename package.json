@@ -38,6 +38,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "compression": "^1.7.3",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.3",
     "cookie-signature": "^1.1.0",

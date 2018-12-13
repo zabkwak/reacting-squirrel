@@ -113,7 +113,7 @@ class Application extends CallbackEmitter {
         this._checkStartedState();
         this._started = true;
         if (this.DEV) {
-            console.log('Application started', { DEV: this.DEV });
+            console.log('Application started', { DEV: this.DEV, timestamp: this.getInitialData('timestamp') });
         }
         this._callListener('start');
         this._components.forEach((component) => {

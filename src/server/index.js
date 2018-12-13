@@ -11,6 +11,7 @@ import fs from 'fs';
 import async from 'async';
 import Error from 'smart-error';
 import HttpError from 'http-smart-error';
+import compression from 'compression';
 
 import Layout from './layout';
 import Session from './session';
@@ -399,6 +400,7 @@ class Server {
                     data: {
                         user: req.session.getUser(),
                         dev,
+                        timestamp: Date.now(),
                     },
                 };
                 if (typeof route.callback !== 'function') {
@@ -754,6 +756,7 @@ Application
             const LayoutComponent = layoutComponent;
             this._app.use(express.static(staticDir));
             this._app.use(cookieParser(cookieSecret));
+            this._app.use(compression());
             this._app.use((req, res, next) => {
                 let sessionId;
                 const setSession = () => {
@@ -807,6 +810,7 @@ Application
                     data: {
                         user: req.session.getUser(),
                         dev,
+                        timestamp: Date.now(),
                         error: err.toJSON(dev),
                     },
                 });
