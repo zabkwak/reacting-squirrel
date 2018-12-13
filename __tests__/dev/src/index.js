@@ -10,6 +10,7 @@ class CustomLayout extends Layout {
         return (
             <div id="container">
                 <div id="test" />
+                <div id="socket-status" />
                 <div id="content">
                     {this.renderLoader()}
                 </div>
@@ -30,11 +31,12 @@ const app = new Server({
 
 app.get('/', 'home', 'Home');
 
-app.get('/about', 'about.tsx', 'About');
+app.get('/about', 'about', 'About');
 
 app.registerSocketClass(User);
 
 app.registerComponent('test', 'test');
+app.registerComponent('socket-status', 'socket-status');
 
 app.start((err) => {
     if (err) {

@@ -639,6 +639,7 @@ Application
                     return;
                 }
                 this._log(stats.toJson('minimal'));
+                Socket.broadcast('webpack.stats', stats.toJson('minimal'));
                 if (!listening) {
                     listening = true;
                     this._server.listen(port, () => {

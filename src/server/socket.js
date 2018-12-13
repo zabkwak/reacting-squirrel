@@ -87,7 +87,6 @@ class Socket {
             if (!filter(socket)) {
                 return;
             }
-            console.log(event, data);
             socket.emit(event, data);
         });
     }

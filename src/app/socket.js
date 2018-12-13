@@ -30,6 +30,7 @@ class Socket extends CallbackEmitter {
     _state = 'none';
     _events = [
         'handshake',
+        'webpack.stats',
     ];
 
     registerEvents(events) {
