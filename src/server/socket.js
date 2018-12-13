@@ -4,6 +4,11 @@ import cookieSignature from 'cookie-signature';
 import uniqid from 'uniqid';
 import SmartError from 'smart-error';
 
+/**
+ * @typedef {import('./').default} Server
+ * @typedef {import('./session').default} Session
+ */
+
 class Socket {
 
     /** @type {Socket[]} */
@@ -77,9 +82,14 @@ class Socket {
         this._sockets.forEach(iterator);
     }
 
+    /** @type {socketIO.Socket} */
     _socket = null;
     _id = null;
 
+    /**
+     *
+     * @param {socketIO.Socket} socket
+     */
     constructor(socket) {
         this._socket = socket;
         this._id = uniqid();
@@ -94,6 +104,9 @@ class Socket {
         this._socket.on(event, listener);
     }
 
+    /**
+     * @returns {Session}
+     */
     getSession() {
         return this._socket.session;
     }
@@ -120,6 +133,10 @@ class Socket {
 
 }
 
+/**
+ *
+ * @param {Server} server Server instance.
+ */
 const func = (server) => {
     const io = socketIO(server.getServer());
     const { cookieSecret } = server._config;

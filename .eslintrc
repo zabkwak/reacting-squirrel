@@ -50,7 +50,9 @@
         "react/prop-types": [
             2,
             {
-                "ignore": ["children"]
+                "ignore": [
+                    "children"
+                ]
             }
         ],
         "no-unused-vars": [

@@ -1,4 +1,7 @@
-import { Socket } from './socket';
+/**
+ * @typedef {import('./socket').Socket} Socket
+ * @typedef {import('./session').default} Session
+ */
 /**
  * Base class to handle multiple socket events.
  * After the registration to the server app the events are created as [className].[method].

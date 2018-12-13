@@ -38,8 +38,8 @@ export default class Layout extends Component {
                 <head>
                     <meta charSet={charSet} />
                     <title>{title}</title>
-                    {scripts.map((s, index) => <script key={index} src={`${s}?v=${version}`} type="text/javascript" />)}
-                    {styles.map((s, index) => <link key={index} href={`${s}?v=${version}`} rel="stylesheet" />)}
+                    {scripts.map(s => <script key={s} src={`${s}?v=${version}`} type="text/javascript" />)}
+                    {styles.map(s => <link key={s} href={`${s}?v=${version}`} rel="stylesheet" />)}
                 </head>
                 <body>
                     {this.renderContainer()}
