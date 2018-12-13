@@ -75,6 +75,24 @@ class Socket {
     }
 
     /**
+     * Broadcasts the event to all connected sockets which will pass the filter method.
+     *
+     * @param {string} event Name of the event to broadcast.
+     * @param {any} data Data to broadcast.
+     * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
+     * @param {function(Socket):boolean} filter Filter function to validate sockets.
+     */
+    static broadcast(event, data, filter = socket => true) {
+        this.iterateSockets((socket) => {
+            if (!filter(socket)) {
+                return;
+            }
+            console.log(event, data);
+            socket.emit(event, data);
+        });
+    }
+
+    /**
      *
      * @param {function(Socket):void} iterator
      */
@@ -130,7 +148,6 @@ class Socket {
             socket.emit(event, data);
         });
     }
-
 }
 
 /**

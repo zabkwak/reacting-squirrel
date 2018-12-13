@@ -178,6 +178,7 @@ declare module 'reacting-squirrel' {
     export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, SS> {
 
         onSocketStateChanged(state: any): void;
+        onSocketError(error: any): void;
 
         on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 

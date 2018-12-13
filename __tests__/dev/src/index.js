@@ -25,6 +25,7 @@ const app = new Server({
     dev: true,
     layoutComponent: CustomLayout,
     entryFile: 'entry.js',
+    // cookieSecret: 'dev-secret',
 });
 
 app.get('/', 'home', 'Home');

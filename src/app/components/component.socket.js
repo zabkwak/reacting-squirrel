@@ -18,14 +18,20 @@ export default class SocketComponent extends Component {
         this.onSocketStateChanged(state);
     };
 
+    __error__ = (socket, error) => this.onSocketError(error);
+
     componentDidMount() {
         super.componentDidMount();
-        Socket.addListener('state', this.__state__);
+        Socket
+            .addListener('state', this.__state__)
+            .addListener('error', this.__error__);
     }
 
     componentWillUnmount() {
         super.componentWillUnmount();
-        Socket.removeListener('state', this.__state__);
+        Socket
+            .removeListener('state', this.__state__)
+            .removeListener('error', this.__error__);
         this._socketListeners.forEach(({ event, listener }, index) => {
             Socket.removeListener(event, listener);
             delete this._socketListeners[index];
@@ -33,6 +39,8 @@ export default class SocketComponent extends Component {
     }
 
     onSocketStateChanged(state) { }
+
+    onSocketError(error) { }
 
     on(event, callback) {
         const listener = (socket, data) => callback(data.error, data.data);

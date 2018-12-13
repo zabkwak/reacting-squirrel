@@ -53,11 +53,22 @@ class Socket extends CallbackEmitter {
             }
             this._setState(this.STATE_CONNECTED);
         });
+        this._socket.on('reconnect', () => {
+            if (Application.DEV) {
+                console.log('Socket reconnected');
+            }
+        });
         this._socket.on('disconnect', () => {
             if (Application.DEV) {
                 console.log('Socket disconnected');
             }
             this._setState(this.STATE_DISCONNECTED);
+        });
+        this._socket.on('error', (err) => {
+            if (Application.DEV) {
+                console.error('Socket connection error', err);
+            }
+            this._callListener('error', err);
         });
         this._events.forEach(event => this._socket.on(event, data => this._handleEvent(event, data)));
     }

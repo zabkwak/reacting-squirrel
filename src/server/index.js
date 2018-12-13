@@ -15,7 +15,7 @@ import HttpError from 'http-smart-error';
 import Layout from './layout';
 import Session from './session';
 import Route from './route';
-import socket from './socket';
+import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
 
 const RS_DIR = '~rs';
