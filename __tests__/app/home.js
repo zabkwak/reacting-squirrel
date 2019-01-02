@@ -63,6 +63,7 @@ export default class Home extends Page {
                         name: 'user.getPromise',
                         key: 'user',
                     }]}
+                    onStart={() => console.log('DATA COMPONENT START')}
                     renderData={({ user }) => <h2>{user.name}</h2>}
                     loaderBlock={false}
                     loaderSize="small"

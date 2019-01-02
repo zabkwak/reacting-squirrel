@@ -16,6 +16,7 @@ export default class Data extends SocketComponent {
         renderData: PropTypes.func.isRequired,
         onError: PropTypes.func,
         onData: PropTypes.func,
+        onStart: PropTypes.func,
         loaderBlock: Loader.propTypes.block,
         loaderSize: Loader.propTypes.size,
     };
@@ -23,6 +24,7 @@ export default class Data extends SocketComponent {
     static defaultProps = {
         onError: null,
         onData: null,
+        onStart: null,
         loaderBlock: true,
     };
 
@@ -61,8 +63,13 @@ export default class Data extends SocketComponent {
     }
 
     _loadData() {
-        const { events, onData, onError } = this.props;
+        const {
+            events, onData, onError, onStart,
+        } = this.props;
         const data = {};
+        if (typeof onStart === 'function') {
+            onStart();
+        }
         async.each(events, ({ name, params, key }, callback) => {
             this.request(name, params, (err, r) => {
                 if (err) {
