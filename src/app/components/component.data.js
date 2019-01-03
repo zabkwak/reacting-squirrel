@@ -65,7 +65,7 @@ export default class Data extends SocketComponent {
         });
         const loaded = Boolean(data);
         return (
-            <div {...divProps}>
+            <div style={{ position: 'relative' }} {...divProps}>
                 <Loader loaded={loaded} block={loaderBlock} size={loaderSize}>
                     {this.renderTook()}
                     {loaded && renderData(data)}
@@ -90,6 +90,8 @@ export default class Data extends SocketComponent {
                     background: 'rgba(200, 200, 200, .6)',
                     padding: 2,
                     fontSize: 10,
+                    top: 0,
+                    left: 0,
                 }}
             >
                 {Text.format('{0}ms', took)}
@@ -123,7 +125,7 @@ export default class Data extends SocketComponent {
                     clearTimeout(this._tookTimeout);
                 }
                 this._tookTimeout = setTimeout(() => {
-                    this.setState({ took: null });
+                    //this.setState({ took: null });
                 }, 2500);
             };
             if (err) {
