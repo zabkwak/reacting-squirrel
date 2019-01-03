@@ -133,10 +133,10 @@ export default class Data extends SocketComponent {
                 this.setState({ took }, tookHandler);
                 return;
             }
-            if (typeof onData === 'function') {
-                onData(data);
-            }
-            this.setState({ data, took }, tookHandler);
+            this.setState({
+                data: typeof onData === 'function' ? onData(data) : data,
+                took,
+            }, tookHandler);
         });
     }
 

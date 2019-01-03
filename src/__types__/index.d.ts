@@ -136,7 +136,7 @@ declare module 'reacting-squirrel' {
         events: Array<{ name: string, params?: any, key?: string }>;
         renderData: (data: any) => JSX.Element;
         onError?: (error: any) => void;
-        onData?: (data: any) => void;
+        onData?: (data: any) => any;
         onStart?: () => void;
         loaderBlock?: boolean;
         loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
