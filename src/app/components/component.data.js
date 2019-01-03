@@ -4,6 +4,7 @@ import async from 'async';
 
 import SocketComponent from './component.socket';
 import Loader from './loader';
+import Text from './text';
 
 export default class Data extends SocketComponent {
 
@@ -30,15 +31,25 @@ export default class Data extends SocketComponent {
 
     state = {
         data: null,
+        took: null,
     };
+
+    _tookTimeout = null;
 
     componentDidMount() {
         super.componentDidMount();
         this._loadData();
     }
 
+    componentWillUnmount() {
+        super.componentWillUnmount();
+        if (this._tookTimeout !== null) {
+            clearInterval(this._tookTimeout);
+        }
+    }
+
     load() {
-        this.setState({ data: null });
+        this.setState({ data: null, took: null });
         this._loadData();
     }
 
@@ -56,10 +67,35 @@ export default class Data extends SocketComponent {
         return (
             <div {...divProps}>
                 <Loader loaded={loaded} block={loaderBlock} size={loaderSize}>
+                    {this.renderTook()}
                     {loaded && renderData(data)}
                 </Loader>
             </div>
         );
+    }
+
+    renderTook() {
+        const { took } = this.state;
+        if (!this.getContext().DEV) {
+            return null;
+        }
+        if (took === null) {
+            return null;
+        }
+        return (
+            <div
+                style={{
+                    position: 'absolute',
+                    color: 'white',
+                    background: 'rgba(200, 200, 200, .6)',
+                    padding: 2,
+                    fontSize: 10,
+                }}
+            >
+                {Text.format('{0}ms', took)}
+            </div>
+        );
+
     }
 
     _loadData() {
@@ -70,6 +106,7 @@ export default class Data extends SocketComponent {
         if (typeof onStart === 'function') {
             onStart();
         }
+        const start = Date.now();
         async.each(events, ({ name, params, key }, callback) => {
             this.request(name, params, (err, r) => {
                 if (err) {
@@ -80,16 +117,26 @@ export default class Data extends SocketComponent {
                 callback();
             });
         }, (err) => {
+            const took = Date.now() - start;
+            const tookHandler = () => {
+                if (this._tookTimeout !== null) {
+                    clearTimeout(this._tookTimeout);
+                }
+                this._tookTimeout = setTimeout(() => {
+                    this.setState({ took: null });
+                }, 2500);
+            };
             if (err) {
                 if (typeof onError === 'function') {
                     onError(err);
                 }
+                this.setState({ took }, tookHandler);
                 return;
             }
             if (typeof onData === 'function') {
                 onData(data);
             }
-            this.setState({ data });
+            this.setState({ data, took }, tookHandler);
         });
     }
 
