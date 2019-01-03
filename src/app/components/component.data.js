@@ -134,7 +134,7 @@ export default class Data extends SocketComponent {
                 return;
             }
             this.setState({
-                data: typeof onData === 'function' ? onData(data) : data,
+                data: typeof onData === 'function' ? onData(data) || data : data,
                 took,
             }, tookHandler);
         });
