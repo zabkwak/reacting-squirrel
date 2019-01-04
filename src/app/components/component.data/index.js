@@ -78,7 +78,7 @@ export default class Data extends SocketComponent {
                 <Loader loaded={loaded || Boolean(error)} block={loaderBlock} size={loaderSize}>
                     {this.renderTook()}
                     {loaded && renderData(data)}
-                    {error && typeof renderError === 'function' && renderError(error)}
+                    {error && typeof renderError === 'function' && renderError(error, this)}
                 </Loader>
             </div>
         );
