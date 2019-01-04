@@ -135,6 +135,7 @@ declare module 'reacting-squirrel' {
     interface IDataComponentProps extends React.HTMLProps<DataComponent> {
         events: Array<{ name: string, params?: any, key?: string }>;
         renderData: (data: any) => JSX.Element;
+        renderError?: (error: { message: string, code: string }, component: this) => JSX.Element;
         onError?: (error: any) => void;
         onData?: (data: any) => any;
         onStart?: () => void;

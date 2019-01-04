@@ -17,6 +17,7 @@ export default class Data extends SocketComponent {
             key: PropTypes.string,
         })).isRequired,
         renderData: PropTypes.func.isRequired,
+        renderError: PropTypes.func,
         onError: PropTypes.func,
         onData: PropTypes.func,
         onStart: PropTypes.func,
@@ -25,6 +26,7 @@ export default class Data extends SocketComponent {
     };
 
     static defaultProps = {
+        renderError: null,
         onError: null,
         onData: null,
         onStart: null,
@@ -34,6 +36,7 @@ export default class Data extends SocketComponent {
     state = {
         data: null,
         took: null,
+        error: null,
     };
 
     _tookTimeout = null;
@@ -56,8 +59,10 @@ export default class Data extends SocketComponent {
     }
 
     render() {
-        const { renderData, loaderBlock, loaderSize } = this.props;
-        const { data } = this.state;
+        const {
+            renderData, renderError, loaderBlock, loaderSize,
+        } = this.props;
+        const { data, error } = this.state;
         const divProps = {};
         Object.keys(this.props).forEach((p) => {
             if (Object.keys(Data.propTypes).includes(p)) {
@@ -70,9 +75,10 @@ export default class Data extends SocketComponent {
         classNames.push('rs-data-component');
         return (
             <div {...divProps} className={classNames.join(' ')}>
-                <Loader loaded={loaded} block={loaderBlock} size={loaderSize}>
+                <Loader loaded={loaded || Boolean(error)} block={loaderBlock} size={loaderSize}>
                     {this.renderTook()}
                     {loaded && renderData(data)}
+                    {error && typeof renderError === 'function' && renderError(error)}
                 </Loader>
             </div>
         );
@@ -137,7 +143,7 @@ export default class Data extends SocketComponent {
                 if (typeof onError === 'function') {
                     onError(err);
                 }
-                this.setState({ took }, tookHandler);
+                this.setState({ took, error: err }, tookHandler);
                 return;
             }
             this.setState({
