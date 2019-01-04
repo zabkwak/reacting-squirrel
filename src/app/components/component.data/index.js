@@ -54,7 +54,7 @@ export default class Data extends SocketComponent {
     }
 
     load() {
-        this.setState({ data: null, took: null });
+        this.setState({ data: null, took: null, error: null });
         this._loadData();
     }
 
