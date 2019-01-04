@@ -12,10 +12,15 @@ import ErrorPage from './page.error';
 class Application extends CallbackEmitter {
 
     _container = null;
+
     _content = null;
+
     _title = null;
+
     _initialData = {};
+
     _started = false;
+
     _components = [];
 
     /**

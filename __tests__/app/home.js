@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { Page, Button, Text, Loader, DataComponent } from '../../src/app';
+import {
+    Page, Button, Text, Loader, DataComponent,
+} from '../../src/app';
 
 import './home.css';
 import './home.scss';

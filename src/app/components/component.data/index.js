@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import async from 'async';
 
-import SocketComponent from './component.socket';
-import Loader from './loader';
-import Text from './text';
+import SocketComponent from '../component.socket';
+import Loader from '../loader';
+import Text from '../text';
+
+import './style.scss';
 
 export default class Data extends SocketComponent {
 
@@ -64,8 +66,10 @@ export default class Data extends SocketComponent {
             divProps[p] = this.props[p];
         });
         const loaded = Boolean(data);
+        const classNames = divProps.className ? divProps.className.split(' ') : [];
+        classNames.push('rs-data-component');
         return (
-            <div style={{ position: 'relative' }} {...divProps}>
+            <div {...divProps} className={classNames.join(' ')}>
                 <Loader loaded={loaded} block={loaderBlock} size={loaderSize}>
                     {this.renderTook()}
                     {loaded && renderData(data)}

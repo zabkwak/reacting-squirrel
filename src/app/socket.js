@@ -13,21 +13,26 @@ class Socket extends CallbackEmitter {
      * The socket is not initiated.
      */
     STATE_NONE = 'none';
+
     /**
      * The socket is connecting to the server.
      */
     STATE_CONNECTING = 'connecting';
+
     /**
      * The socket is connected to the server.
      */
     STATE_CONNECTED = 'connected';
+
     /**
      * The socket is disconnected from the server.
      */
     STATE_DISCONNECTED = 'disconnected';
 
     _socket = null;
+
     _state = 'none';
+
     _events = [
         'handshake',
         'webpack.stats',

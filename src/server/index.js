@@ -64,10 +64,14 @@ class Server {
      * @type {any}
      */
     _app = null;
+
     _server = null;
+
     _webpack = null;
+
     /** @type {Route[]} */
     _routes = [];
+
     /** @type {AppConfig} */
     _config = {
         port: 8080,
@@ -105,7 +109,9 @@ class Server {
 
     /** @type {SocketEvent[]} */
     _socketEvents = [];
+
     _socketClasses = [];
+
     /** @type {CustomComponent[]} */
     _components = [];
 

@@ -8,7 +8,9 @@ const TIMEOUT = 30000;
 export default class SocketComponent extends Component {
 
     _requests = {};
+
     _socketListeners = [];
+
     _queue = [];
 
     __state__ = (socket, state) => {
