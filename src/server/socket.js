@@ -7,6 +7,10 @@ import SmartError from 'smart-error';
 /**
  * @typedef {import('./').default} Server
  * @typedef {import('./session').default} Session
+ * @typedef {import('./socket-class').default} SocketClass
+ * @typedef SocketEvent
+ * @property {string} event
+ * @property {function(any, function):void|Promise<any>} listener
  */
 
 class Socket {
@@ -14,6 +18,12 @@ class Socket {
     /** @type {Socket[]} */
     static _sockets = [];
 
+    /**
+     *
+     * @param {socketIO.Socket} socket
+     * @param {SocketEvent[]} events
+     * @param {SocketClass[]} classes
+     */
     static add(socket, events, classes) {
         const s = new this(socket);
         this._sockets.push(s);
@@ -101,6 +111,8 @@ class Socket {
 
     /** @type {socketIO.Socket} */
     _socket = null;
+
+    /** @type {string} */
     _id = null;
 
     /**

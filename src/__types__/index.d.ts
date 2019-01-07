@@ -281,9 +281,11 @@ declare module 'reacting-squirrel/server' {
         lang?: string;
     }
 
-    class Socket {
+    export class Socket {
 
         static add(socket: net.Socket, events: Array<ISocketEvent>, classes: Array<SocketClass>): void;
+
+        static broadcast(event: string, data: any, filter: (socket: Socket) => boolean): void;
 
         static itereateSockets(iterator: (socket: Socket) => void): void;
 

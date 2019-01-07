@@ -877,4 +877,5 @@ export {
     Layout,
     SocketClass,
     HttpError,
+    Socket,
 };

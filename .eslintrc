@@ -104,6 +104,7 @@
         "localStorage": true,
         "describe": true,
         "it": true,
-        "window": true
+        "window": true,
+        "location": true
     }
 }
