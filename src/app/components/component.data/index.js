@@ -94,16 +94,7 @@ export default class Data extends SocketComponent {
         }
         return (
             <div
-                style={{
-                    position: 'absolute',
-                    color: 'white',
-                    background: 'rgba(200, 200, 200, .6)',
-                    padding: 2,
-                    fontSize: 10,
-                    top: 0,
-                    left: 0,
-                    zIndex: 100,
-                }}
+                className="rs-data-component-took-info"
             >
                 {Text.format('{0}ms', took)}
             </div>

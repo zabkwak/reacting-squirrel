@@ -1,3 +1,14 @@
 .rs-data-component {
     position: relative;
 }
+
+.rs-data-component-took-info {
+    position: absolute;
+    color: white;
+    background: rgba(100, 100, 100, .6);
+    padding: 2;
+    font-size: 10;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
