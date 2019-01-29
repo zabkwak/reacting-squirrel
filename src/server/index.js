@@ -703,7 +703,7 @@ Application
         };
         this._webpack = webpack({
             mode: dev ? 'development' : 'production',
-            entry: `${this._getRSDirPath()}/entry.js`,
+            entry: ['@babel/polyfill', `${this._getRSDirPath()}/entry.js`],
             output: {
                 path: this._path,
                 filename,
@@ -718,7 +718,8 @@ Application
                         exclude: /node_modules/,
                         loader: 'babel-loader',
                         options: {
-                            presets: ['stage-2', 'react'],
+                            presets: ['@babel/preset-env', '@babel/preset-react'],
+                            plugins: ['@babel/plugin-transform-async-to-generator'],
                         },
                     },
                     {

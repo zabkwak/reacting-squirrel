@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+// import '@babel/polyfill';
 import Application, { Text } from '../../src/app';
 
 import dictionaryCzech from './res/text_cs-CZ.json';

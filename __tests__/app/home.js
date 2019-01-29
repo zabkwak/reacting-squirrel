@@ -17,6 +17,8 @@ export default class Home extends Page {
 
     async componentDidMount() {
         super.componentDidMount();
+        const a = { a: 'a' };
+        // alert({ b: 'b', ...a });
         this.emit('user.get');
         this.on('user.get', (err, user) => {
             if (err) {
@@ -35,11 +37,14 @@ export default class Home extends Page {
         this.request('user.getAsyncError', (err) => {
             // alert(err.message);
         });
-        try {
+        console.log('TRY/CATCH');
+        console.log(await this.call('user.get'));
+        /* try {
             await this.call('user.getAsyncError');
         } catch (e) {
-            // alert(e.message);
-        }
+            alert(e.message);
+        } */
+        console.log('BAF');
         this.getContext().addListener('pagerender', this._pageRender);
     }
 
