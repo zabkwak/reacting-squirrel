@@ -703,7 +703,7 @@ Application
         };
         this._webpack = webpack({
             mode: dev ? 'development' : 'production',
-            entry: ['@babel/polyfill', `${this._getRSDirPath()}/entry.js`],
+            entry: `${this._getRSDirPath()}/entry.js`,
             output: {
                 path: this._path,
                 filename,
