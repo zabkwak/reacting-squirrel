@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
     Page, Button, Text, Loader, DataComponent,
 } from '../../src/app';
@@ -17,6 +16,7 @@ export default class Home extends Page {
 
     async componentDidMount() {
         super.componentDidMount();
+        this.getContext().addListener('pagerender', this._pageRender);
         this.emit('user.get');
         this.on('user.get', (err, user) => {
             if (err) {
@@ -40,7 +40,7 @@ export default class Home extends Page {
         } catch (e) {
             // alert(e.message);
         }
-        this.getContext().addListener('pagerender', this._pageRender);
+        console.log('DID MOUNT END');
     }
 
     componentWillUnmount() {
@@ -84,6 +84,13 @@ export default class Home extends Page {
                 <Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
                 <Button href="/test" id="test-button">Invalid page</Button>
                 <Button id="state-button" onClick={() => this.getContext().pushState(null, { test: 1 })}>Push state query</Button>
+                <Button
+                    onClick={async () => {
+                        console.log(await this.call('user.getAsyncError'));
+                    }}
+                >
+                    Async request
+                </Button>
                 <div>
                     <Text tag="p" dictionaryKey="args" args={['one', 'two', 'three']} />
                 </div>
