@@ -13,8 +13,11 @@ export default class Page extends SocketComponent {
         initialData: PropTypes.any.isRequired,
     }
 
+    __pageRender__ = () => this.onPageRender();
+
     componentDidMount() {
         super.componentDidMount();
+        this.getContext().addListener('pagerender', this.__pageRender__);
         if (this.getContext().DEV) {
             console.log(`Page '${this.constructor.name}' did mount`, this.props);
         }
@@ -22,8 +25,11 @@ export default class Page extends SocketComponent {
 
     componentWillUnmount() {
         super.componentWillUnmount();
+        this.getContext().removeListener('pagerender', this._pageRender);
         if (this.getContext().DEV) {
             console.log(`Page '${this.constructor.name}' will unmount`);
         }
     }
+
+    onPageRender() { }
 }

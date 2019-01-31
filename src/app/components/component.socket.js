@@ -92,7 +92,6 @@ export default class SocketComponent extends Component {
         data._key = key;
         let done = false;
         const start = Date.now();
-        console.log('REQUEST', key);
         const listener = (socket, data) => {
             if (this.getContext().DEV) {
                 console.log(`Request ${event}`, { took: Date.now() - start, _key: data._key });

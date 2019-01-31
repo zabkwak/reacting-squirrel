@@ -12,11 +12,8 @@ export default class Home extends Page {
         user: null,
     };
 
-    _pageRender = (context, page) => console.log('PAGE RENDERED');
-
     async componentDidMount() {
         super.componentDidMount();
-        this.getContext().addListener('pagerender', this._pageRender);
         this.emit('user.get');
         this.on('user.get', (err, user) => {
             if (err) {
@@ -45,7 +42,10 @@ export default class Home extends Page {
 
     componentWillUnmount() {
         super.componentWillUnmount();
-        this.getContext().removeListener('pagerender', this._pageRender);
+    }
+
+    onPageRender() {
+        console.log('PAGE RENDERED');
     }
 
     render() {
