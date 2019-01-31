@@ -196,7 +196,9 @@ declare module 'reacting-squirrel' {
         emit<P = any>(event: string, data: P): this;
     }
 
-    export class Page<P extends IPageProps = { params: any, query: any, initialData: any }, S = {}, SS = any> extends SocketComponent<P, S, SS> { }
+    export class Page<P extends IPageProps = { params: any, query: any, initialData: any }, S = {}, SS = any> extends SocketComponent<P, S, SS> {
+        onPageRender(): void;
+    }
 
     export class DataComponent extends SocketComponent<IDataComponentProps> {
 
