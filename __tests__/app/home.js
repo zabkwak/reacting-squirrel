@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
     Page, Button, Text, Loader, DataComponent,
 } from '../../src/app';
@@ -13,12 +12,8 @@ export default class Home extends Page {
         user: null,
     };
 
-    _pageRender = (context, page) => console.log('PAGE RENDERED');
-
     async componentDidMount() {
         super.componentDidMount();
-        const a = { a: 'a' };
-        // alert({ b: 'b', ...a });
         this.emit('user.get');
         this.on('user.get', (err, user) => {
             if (err) {
@@ -37,20 +32,20 @@ export default class Home extends Page {
         this.request('user.getAsyncError', (err) => {
             // alert(err.message);
         });
-        console.log('TRY/CATCH');
-        console.log(await this.call('user.get'));
-        /* try {
+        try {
             await this.call('user.getAsyncError');
         } catch (e) {
-            alert(e.message);
-        } */
-        console.log('BAF');
-        this.getContext().addListener('pagerender', this._pageRender);
+            // alert(e.message);
+        }
+        console.log('DID MOUNT END');
     }
 
     componentWillUnmount() {
         super.componentWillUnmount();
-        this.getContext().removeListener('pagerender', this._pageRender);
+    }
+
+    onPageRender() {
+        console.log('PAGE RENDERED');
     }
 
     render() {
@@ -89,6 +84,13 @@ export default class Home extends Page {
                 <Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
                 <Button href="/test" id="test-button">Invalid page</Button>
                 <Button id="state-button" onClick={() => this.getContext().pushState(null, { test: 1 })}>Push state query</Button>
+                <Button
+                    onClick={async () => {
+                        console.log(await this.call('user.getAsyncError'));
+                    }}
+                >
+                    Async request
+                </Button>
                 <div>
                     <Text tag="p" dictionaryKey="args" args={['one', 'two', 'three']} />
                 </div>

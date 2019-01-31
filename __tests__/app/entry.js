@@ -13,3 +13,11 @@ Application.addListener('start', () => {
     }
     Text.setDictionary(dictionary);
 });
+
+const doAsync = async () => {
+    return true;
+};
+
+(async () => {
+    console.log('ASYNC', await doAsync());
+})();

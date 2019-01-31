@@ -99,9 +99,9 @@ export default class SocketComponent extends Component {
             done = true;
             if (data && data._key === key) {
                 callback(data.error, data.data);
+                Socket.removeListener(event, listener);
+                delete this._requests[key];
             }
-            Socket.removeListener(event, listener);
-            delete this._requests[key];
         };
         Socket.addListener(event, listener);
         this.emit(event, data);
