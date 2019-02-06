@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.7.2
+### Updates
+- updated server type definition
+
 ## 0.7.1
 ### Updates
 - server type definition in the server directory

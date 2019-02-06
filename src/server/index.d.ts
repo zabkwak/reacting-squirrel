@@ -82,7 +82,7 @@ declare module 'reacting-squirrel/server' {
         renderLoader(): JSX.Element;
     }
 
-    export class SocketClass {
+    export class SocketClass<S extends Session = Session> {
 
         getEvents(): Array<ISocketEvent>;
         broadcast(event: string, data: any): void;
@@ -91,7 +91,7 @@ declare module 'reacting-squirrel/server' {
 
         setSocket(socket: Socket): void;
 
-        getSession(): Session;
+        getSession(): S;
 
         getUser(): any;
     }
@@ -131,6 +131,8 @@ declare module 'reacting-squirrel/server' {
         registerRoute(method: 'get' | 'post' | 'put' | 'delete', route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
 
         registerSocketClass(cls: typeof SocketClass): this;
+
+        registerSocketClass(cls: new () => SocketClass<Session>): this;
 
         registerSocketEvent(event: string, listener: ISocketEvent['listener']): this;
 
