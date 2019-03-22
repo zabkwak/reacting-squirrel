@@ -217,10 +217,10 @@ class Server {
             ...this._config,
             ...config,
         };
-        if (!(new this._config.session() instanceof Session)) {
+        if (!(new this.Session() instanceof Session)) {
             throw new Error('Cannot create instance of Session.');
         }
-        if (!(new this._config.layoutComponent() instanceof Layout)) {
+        if (!(new this.Layout() instanceof Layout)) {
             throw new Error('Cannot create instance of Layout.');
         }
         this._path = path.resolve(`${this._config.staticDir}/${this._config.jsDir}`);
@@ -780,7 +780,7 @@ Application
                         setSession();
                     }
                 }
-                req.session = new session(sessionId);
+                req.session = new this.Session(sessionId);
                 res.render = ({
                     scripts, styles, data, title,
                 }) => {

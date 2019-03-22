@@ -32,9 +32,19 @@ export default class ErrorPage extends Page {
             <p>
                 {stack.split('\n').map((entry, index) => {
                     if (index === 0) {
-                        return <span key={index}>{entry}<br /></span>;
+                        return (
+                            <span key={entry}>
+                                {entry}
+                                <br />
+                            </span>
+                        );
                     }
-                    return <span key={index}>&nbsp;&nbsp;&nbsp;&nbsp;{entry}<br /></span>;
+                    return (
+                        <span key={entry} style={{ paddingLeft: 20 }}>
+                            {entry}
+                            <br />
+                        </span>
+                    );
                 })}
             </p>
         );

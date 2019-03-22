@@ -17,6 +17,7 @@ export default class Session {
      * @type {string}
      */
     id = null;
+
     _user = null;
 
     /**

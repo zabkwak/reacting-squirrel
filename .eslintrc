@@ -92,6 +92,11 @@
             {
                 "allowEmptyCatch": true
             }
+        ],
+        "import/no-dynamic-require": 1,
+        "global-require": 1,
+        "no-restricted-globals": [
+            2, "event"
         ]
     },
     "plugins": [
@@ -100,11 +105,12 @@
         "import"
     ],
     "globals": {
+        "window": true,
         "document": true,
         "localStorage": true,
         "describe": true,
         "it": true,
-        "window": true,
-        "location": true
+        "location": true,
+        "history": true
     }
 }

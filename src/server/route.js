@@ -8,26 +8,31 @@ export default class Route {
      * @type {'get'|'post'|'put'|'delete'}
      */
     method = null;
+
     /**
      * Route spec.
      * @type {string}
      */
     spec = null;
+
     /**
      * Relative path from the app directory to the component.
      * @type {string}
      */
     contentComponent = null;
+
     /**
      * Title of the page.
      * @type {string}
      */
     title = null;
+
     /**
      * If true the route requires authorized user.
      * @type {boolean}
      */
     requireAuth = false;
+
     /**
      * Callback to call when the route is called.
      * @type {function}

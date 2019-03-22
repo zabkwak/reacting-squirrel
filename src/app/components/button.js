@@ -32,6 +32,6 @@ export default class Button extends Component {
             refreshContent,
             ...props
         } = this.props;
-        return <button onClick={this._click} {...props} />;
+        return <button type="button" onClick={this._click} {...props} />;
     }
 }
