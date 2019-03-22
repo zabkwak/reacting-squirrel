@@ -14,14 +14,18 @@ export default class Home extends Page {
 
     async componentDidMount() {
         super.componentDidMount();
-        this.emit('user.get');
-        this.on('user.get', (err, user) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            this.setState({ user });
-        });
+        await this.loadState('homepage');
+        const { user } = this.state;
+        if (!user) {
+            this.emit('user.get');
+            this.on('user.get', (err, user) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                this.setState({ user });
+            });
+        }
         this.request('user.getPromise', (err, user) => {
             if (err) {
                 console.error(err);
@@ -41,6 +45,7 @@ export default class Home extends Page {
     }
 
     componentWillUnmount() {
+        this.saveState('homepage');
         super.componentWillUnmount();
     }
 

@@ -165,16 +165,26 @@ declare module 'reacting-squirrel' {
 
     export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS> {
 
-        componentDidMount(): void;
+        private static _stateStorage: { [key: string]: any };
 
-        componentWillUnmount(): void;
+        protected _mounted: boolean;
 
-        getContext(): Application;
+        public componentDidMount(): void;
 
-        getText(key: string): string;
-        getText(key: string, ...args: Array<any>): string;
+        public componentWillUnmount(): void;
 
-        onPopState(event: any): void;
+        public getContext(): Application;
+
+        public getText(key: string): string;
+        public getText(key: string, ...args: Array<any>): string;
+
+        protected onPopState(event: any): void;
+
+        protected saveState(key: string): void;
+
+        protected loadState(key: string): Promise<void>;
+
+        protected getStateKey(): string;
     }
 
     export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, SS> {
