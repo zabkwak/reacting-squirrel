@@ -5,15 +5,17 @@ import Component from './component';
 
 /**
  * Component for navigation throught the application. The click event calls {Application.navigate} method.
+ * @deprecated
  */
 export default class Button extends Component {
 
     static propTypes = {
-        href: PropTypes.string.isRequired,
+        href: PropTypes.string,
         refreshContent: PropTypes.bool,
     };
 
     static defaultProps = {
+        href: null,
         refreshContent: false,
     };
 
@@ -26,13 +28,10 @@ export default class Button extends Component {
     };
 
     render() {
-        const props = {};
-        Object.keys(this.props).forEach((k) => {
-            if (['refreshContent'].indexOf(k) >= 0) {
-                return;
-            }
-            props[k] = this.props[k];
-        });
+        const {
+            refreshContent,
+            ...props
+        } = this.props;
         return <button onClick={this._click} {...props} />;
     }
 }

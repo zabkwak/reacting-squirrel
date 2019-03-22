@@ -1,5 +1,5 @@
 declare module 'reacting-squirrel' {
-    import { Component as BaseComponent } from 'react';
+    import { Component as BaseComponent, ButtonHTMLAttributes } from 'react';
     import * as url from 'url';
 
     class Application extends CallbackEmitter {
@@ -108,7 +108,7 @@ declare module 'reacting-squirrel' {
     }
 
     interface IButtonProps {
-        href: string;
+        href?: string;
         refreshContent?: boolean;
     }
 
@@ -215,7 +215,11 @@ declare module 'reacting-squirrel' {
         load(): void;
     }
 
-    export class Button extends BaseComponent<IButtonProps> { }
+    /**
+     * Component for navigation throught the application. The click event calls {Application.navigate} method.
+     * @deprecated
+     */
+    export class Button extends BaseComponent<IButtonProps & React.ButtonHTMLAttributes<Button>> { }
 
     export class Text extends BaseComponent<ITextProps> {
 

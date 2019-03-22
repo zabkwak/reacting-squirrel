@@ -3,6 +3,7 @@
 ## 0.7.3
 ### Features
 - Saving & loading states of the components
+- Deprecating button component
 
 ## 0.7.2
 ### Updates
