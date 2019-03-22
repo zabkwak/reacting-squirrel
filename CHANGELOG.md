@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.7.3
+### Features
+- Saving & loading states of the components
+
 ## 0.7.2
 ### Updates
 - updated server type definition

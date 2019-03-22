@@ -221,645 +221,6 @@ export default class CustomComponent extends Component {
 
 ## TODO
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
-## Classes
-
-<dl>
-<dt><a href="#Server">Server</a></dt>
-<dd><p>Server part of the application.</p>
-</dd>
-</dl>
-
-## Functions
-
-<dl>
-<dt><a href="#render">render()</a></dt>
-<dd><p>Renders the base html. This method shouldn&#39;t be overriden.</p>
-</dd>
-<dt><a href="#renderContainer">renderContainer()</a></dt>
-<dd><p>Renders the container of the website.</p>
-</dd>
-<dt><a href="#generateId">generateId()</a></dt>
-<dd><p>Generates the random string as a session id.</p>
-</dd>
-<dt><a href="#setUser">setUser(user)</a></dt>
-<dd><p>Sets the user instance to the session.</p>
-</dd>
-<dt><a href="#getUser">getUser()</a></dt>
-<dd><p>Gets the user added to the session.</p>
-</dd>
-<dt><a href="#getEvents">getEvents()</a> ⇒ <code><a href="#SocketEvent">Array.&lt;SocketEvent&gt;</a></code></dt>
-<dd><p>Gets the list of all events and their listeners.</p>
-</dd>
-<dt><a href="#broadcast">broadcast(event, data, includeSelf, filter)</a></dt>
-<dd><p>Broadcasts the event to all connected sockets which will pass the filter method.</p>
-</dd>
-<dt><a href="#setSocket">setSocket(socket)</a></dt>
-<dd><p>Sets the current socket.</p>
-</dd>
-<dt><a href="#getSession">getSession()</a> ⇒ <code>Session</code></dt>
-<dd><p>Gets the session from the socket.</p>
-</dd>
-<dt><a href="#getUser">getUser()</a></dt>
-<dd><p>Gets the user from the session.</p>
-</dd>
-</dl>
-
-## Typedefs
-
-<dl>
-<dt><a href="#AuthCallback">AuthCallback</a> : <code>function</code></dt>
-<dd></dd>
-<dt><a href="#SocketEvent">SocketEvent</a></dt>
-<dd></dd>
-<dt><a href="#CustomComponent">CustomComponent</a></dt>
-<dd></dd>
-<dt><a href="#AppConfig">AppConfig</a></dt>
-<dd></dd>
-<dt><a href="#RouteMappings">RouteMappings</a></dt>
-<dd></dd>
-<dt><a href="#SocketEvent">SocketEvent</a></dt>
-<dd></dd>
-</dl>
-
-<a name="Server"></a>
-
-## Server
-Server part of the application.
-
-**Kind**: global class  
-
-* [Server](#Server)
-    * [new Server(config)](#new_Server_new)
-    * [._app](#Server+_app) : <code>any</code>
-    * [._routes](#Server+_routes) : <code>Array.&lt;Route&gt;</code>
-    * [._config](#Server+_config) : [<code>AppConfig</code>](#AppConfig)
-    * [._path](#Server+_path) : <code>string</code>
-    * [._bundlePath](#Server+_bundlePath) : <code>string</code>
-    * [._socketEvents](#Server+_socketEvents) : [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
-    * [._components](#Server+_components) : [<code>Array.&lt;CustomComponent&gt;</code>](#CustomComponent)
-    * [.port](#Server+port) : <code>number</code>
-    * [.staticDir](#Server+staticDir) : <code>string</code>
-    * [.staticDirAbsolute](#Server+staticDirAbsolute) : <code>string</code>
-    * [.dev](#Server+dev) : <code>boolean</code>
-    * [.path](#Server+path) : <code>string</code>
-    * [.bundlePath](#Server+bundlePath) : <code>string</code>
-    * [.bundlePathAbsolute](#Server+bundlePathAbsolute) : <code>string</code>
-    * [.appDir](#Server+appDir) : <code>string</code>
-    * [.appDirAbsolute](#Server+appDirAbsolute) : <code>string</code>
-    * [.Layout](#Server+Layout) : <code>JSX.Element</code>
-    * [.Session](#Server+Session) : <code>function</code>
-    * [.getServer()](#Server+getServer) ⇒ <code>http.Server</code>
-    * [.getSocketEvents()](#Server+getSocketEvents) ⇒ [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
-    * [.getSocketClasses()](#Server+getSocketClasses) ⇒ <code>Array.&lt;SocketClass&gt;</code>
-    * [.auth(session, next)](#Server+auth)
-    * [.get(route, contentComponent, title, [requireAuth], [callback])](#Server+get)
-    * [.registerRoute(method, route, contentComponent, title, [requireAuth], [callback])](#Server+registerRoute)
-    * [.registerSocketClass(Cls)](#Server+registerSocketClass)
-    * [.registerSocketEvent(event, listener)](#Server+registerSocketEvent)
-    * [.registerComponent(componentPath, elementId)](#Server+registerComponent)
-    * [.start([cb])](#Server+start)
-    * [._createRSFiles(cb)](#Server+_createRSFiles)
-    * [._setRoutes(cb)](#Server+_setRoutes)
-    * [._createEntryFile(cb)](#Server+_createEntryFile)
-    * [._createRoutingFile(map, cb)](#Server+_createRoutingFile)
-    * [._createComponentsFile(cb)](#Server+_createComponentsFile)
-    * [._createSocketMap(cb)](#Server+_createSocketMap)
-    * [._createPostCSSConfig(cb)](#Server+_createPostCSSConfig)
-    * [._validateAppDir(cb)](#Server+_validateAppDir)
-    * [._validateRSDir(cb)](#Server+_validateRSDir)
-    * [._start(cb)](#Server+_start)
-    * [._setApp()](#Server+_setApp)
-    * [._setWebpack()](#Server+_setWebpack)
-    * [._getRSDirPath()](#Server+_getRSDirPath) ⇒ <code>string</code>
-    * [._getRSDirPathAbsolute()](#Server+_getRSDirPathAbsolute) ⇒ <code>string</code>
-    * [._log(message)](#Server+_log)
-    * [._warn(message)](#Server+_warn)
-
-<a name="new_Server_new"></a>
-
-### new Server(config)
-Creates the instance of the server and prepares express app with socket.io.
-
-
-| Param | Type |
-| --- | --- |
-| config | [<code>AppConfig</code>](#AppConfig) | 
-
-<a name="Server+_app"></a>
-
-### server._app : <code>any</code>
-Express app instance.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+_routes"></a>
-
-### server._routes : <code>Array.&lt;Route&gt;</code>
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+_config"></a>
-
-### server._config : [<code>AppConfig</code>](#AppConfig)
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+_path"></a>
-
-### server._path : <code>string</code>
-Absolute path to the javascript directory for the webpack config.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+_bundlePath"></a>
-
-### server._bundlePath : <code>string</code>
-Bundle path in the website structure.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+_socketEvents"></a>
-
-### server._socketEvents : [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+_components"></a>
-
-### server._components : [<code>Array.&lt;CustomComponent&gt;</code>](#CustomComponent)
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+port"></a>
-
-### server.port : <code>number</code>
-Port on which the server listens.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+staticDir"></a>
-
-### server.staticDir : <code>string</code>
-Relative path to the static directory for the express app.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+staticDirAbsolute"></a>
-
-### server.staticDirAbsolute : <code>string</code>
-Absolute path to the static directory for the express app.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+dev"></a>
-
-### server.dev : <code>boolean</code>
-Flag of the dev status of the app.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+path"></a>
-
-### server.path : <code>string</code>
-Absolute path to the javascript directory for the webpack config.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+bundlePath"></a>
-
-### server.bundlePath : <code>string</code>
-Bundle path in the website structure.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+bundlePathAbsolute"></a>
-
-### server.bundlePathAbsolute : <code>string</code>
-Absolute path to the bundle file in the application structure.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+appDir"></a>
-
-### server.appDir : <code>string</code>
-Relative path to the application directory.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+appDirAbsolute"></a>
-
-### server.appDirAbsolute : <code>string</code>
-Absolute path to the application directory.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+Layout"></a>
-
-### server.Layout : <code>JSX.Element</code>
-JSX element for the layout component
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+Session"></a>
-
-### server.Session : <code>function</code>
-Object of the session.
-
-**Kind**: instance property of [<code>Server</code>](#Server)  
-<a name="Server+getServer"></a>
-
-### server.getServer() ⇒ <code>http.Server</code>
-Gets the http server.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-<a name="Server+getSocketEvents"></a>
-
-### server.getSocketEvents() ⇒ [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
-Gets the list of registered socket events.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-<a name="Server+getSocketClasses"></a>
-
-### server.getSocketClasses() ⇒ <code>Array.&lt;SocketClass&gt;</code>
-Gets the list of registered socket classes.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-<a name="Server+auth"></a>
-
-### server.auth(session, next)
-Calls the auth function from the config.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type |
-| --- | --- |
-| session | <code>Session</code> | 
-| next | <code>function</code> | 
-
-<a name="Server+get"></a>
-
-### server.get(route, contentComponent, title, [requireAuth], [callback])
-Registers the GET route.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| route | <code>string</code> | Route spec. |
-| contentComponent | <code>string</code> | Relative path from the {config.appDir} to the component. |
-| title | <code>string</code> | Title of the page. |
-| [requireAuth] | <code>boolean</code> | If true the route requires authorized user. |
-| [callback] | <code>function</code> | Callback to call when the route is called. |
-
-<a name="Server+registerRoute"></a>
-
-### server.registerRoute(method, route, contentComponent, title, [requireAuth], [callback])
-Registers the route.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| method | <code>&#x27;get&#x27;</code> \| <code>&#x27;post&#x27;</code> \| <code>&#x27;put&#x27;</code> \| <code>&#x27;delete&#x27;</code> | HTTP method of the route. |
-| route | <code>string</code> | Route spec. |
-| contentComponent | <code>string</code> | Relative path from the {config.appDir} to the component. |
-| title | <code>string</code> | Title of the page. |
-| [requireAuth] | <code>boolean</code> | If true the route requires authorized user. |
-| [callback] | <code>function</code> | Callback to call when the route is called. |
-
-<a name="Server+registerSocketClass"></a>
-
-### server.registerSocketClass(Cls)
-Registers the socket class to handle socket events.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Cls | <code>function</code> | Class inherited from SocketClass. |
-
-<a name="Server+registerSocketEvent"></a>
-
-### server.registerSocketEvent(event, listener)
-Registers the socket event.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| event | <code>string</code> | Name of the event. |
-| listener | <code>function</code> | Listener to call after the socket request. |
-
-<a name="Server+registerComponent"></a>
-
-### server.registerComponent(componentPath, elementId)
-Registers react components which are rendered into DOM elements.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| componentPath | <code>string</code> | Relative path from the {config.appDir} to the component. |
-| elementId | <code>string</code> | Identificator of the DOM element where the component should render. |
-
-<a name="Server+start"></a>
-
-### server.start([cb])
-Starts the express server. In that process it creates all necessary files.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [cb] | <code>function</code> | Callback to call after the server start. |
-
-<a name="Server+_createRSFiles"></a>
-
-### server._createRSFiles(cb)
-Creates the resting-squirrel files.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_setRoutes"></a>
-
-### server._setRoutes(cb)
-Registers the routes to the express app and creates the routing map for the front-end.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback called after the registration of the routes and creation of the routing map. |
-
-<a name="Server+_createEntryFile"></a>
-
-### server._createEntryFile(cb)
-Creates the entry file required for the webpack.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_createRoutingFile"></a>
-
-### server._createRoutingFile(map, cb)
-Creates the routing file for the front-end application.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| map | <code>Object.&lt;string, RouteMappings&gt;</code> | Map of the routes. |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_createComponentsFile"></a>
-
-### server._createComponentsFile(cb)
-Creates the file with custom components.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_createSocketMap"></a>
-
-### server._createSocketMap(cb)
-Creates the socket map for the front-end application.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_createPostCSSConfig"></a>
-
-### server._createPostCSSConfig(cb)
-Creates the postcss config for the front-end application.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_validateAppDir"></a>
-
-### server._validateAppDir(cb)
-Checks if the {config.appDir} exists. If not the directory is created.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_validateRSDir"></a>
-
-### server._validateRSDir(cb)
-Checks if the RS directory exists. If not the directory is created.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the creation process. |
-
-<a name="Server+_start"></a>
-
-### server._start(cb)
-Starts the webpack and the express server. If the app is in dev mode the webpack watcher is started.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| cb | <code>function</code> | Callback to call after the server start. |
-
-<a name="Server+_setApp"></a>
-
-### server._setApp()
-Sets the express app, webpack and registers socket server.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-<a name="Server+_setWebpack"></a>
-
-### server._setWebpack()
-Creates the webpack instance.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-<a name="Server+_getRSDirPath"></a>
-
-### server._getRSDirPath() ⇒ <code>string</code>
-Gets the relative path to the RS directory.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-<a name="Server+_getRSDirPathAbsolute"></a>
-
-### server._getRSDirPathAbsolute() ⇒ <code>string</code>
-Gets the absolute path to the RS directory.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-<a name="Server+_log"></a>
-
-### server._log(message)
-Logs the message to the console if the app is in the dev mode.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| message | <code>string</code> | Message to log. |
-
-<a name="Server+_warn"></a>
-
-### server._warn(message)
-Logs the warning message to the console.
-
-**Kind**: instance method of [<code>Server</code>](#Server)  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| message | <code>string</code> | Message to log. |
-
-<a name="render"></a>
-
-## render()
-Renders the base html. This method shouldn't be overriden.
-
-**Kind**: global function  
-<a name="renderContainer"></a>
-
-## renderContainer()
-Renders the container of the website.
-
-**Kind**: global function  
-<a name="generateId"></a>
-
-## generateId()
-Generates the random string as a session id.
-
-**Kind**: global function  
-<a name="setUser"></a>
-
-## setUser(user)
-Sets the user instance to the session.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| user | <code>\*</code> | User's data. |
-
-<a name="getUser"></a>
-
-## getUser()
-Gets the user added to the session.
-
-**Kind**: global function  
-<a name="getEvents"></a>
-
-## getEvents() ⇒ [<code>Array.&lt;SocketEvent&gt;</code>](#SocketEvent)
-Gets the list of all events and their listeners.
-
-**Kind**: global function  
-<a name="broadcast"></a>
-
-## broadcast(event, data, includeSelf, filter)
-Broadcasts the event to all connected sockets which will pass the filter method.
-
-**Kind**: global function  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| event | <code>string</code> |  | Name of the event to broadcast. |
-| data | <code>any</code> |  | Data to broadcast. |
-| includeSelf | <code>boolean</code> | <code>false</code> | If true the data are broadcasting also to the requesting socket. |
-| filter | <code>function</code> |  | Filter function to validate sockets. |
-
-<a name="setSocket"></a>
-
-## setSocket(socket)
-Sets the current socket.
-
-**Kind**: global function  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| socket | <code>Socket</code> | Current requesting socket. |
-
-<a name="getSession"></a>
-
-## getSession() ⇒ <code>Session</code>
-Gets the session from the socket.
-
-**Kind**: global function  
-<a name="getUser"></a>
-
-## getUser()
-Gets the user from the session.
-
-**Kind**: global function  
-<a name="AuthCallback"></a>
-
-## AuthCallback : <code>function</code>
-**Kind**: global typedef  
-<a name="SocketEvent"></a>
-
-## SocketEvent
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type |
-| --- | --- |
-| event | <code>string</code> | 
-| listener | <code>function</code> | 
-
-<a name="CustomComponent"></a>
-
-## CustomComponent
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| path | <code>string</code> | Absolute path to the component. |
-| elementId | <code>string</code> | Identificator of the DOM element where the component should render. |
-
-<a name="AppConfig"></a>
-
-## AppConfig
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| port | <code>number</code> | Port on which the app listens. |
-| staticDir | <code>string</code> | Relative path to the static directory for the express app. |
-| dev | <code>boolean</code> | Flag of the dev status of the app. |
-| jsDir | <code>string</code> | Name of the directory where the javascript is located in the staticDir. |
-| filename | <code>string</code> | Name of the file. |
-| appDir | <code>string</code> | Relative path to the app directory. |
-| entryFile | <code>string</code> | Relative path to the entry file. |
-| layoutComponent | <code>JSX.Element</code> | React component with default html code. It must extend Layout from the module. |
-| cookieSecret | <code>string</code> | Secret which is used to sign cookies. |
-| scripts | <code>Array.&lt;string&gt;</code> | List of the scripts loaded in the base html. |
-| styles | <code>Array.&lt;string&gt;</code> | List of the styles loaded in the base html. |
-| session | <code>function</code> | Class of the session. It must extend Session from the module. |
-| auth | <code>function</code> | Auth function called on the routes which are requiring authorization. |
-| errorHandler | <code>function</code> | Function to handle errors in the route execution. |
-| bundlePathRelative | <code>boolean</code> | Indicates if the bundle is loaded relatively in the output html. |
-| webpack | <code>any</code> | Custom webpack config. |
-
-<a name="RouteMappings"></a>
-
-## RouteMappings
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type | Description |
-| --- | --- | --- |
-| title | <code>string</code> | Title of the page. |
-| spec | <code>string</code> | Route spec of the page. |
-| path | <code>string</code> | Absolute path to the component. |
-
-<a name="SocketEvent"></a>
-
-## SocketEvent
-**Kind**: global typedef  
-**Properties**
-
-| Name | Type |
-| --- | --- |
-| event | <code>string</code> | 
-| listener | <code>function</code> | 
 
 ## Modules
 
@@ -898,6 +259,15 @@ Gets the user from the session.
 </dd>
 <dt><a href="#onPopState">onPopState(event)</a></dt>
 <dd><p>Method called after the window.onpopstate event.</p>
+</dd>
+<dt><a href="#saveState">saveState(key)</a></dt>
+<dd><p>Saves the component state to memory storage.</p>
+</dd>
+<dt><a href="#loadState">loadState(key)</a> ⇒ <code>Promise.&lt;void&gt;</code></dt>
+<dd><p>Loads the saved state and sets it to the component state.</p>
+</dd>
+<dt><a href="#getStateKey">getStateKey()</a> ⇒ <code>string</code></dt>
+<dd><p>Gets the state key for memory storage. If the method returns string the saveState and loadState methods are automatically called in the component lifecycle.</p>
 </dd>
 <dt><a href="#request">request(event, data, timeout, callback)</a></dt>
 <dd><p>Requests the data over the socket. It automatically handles listeners on the Socket class and calls the callback.</p>
@@ -1105,6 +475,8 @@ Base class for client application context.
 
 * [Application](#Application)
     * [.DEV](#Application+DEV) ⇒ <code>boolean</code>
+    * ~~[.initialData](#Application+initialData) ⇒ <code>any</code>~~
+    * [.getInitialData(key)](#Application+getInitialData) ⇒ <code>any</code>
     * [.registerRoutingMap(routingMap)](#Application+registerRoutingMap)
     * [.registerSocketEvents(events)](#Application+registerSocketEvents)
     * [.registerComponents(components)](#Application+registerComponents)
@@ -1121,6 +493,23 @@ Base class for client application context.
 
 ### application.DEV ⇒ <code>boolean</code>
 **Kind**: instance property of [<code>Application</code>](#Application)  
+<a name="Application+initialData"></a>
+
+### ~~application.initialData ⇒ <code>any</code>~~
+***Deprecated***
+
+**Kind**: instance property of [<code>Application</code>](#Application)  
+<a name="Application+getInitialData"></a>
+
+### application.getInitialData(key) ⇒ <code>any</code>
+Gets the initial data.
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+
+| Param | Type | Default |
+| --- | --- | --- |
+| key | <code>string</code> | <code>null</code> | 
+
 <a name="Application+registerRoutingMap"></a>
 
 ### application.registerRoutingMap(routingMap)
@@ -1308,6 +697,34 @@ Method called after the window.onpopstate event.
 | --- | --- |
 | event | <code>\*</code> | 
 
+<a name="saveState"></a>
+
+## saveState(key)
+Saves the component state to memory storage.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| key | <code>string</code> | 
+
+<a name="loadState"></a>
+
+## loadState(key) ⇒ <code>Promise.&lt;void&gt;</code>
+Loads the saved state and sets it to the component state.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| key | <code>string</code> | 
+
+<a name="getStateKey"></a>
+
+## getStateKey() ⇒ <code>string</code>
+Gets the state key for memory storage. If the method returns string the saveState and loadState methods are automatically called in the component lifecycle.
+
+**Kind**: global function  
 <a name="request"></a>
 
 ## request(event, data, timeout, callback)
