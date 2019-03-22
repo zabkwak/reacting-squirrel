@@ -60,16 +60,9 @@ export default class Data extends SocketComponent {
 
     render() {
         const {
-            renderData, renderError, loaderBlock, loaderSize,
+            events, renderData, renderError, onError, onData, onStart, loaderBlock, loaderSize, ...divProps
         } = this.props;
         const { data, error } = this.state;
-        const divProps = {};
-        Object.keys(this.props).forEach((p) => {
-            if (Object.keys(Data.propTypes).includes(p)) {
-                return;
-            }
-            divProps[p] = this.props[p];
-        });
         const loaded = Boolean(data);
         const classNames = divProps.className ? divProps.className.split(' ') : [];
         classNames.push('rs-data-component');

@@ -39,15 +39,13 @@ export default class TextComponent extends Component {
     }
 
     render() {
-        const Tag = this.props.tag;
-        const { args, dictionaryKey } = this.props;
-        const props = {};
-        Object.keys(this.props).forEach((k) => {
-            if (['tag', 'args', 'dictionaryKey'].includes(k)) {
-                return;
-            }
-            props[k] = this.props[k];
-        });
+        const {
+            args,
+            dictionaryKey,
+            tag,
+            ...props
+        } = this.props;
+        const Tag = tag;
         const value = Text.get.apply(Text, [dictionaryKey, ...args]);
         return <Tag {...props}>{value}</Tag>;
     }

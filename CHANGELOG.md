@@ -4,6 +4,7 @@
 ### Features
 - Saving & loading states of the components
 - Deprecating button component
+- Minor refactoring
 
 ## 0.7.2
 ### Updates
