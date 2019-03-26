@@ -73,7 +73,7 @@ import { SocketClass } from 'reacting-squirrel/server';
 
 export default class User extends SocketClass {
 
-    load(data, next) {
+    load(session, data, next) {
         next(null, this.getUser());
     }
 }
@@ -133,7 +133,7 @@ import Server from 'reacting-squirrel/server';
 const app = new Server();
 
 // Frontend app can emit 'test' with some data. The event's listener emits the data back.
-app.registerSocketEvent('test', (data, next) => next(null, data));
+app.registerSocketEvent('test', (session, data, next) => next(null, data));
 
 app.start();
 ```
@@ -145,7 +145,7 @@ import { SocketClass } from 'reacting-squirrel/server';
 
 export default class User extends SocketClass {
 
-    load(data, next) {
+    load(session, data, next) {
         // sends the authorized user data after the 'user.load' socket request
         next(null, this.getUser());
     }
