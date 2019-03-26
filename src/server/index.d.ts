@@ -25,14 +25,21 @@ declare module 'reacting-squirrel/server' {
         webpack?: any;
     }
 
-    interface ISocketEvent {
+    interface ISocketEvent<S extends Session = Session> {
         event: string;
-        listener: (data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
+        listener: (session: S, data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
     }
 
-    interface ILayoutProps {
+    interface ILayoutPropsInitialData {
+        user: any;
+        dev: boolean;
+        timestamp: number;
+    }
+
+    export interface ILayoutProps<T = {}> {
         title: string;
-        initialData: any;
+        initialData: ILayoutPropsInitialData & T;
+        /** @deprecated */
         user?: any;
         scripts?: Array<string>;
         styles?: Array<string>;
@@ -75,7 +82,7 @@ declare module 'reacting-squirrel/server' {
         getUser(): any;
     }
 
-    export class Layout extends Component<ILayoutProps> {
+    export class Layout<P = ILayoutProps> extends Component<P> {
 
         renderContainer(): JSX.Element;
 
@@ -84,7 +91,7 @@ declare module 'reacting-squirrel/server' {
 
     export class SocketClass<S extends Session = Session> {
 
-        getEvents(): Array<ISocketEvent>;
+        getEvents(): Array<ISocketEvent<S>>;
         broadcast(event: string, data: any): void;
         broadcast(event: string, data: any, includeSelf: boolean): void;
         broadcast(event: string, data: any, includeSelf: boolean, filter: (socket: Socket) => boolean): void;

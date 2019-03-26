@@ -1,10 +1,12 @@
 # CHANGELOG
 
-## 0.7.3
+## 0.8.0
 ### Features
 - Saving & loading states of the components
 - Deprecating button component
 - Minor refactoring
+### Fixes
+- Fixed missing sessions in the socket classes
 
 ## 0.7.2
 ### Updates

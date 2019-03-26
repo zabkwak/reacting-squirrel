@@ -49,7 +49,7 @@ class Socket {
                     response._key = key;
                     s.emit(event, response);
                 };
-                const p = listener(data, (err, data) => {
+                const p = listener(s.getSession(), data, (err, data) => {
                     if (sent) {
                         console.warn('Data already sent using Promise.');
                         return;
@@ -81,7 +81,6 @@ class Socket {
                 });
             });
         });
-        classes.forEach(cls => cls.setSocket(s));
     }
 
     /**

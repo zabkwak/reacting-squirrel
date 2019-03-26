@@ -2,17 +2,17 @@ import { SocketClass } from '../../../server';
 
 export default class User extends SocketClass {
 
-    get(data, next) {
+    get(session, data, next) {
         next(null, { id: 1, name: 'Test User' });
     }
 
-    getPromise() {
+    getPromise(session) {
         return new Promise((resolve) => {
             resolve({ id: 1, name: 'Test User' });
         });
     }
 
-    async getAsyncError() {
+    async getAsyncError(session) {
         return a;
     }
 }

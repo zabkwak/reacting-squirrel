@@ -9,7 +9,7 @@
  *
  * @example
  * class User extends SocketClass {
- *      load(data, next) {
+ *      load(session, data, next) {
  *          next(null, { id: 1, name: 'Baf Lek' });
  *      }
  * }
@@ -39,7 +39,7 @@ export default class SocketClass {
             .filter(method => ['constructor', 'getEvents', 'broadcast', 'setSocket', 'getSession', 'getUser'].indexOf(method) < 0)
             .map((method) => {
                 const event = `${this.constructor.name.toLowerCase()}.${method}`;
-                const listener = (data, next) => this[method].apply(this, [data, next]);
+                const listener = (session, data, next) => this[method].apply(this, [session, data, next]);
                 return { event, listener };
             });
     }
