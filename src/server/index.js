@@ -488,7 +488,8 @@ class Server {
         }
         fs.writeFile(
             `${this._getRSDirPath()}/entry.js`,
-            `import Application, { Text } from '${pathToTheModule}';
+            `import '@babel/polyfill';
+import Application, { Text } from '${pathToTheModule}';
 ${entryFileImport || ''}
 import routingMap from './router.map';
 import socketEvents from './socket.map';

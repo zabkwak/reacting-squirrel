@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.8.1
+### Features
+- Importing @babel/polyfill in the entry script
+
 ## 0.8.0
 ### Features
 - Saving & loading states of the components
