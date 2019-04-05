@@ -122,6 +122,7 @@ declare module 'reacting-squirrel/server' {
         constructor(config?: IAppConfig);
 
         getServer(): http.Server;
+        getApp(): express.Application;
 
         getSocketEvents(): Array<ISocketEvent>;
 

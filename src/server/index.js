@@ -240,6 +240,10 @@ class Server {
         return this._server;
     }
 
+    getApp() {
+        return this._app;
+    }
+
     /**
      * Gets the list of registered socket events.
      *

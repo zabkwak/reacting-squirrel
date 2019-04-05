@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.8.2
+### Updates
+- updated server type definition
+
 ## 0.8.1
 ### Features
 - Importing @babel/polyfill in the entry script
