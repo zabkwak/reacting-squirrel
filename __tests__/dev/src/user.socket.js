@@ -15,4 +15,8 @@ export default class User extends SocketClass {
     async getAsyncError(session) {
         return a;
     }
+
+    getSyncError(session) {
+        throw new Error('Error');
+    }
 }

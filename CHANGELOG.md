@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.8.3
+### Features
+- catching errors in socket events
+
 ## 0.8.2
 ### Updates
 - updated server type definition

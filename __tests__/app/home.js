@@ -85,6 +85,16 @@ export default class Home extends Page {
                     loaderBlock={false}
                     loaderSize="small"
                 />
+                <DataComponent
+                    events={[{
+                        name: 'user.getSyncError',
+                        key: 'user',
+                    }]}
+                    renderData={({ user }) => <h2>{user.name}</h2>}
+                    renderError={({ message, code }) => <h2>Error: {code} - {message}</h2>}
+                    loaderBlock={false}
+                    loaderSize="small"
+                />
                 <Button href="/about" id="navigate-button">About page</Button>
                 <Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
                 <Button href="/test" id="test-button">Invalid page</Button>

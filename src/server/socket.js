@@ -49,36 +49,41 @@ class Socket {
                     response._key = key;
                     s.emit(event, response);
                 };
-                const p = listener(s.getSession(), data, (err, data) => {
-                    if (sent) {
-                        console.warn('Data already sent using Promise.');
+                try {
+                    const p = listener(s.getSession(), data, (err, data) => {
+                        if (sent) {
+                            console.warn('Data already sent using Promise.');
+                            return;
+                        }
+                        sent = true;
+                        handle(err, data);
+                    });
+                    if (!(p instanceof Promise)) {
                         return;
                     }
+                    p.then((data) => {
+                        if (sent) {
+                            console.warn('Data already sent using callback.');
+                            return;
+                        }
+                        if (data === undefined) {
+                            console.warn('Listeners using promises cannot return undefined.');
+                            return;
+                        }
+                        sent = true;
+                        handle(null, data === null ? undefined : data);
+                    }).catch((err) => {
+                        if (sent) {
+                            console.warn('Data already sent using callback.');
+                            return;
+                        }
+                        sent = true;
+                        handle(err);
+                    });
+                } catch (e) {
                     sent = true;
-                    handle(err, data);
-                });
-                if (!(p instanceof Promise)) {
-                    return;
+                    handle(e);
                 }
-                p.then((data) => {
-                    if (sent) {
-                        console.warn('Data already sent using callback.');
-                        return;
-                    }
-                    if (data === undefined) {
-                        console.warn('Listeners using promises cannot return undefined.');
-                        return;
-                    }
-                    sent = true;
-                    handle(null, data === null ? undefined : data);
-                }).catch((err) => {
-                    if (sent) {
-                        console.warn('Data already sent using callback.');
-                        return;
-                    }
-                    sent = true;
-                    handle(err);
-                });
             });
         });
     }
