@@ -27,7 +27,7 @@ declare module 'reacting-squirrel/server' {
 
     interface ISocketEvent<S extends Session = Session> {
         event: string;
-        listener: (session: S, data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
+        listener: (socket: Socket<S>, data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
     }
 
     interface ILayoutPropsInitialData {
@@ -49,7 +49,7 @@ declare module 'reacting-squirrel/server' {
         lang?: string;
     }
 
-    export class Socket {
+    export class Socket<S extends Session = Session> {
 
         static add(socket: net.Socket, events: Array<ISocketEvent>, classes: Array<SocketClass>): void;
 
@@ -67,6 +67,7 @@ declare module 'reacting-squirrel/server' {
         broadcast(event: string, data: any, includeSelf: boolean): void;
         broadcast(event: string, data: any, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
 
+        getSession(): S;
     }
 
     export class Session {

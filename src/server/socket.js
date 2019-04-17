@@ -50,7 +50,7 @@ class Socket {
                     s.emit(event, response);
                 };
                 try {
-                    const p = listener(s.getSession(), data, (err, data) => {
+                    const p = listener(s, data, (err, data) => {
                         if (sent) {
                             console.warn('Data already sent using Promise.');
                             return;

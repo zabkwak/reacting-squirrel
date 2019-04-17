@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.0
+### Features
+- Passing `Socket` instance to socket listeners instead of `Session`.
+
 ## 0.8.3
 ### Features
 - catching errors in socket events
