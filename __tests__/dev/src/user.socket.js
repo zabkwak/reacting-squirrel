@@ -3,7 +3,6 @@ import { SocketClass } from '../../../server';
 export default class User extends SocketClass {
 
     get(socket, data, next) {
-        console.log(socket);
         next(null, { id: 1, name: 'Test User' });
     }
 

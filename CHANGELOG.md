@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.1
+### Features
+- `on` method in the `Socket` class for handling base socket events
+
 ## 0.9.0
 ### Features
 - Passing `Socket` instance to socket listeners instead of `Session`.

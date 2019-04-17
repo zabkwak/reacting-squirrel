@@ -18,6 +18,8 @@ class Socket {
     /** @type {Socket[]} */
     static _sockets = [];
 
+    static _listeners = {};
+
     /**
      *
      * @param {socketIO.Socket} socket
@@ -27,11 +29,14 @@ class Socket {
     static add(socket, events, classes) {
         const s = new this(socket);
         this._sockets.push(s);
-        s.on('error', err => console.error(err));
+        s.on('error', (err) => {
+            console.error(err);
+            this._callListener('error', s, err);
+        });
         s.on('disconnect', () => {
             this._sockets.splice(this._sockets.indexOf(s), 1);
+            this._callListener('disconnect', s);
         });
-
         events.forEach(({ event, listener }) => {
             s.on(event, (data = {}) => {
                 let sent;
@@ -86,6 +91,14 @@ class Socket {
                 }
             });
         });
+        this._callListener('connection', s);
+    }
+
+    static on(event, listener) {
+        if (!this._listeners[event]) {
+            this._listeners[event] = [];
+        }
+        this._listeners[event].push(listener);
     }
 
     /**
@@ -111,6 +124,17 @@ class Socket {
      */
     static iterateSockets(iterator) {
         this._sockets.forEach(iterator);
+    }
+
+    static _callListener(event, socket, ...args) {
+        if (!this._listeners[event]) {
+            return;
+        }
+        this._listeners[event].forEach((listener) => {
+            if (typeof listener === 'function') {
+                listener(socket, ...args);
+            }
+        });
     }
 
     /** @type {socketIO.Socket} */

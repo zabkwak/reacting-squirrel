@@ -57,6 +57,9 @@ declare module 'reacting-squirrel/server' {
 
         static itereateSockets(iterator: (socket: Socket) => void): void;
 
+        static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>) => void): void;
+        static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>, ...args: Array<any>) => void): void;
+
         constructor(socket: net.Socket);
 
         emit(event: string, data: any): void;

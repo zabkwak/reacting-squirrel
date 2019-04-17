@@ -1,7 +1,7 @@
 import React from 'react';
 import '@babel/polyfill';
 
-import Server, { Layout } from '../../../server';
+import Server, { Layout, Socket } from '../../../server';
 import User from './user.socket';
 
 class CustomLayout extends Layout {
@@ -45,3 +45,5 @@ app.start((err) => {
     }
     console.log('App started');
 });
+
+Socket.on('connection', socket => console.log(socket));
