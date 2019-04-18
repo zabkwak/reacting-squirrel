@@ -6,17 +6,21 @@ export default class User extends SocketClass {
         next(null, { id: 1, name: 'Test User' });
     }
 
-    getPromise(session) {
+    getPromise(socket) {
         return new Promise((resolve) => {
             resolve({ id: 1, name: 'Test User' });
         });
     }
 
-    async getAsyncError(session) {
+    async getAsyncError(socket) {
         return a;
     }
 
-    getSyncError(session) {
+    getSyncError(socket) {
         throw new Error('Error');
+    }
+
+    async getVoidPromise(socket) {
+        console.log('VOID PROMISE');
     }
 }

@@ -71,10 +71,6 @@ class Socket {
                             console.warn('Data already sent using callback.');
                             return;
                         }
-                        if (data === undefined) {
-                            console.warn('Listeners using promises cannot return undefined.');
-                            return;
-                        }
                         sent = true;
                         handle(null, data === null ? undefined : data);
                     }).catch((err) => {
