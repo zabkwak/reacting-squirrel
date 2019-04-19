@@ -8,3 +8,4 @@
 /__tests__/dev/dist
 /__types__
 /docs
+/package-lock.json
