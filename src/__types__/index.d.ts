@@ -38,6 +38,10 @@ declare module 'reacting-squirrel' {
         pushState(path: string, q: { [key: string]: string }): void;
 
         setTitle(title: string): void;
+
+        setRef<T = any>(ref: T, key: string): void;
+
+        getRef<T = any>(key: string): T;
     }
 
     class Route {

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.3
+### Features
+- possibility to register component's ref to the application context
+
 ## 0.9.2
 ### Features
 - allowed void Promises in the socket listeners

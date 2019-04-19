@@ -23,6 +23,8 @@ class Application extends CallbackEmitter {
 
     _components = [];
 
+    _refs = {};
+
     /**
      * @returns {boolean}
      */
@@ -128,7 +130,7 @@ class Application extends CallbackEmitter {
                 return;
             }
             const Component = component.component;
-            this.renderComponent(<Component />, target);
+            this.renderComponent(<Component ref={ref => this.setRef(ref, component.elementId)} />, target);
         });
         this.render(Router.getRoute());
         if (connectSocket) {
@@ -223,6 +225,25 @@ class Application extends CallbackEmitter {
      */
     setTitle(title) {
         this._title.textContent = title;
+    }
+
+    /**
+     * Sets the reference of the component to the application context.
+     *
+     * @param {any} ref Reference of the component.
+     * @param {string} key Key of the reference in the application context.
+     */
+    setRef(ref, key) {
+        this._refs[key] = ref;
+    }
+
+    /**
+     * Gets the reference of the component in the application context.
+     *
+     * @param {string} key Key of the reference in the application context.
+     */
+    getRef(key) {
+        return this._refs[key];
     }
 
     _checkStartedState() {

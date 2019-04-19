@@ -42,6 +42,7 @@ export default class Home extends Page {
             // alert(e.message);
         }
         console.log('DID MOUNT END');
+        console.log(this.getContext().getRef('test'));
     }
 
     componentWillUnmount() {
