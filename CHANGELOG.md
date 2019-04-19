@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.9.2
+### Features
+- allowed void Promises in the socket listeners
+### Fixes
+- version of the app in the scripts or styles paths with query string included
+
 ## 0.9.1
 ### Features
 - `on` method in the `Socket` class for handling base socket events

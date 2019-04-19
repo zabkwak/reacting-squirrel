@@ -38,13 +38,13 @@ export default class Layout extends Component {
                 <head>
                     <meta charSet={charSet} />
                     <title>{title}</title>
-                    {scripts.map(s => <script key={s} src={`${s}?v=${version}`} type="text/javascript" />)}
-                    {styles.map(s => <link key={s} href={`${s}?v=${version}`} rel="stylesheet" />)}
+                    {scripts.map(s => <script key={s} src={this._createPath(s, version)} type="text/javascript" />)}
+                    {styles.map(s => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
                 </head>
                 <body>
                     {this.renderContainer()}
                     <script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
-                    <script type="text/javascript" src={`${bundle}?v=${version}`} />
+                    <script type="text/javascript" src={this._createPath(bundle, version)} />
                 </body>
             </html>
         );
@@ -79,5 +79,10 @@ export default class Layout extends Component {
                 }}
             />
         );
+    }
+
+    _createPath(path, version) {
+        // TODO use url module?
+        return `${path}${path.indexOf('?') >= 0 ? '&' : '?'}v=${version}`;
     }
 }

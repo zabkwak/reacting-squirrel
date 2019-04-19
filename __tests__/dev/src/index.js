@@ -26,6 +26,8 @@ const app = new Server({
     dev: true,
     layoutComponent: CustomLayout,
     entryFile: 'entry.js',
+    styles: ['/css/main.css'],
+    scripts: ['/js/script.js?api_key=API_KEY'],
     // cookieSecret: 'dev-secret',
 });
 
