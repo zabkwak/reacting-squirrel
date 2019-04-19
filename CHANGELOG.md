@@ -3,6 +3,7 @@
 ## 0.9.2
 ### Features
 - allowed void Promises in the socket listeners
+- added option to handle with webpack progress
 ### Fixes
 - version of the app in the scripts or styles paths with query string included
 

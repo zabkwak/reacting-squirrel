@@ -29,6 +29,11 @@ const app = new Server({
     styles: ['/css/main.css'],
     scripts: ['/js/script.js?api_key=API_KEY'],
     // cookieSecret: 'dev-secret',
+    /*
+    onWebpackProgress: (percents, message) => {
+        console.log(`${percents * 100}%`, message);
+    },
+    */
 });
 
 app.get('/', 'home', 'Home');

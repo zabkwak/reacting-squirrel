@@ -22,6 +22,7 @@ declare module 'reacting-squirrel/server' {
         auth?: (session: Session, next: (err?: any) => void) => void;
         errorHandler?: (err: any, req: express.Request, res: express.Response, next: (err?: any) => void) => void;
         bundlePathRelative?: boolean;
+        onWebpackProgress?: (percents: number, message: string) => void;
         webpack?: any;
     }
 

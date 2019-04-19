@@ -12,6 +12,7 @@ import async from 'async';
 import Error from 'smart-error';
 import HttpError from 'http-smart-error';
 import compression from 'compression';
+import readline from 'readline';
 
 import Layout from './layout';
 import Session from './session';
@@ -56,6 +57,7 @@ class Server {
      * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
      * @property {function} errorHandler Function to handle errors in the route execution.
      * @property {boolean} bundlePathRelative Indicates if the bundle is loaded relatively in the output html.
+     * @property {function(percents, message):void} onWebpackProgress Function to handle webpack progress.
      * @property {any} webpack Custom webpack config.
      */
 
@@ -89,6 +91,7 @@ class Server {
         auth: (session, next) => next(),
         errorHandler: (err, req, res, next) => next(),
         bundlePathRelative: false,
+        onWebpackProgress: null,
         webpack: {},
         moduleDev: false,
     };
@@ -643,7 +646,21 @@ Application
      */
     _start(cb) {
         this._log('Starting webpack');
-        const { dev, port } = this._config;
+        const { dev, port, onWebpackProgress } = this._config;
+        let webpackDone = false;
+        const p = new webpack.ProgressPlugin((percentage, message, ...args) => {
+            if (!webpackDone) {
+                if (typeof onWebpackProgress === 'function') {
+                    onWebpackProgress(percentage, message);
+                } else if (dev) {
+                    this._webpackProgress(percentage, message);
+                }
+                if (percentage === 1) {
+                    webpackDone = true;
+                }
+            }
+        });
+        p.apply(this._webpack);
         if (dev) {
             let listening = false;
             this._webpack.watch({ aggregateTimeout: 300 }, (err, stats) => {
@@ -833,6 +850,15 @@ Application
             }
             errorHandler(err, req, res, () => render());
         });
+    }
+
+    _webpackProgress(percentage, message) {
+        readline.cursorTo(process.stdout, 0);
+        process.stdout.write(`Webpack: ${(percentage * 100).toFixed(2)}% ${message}`);
+        readline.clearLine(process.stdout, 1);
+        if (percentage === 1) {
+            process.stdout.write('\n');
+        }
     }
 
     /**

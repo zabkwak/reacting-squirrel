@@ -113,6 +113,7 @@ export default class Home extends Page {
                     }}
                 >
                     Async request
+                    
                 </Button>
                 <div>
                     <Text tag="p" dictionaryKey="args" args={['one', 'two', 'three']} />
