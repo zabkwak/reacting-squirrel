@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.4
+### Updates
+- removed package-lock.json (again)
+
 ## 0.9.3
 ### Features
 - possibility to register component's ref to the application context
