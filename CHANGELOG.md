@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.5
+### Updates
+- ts for web app is targeted to es5
+
 ## 0.9.4
 ### Updates
 - removed package-lock.json (again)

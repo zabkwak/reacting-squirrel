@@ -590,7 +590,7 @@ Application
                 "preserveConstEnums": true,
                 "sourceMap": true,
                 "declaration": false,
-                "target": "es6",
+                "target": "es5",
                 "jsx": "react",
                 "lib": [
                     "es6",
