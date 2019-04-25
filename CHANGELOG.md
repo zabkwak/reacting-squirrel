@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.6
+### Updates
+- parsing errors for SmartError payload
+
 ## 0.9.5
 ### Updates
 - ts for web app is targeted to es5

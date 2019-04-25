@@ -40,6 +40,10 @@ app.get('/', 'home', 'Home');
 
 app.get('/about', 'about', 'About');
 
+app.get('/error', null, 'Error', false, (req, res, next) => {
+    next({ statusCode: 501, message: 'Test error', date: new Date() });
+});
+
 app.registerSocketClass(User);
 
 app.registerComponent('test', 'test');

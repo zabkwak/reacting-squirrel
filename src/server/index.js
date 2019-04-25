@@ -827,7 +827,13 @@ Application
         });
         this._app.use((err, req, res, next) => {
             if (!(err instanceof HttpError)) {
-                err = HttpError.create(500, err);
+                if (typeof err === 'string') {
+                    err = { message: err };
+                }
+                err = HttpError.create(err.statusCode || 500, {
+                    ...err,
+                    payload: new Error()._parsePayload(err),
+                });
             }
             if (res.statusCode === 200) {
                 res.status(err.statusCode);

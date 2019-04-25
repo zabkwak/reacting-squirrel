@@ -23,4 +23,8 @@ export default class User extends SocketClass {
     async getVoidPromise(socket) {
         console.log('VOID PROMISE');
     }
+
+    getPayloadedError(socket, data, next) {
+        next({ message: 'Test error', code: 'ERR_TEST', statusCode: 403 });
+    }
 }
