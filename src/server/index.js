@@ -830,10 +830,8 @@ Application
                 if (typeof err === 'string') {
                     err = { message: err };
                 }
-                err = HttpError.create(err.statusCode || 500, {
-                    ...err,
-                    payload: new Error()._parsePayload(err),
-                });
+                const { message, code, ...payload } = err;
+                err = HttpError.create(err.statusCode || 500, message, code, Error.parsePayload(payload));
             }
             if (res.statusCode === 200) {
                 res.status(err.statusCode);

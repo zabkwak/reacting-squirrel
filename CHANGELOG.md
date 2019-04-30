@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.7
+### Fixes
+- undefined statusCode of the http error
+
 ## 0.9.6
 ### Updates
 - parsing errors for SmartError payload

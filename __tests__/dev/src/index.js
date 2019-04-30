@@ -41,7 +41,7 @@ app.get('/', 'home', 'Home');
 app.get('/about', 'about', 'About');
 
 app.get('/error', null, 'Error', false, (req, res, next) => {
-    next({ statusCode: 501, message: 'Test error', date: new Date() });
+    next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
 
 app.registerSocketClass(User);

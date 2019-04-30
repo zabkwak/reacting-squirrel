@@ -45,7 +45,8 @@ class Socket {
                     const response = {};
                     if (err) {
                         if (!(err instanceof SmartError)) {
-                            err = new SmartError({ ...err, payload: new SmartError()._parsePayload(err) });
+                            const { message, code, ...payload } = err;
+                            err = new SmartError(message, code, SmartError.parsePayload(payload));
                         }
                         response.error = err.toJSON();
                     } else {
