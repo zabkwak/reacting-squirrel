@@ -1,4 +1,7 @@
 # CHANGELOG
+## 0.9.10
+### Updates
+- removed tmp dir from repository
 
 ## 0.9.9
 ### Updates

@@ -9,3 +9,6 @@
 /__types__
 /docs
 /package-lock.json
+
+/tmp
+/test.ts
