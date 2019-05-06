@@ -1,5 +1,6 @@
 import React from 'react';
 import '@babel/polyfill';
+import fs from 'fs';
 
 import Server, { Layout, Socket } from '../../../server';
 import User from './user.socket';
@@ -44,7 +45,16 @@ app.get('/error', null, 'Error', false, (req, res, next) => {
     next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
 
+app.get('/socket', 'socket', 'Socket');
+
 app.registerSocketClass(User);
+app.registerSocketEvent('socket.test', async (socket, data) => {
+    // console.log(data.buffer.toString());
+    return data;
+});
+app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
+    fs.writeFileSync(`./tmp/${name}`, file);
+});
 
 app.registerComponent('test', 'test');
 app.registerComponent('socket-status', 'socket-status');

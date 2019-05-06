@@ -29,6 +29,10 @@ class Socket {
     static add(socket, events, classes) {
         const s = new this(socket);
         this._sockets.push(s);
+        socket.use((packet, next) => {
+            console.log(packet);
+            next();
+        });
         s.on('error', (err) => {
             console.error(err);
             this._callListener('error', s, err);
