@@ -58,6 +58,7 @@ class Server {
      * @property {function} errorHandler Function to handle errors in the route execution.
      * @property {boolean} bundlePathRelative Indicates if the bundle is loaded relatively in the output html.
      * @property {function(percents, message):void} onWebpackProgress Function to handle webpack progress.
+     * @property {any} socketIO Custom socketio config.
      * @property {any} webpack Custom webpack config.
      */
 
@@ -93,6 +94,7 @@ class Server {
         bundlePathRelative: false,
         onWebpackProgress: null,
         webpack: {},
+        socketIO: {},
         moduleDev: false,
     };
 
@@ -707,7 +709,7 @@ Application
         this._setMiddlewares();
         this._server = http.createServer(this._app);
         // this._setWebpack();
-        socket(this);
+        socket(this, this._config.socketIO);
     }
 
     /**

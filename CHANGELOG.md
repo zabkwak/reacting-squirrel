@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.8
+### Features
+- socket server options
+
 ## 0.9.7
 ### Fixes
 - undefined statusCode of the http error
