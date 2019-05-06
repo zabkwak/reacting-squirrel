@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.9
+### Updates
+- @types/socket.io dependency
+
 ## 0.9.8
 ### Features
 - socket server options
