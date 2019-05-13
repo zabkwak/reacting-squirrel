@@ -7,3 +7,5 @@
 /jsdoc.json
 /markdown
 /docs
+/tmp
+/test.ts

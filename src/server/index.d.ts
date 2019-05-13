@@ -5,6 +5,7 @@ declare module 'reacting-squirrel/server' {
     import * as express from 'express';
     import { Component } from 'react';
     import HttpSmartError from 'http-smart-error';
+    import { ServerOptions as SocketServerOptions } from 'socket.io';
 
     interface IAppConfig {
         port?: number;
@@ -24,6 +25,7 @@ declare module 'reacting-squirrel/server' {
         bundlePathRelative?: boolean;
         onWebpackProgress?: (percents: number, message: string) => void;
         webpack?: any;
+        socketIO?: SocketServerOptions;
     }
 
     interface ISocketEvent<S extends Session = Session> {

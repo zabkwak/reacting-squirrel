@@ -37,9 +37,9 @@ class Socket {
             console.error(err);
             this._callListener('error', s, err);
         });
-        s.on('disconnect', () => {
+        s.on('disconnect', (reason) => {
             this._sockets.splice(this._sockets.indexOf(s), 1);
-            this._callListener('disconnect', s);
+            this._callListener('disconnect', s, reason);
         });
         events.forEach(({ event, listener }) => {
             s.on(event, (data = {}) => {
@@ -194,8 +194,8 @@ class Socket {
  *
  * @param {Server} server Server instance.
  */
-const func = (server) => {
-    const io = socketIO(server.getServer());
+const func = (server, options = {}) => {
+    const io = socketIO(server.getServer(), options);
     const { cookieSecret } = server._config;
     io.use((socket, next) => {
         if (!socket.request.headers.cookie) {
