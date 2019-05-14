@@ -3,7 +3,6 @@ import cookie from 'cookie';
 import cookieSignature from 'cookie-signature';
 import uniqid from 'uniqid';
 import SmartError from 'smart-error';
-// import { encode, decode } from '@msgpack/msgpack';
 import { decode } from 'msgpack-lite';
 
 /**
@@ -14,6 +13,8 @@ import { decode } from 'msgpack-lite';
  * @property {string} event
  * @property {function(any, function):void|Promise<any>} listener
  */
+
+const MAX_MESSAGE_SIZE = (2 ** 20) * 100;
 
 class Socket {
 
@@ -28,9 +29,9 @@ class Socket {
      *
      * @param {socketIO.Socket} socket
      * @param {SocketEvent[]} events
-     * @param {SocketClass[]} classes
+     * @param {number} maxMessageSize
      */
-    static add(socket, events, classes) {
+    static add(socket, events, maxMessageSize) {
         const s = new this(socket);
         this._sockets.push(s);
         /*
@@ -50,10 +51,13 @@ class Socket {
         events.forEach(({ event, listener }) => {
             s.on(event, (message = {}) => {
                 let sent;
-                // TODO limit size of data
                 const {
                     key, size, index, byteLength,
                 } = message;
+                if (byteLength > MAX_MESSAGE_SIZE || byteLength > maxMessageSize) {
+                    s.disconnect();
+                    return;
+                }
                 if (!this._chunks[key]) {
                     this._chunks[key] = [];
                 }
@@ -180,6 +184,10 @@ class Socket {
         this._socket.on(event, listener);
     }
 
+    disconnect() {
+        this._socket.disconnect();
+    }
+
     /**
      * @returns {Session}
      */
@@ -214,7 +222,7 @@ class Socket {
  */
 const func = (server, options = {}) => {
     const io = socketIO(server.getServer(), options);
-    const { cookieSecret } = server._config;
+    const { cookieSecret, socketMessageMaxSize } = server._config;
     io.use((socket, next) => {
         if (!socket.request.headers.cookie) {
             next();
@@ -235,7 +243,7 @@ const func = (server, options = {}) => {
     });
 
     io.on('connection', (socket) => {
-        Socket.add(socket, server.getSocketEvents(), server.getSocketClasses());
+        Socket.add(socket, server.getSocketEvents(), socketMessageMaxSize);
     });
 
     io.on('error', err => console.error(err));

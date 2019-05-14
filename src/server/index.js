@@ -54,6 +54,7 @@ class Server {
      * @property {string[]} scripts List of the scripts loaded in the base html.
      * @property {string[]} styles List of the styles loaded in the base html.
      * @property {function} session Class of the session. It must extend Session from the module.
+     * @property {function} socketMessageMaxSize Maximal size of one socket message.
      * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
      * @property {function} errorHandler Function to handle errors in the route execution.
      * @property {boolean} bundlePathRelative Indicates if the bundle is loaded relatively in the output html.
@@ -89,6 +90,7 @@ class Server {
         scripts: [],
         styles: [],
         session: Session,
+        socketMessageMaxSize: (2 ** 20) * 100,
         auth: (session, next) => next(),
         errorHandler: (err, req, res, next) => next(),
         bundlePathRelative: false,

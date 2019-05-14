@@ -1,6 +1,5 @@
 /** @module Socket */
 import io from 'socket.io-client';
-// import { encode, decode } from '@msgpack/msgpack';
 import { encode } from 'msgpack-lite';
 import uniqid from 'uniqid';
 

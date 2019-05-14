@@ -35,6 +35,7 @@ const app = new Server({
         console.log(`${percents * 100}%`, message);
     },
     */
+    // socketMessageMaxSize: 1,
 });
 
 app.get('/', 'home', 'Home');

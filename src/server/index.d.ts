@@ -20,6 +20,7 @@ declare module 'reacting-squirrel/server' {
         scripts?: Array<string>;
         styles?: Array<string>;
         session?: typeof Session;
+        socketMessageMaxSize?: number;
         auth?: (session: Session, next: (err?: any) => void) => void;
         errorHandler?: (err: any, req: express.Request, res: express.Response, next: (err?: any) => void) => void;
         bundlePathRelative?: boolean;
@@ -54,7 +55,7 @@ declare module 'reacting-squirrel/server' {
 
     export class Socket<S extends Session = Session> {
 
-        static add(socket: net.Socket, events: Array<ISocketEvent>, classes: Array<SocketClass>): void;
+        static add(socket: net.Socket, events: Array<ISocketEvent>, maxMessageSize: number): void;
 
         static broadcast(event: string, data: any, filter: (socket: Socket) => boolean): void;
 

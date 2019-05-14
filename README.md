@@ -227,6 +227,8 @@ File upload can be diffucult over websocket. Without chunks big files disconnect
 const file = 'get somehow a File instance';
 Socket.emit('file.upload', undefined, { file }, (progress) => console.log(progress));
 ```
+#### Limitations
+The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.
 
 ## TODO
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
