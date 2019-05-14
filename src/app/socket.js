@@ -1,5 +1,8 @@
 /** @module Socket */
 import io from 'socket.io-client';
+// import { encode, decode } from '@msgpack/msgpack';
+import { encode } from 'msgpack-lite';
+import uniqid from 'uniqid';
 
 import CallbackEmitter from './callback-emitter';
 import Application from './application';
@@ -37,6 +40,20 @@ class Socket extends CallbackEmitter {
         'handshake',
         'webpack.stats',
     ];
+
+    _chunkSize = (2 ** 10) * 10;
+
+    _maxMessageSize = (2 ** 20) * 10;
+
+    setChunkSize(chunkSize) {
+        this._chunkSize = chunkSize;
+        return this;
+    }
+
+    setMaxMessageSize(maxMessageSize) {
+        this._maxMessageSize = maxMessageSize;
+        return this;
+    }
 
     registerEvents(events) {
         this._events = this._events.concat(events);
@@ -83,9 +100,11 @@ class Socket extends CallbackEmitter {
      * Emits the data.
      *
      * @param {string} event
+     * @param {string} key
      * @param {any} data
+     * @param {function} onProgress
      */
-    emit(event, data) {
+    emit(event, key = uniqid(), data = {}, onProgress = null) {
         if (!this.isConnected()) {
             throw new Error('Socket not connected');
         }
@@ -95,7 +114,12 @@ class Socket extends CallbackEmitter {
         if (Application.DEV) {
             console.log(`Emit '${event}'`, data);
         }
-        this._socket.emit(event, data);
+        this._emit(event, key, data, onProgress)
+            .catch((e) => {
+                // Force to handle event as error
+                const [handle] = this._socket._callbacks[`$${event}`];
+                handle({ error: e, _key: key });
+            });
         return this;
     }
 
@@ -129,6 +153,36 @@ class Socket extends CallbackEmitter {
         this._callListener('state', state);
     }
 
+    async _emit(event, key, data, onProgress) {
+        await Promise.all(Object.keys(data).map(async (key) => {
+            if (data[key] instanceof File) {
+                const buffer = await this._convertFileToArrayBuffer(data[key]);
+                data[key] = new Uint8Array(buffer);
+            }
+        }));
+        const bin = encode(data);
+        const { byteLength } = bin;
+        if (byteLength > this._maxMessageSize) {
+            throw new Error('Overcomed allowed size of the message.');
+        }
+        const chunked = this._chunkArray(bin, this._chunkSize);
+        const size = chunked.length;
+        this._socket.on(`${key}~progress`, ({ done, total }) => {
+            if (typeof onProgress === 'function') {
+                onProgress(done / total);
+            }
+        });
+        chunked.forEach((chunk, index) => {
+            this._socket.emit(event, {
+                key,
+                byteLength,
+                size,
+                index,
+                data: chunk,
+            });
+        });
+    }
+
     _handleEvent(event, data) {
         if (Application.DEV) {
             console.log(`Handling event '${event}'`, data);
@@ -140,6 +194,28 @@ class Socket extends CallbackEmitter {
             console.warn(`Event '${event}' is deprecated`);
         }
         this._callListener(event, data);
+    }
+
+    _chunkArray(array, chunkSize) {
+        const arrayLength = array.length;
+        const tempArray = [];
+
+        for (let index = 0; index < arrayLength; index += chunkSize) {
+            const myChunk = array.slice(index, index + chunkSize);
+            // Do something if you want with the group
+            tempArray.push(myChunk);
+        }
+
+        return tempArray;
+    }
+
+    _convertFileToArrayBuffer(file) {
+        return new Promise((resolve, reject) => {
+            const fr = new FileReader();
+            fr.onload = () => resolve(fr.result);
+            fr.onerror = e => reject(e);
+            fr.readAsArrayBuffer(file);
+        });
     }
 }
 

@@ -219,6 +219,15 @@ export default class CustomComponent extends Component {
 
 ```
 
+## Socket communication
+The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. 
+### Uploading files (experimental)
+File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the `pingTimeout`. The file is sent to the server in chunks and converted to buffer on the server side.
+```javascript
+const file = 'get somehow a File instance';
+Socket.emit('file.upload', undefined, { file }, (progress) => console.log(progress));
+```
+
 ## TODO
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
 

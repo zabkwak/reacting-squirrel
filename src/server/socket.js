@@ -3,6 +3,8 @@ import cookie from 'cookie';
 import cookieSignature from 'cookie-signature';
 import uniqid from 'uniqid';
 import SmartError from 'smart-error';
+// import { encode, decode } from '@msgpack/msgpack';
+import { decode } from 'msgpack-lite';
 
 /**
  * @typedef {import('./').default} Server
@@ -20,6 +22,8 @@ class Socket {
 
     static _listeners = {};
 
+    static _chunks = {};
+
     /**
      *
      * @param {socketIO.Socket} socket
@@ -29,10 +33,12 @@ class Socket {
     static add(socket, events, classes) {
         const s = new this(socket);
         this._sockets.push(s);
+        /*
         socket.use((packet, next) => {
             console.log(packet);
             next();
         });
+        */
         s.on('error', (err) => {
             console.error(err);
             this._callListener('error', s, err);
@@ -42,53 +48,65 @@ class Socket {
             this._callListener('disconnect', s, reason);
         });
         events.forEach(({ event, listener }) => {
-            s.on(event, (data = {}) => {
+            s.on(event, (message = {}) => {
                 let sent;
-                const key = data._key;
-                const handle = (err, data) => {
-                    const response = {};
-                    if (err) {
-                        if (!(err instanceof SmartError)) {
-                            const { message, code, ...payload } = err;
-                            err = new SmartError(message, code, SmartError.parsePayload(payload));
+                // TODO limit size of data
+                const {
+                    key, size, index, byteLength,
+                } = message;
+                if (!this._chunks[key]) {
+                    this._chunks[key] = [];
+                }
+                this._chunks[key][index] = Buffer.from(Object.keys(message.data).map(k => message.data[k]));
+                const chunks = this._chunks[key];
+                s.emit(`${key}~progress`, { total: size, done: chunks.length });
+                if (chunks.length === size) {
+                    const data = decode(Buffer.concat(chunks));
+                    const handle = (err, data) => {
+                        const response = {};
+                        if (err) {
+                            if (!(err instanceof SmartError)) {
+                                const { message, code, ...payload } = err;
+                                err = new SmartError(message, code, SmartError.parsePayload(payload));
+                            }
+                            response.error = err.toJSON();
+                        } else {
+                            response.data = data;
                         }
-                        response.error = err.toJSON();
-                    } else {
-                        response.data = data;
+                        response._key = key;
+                        s.emit(event, response);
+                    };
+                    try {
+                        const p = listener(s, data, (err, data) => {
+                            if (sent) {
+                                console.warn('Data already sent using Promise.');
+                                return;
+                            }
+                            sent = true;
+                            handle(err, data);
+                        });
+                        if (!(p instanceof Promise)) {
+                            return;
+                        }
+                        p.then((data) => {
+                            if (sent) {
+                                console.warn('Data already sent using callback.');
+                                return;
+                            }
+                            sent = true;
+                            handle(null, data === null ? undefined : data);
+                        }).catch((err) => {
+                            if (sent) {
+                                console.warn('Data already sent using callback.');
+                                return;
+                            }
+                            sent = true;
+                            handle(err);
+                        });
+                    } catch (e) {
+                        sent = true;
+                        handle(e);
                     }
-                    response._key = key;
-                    s.emit(event, response);
-                };
-                try {
-                    const p = listener(s, data, (err, data) => {
-                        if (sent) {
-                            console.warn('Data already sent using Promise.');
-                            return;
-                        }
-                        sent = true;
-                        handle(err, data);
-                    });
-                    if (!(p instanceof Promise)) {
-                        return;
-                    }
-                    p.then((data) => {
-                        if (sent) {
-                            console.warn('Data already sent using callback.');
-                            return;
-                        }
-                        sent = true;
-                        handle(null, data === null ? undefined : data);
-                    }).catch((err) => {
-                        if (sent) {
-                            console.warn('Data already sent using callback.');
-                            return;
-                        }
-                        sent = true;
-                        handle(err);
-                    });
-                } catch (e) {
-                    sent = true;
-                    handle(e);
                 }
             });
         });

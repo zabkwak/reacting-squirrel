@@ -80,13 +80,19 @@ declare module 'reacting-squirrel' {
 
         readonly STATE_DISCONNECTED: 'disconnected';
 
+        setChunkSize(chunkSize: number): this;
+
+        setMaxMessageSize(maxMessageSize: number): this;
+
         registerSocketEvents(events: Array<string>): void;
 
         connect(): void;
         connect(address: string): void;
 
         emit(event: string): this;
-        emit<P = any>(event: string, data: P): this;
+        emit(event: string, key: string): this;
+        emit<P = any>(event: string, key: string, data: P): this;
+        emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
 
         disconnect(): void;
 
@@ -201,13 +207,22 @@ declare module 'reacting-squirrel' {
         call<R = any>(event: string): Promise<R>;
         call<P = any, R = any>(event: string, data: P): Promise<R>;
         call<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+        call<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
+
+        requestAsync<R = any>(event: string): Promise<R>;
+        requestAsync<P = any, R = any>(event: string, data: P): Promise<R>;
+        requestAsync<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+        requestAsync<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
         request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
         request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
         request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
+        request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void, onProgress: (progress: number) => void): this;
 
         emit(event: string): this;
-        emit<P = any>(event: string, data: P): this;
+        emit(event: string, key: string): this;
+        emit<P = any>(event: string, key: string, data: P): this;
+        emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
     }
 
     export class Page<P extends IPageProps = { params: any, query: any, initialData: any }, S = {}, SS = any> extends SocketComponent<P, S, SS> {

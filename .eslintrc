@@ -111,6 +111,9 @@
         "describe": true,
         "it": true,
         "location": true,
-        "history": true
+        "history": true,
+        "File": true,
+        "FileReader": true,
+        "navigator": true
     }
 }

@@ -51,7 +51,14 @@ export default class SocketComponent extends Component {
         return this;
     }
 
-    call(event, data = {}, timeout = TIMEOUT) {
+    call(event, data = {}, timeout = TIMEOUT, onProgress = null) {
+        if (this.getContext().DEV) {
+            console.warn('SocketComponent.call is deprecated. Use requestAsync instead.');
+        }
+        return this.requestAsync(event, data, timeout, onProgress);
+    }
+
+    requestAsync(event, data = {}, timeout = TIMEOUT, onProgress = null) {
         return new Promise((resolve, reject) => {
             this.request(event, data, timeout, (err, response) => {
                 if (err) {
@@ -59,7 +66,7 @@ export default class SocketComponent extends Component {
                     return;
                 }
                 resolve(response);
-            });
+            }, onProgress);
         });
     }
 
@@ -70,8 +77,9 @@ export default class SocketComponent extends Component {
      * @param {Object.<string, object>|function} data Data to emit or the callback.
      * @param {number|function} timeout Timeout in milliseconds or the callback.
      * @param {function} callback Callback is called after the socket execution.
+     * @param {function} onProgress Function called in the progress of the request.
      */
-    request(event, data, timeout, callback) {
+    request(event, data, timeout, callback, onProgress) {
         if (typeof data === 'function') {
             callback = data;
             timeout = TIMEOUT;
@@ -89,7 +97,6 @@ export default class SocketComponent extends Component {
             data = {};
         }
         const key = uniqid();
-        data._key = key;
         let done = false;
         const start = Date.now();
         const listener = (socket, data) => {
@@ -104,7 +111,7 @@ export default class SocketComponent extends Component {
             }
         };
         Socket.addListener(event, listener);
-        this.emit(event, data);
+        this.emit(event, key, data, onProgress);
         setTimeout(() => {
             if (done) {
                 return;
@@ -123,21 +130,25 @@ export default class SocketComponent extends Component {
      * Emits the socket event with data. The event is sent after the socket is connected => this method can be called before the socket connection.
      *
      * @param {string} event Name of the event.
+     * @param {string} key Key of the request.
      * @param {Object.<string, object>} [data] Data to emit.
+     * @param {function} onProgress Function called in the progress of the request.
      */
-    emit(event, data = {}) {
+    emit(event, key, data = {}, onProgress = null) {
         if (!Socket.isConnected()) {
-            this._queue.push({ event, data });
+            this._queue.push({
+                event, key, data, onProgress,
+            });
             return this;
         }
-        Socket.emit(event, data);
+        Socket.emit(event, key, data, onProgress);
         return this;
     }
 
     _executeQueue() {
         while (this._queue.length) {
             const item = this._queue.shift();
-            Socket.emit(item.event, item.data);
+            this.emit(item.event, item.key, item.data, item.onProgress);
         }
     }
 }

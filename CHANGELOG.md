@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## 0.10.0
+### Updates
+- Socket data are converted to messagepack and chunked while sending from the client.
+
 ## 0.9.10
 ### Updates
 - removed tmp dir from repository

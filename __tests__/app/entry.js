@@ -1,8 +1,9 @@
 import '@babel/polyfill';
-import Application, { Text } from '../../src/app';
+import Application, { Text, Socket } from '../../src/app';
 
 import dictionaryCzech from './res/text_cs-CZ.json';
 
+Socket.setMaxMessageSize((2 ** 20) * 100);
 console.log('Custom entry', 'imported');
 Application.addListener('start', () => {
     console.log('Custom entry', 'Application started.');
