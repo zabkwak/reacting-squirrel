@@ -19,6 +19,7 @@ import Session from './session';
 import Route from './route';
 import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
+import Utils from './utils';
 
 const RS_DIR = '~rs';
 
@@ -918,4 +919,5 @@ export {
     SocketClass,
     HttpError,
     Socket,
+    Utils,
 };
