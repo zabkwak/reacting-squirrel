@@ -1,9 +1,9 @@
 import React from 'react';
 import '@babel/polyfill';
 import fs from 'fs';
+import path from 'path';
 
-import Server, { Layout, Socket } from '../../../server';
-import User from './user.socket';
+import Server, { Layout, Socket, Utils } from '../../../server';
 
 class CustomLayout extends Layout {
 
@@ -38,17 +38,30 @@ const app = new Server({
     // socketMessageMaxSize: 1,
 });
 
-app.get('/', 'home', 'Home');
-
-app.get('/about', 'about', 'About');
+Utils.registerRoutes(app, [
+    {
+        route: '/',
+        component: 'home',
+        title: 'Home',
+    },
+    {
+        route: '/about',
+        component: 'about',
+        title: 'About',
+    },
+    {
+        route: '/socket',
+        component: 'socket',
+        title: 'Socket',
+    },
+]);
 
 app.get('/error', null, 'Error', false, (req, res, next) => {
     next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
 
-app.get('/socket', 'socket', 'Socket');
+Utils.registerSocketClassDir(app, path.resolve(__dirname, './'));
 
-app.registerSocketClass(User);
 app.registerSocketEvent('socket.test', async (socket, data) => {
     // console.log(data.buffer.toString());
     return data;
@@ -57,8 +70,16 @@ app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
     fs.writeFileSync(`./tmp/${name}`, file);
 });
 
-app.registerComponent('test', 'test');
-app.registerComponent('socket-status', 'socket-status');
+Utils.registerComponents(app, [
+    {
+        id: 'test',
+        component: 'test',
+    },
+    {
+        id: 'socket-status',
+        component: 'socket-status',
+    },
+]);
 
 app.start((err) => {
     if (err) {

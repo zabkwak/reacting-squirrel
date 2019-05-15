@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## 0.10.0
+### Features
+- Utils module for simplify routes, socket-classes and components registration.
 ### Updates
 - Socket data are converted to messagepack and chunked while sending from the client.
 

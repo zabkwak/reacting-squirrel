@@ -13,7 +13,11 @@ export default class Socket extends Page {
     async componentDidMount() {
         super.componentDidMount();
         try {
-            const data = await this.requestAsync('socket.test', { test: 'test' });
+            await this.requestAsync('socket.test', {
+                test: 'test',
+                array: ['test'],
+                object: { test: 'test' },
+            });
         } catch (e) {
             // alert(e.message);
         }

@@ -153,12 +153,7 @@ class Socket extends CallbackEmitter {
     }
 
     async _emit(event, key, data, onProgress) {
-        await Promise.all(Object.keys(data).map(async (key) => {
-            if (data[key] instanceof File) {
-                const buffer = await this._convertFileToArrayBuffer(data[key]);
-                data[key] = new Uint8Array(buffer);
-            }
-        }));
+        data = await this._convertData(data);
         const bin = encode(data);
         const { byteLength } = bin;
         if (byteLength > this._maxMessageSize) {
@@ -182,6 +177,21 @@ class Socket extends CallbackEmitter {
         });
     }
 
+    async _convertData(data) {
+        await Promise.all(Object.keys(data).map(async (key) => {
+            const value = data[key];
+            if (value instanceof File) {
+                const buffer = await this._convertFileToArrayBuffer(data[key]);
+                data[key] = new Uint8Array(buffer);
+                return;
+            }
+            if (typeof value === 'object') {
+                data[key] = await this._convertData(data[key]);
+            }
+        }));
+        return data;
+    }
+
     _handleEvent(event, data) {
         if (Application.DEV) {
             console.log(`Handling event '${event}'`, data);
@@ -198,13 +208,10 @@ class Socket extends CallbackEmitter {
     _chunkArray(array, chunkSize) {
         const arrayLength = array.length;
         const tempArray = [];
-
         for (let index = 0; index < arrayLength; index += chunkSize) {
             const myChunk = array.slice(index, index + chunkSize);
-            // Do something if you want with the group
             tempArray.push(myChunk);
         }
-
         return tempArray;
     }
 
