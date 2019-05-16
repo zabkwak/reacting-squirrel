@@ -259,9 +259,9 @@ declare module 'reacting-squirrel/server' {
         get(route: string, contentComponent: string, title: string, requireAuth: boolean): this;
         get(route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
 
-        registerRoute(method: 'get' | 'post' | 'put' | 'delete', route: string, contentComponent: string, title: string): this;
-        registerRoute(method: 'get' | 'post' | 'put' | 'delete', route: string, contentComponent: string, title: string, requireAuth: boolean): this;
-        registerRoute(method: 'get' | 'post' | 'put' | 'delete', route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
+        registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
+        registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
+        registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
 
         registerSocketClass(cls: typeof SocketClass): this;
 
