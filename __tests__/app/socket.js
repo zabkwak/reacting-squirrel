@@ -17,6 +17,9 @@ export default class Socket extends Page {
                 test: 'test',
                 array: ['test'],
                 object: { test: 'test' },
+                date: new Date(),
+                null: null,
+                undefined: undefined,
             });
         } catch (e) {
             // alert(e.message);

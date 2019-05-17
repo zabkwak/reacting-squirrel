@@ -23,7 +23,8 @@
     "md_server": "./node_modules/.bin/jsdoc2md --files ./src/server/**/*.js > ./markdown/server.md",
     "md_app": "./node_modules/.bin/jsdoc2md --files ./src/app/**/*.js > ./markdown/app.md",
     "md_concat": "cat ./markdown/readme.md ./markdown/server.md ./markdown/app.md > ./README.md",
-    "docs_md": "npm run md_server && npm run md_app && npm run md_concat"
+    "docs_md": "npm run md_server && npm run md_app && npm run md_concat",
+    "preversion": "git branch %npm_package_version% && git checkout %npm_package_version%"
   },
   "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",

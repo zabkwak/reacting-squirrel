@@ -1,4 +1,7 @@
 # CHANGELOG
+## 0.10.1
+### Fixes
+- Error if the socket data value is null or undefined.
 
 ## 0.10.0
 ### Features

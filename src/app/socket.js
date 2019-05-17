@@ -181,12 +181,18 @@ class Socket extends CallbackEmitter {
         await Promise.all(Object.keys(data).map(async (key) => {
             const value = data[key];
             if (value instanceof File) {
-                const buffer = await this._convertFileToArrayBuffer(data[key]);
+                const buffer = await this._convertFileToArrayBuffer(value);
                 data[key] = new Uint8Array(buffer);
                 return;
             }
             if (typeof value === 'object') {
-                data[key] = await this._convertData(data[key]);
+                if (value === null) {
+                    return;
+                }
+                if (value === undefined) {
+                    return;
+                }
+                data[key] = await this._convertData(value);
             }
         }));
         return data;
