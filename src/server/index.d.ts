@@ -212,7 +212,7 @@ declare module 'reacting-squirrel/server' {
          * @param routes List of routes to register.
          */
         export function registerRoutes(
-            app: net.Server,
+            app: Server,
             routes: Array<{
                 method?: HttpMethod;
                 route: string;
