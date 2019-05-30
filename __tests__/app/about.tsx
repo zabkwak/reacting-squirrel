@@ -8,7 +8,7 @@ export default class About extends Page {
 
     async componentDidMount() {
         super.componentDidMount();
-        console.log(await this.call('user.get'));
+        console.log(await this.requestAsync('user.get'));
     }
 
     render() {

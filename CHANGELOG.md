@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.11.0
+### Features
+- Compilation of styles.
+
 ## 0.10.2
 ### Updates
 - Updated type definition

@@ -13,6 +13,8 @@ import Error from 'smart-error';
 import HttpError from 'http-smart-error';
 import compression from 'compression';
 import readline from 'readline';
+import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
+import mkdirp from 'mkdirp';
 
 import Layout from './layout';
 import Session from './session';
@@ -20,6 +22,7 @@ import Route from './route';
 import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
 import Utils from './utils';
+import StylesCompiler from './styles-compiler';
 
 const RS_DIR = '~rs';
 
@@ -47,6 +50,7 @@ class Server {
      * @property {string} staticDir Relative path to the static directory for the express app.
      * @property {boolean} dev Flag of the dev status of the app.
      * @property {string} jsDir Name of the directory where the javascript is located in the staticDir.
+     * @property {string} cssDir Name of the directory where the css is located in the staticDir.
      * @property {string} filename Name of the file.
      * @property {string} appDir Relative path to the app directory.
      * @property {string} entryFile Relative path to the entry file.
@@ -83,6 +87,7 @@ class Server {
         staticDir: './public',
         dev: false,
         jsDir: 'js',
+        cssDir: 'css',
         filename: 'bundle.js',
         appDir: './app',
         entryFile: null,
@@ -393,6 +398,7 @@ class Server {
                     '_createSocketMap',
                     '_createPostCSSConfig',
                     '_createTSConfig',
+                    '_compileProductionStyles',
                 ], (f, callback) => this[f].call(this, callback), cb);
             });
         });
@@ -611,6 +617,22 @@ Application
         }`, cb);
     }
 
+    _compileProductionStyles(cb) {
+        const {
+            dev, appDir, staticDir, cssDir,
+        } = this._config;
+        this._log('Compiling production styles', dev ? 'skipping' : undefined);
+        if (dev) {
+            cb();
+            return;
+        }
+        const compiler = new StylesCompiler([
+            path.resolve(__dirname, '../app'),
+            path.resolve(appDir),
+        ], path.resolve(`${staticDir}/${cssDir}`));
+        compiler.compile(cb);
+    }
+
     /**
      * Checks if the {config.appDir} exists. If not the directory is created.
      *
@@ -673,6 +695,7 @@ Application
                     console.error(err);
                     return;
                 }
+                this._compileStyles();
                 this._log(stats.toJson('minimal'));
                 Socket.broadcast('webpack.stats', stats.toJson('minimal'));
                 if (!listening) {
@@ -697,9 +720,14 @@ Application
                 cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
                 return;
             }
-            this._server.listen(port, () => {
-                this._log(`App listening on ${port}`);
-                cb();
+            this._compileStyles((err) => {
+                if (err) {
+                    cb(err);
+                }
+                this._server.listen(port, () => {
+                    this._log(`App listening on ${port}`);
+                    cb();
+                });
             });
         });
     }
@@ -719,7 +747,10 @@ Application
      * Creates the webpack instance.
      */
     _setWebpack() {
-        const { dev, filename } = this._config;
+        const {
+            dev, filename,
+        } = this._config;
+        const { plugins, ...config } = this._config.webpack;
         const postCSSLoader = {
             loader: 'postcss-loader',
             options: {
@@ -759,32 +790,37 @@ Application
                     },
                     {
                         test: /\.css?$/,
-                        use: [
+                        use: dev ? [
                             'style-loader',
                             'css-loader',
                             postCSSLoader,
-                        ],
+                        ] : 'null-loader',
                     },
                     {
                         test: /\.scss?$/,
-                        use: [
+                        use: dev ? [
                             'style-loader',
                             'css-loader',
                             postCSSLoader,
                             'sass-loader',
-                        ],
+                        ] : 'null-loader',
                     },
                 ],
             },
             target: 'web',
             devtool: dev ? 'source-map' : undefined,
-            ...this._config.webpack,
+            plugins: [
+                new ExtraWatchWebpackPlugin({
+                    files: this._getStylesToWatch(),
+                }),
+            ].concat(plugins || []),
+            ...config,
         });
     }
 
     _setMiddlewares(afterRoutes = false) {
         const {
-            staticDir, cookieSecret, session, layoutComponent, dev, errorHandler,
+            staticDir, cookieSecret, session, layoutComponent, dev, errorHandler, cssDir,
         } = this._config;
         if (!afterRoutes) {
             const LayoutComponent = layoutComponent;
@@ -814,7 +850,7 @@ Application
                     res.setHeader('Content-Type', 'text/html; charset=utf-8');
                     res.end(ReactDOMServer.renderToString(<LayoutComponent
                         scripts={this._config.scripts.concat(scripts || [])}
-                        styles={this._config.styles.concat(styles || [])}
+                        styles={this._config.styles.concat(styles || [`/${cssDir}/rs-app.css`])}
                         initialData={data || {}}
                         title={title}
                         user={req.user}
@@ -868,6 +904,38 @@ Application
         if (percentage === 1) {
             process.stdout.write('\n');
         }
+    }
+
+    _compileStyles(cb = () => { }) {
+        const { cssDir, staticDir } = this._config;
+        const dir = path.resolve(`${staticDir}/${cssDir}`);
+        const stylesPath = `${dir}/rs-app.css`;
+        if (!fs.existsSync(dir)) {
+            mkdirp(dir);
+        }
+        if (fs.existsSync(stylesPath)) {
+            fs.unlinkSync(stylesPath);
+        }
+        const compiler = new StylesCompiler([dir], dir, 'rs-app.css');
+        compiler.compile(cb);
+    }
+
+    _getStylesToWatch() {
+        const { staticDir, cssDir } = this._config;
+        const dir = path.resolve(`${staticDir}/${cssDir}`);
+        const files = fs.readdirSync(dir);
+        return files
+            .map(f => `${dir}/${f}`)
+            .filter((f) => {
+                const stat = fs.statSync(f);
+                if (stat.isDirectory()) {
+                    return false;
+                }
+                if (f.indexOf('rs-') >= 0) {
+                    return false;
+                }
+                return ['.css', '.scss'].includes(path.extname(f));
+            });
     }
 
     /**
