@@ -390,16 +390,18 @@ class Server {
                     cb(err);
                     return;
                 }
-                async.each([
-                    '_createResDir',
-                    '_createEntryFile',
-                    '_setRoutes',
-                    '_createComponentsFile',
-                    '_createSocketMap',
-                    '_createPostCSSConfig',
-                    '_createTSConfig',
-                    '_compileProductionStyles',
-                ], (f, callback) => this[f].call(this, callback), cb);
+                this._validateCssDir((err) => {
+                    async.each([
+                        '_createResDir',
+                        '_createEntryFile',
+                        '_setRoutes',
+                        '_createComponentsFile',
+                        '_createSocketMap',
+                        '_createPostCSSConfig',
+                        '_createTSConfig',
+                        '_compileProductionStyles',
+                    ], (f, callback) => this[f].call(this, callback), cb);
+                });
             });
         });
     }
@@ -667,6 +669,21 @@ Application
     }
 
     /**
+     * Checks if the css directory exists If not the directory is created.
+     * @param {function(Error):void} cb Callback to call after the creation process.
+     */
+    _validateCssDir(cb) {
+        const { cssDir, staticDir } = this._config;
+        const dir = path.resolve(`${staticDir}/${cssDir}`);
+        if (!fs.existsSync(dir)) {
+            this._log('Creating CSS directory.');
+            mkdirp(dir, cb);
+            return;
+        }
+        cb();
+    }
+
+    /**
      * Starts the webpack and the express server. If the app is in dev mode the webpack watcher is started.
      *
      * @param {function} cb Callback to call after the server start.
@@ -910,9 +927,6 @@ Application
         const { cssDir, staticDir } = this._config;
         const dir = path.resolve(`${staticDir}/${cssDir}`);
         const stylesPath = `${dir}/rs-app.css`;
-        if (!fs.existsSync(dir)) {
-            mkdirp(dir);
-        }
         if (fs.existsSync(stylesPath)) {
             fs.unlinkSync(stylesPath);
         }
