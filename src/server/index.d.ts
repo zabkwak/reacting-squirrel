@@ -74,6 +74,11 @@ interface IAppConfig {
      */
     styles?: Array<string>;
     /**
+     * List of styles to merge to rs-app.css.
+     * @default []
+     */
+    mergeStyles?: Array<string>;
+    /**
      * Class of the session.
      * @default typeof Session
      */

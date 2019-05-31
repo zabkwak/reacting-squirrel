@@ -41,7 +41,7 @@
     "async": "^2.6.2",
     "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.6",
-    "combine-styles-processor": "^1.0.0",
+    "combine-styles-processor": "^1.1.0",
     "compression": "^1.7.4",
     "cookie": "^0.3.1",
     "cookie-parser": "^1.4.4",
@@ -89,6 +89,7 @@
     "jsdoc": "^3.6.2",
     "jsdoc-export-default-interop": "^0.3.1",
     "jsdoc-to-markdown": "^5.0.0",
+    "react-gtm-module": "^2.0.4",
     "request": "^2.88.0",
     "run-script-os-fix": "^1.0.4"
   },

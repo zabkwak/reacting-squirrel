@@ -29,6 +29,9 @@ const app = new Server({
     entryFile: 'entry.js',
     styles: ['/css/main.css'],
     scripts: ['/js/script.js?api_key=API_KEY'],
+    mergeStyles: [
+        path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
+    ],
     // cookieSecret: 'dev-secret',
     /*
     onWebpackProgress: (percents, message) => {

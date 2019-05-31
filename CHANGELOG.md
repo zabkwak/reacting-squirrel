@@ -1,5 +1,7 @@
 # CHANGELOG
 ## 0.11.1
+### Features
+- Option to register styles in node_modules (or anywhere) to the styles processor.
 ### Updates
 - Styles compiler as external module.
 

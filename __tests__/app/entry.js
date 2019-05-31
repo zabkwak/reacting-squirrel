@@ -1,7 +1,11 @@
-import '@babel/polyfill';
+import TagManager from 'react-gtm-module';
 import Application, { Text, Socket } from '../../src/app';
 
 import dictionaryCzech from './res/text_cs-CZ.json';
+
+TagManager.initialize({
+    gtmId: 'GTM-KQ3XSLZ',
+});
 
 Socket.setMaxMessageSize((2 ** 20) * 100);
 console.log('Custom entry', 'imported');

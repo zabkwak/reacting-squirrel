@@ -60,6 +60,7 @@ class Server {
      * @property {string} cookieSecret Secret which is used to sign cookies.
      * @property {string[]} scripts List of the scripts loaded in the base html.
      * @property {string[]} styles List of the styles loaded in the base html.
+     * @property {string[]} mergeStyles List of styles to merge to rs-app.css.
      * @property {function} session Class of the session. It must extend Session from the module.
      * @property {function} socketMessageMaxSize Maximal size of one socket message.
      * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
@@ -97,6 +98,7 @@ class Server {
         cookieSecret: Math.random().toString(36).substring(7),
         scripts: [],
         styles: [],
+        mergeStyles: [],
         session: Session,
         socketMessageMaxSize: (2 ** 20) * 100,
         auth: (session, next) => next(),
@@ -920,13 +922,13 @@ Application
      * @param {function(Error):void} cb Callback after the compilation is finished.
      */
     _compileStyles(cb = () => { }) {
-        const { cssDir, staticDir } = this._config;
+        const { cssDir, staticDir, mergeStyles } = this._config;
         const dir = path.resolve(`${staticDir}/${cssDir}`);
         const stylesPath = `${dir}/rs-app.css`;
         if (fs.existsSync(stylesPath)) {
             fs.unlinkSync(stylesPath);
         }
-        const compiler = new StylesCompiler([dir], dir, 'rs-app.css');
+        const compiler = new StylesCompiler([dir, ...mergeStyles], dir, 'rs-app.css');
         compiler.compile(cb);
     }
 
@@ -942,6 +944,7 @@ Application
             .filter((f) => {
                 const stat = fs.statSync(f);
                 if (stat.isDirectory()) {
+                    // TODO nested
                     return false;
                 }
                 if (f.indexOf('rs-') >= 0) {
