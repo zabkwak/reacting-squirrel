@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import express from 'express';
 import http from 'http';
 import webpack from 'webpack';
@@ -23,6 +24,7 @@ import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
 import Utils from './utils';
 import StylesCompiler from './styles-compiler';
+import { TSConfig } from './constants';
 
 const RS_DIR = '~rs';
 
@@ -359,49 +361,45 @@ class Server {
      *
      * @param {function=} cb Callback to call after the server start.
      */
-    start(cb = () => { }) {
+    async start(cb = () => { }) {
         const { dev } = this._config;
         this._log(`App starting DEV: ${dev}`);
-        this._createRSFiles((err) => {
-            if (err) {
-                console.error(err);
-                return;
-            }
-            this._setWebpack();
-            this._setMiddlewares(true);
-            this._start(cb);
-        });
+        try {
+            await this._createRSFiles();
+        } catch (e) {
+            process.nextTick(() => cb(e));
+            return;
+        }
+        this._setWebpack();
+        this._setMiddlewares(true);
+        this._start(cb);
     }
 
     /**
-     * Creates the resting-squirrel files.
-     *
-     * @param {function(Error):void} cb Callback to call after the creation process.
+     * Creates the reacting-squirrel files.
      */
-    _createRSFiles(cb) {
+    async _createRSFiles() {
         this._log('Creating RS files');
-        this._validateAppDir((err) => {
-            if (err) {
-                cb(err);
-                return;
-            }
-            this._validateRSDir((err) => {
+        const { appDir, staticDir, cssDir } = this._config;
+        await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
+        await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
+        await this._validateDir(path.resolve(`${staticDir}/${cssDir}`), 'Creating CSS directory.');
+        return new Promise((resolve, reject) => {
+            async.each([
+                '_createResDir',
+                '_createEntryFile',
+                '_setRoutes',
+                '_createComponentsFile',
+                '_createSocketMap',
+                '_createPostCSSConfig',
+                '_createTSConfig',
+                '_compileProductionStyles',
+            ], (f, callback) => this[f].call(this, callback), (err) => {
                 if (err) {
-                    cb(err);
+                    reject(err);
                     return;
                 }
-                this._validateCssDir((err) => {
-                    async.each([
-                        '_createResDir',
-                        '_createEntryFile',
-                        '_setRoutes',
-                        '_createComponentsFile',
-                        '_createSocketMap',
-                        '_createPostCSSConfig',
-                        '_createTSConfig',
-                        '_compileProductionStyles',
-                    ], (f, callback) => this[f].call(this, callback), cb);
-                });
+                resolve();
             });
         });
     }
@@ -458,25 +456,27 @@ class Server {
         this._createRoutingFile(componentsMap, cb);
     }
 
-    _createResDir(cb) {
+    /**
+     * Creates resources directory if doens't exists.
+     * If the res directory doesn't contain text.json the file is created as well.
+     * @param {function(Error):void} cb Callback called after the directory is created.
+     */
+    async _createResDir(cb) {
         const { appDir } = this._config;
-        const dir = `${appDir}/res`;
-        fs.exists(dir, (exists) => {
-            if (exists) {
-                this._createDefaultTextFile(cb);
-                return;
-            }
-            this._log('Creating RES directory');
-            fs.mkdir(dir, (err) => {
-                if (err) {
-                    cb(err);
-                    return;
-                }
-                this._createDefaultTextFile(cb);
-            });
-        });
+        try {
+            await this._validateDir(`${appDir}/res`, 'Creating RES directory.');
+        } catch (e) {
+            process.nextTick(() => cb(e));
+            return;
+        }
+        this._createDefaultTextFile(cb);
     }
 
+    /**
+     * Creates text.json file in resources directory if it doesn't exist.
+     *
+     * @param {function(Error):void} cb Callback after the text file creation.
+     */
     _createDefaultTextFile(cb) {
         const { appDir } = this._config;
         const filePath = `${appDir}/res/text.json`;
@@ -593,32 +593,26 @@ Application
         fs.writeFile(`${this._getRSDirPath()}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
     }
 
+    /**
+     * Creates tsconfig.json in the RS directory.
+     *
+     * @param {function(Error):void} cb Callback after the file is created in RS directory.
+     */
     _createTSConfig(cb) {
         this._log('Creating TS config');
-        fs.writeFile(`${this._getRSDirPath()}/tsconfig.json`, `{
-            "compilerOptions": {
-                "module": "commonjs",
-                "noImplicitAny": true,
-                "removeComments": true,
-                "preserveConstEnums": true,
-                "sourceMap": true,
-                "declaration": false,
-                "target": "es5",
-                "jsx": "react",
-                "lib": [
-                    "es6",
-                    "dom"
-                ]
-            },
-            "include": [
-                "../**/*"
-            ],
-            "exclude": [
-                "node_modules"
-            ]
-        }`, cb);
+        fs.writeFile(
+            `${this._getRSDirPath()}/tsconfig.json`,
+            JSON.stringify(TSConfig, null, 4),
+            cb,
+        );
     }
 
+    /**
+     * Compiles and merges all css and scss files in the module and app directories into one minified css file.
+     * Available only in production mode.
+     *
+     * @param {function(Error):void} cb Callback after the styles are compiled.
+     */
     _compileProductionStyles(cb) {
         const {
             dev, appDir, staticDir, cssDir,
@@ -636,51 +630,37 @@ Application
     }
 
     /**
-     * Checks if the {config.appDir} exists. If not the directory is created.
+     * Checks if the directory exists. If doesn't the directory is created.
      *
-     * @param {function(Error):void} cb Callback to call after the creation process.
+     * @param {string} dir Directory to check.
+     * @param {string} message Message shown if the directory is creating.
+     * @param {'log'|'warn'} level Log level of the message.
+     * @returns {Promise<void>}
      */
-    _validateAppDir(cb) {
-        const { appDir } = this._config;
-        fs.exists(appDir, (exists) => {
-            if (exists) {
-                cb();
-                return;
-            }
-            this._warn('App directory doesn\'t exist. Creating.');
-            fs.mkdir(appDir, cb);
+    _validateDir(dir, message = null, level = 'log') {
+        return new Promise((resolve, reject) => {
+            fs.exists(dir, (exists) => {
+                if (exists) {
+                    resolve();
+                    return;
+                }
+                const msg = message || `Directory ${dir} doesn't exist. Creating.`;
+                switch (level) {
+                    case 'warn':
+                        this._warn(msg);
+                        break;
+                    default:
+                        this._log(msg);
+                }
+                mkdirp(dir, (err) => {
+                    if (err) {
+                        reject(err);
+                        return;
+                    }
+                    resolve();
+                });
+            });
         });
-    }
-
-    /**
-     * Checks if the RS directory exists. If not the directory is created.
-     *
-     * @param {function(Error):void} cb Callback to call after the creation process.
-     */
-    _validateRSDir(cb) {
-        fs.exists(this._getRSDirPath(), (exists) => {
-            if (exists) {
-                cb();
-                return;
-            }
-            this._log('Creating RS directory.');
-            fs.mkdir(this._getRSDirPath(), cb);
-        });
-    }
-
-    /**
-     * Checks if the css directory exists If not the directory is created.
-     * @param {function(Error):void} cb Callback to call after the creation process.
-     */
-    _validateCssDir(cb) {
-        const { cssDir, staticDir } = this._config;
-        const dir = path.resolve(`${staticDir}/${cssDir}`);
-        if (!fs.existsSync(dir)) {
-            this._log('Creating CSS directory.');
-            mkdirp(dir, cb);
-            return;
-        }
-        cb();
     }
 
     /**
@@ -835,6 +815,11 @@ Application
         });
     }
 
+    /**
+     * Registers middlewares to the express instance.
+     *
+     * @param {boolean} afterRoutes If true the middlewares are registered after the routes registration.
+     */
     _setMiddlewares(afterRoutes = false) {
         const {
             staticDir, cookieSecret, session, layoutComponent, dev, errorHandler, cssDir,
@@ -914,6 +899,12 @@ Application
         });
     }
 
+    /**
+     * Logs the webpack progress in stdout.
+     *
+     * @param {number} percentage Current progress of webpack processing.
+     * @param {string} message Current message of webpack processing.
+     */
     _webpackProgress(percentage, message) {
         readline.cursorTo(process.stdout, 0);
         process.stdout.write(`Webpack: ${(percentage * 100).toFixed(2)}% ${message}`);
@@ -923,6 +914,11 @@ Application
         }
     }
 
+    /**
+     * Combines all css files in css directory to rs-app.css in css directory.
+     *
+     * @param {function(Error):void} cb Callback after the compilation is finished.
+     */
     _compileStyles(cb = () => { }) {
         const { cssDir, staticDir } = this._config;
         const dir = path.resolve(`${staticDir}/${cssDir}`);
@@ -934,6 +930,9 @@ Application
         compiler.compile(cb);
     }
 
+    /**
+     * Gets the list of css or scss files in css directory for webpack watch registration.
+     */
     _getStylesToWatch() {
         const { staticDir, cssDir } = this._config;
         const dir = path.resolve(`${staticDir}/${cssDir}`);

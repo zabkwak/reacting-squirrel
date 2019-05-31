@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.11.1
+### Updates
+- Styles compiler as external module.
+
 ## 0.11.0
 ### Features
 - Compilation of styles.
