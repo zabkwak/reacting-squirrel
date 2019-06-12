@@ -1,0 +1,30 @@
+{
+    "routes": [
+        {
+            "route": "/",
+            "component": "home",
+            "title": "Home"
+        },
+        {
+            "route": "/about",
+            "component": "about",
+            "title": "About"
+        },
+        {
+            "route": "/socket",
+            "component": "socket",
+            "title": "Socket"
+        }
+    ],
+    "components": [
+        {
+            "id": "test",
+            "component": "test"
+        },
+        {
+            "id": "socket-status",
+            "component": "socket-status"
+        }
+    ],
+    "socketClassDir": "__tests__/dev/dist"
+}

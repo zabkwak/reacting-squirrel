@@ -32,6 +32,7 @@ const app = new Server({
     mergeStyles: [
         // path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
     ],
+    rsConfig: path.resolve(__dirname, '../rsconfig.json'),
     // cookieSecret: 'dev-secret',
     /*
     onWebpackProgress: (percents, message) => {
@@ -41,45 +42,14 @@ const app = new Server({
     // socketMessageMaxSize: 1,
 });
 
-Utils.registerRoutes(app, [
-    {
-        route: '/',
-        component: 'home',
-        title: 'Home',
-    },
-    {
-        route: '/about',
-        component: 'about',
-        title: 'About',
-    },
-    {
-        route: '/socket',
-        component: 'socket',
-        title: 'Socket',
-    },
-]);
-
 app.get('/error', null, 'Error', false, (req, res, next) => {
     next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
-
-Utils.registerSocketClassDir(app, path.resolve(__dirname, './'));
 
 app.registerSocketEvent('socket.test', async (socket, data) => data);
 app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
     fs.writeFileSync(`./tmp/${name}`, file);
 });
-
-Utils.registerComponents(app, [
-    {
-        id: 'test',
-        component: 'test',
-    },
-    {
-        id: 'socket-status',
-        component: 'socket-status',
-    },
-]);
 
 app.start((err) => {
     if (err) {

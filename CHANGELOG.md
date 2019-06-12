@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.13.0
+### Features
+- Loading of rsconfig.json for specify routes, components and directory with socket classes.
+
 ## 0.12.0
 ### Updates
 - Custom webpack loader for merging styles in the bundling process.

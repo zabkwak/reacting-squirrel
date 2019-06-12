@@ -54,6 +54,11 @@ interface IAppConfig {
      */
     entryFile?: string;
     /**
+     * Custom path to rsconfig.json file.
+     * @default null
+     */
+    rsConfig?: string;
+    /**
      * React component width default html code.
      * @default typeof Layout
      */

@@ -58,6 +58,7 @@ class Server {
      * @property {string} filename Name of the file.
      * @property {string} appDir Relative path to the app directory.
      * @property {string} entryFile Relative path to the entry file.
+     * @property {string} rsConfig Custom path to rsconfig.json file.
      * @property {JSX.Element} layoutComponent React component with default html code. It must extend Layout from the module.
      * @property {string} cookieSecret Secret which is used to sign cookies.
      * @property {string[]} scripts List of the scripts loaded in the base html.
@@ -96,6 +97,7 @@ class Server {
         filename: 'bundle.js',
         appDir: './app',
         entryFile: null,
+        rsConfig: null,
         layoutComponent: Layout,
         cookieSecret: Math.random().toString(36).substring(7),
         scripts: [],
@@ -133,6 +135,8 @@ class Server {
 
     /** @type {CustomComponent[]} */
     _components = [];
+
+    _rsConfig = null;
 
     /**
      * Port on which the server listens.
@@ -243,6 +247,13 @@ class Server {
             throw new Error('Cannot create instance of Layout.');
         }
         this._path = path.resolve(`${this._config.staticDir}/${this._config.jsDir}`);
+        try {
+            this._rsConfig = require(this._config.rsConfig || path.resolve('./rsconfig.json'));
+        } catch (e) {
+            if (this._config.rsConfig) {
+                throw e;
+            }
+        }
         this._bundlePath = `${this._config.bundlePathRelative
             ? ''
             : '/'}${this._config.jsDir}/${this._config.filename}`;
@@ -370,6 +381,7 @@ class Server {
     async start(cb = () => { }) {
         const { dev } = this._config;
         this._log(`App starting DEV: ${dev}`);
+        this._registerRsConfig();
         try {
             await this._createRSFiles();
         } catch (e) {
@@ -379,6 +391,21 @@ class Server {
         this._setWebpack();
         this._setMiddlewares(true);
         this._start(cb);
+    }
+
+    _registerRsConfig() {
+        if (this._rsConfig) {
+            const { routes, components, socketClassDir } = this._rsConfig;
+            if (routes) {
+                Utils.registerRoutes(this, routes);
+            }
+            if (components) {
+                Utils.registerComponents(this, components);
+            }
+            if (socketClassDir) {
+                Utils.registerSocketClassDir(this, path.resolve(process.cwd(), socketClassDir));
+            }
+        }
     }
 
     /**
