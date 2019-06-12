@@ -4,6 +4,7 @@ Sample app can be cloned from [GitHub](https://github.com/zabkwak/reacting-squir
 
 ## Requirements
 - The module needs to be able to write in the app directory (config.appDir). It creates the directory where are stored the frontend maps.
+- The module needs to be able to write in the css directory (config.cssDir). It creates one app style.
 - The frontend needs the possibility to work with websockets (connection upgrade in nginx).
 
 ## Installation
@@ -187,6 +188,30 @@ const app = new Server();
 app.registerComponent('test', 'test');
 
 app.start();
+```
+### RSConfig
+RSConfig file can contain list of routes, list of components and the directory with the socket classes. By default the file `rsconfig.json` is searched in the `process.cwd()` directory. If the file doesn't exist nothing happens. The path to the file can by changed with config.rsConfig option.  
+
+```json
+// rsconfig.json
+{
+    "routes": [
+        {
+            "route": "/",
+            "component": "home",
+            "title": "Home",
+            "requiredAuth": false,
+            "method": "GET"
+        }
+    ],
+    "components": [
+        {
+            "id": "test",
+            "component": "test"
+        }
+    ],
+    "socketClassDir": "./dist/network/socket"
+}
 ```
 
 ### Texts
