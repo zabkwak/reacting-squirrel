@@ -24,7 +24,7 @@ const app = new Server({
     appDir: './__tests__/app',
     staticDir: './__tests__/public',
     moduleDev: true,
-    dev: true,
+    dev: false,
     layoutComponent: CustomLayout,
     entryFile: 'entry.js',
     styles: ['/css/main.css'],

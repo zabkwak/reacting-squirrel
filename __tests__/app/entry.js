@@ -4,6 +4,7 @@ import Application, { Text, Socket } from '../../src/app';
 import dictionaryCzech from './res/text_cs-CZ.json';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import './styles/app.css';
 
 TagManager.initialize({
     gtmId: 'GTM-KQ3XSLZ',
