@@ -254,30 +254,88 @@ export default class Server {
 
     constructor(config?: IAppConfig);
 
+    /**
+     * Gets the instance of the server.
+     */
     getServer(): http.Server;
+    /**
+     * Gets the instance of express application.
+     */
     getApp(): express.Application;
 
+    /**
+     * Gets the list of registered socket events.
+     */
     getSocketEvents(): Array<ISocketEvent>;
 
+    /**
+     * Gets the list of registered socket classes.
+     */
     getSocketClasses(): Array<SocketClass>;
 
+    /**
+     * Authorizes the user.
+     *
+     * @param session Current session.
+     * @param next Callback after the auth process.
+     */
     auth(session: Session, next: (err?: any) => void): void;
 
     get(route: string, contentComponent: string, title: string): this;
     get(route: string, contentComponent: string, title: string, requireAuth: boolean): this;
+    /**
+     * Registers the GET route.
+     * @param route
+     * @param contentComponent 
+     * @param title 
+     * @param requireAuth 
+     * @param callback 
+     * @deprecated
+     */
     get(route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
 
     registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
     registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
+    /**
+     * Registers route.
+     *
+     * @param method 
+     * @param route 
+     * @param contentComponent 
+     * @param title 
+     * @param requireAuth 
+     * @param callback 
+     */
     registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
 
     registerSocketClass(cls: typeof SocketClass): this;
-
+    /**
+     * Registers the socket class.
+     *
+     * @param cls Socket class to register.
+     */
     registerSocketClass(cls: new () => SocketClass<Session>): this;
 
+    /**
+     * Registers the socket event.
+     *
+     * @param event Name of the event.
+     * @param listener Listener executed in the event.
+     */
     registerSocketEvent(event: string, listener: ISocketEvent['listener']): this;
 
+    /**
+     * Registers component.
+     *
+     * @param componentPath Relative path to the component from the app directory.
+     * @param elementId Id of the element in the layout where the component should be rendered.
+     */
     registerComponent(componentPath: string, elementId: string): this;
 
+    /**
+     * Starts the application.
+     *
+     * @param cb Callback called after the application is started.
+     */
     start(cb?: (err?: any) => void): void;
 }

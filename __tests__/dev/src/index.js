@@ -24,7 +24,7 @@ const app = new Server({
     appDir: './__tests__/app',
     staticDir: './__tests__/public',
     moduleDev: true,
-    dev: false,
+    dev: true,
     layoutComponent: CustomLayout,
     entryFile: 'entry.js',
     styles: ['/css/main.css'],
@@ -65,10 +65,7 @@ app.get('/error', null, 'Error', false, (req, res, next) => {
 
 Utils.registerSocketClassDir(app, path.resolve(__dirname, './'));
 
-app.registerSocketEvent('socket.test', async (socket, data) => {
-    // console.log(data.buffer.toString());
-    return data;
-});
+app.registerSocketEvent('socket.test', async (socket, data) => data);
 app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
     fs.writeFileSync(`./tmp/${name}`, file);
 });

@@ -83,7 +83,7 @@
                 "ignoreTrailingComments": true,
                 "ignoreUrls": true,
                 "ignoreStrings": true,
-                "code": 150
+                "code": 120
             }
         ],
         "no-plusplus": 0,

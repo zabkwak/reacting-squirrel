@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import fs from 'fs';
 
 import SocketClass from './socket-class';
@@ -64,6 +66,7 @@ export default {
     },
     _isConstructor(Class) {
         try {
+            // eslint-disable-next-line no-new
             new Class();
             return true;
         } catch (e) {

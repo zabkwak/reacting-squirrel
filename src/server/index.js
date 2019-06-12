@@ -1,3 +1,5 @@
+/* eslint-disable import/no-dynamic-require */
+/* eslint-disable global-require */
 import '@babel/polyfill';
 import express from 'express';
 import http from 'http';
@@ -228,7 +230,7 @@ class Server {
      */
     constructor(config = {}) {
         if (!config.cookieSecret) {
-            console.warn('Using default cookieSecret. It\'s a random string which changes every server start. It should be overriden in config.\n');
+            this._warn('Using default cookieSecret. It\'s a random string which changes every server start. It should be overriden in config.\n');
         }
         this._config = {
             ...this._config,
@@ -241,7 +243,9 @@ class Server {
             throw new Error('Cannot create instance of Layout.');
         }
         this._path = path.resolve(`${this._config.staticDir}/${this._config.jsDir}`);
-        this._bundlePath = `${this._config.bundlePathRelative ? '' : '/'}${this._config.jsDir}/${this._config.filename}`;
+        this._bundlePath = `${this._config.bundlePathRelative
+            ? ''
+            : '/'}${this._config.jsDir}/${this._config.filename}`;
         const pkg = require(path.resolve('./package.json'));
         this._version = pkg.version;
         this._setApp();
@@ -691,7 +695,7 @@ Application
             let listening = false;
             this._webpack.watch({ aggregateTimeout: 300 }, (err, stats) => {
                 if (err) {
-                    console.error(err);
+                    this._error(err);
                     return;
                 }
                 this._compileStyles();
@@ -884,15 +888,17 @@ Application
         this._app.use((err, req, res, next) => {
             if (!(err instanceof HttpError)) {
                 if (typeof err === 'string') {
+                    // eslint-disable-next-line no-param-reassign
                     err = { message: err };
                 }
                 const { message, code, ...payload } = err;
+                // eslint-disable-next-line no-param-reassign
                 err = HttpError.create(err.statusCode || 500, message, code, Error.parsePayload(payload));
             }
             if (res.statusCode === 200) {
                 res.status(err.statusCode);
             }
-            console.error(err);
+            this._error(err);
             const render = () => {
                 res.render({
                     title: err.message,
@@ -1006,6 +1012,7 @@ Application
         if (!dev) {
             return;
         }
+        // eslint-disable-next-line no-console
         console.log(new Date(), message);
     }
 
@@ -1015,7 +1022,13 @@ Application
      * @param {string} message Message to log.
      */
     _warn(message) {
+        // eslint-disable-next-line no-console
         console.warn(new Date(), message);
+    }
+
+    _error(message) {
+        // eslint-disable-next-line no-console
+        console.error(new Date(), message);
     }
 }
 

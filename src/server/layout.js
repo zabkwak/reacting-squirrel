@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
@@ -9,6 +10,7 @@ export default class Layout extends Component {
     static propTypes = {
         title: PropTypes.string.isRequired,
         initialData: PropTypes.any.isRequired,
+        // eslint-disable-next-line react/no-unused-prop-types
         user: PropTypes.any,
         scripts: PropTypes.arrayOf(PropTypes.string),
         styles: PropTypes.arrayOf(PropTypes.string),
