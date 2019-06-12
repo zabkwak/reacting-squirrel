@@ -24,13 +24,13 @@ const app = new Server({
     appDir: './__tests__/app',
     staticDir: './__tests__/public',
     moduleDev: true,
-    dev: true,
+    dev: false,
     layoutComponent: CustomLayout,
     entryFile: 'entry.js',
     styles: ['/css/main.css'],
     scripts: ['/js/script.js?api_key=API_KEY'],
     mergeStyles: [
-        path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
+        // path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
     ],
     // cookieSecret: 'dev-secret',
     /*

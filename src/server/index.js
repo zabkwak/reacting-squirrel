@@ -395,7 +395,7 @@ class Server {
                 '_createSocketMap',
                 '_createPostCSSConfig',
                 '_createTSConfig',
-                '_compileProductionStyles',
+                // '_compileProductionStyles',
             ], (f, callback) => this[f].call(this, callback), (err) => {
                 if (err) {
                     reject(err);
@@ -747,7 +747,7 @@ Application
      */
     _setWebpack() {
         const {
-            dev, filename,
+            dev, filename, staticDir, cssDir,
         } = this._config;
         const { plugins, ...config } = this._config.webpack;
         const postCSSLoader = {
@@ -756,6 +756,12 @@ Application
                 config: {
                     path: `${this._getRSDirPath()}/postcss.config.js`,
                 },
+            },
+        };
+        const prodStyleLoader = {
+            loader: 'prod-style-loader',
+            options: {
+                outDir: path.resolve(`${staticDir}/${cssDir}`),
             },
         };
         this._webpack = webpack({
@@ -767,6 +773,11 @@ Application
             },
             resolve: {
                 extensions: ['.js', '.jsx', '.ts', '.tsx'],
+            },
+            resolveLoader: {
+                alias: {
+                    'prod-style-loader': path.resolve(__dirname, './style-loader'),
+                },
             },
             module: {
                 rules: [
@@ -793,7 +804,7 @@ Application
                             'style-loader',
                             'css-loader',
                             postCSSLoader,
-                        ] : 'null-loader',
+                        ] : prodStyleLoader,
                     },
                     {
                         test: /\.scss?$/,
@@ -802,7 +813,7 @@ Application
                             'css-loader',
                             postCSSLoader,
                             'sass-loader',
-                        ] : 'null-loader',
+                        ] : prodStyleLoader,
                     },
                 ],
             },
@@ -929,7 +940,19 @@ Application
             fs.unlinkSync(stylesPath);
         }
         const compiler = new StylesCompiler([dir, ...mergeStyles], dir, 'rs-app.css');
-        compiler.compile(cb);
+        compiler.compile((err) => {
+            if (err) {
+                cb(err);
+                return;
+            }
+            const files = fs.readdirSync(dir);
+            files.forEach((file) => {
+                if (file.indexOf('rs-tmp') >= 0) {
+                    fs.unlinkSync(`${dir}/${file}`);
+                }
+            });
+            cb();
+        });
     }
 
     /**

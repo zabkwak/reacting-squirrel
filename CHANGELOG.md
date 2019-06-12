@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.12.0
+### Updates
+- Custom webpack loader for merging styles in the bundling process.
+
 ## 0.11.1
 ### Features
 - Option to register styles in node_modules (or anywhere) to the styles processor.
