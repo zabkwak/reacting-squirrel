@@ -255,6 +255,9 @@ Socket.emit('file.upload', undefined, { file }, (progress) => console.log(progre
 #### Limitations
 The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.
 
+## Docs
+Checkout the documentation [here](https://zabkwak.github.io/reacting-squirrel/).
+
 ## TODO
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
 
