@@ -18,8 +18,8 @@
     "postpublish": "npm run clear",
     "docs_server": "./node_modules/.bin/jsdoc ./src/server -r -d ./docs/server -c ./jsdoc.json",
     "docs_app": "./node_modules/.bin/jsdoc ./src/app -r -d ./docs/app -c ./jsdoc.json",
-    "docs_generate": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
-    "docs": "rm -rf docs && npm run docs_generate",
+    "docs_generate": "./node_modules/.bin/typedoc --out docs ./src --includeDeclarations --excludeExternals",
+    "docs": "rm -rf ./docs && npm run docs_generate",
     "md_server": "./node_modules/.bin/jsdoc2md --files ./src/server/**/*.js > ./markdown/server.md",
     "md_app": "./node_modules/.bin/jsdoc2md --files ./src/app/**/*.js > ./markdown/app.md",
     "md_concat": "cat ./markdown/readme.md ./markdown/server.md ./markdown/app.md > ./README.md",
@@ -91,7 +91,9 @@
     "jsdoc-to-markdown": "^5.0.0",
     "react-gtm-module": "^2.0.7",
     "request": "^2.88.0",
-    "run-script-os-fix": "^1.0.4"
+    "run-script-os-fix": "^1.0.4",
+    "typedoc": "^0.14.2",
+    "typedoc-plugin-markdown": "^1.2.1"
   },
   "engines": {
     "node": ">=4"

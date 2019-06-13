@@ -2,6 +2,8 @@
 ## 0.13.0
 ### Features
 - Loading of rsconfig.json for specify routes, components and directory with socket classes.
+### Updates
+- HTML docs
 
 ## 0.12.0
 ### Updates
