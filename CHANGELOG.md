@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.13.1
+### Updates
+- Cleaned dependencies
+
 ## 0.13.0
 ### Features
 - Loading of rsconfig.json for specify routes, components and directory with socket classes.

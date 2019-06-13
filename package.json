@@ -16,8 +16,6 @@
     "clear": "rm -rf ./app && rm -rf ./server && rm -f ./index.js",
     "prepublish": "npm run build_es6",
     "postpublish": "npm run clear",
-    "docs_server": "./node_modules/.bin/jsdoc ./src/server -r -d ./docs/server -c ./jsdoc.json",
-    "docs_app": "./node_modules/.bin/jsdoc ./src/app -r -d ./docs/app -c ./jsdoc.json",
     "docs_generate": "./node_modules/.bin/typedoc --out docs ./src --includeDeclarations --excludeExternals",
     "docs": "rm -rf ./docs && npm run docs_generate && touch ./docs/.nojekyll",
     "md_server": "./node_modules/.bin/jsdoc2md --files ./src/server/**/*.js > ./markdown/server.md",
@@ -69,7 +67,7 @@
     "ts-loader": "^5.4.5",
     "typescript": "^3.5.1",
     "uniqid": "^5.0.3",
-    "webpack": "^4.33.0"
+    "webpack": "^4.34.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -86,14 +84,10 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "ignore-styles": "^5.0.1",
-    "jsdoc": "^3.6.2",
-    "jsdoc-export-default-interop": "^0.3.1",
-    "jsdoc-to-markdown": "^5.0.0",
     "react-gtm-module": "^2.0.7",
     "request": "^2.88.0",
     "run-script-os-fix": "^1.0.4",
-    "typedoc": "^0.14.2",
-    "typedoc-plugin-markdown": "^1.2.1"
+    "typedoc": "^0.14.2"
   },
   "engines": {
     "node": ">=4"
@@ -105,7 +99,7 @@
   "bugs": {
     "url": "https://github.com/zabkwak/reacting-squirrel/issues"
   },
-  "homepage": "https://github.com/zabkwak/reacting-squirrel#readme",
+  "homepage": "https://zabkwak.github.io/reacting-squirrel",
   "keywords": [
     "react",
     "express",
