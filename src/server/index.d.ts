@@ -13,6 +13,9 @@ export interface IRequest<S extends Session = Session> extends express.Request {
 
 export interface IResponse extends express.Response { }
 
+/**
+ * Server configuration.
+ */
 interface IAppConfig {
     /** Port on which the app listens. 
      * @default 8080 
@@ -202,14 +205,14 @@ export class SocketClass<S extends Session = Session> {
     broadcast(event: string, data: any, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
 
     setSocket(socket: Socket): void;
-
-    getSession(): S;
-
-    getUser(): any;
 }
 
 export { HttpSmartError as HttpError };
 
+/**
+ * Helper for register routes, components and socket class directory.
+ * @deprecated Use `rsconfig.json` instead.
+ */
 export namespace Utils {
     /**
      * Registers socket classes to the server app.
@@ -243,6 +246,9 @@ export namespace Utils {
     export function registerComponents(app: Server, components: Array<{ id: string, component: string }>): void;
 }
 
+/**
+ * Base server application.
+ */
 export default class Server {
 
     port: number;

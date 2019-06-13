@@ -1,6 +1,9 @@
 import { Component as BaseComponent, ButtonHTMLAttributes } from 'react';
 import * as url from 'url';
 
+/**
+ * Base client application.
+ */
 declare class Application extends CallbackEmitter {
 
     DEV: boolean;
@@ -163,36 +166,105 @@ export interface IPageProps {
     initialData: any;
 }
 
+/**
+ * Simple class to handle callbacks.
+ */
 export class CallbackEmitter {
 
-    addListener(event: string, listener: (self: this) => void): this;
-    addListener(event: string, listener: (self: this, args?: any) => void): this;
+    public addListener(event: string, listener: (self: this) => void): this;
+    /**
+     * Registers the listener of the event.
+     *
+     * @param event Name of the event.
+     * @param listener Listener to execute when the event is called.
+     */
+    public addListener(event: string, listener: (self: this, args: any) => void): this;
 
-    removeListener(event: string, listener: (self: this) => void): this;
-    removeListener(event: string, listener: (self: this, args?: any) => void): this;
+    public removeListener(event: string, listener: (self: this) => void): this;
+    /**
+     * Removes the listener of the event.
+     *
+     * @param event Name of the event.
+     * @param listener 
+     */
+    public removeListener(event: string, listener: (self: this, args: any) => void): this;
+
+    protected _callListener(event: string): void;
+    /**
+     * Calls all listeners registered in the event.
+     *
+     * @param event Name of the event.
+     * @param args Data to send in the event.
+     */
+    protected _callListener(event: string, args: any): void;
+
+    /**
+     * Checks if the emitter has registerd event.
+     *
+     * @param event Name of the event.
+     */
+    protected _hasEventRegistered(event: string): boolean;
 }
 
+/**
+ * Base RS Components.
+ * All components in the application should be inherited from this class or its subclasses.
+ */
 export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS> {
 
+    /**
+     * Saved states of the component.
+     */
     private static _stateStorage: { [key: string]: any };
 
+    /**
+     * Indicates if the component is mounted.
+     */
     protected _mounted: boolean;
 
     public componentDidMount(): void;
 
     public componentWillUnmount(): void;
 
+    /**
+     * Gets the application context.
+     */
     public getContext(): Application;
 
     public getText(key: string): string;
+    /**
+     * Gets the text from the dictionary.
+     *
+     * @param key Key of the text in the dictionary.
+     * @param args Arguments for text format.
+     */
     public getText(key: string, ...args: Array<any>): string;
 
+    /**
+     * Method called after `window.onpopstate` event is triggered.
+     * @param event 
+     */
     protected onPopState(event: any): void;
 
+    /**
+     * Saves the current state to the memory storage.
+     *
+     * @param key State key of the component instance.
+     */
     protected saveState(key: string): void;
 
+    /**
+     * Loads the state from the memory storage.
+     *
+     * @param key State key of the component instance.
+     */
     protected loadState(key: string): Promise<void>;
 
+    /**
+     * Gets the state key of the component instance.
+     * By default the method returns `null`.
+     * If it's overriden to return a string value the `saveState` and `loadState` are handled automatically in the component's lifecycle.
+     */
     protected getStateKey(): string;
 }
 

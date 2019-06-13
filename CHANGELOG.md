@@ -2,6 +2,7 @@
 ## 0.13.1
 ### Updates
 - Cleaned dependencies
+- Updated docs
 
 ## 0.13.0
 ### Features
