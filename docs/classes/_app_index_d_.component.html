@@ -67,6 +67,14 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Base RS Components.
+						All components in the application should be inherited from this class or its subclasses.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
@@ -213,9 +221,14 @@
 					<div class="tsd-signature tsd-kind-icon">_mounted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L179">app/index.d.ts:179</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L223">app/index.d.ts:223</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates if the component is mounted.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="context" class="tsd-anchor"></a>
@@ -298,9 +311,14 @@ context!: React.ContextType&lt;<span class="hljs-keyword">typeof</span> MyContex
 					<div class="tsd-signature tsd-kind-icon">_state<wbr>Storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L177">app/index.d.ts:177</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L218">app/index.d.ts:218</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Saved states of the component.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -526,7 +544,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Overrides ComponentLifecycle.componentDidMount</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L181">app/index.d.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L225">app/index.d.ts:225</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -665,7 +683,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Overrides ComponentLifecycle.componentWillUnmount</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L183">app/index.d.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L227">app/index.d.ts:227</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -767,9 +785,14 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L185">app/index.d.ts:185</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L232">app/index.d.ts:232</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the application context.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="_app_index_d_.application.html" class="tsd-signature-type">Application</a></h4>
 						</li>
 					</ul>
@@ -823,9 +846,16 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L196">app/index.d.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L268">app/index.d.ts:268</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the state key of the component instance.
+										By default the method returns <code>null</code>.
+									If it&#39;s overriden to return a string value the <code>saveState</code> and <code>loadState</code> are handled automatically in the component&#39;s lifecycle.</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
@@ -841,7 +871,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L187">app/index.d.ts:187</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L234">app/index.d.ts:234</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -855,16 +885,27 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L188">app/index.d.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L241">app/index.d.ts:241</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the text from the dictionary.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Key of the text in the dictionary.</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Arguments for text format.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -881,13 +922,21 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L194">app/index.d.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L261">app/index.d.ts:261</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Loads the state from the memory storage.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>State key of the component instance.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -904,13 +953,20 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L190">app/index.d.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L247">app/index.d.ts:247</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Method called after <code>window.onpopstate</code> event is triggered.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>event: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -945,13 +1001,21 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/9ac0113/src/app/index.d.ts#L192">app/index.d.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/e3825de/src/app/index.d.ts#L254">app/index.d.ts:254</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Saves the current state to the memory storage.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>key: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>State key of the component instance.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
