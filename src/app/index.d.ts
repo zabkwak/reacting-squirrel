@@ -6,43 +6,138 @@ import * as url from 'url';
  */
 declare class Application extends CallbackEmitter {
 
+    /**
+     * Indicates if the application is in dev mode.
+     */
     DEV: boolean;
     /** @deprecated */
     initialData: any;
 
+    /**
+     * Gets the initial data registered to the app.
+     *
+     * @typeparam T Definition of the returned data.
+     */
     getInitialData<T = any>(): T;
+    /**
+     * Gets the initial data value by its key.
+     *
+     * @typeparam T Definition of the returned data.
+     * @param key Key in the initial data.
+     */
     getInitialData<T = any>(key: string): T;
 
+    /**
+     * Registers the routing map.
+     * 
+     * This method is called automatically in after the bundle load.
+     *
+     * @param routingMap Map of routes.
+     */
     registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
 
+    /**
+     * Registers socket events.
+     * 
+     * This method is called automatically in after the bundle load.
+     *
+     * @param events List of socket events.
+     */
     registerSocketEvents(events: Array<string>): this;
 
+    /**
+     * Registers custom components.
+     * 
+     * This method is called automatically in after the bundle load.
+     * 
+     * @param components List of components.
+     */
     registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
 
     start(): void;
+    /**
+     * Starts the application.
+     *
+     * This method is called automatically in after the bundle load.
+     * 
+     * @param connectSocket Indicates if the socket should be connected.
+     */
     start(connectSocket: boolean): void;
 
+    /**
+     * Forces the content refresh.
+     */
     refreshContent(): void;
 
     render(route: Route): void;
+    /**
+     * Renders the route's component.
+     * 
+     * @param route Route to render.
+     * @param refresh Indicates if the component of the route should be refreshed if the route is currently rendered.
+     */
     render(route: Route, refresh: boolean): void;
 
     renderComponent(component: JSX.Element, target: HTMLElement): void;
+    /**
+     * Renders the component to the target.
+     * 
+     * @param component The component.
+     * @param target The target DOM element
+     * @param callback Function called after the render.
+     */
     renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
 
     redirect(path: string): void;
+    /**
+     * Alias for the `navigate` method with the refreshing the content.
+     * 
+     * @param path URL path.
+     * @param q Query string data.
+     */
     redirect(path: string, q: { [key: string]: string }): void;
 
     navigate(path: string): void;
     navigate(path: string, q: { [key: string]: string }): void;
+    /**
+     * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
+     * 
+     * @param path URL path.
+     * @param q Query string data.
+     * @param refresh Indicates if the route should be refreshed if the route is currently rendered.
+     */
     navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
 
+    /**
+     * Pushes the state to the history.
+     *
+     * @param path URL path.
+     * @param q Query string data.
+     */
     pushState(path: string, q: { [key: string]: string }): void;
 
+    /**
+     * Sets the page title.
+     *
+     * @param title Title of the page.
+     */
     setTitle(title: string): void;
 
+    /**
+     * Registers the component as the context reference.
+     *
+     * @typeparam T Type of the component.
+     * @param ref Component's reference.
+     * @param key Key of the reference.
+     */
     setRef<T = any>(ref: T, key: string): void;
 
+    /**
+     * Gets the component registered in the application context.
+     *
+     * @typparam T Type of the component.
+     * @param key Key of the reference.
+     */
     getRef<T = any>(key: string): T;
 }
 

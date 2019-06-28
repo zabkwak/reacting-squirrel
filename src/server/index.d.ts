@@ -7,10 +7,18 @@ import { ServerOptions as SocketServerOptions } from 'socket.io';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
+/**
+ * Express request.
+ *
+ * @typeparam S Type of the Session
+ */
 export interface IRequest<S extends Session = Session> extends express.Request {
     session: S;
 }
 
+/**
+ * Express response.
+ */
 export interface IResponse extends express.Response { }
 
 /**
@@ -98,7 +106,7 @@ interface IAppConfig {
     socketMessageMaxSize?: number;
     /**
      * Auth function called before the route execution.
-     * @param session Jebka
+     * @param session Session instance.
      * @default (session, next) => next()
      */
     auth?: (session: Session, next: (err?: any) => void) => void;
