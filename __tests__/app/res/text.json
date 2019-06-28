@@ -8,5 +8,6 @@
     "socket_state_connected": "Connected",
     "socket_state_disconnected": "Disconnected",
     "socket_error": "Socket error: {0}",
-    "reload": "Reload"
+    "reload": "Reload",
+    "html_text": "Some <strong>HTML</strong> text."
 }

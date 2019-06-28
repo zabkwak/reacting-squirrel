@@ -1,4 +1,10 @@
 # CHANGELOG
+## 0.13.2
+### Features
+- HTML tags in texts can be renedered as JSX.
+### Updates
+- Updated docs
+
 ## 0.13.1
 ### Updates
 - Cleaned dependencies

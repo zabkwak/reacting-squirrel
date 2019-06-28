@@ -326,6 +326,11 @@ export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS>
      */
     public getContext(): Application;
 
+    /**
+     * Gets the text from the dictionary.
+     *
+     * @param key Key of the text in the dictionary.
+     */
     public getText(key: string): string;
     /**
      * Gets the text from the dictionary.
@@ -334,6 +339,20 @@ export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS>
      * @param args Arguments for text format.
      */
     public getText(key: string, ...args: Array<any>): string;
+
+    /**
+     * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
+     *
+     * @param key Key of the text in the dictionary.
+     */
+    public getJSXText(key: string): JSX.Element;
+    /**
+     * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
+     *
+     * @param key Key of the text in the dictionary.
+     * @param args Arguments for text format.
+     */
+    public getJSXText(key: string, ...args: Array<any>): JSX.Element;
 
     /**
      * Method called after `window.onpopstate` event is triggered.
@@ -417,7 +436,11 @@ export class Text extends BaseComponent<ITextProps> {
 
     static get(key: string, ...args: any[]): string;
 
+    static getJSX(key: string, ...args: any[]): JSX.Element;
+
     static format(text: string, ...args: any[]): string;
+
+    static formatJSX(key: string, ...args: any[]): JSX.Element;
 }
 
 export class Loader extends BaseComponent<ILoaderProps> { }

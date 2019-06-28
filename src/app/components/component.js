@@ -52,6 +52,10 @@ export default class Component extends Base {
         return Text.get(key, ...args);
     }
 
+    getJSXText(key, ...args) {
+        return Text.getJSX(key, ...args);
+    }
+
     /**
      * Method called after the window.onpopstate event.
      *
