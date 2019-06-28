@@ -54,6 +54,11 @@ declare class Application extends CallbackEmitter {
      */
     registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
 
+    /**
+     * Starts the application.
+     *
+     * This method is called automatically in after the bundle load.
+     */
     start(): void;
     /**
      * Starts the application.
@@ -69,6 +74,11 @@ declare class Application extends CallbackEmitter {
      */
     refreshContent(): void;
 
+    /**
+     * Renders the route's component.
+     * 
+     * @param route Route to render.
+     */
     render(route: Route): void;
     /**
      * Renders the route's component.
@@ -77,7 +87,13 @@ declare class Application extends CallbackEmitter {
      * @param refresh Indicates if the component of the route should be refreshed if the route is currently rendered.
      */
     render(route: Route, refresh: boolean): void;
-
+    
+    /**
+     * Renders the component to the target.
+     * 
+     * @param component The component.
+     * @param target The target DOM element
+     */
     renderComponent(component: JSX.Element, target: HTMLElement): void;
     /**
      * Renders the component to the target.
@@ -88,6 +104,11 @@ declare class Application extends CallbackEmitter {
      */
     renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
 
+    /**
+     * Alias for the `navigate` method with the refreshing the content.
+     * 
+     * @param path URL path.
+     */
     redirect(path: string): void;
     /**
      * Alias for the `navigate` method with the refreshing the content.
@@ -97,7 +118,19 @@ declare class Application extends CallbackEmitter {
      */
     redirect(path: string, q: { [key: string]: string }): void;
 
+    /**
+     * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
+     * 
+     * @param path URL path.
+     */
     navigate(path: string): void;
+    /**
+     * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
+     * 
+     * @param path URL path.
+     * @param q Query string data.
+     * 
+     */
     navigate(path: string, q: { [key: string]: string }): void;
     /**
      * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
@@ -266,6 +299,12 @@ export interface IPageProps {
  */
 export class CallbackEmitter {
 
+    /**
+     * Registers the listener of the event.
+     *
+     * @param event Name of the event.
+     * @param listener Listener to execute when the event is called.
+     */
     public addListener(event: string, listener: (self: this) => void): this;
     /**
      * Registers the listener of the event.
@@ -275,6 +314,12 @@ export class CallbackEmitter {
      */
     public addListener(event: string, listener: (self: this, args: any) => void): this;
 
+    /**
+     * Removes the listener of the event.
+     *
+     * @param event Name of the event.
+     * @param listener 
+     */
     public removeListener(event: string, listener: (self: this) => void): this;
     /**
      * Removes the listener of the event.
@@ -284,6 +329,11 @@ export class CallbackEmitter {
      */
     public removeListener(event: string, listener: (self: this, args: any) => void): this;
 
+    /**
+     * Calls all listeners registered in the event.
+     *
+     * @param event Name of the event.
+     */
     protected _callListener(event: string): void;
     /**
      * Calls all listeners registered in the event.
