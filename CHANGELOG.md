@@ -1,4 +1,9 @@
 # CHANGELOG
+## 0.13.3
+### Updates
+- Updated test command
+- Added resolveJSONModule to app tsconfig.
+
 ## 0.13.2
 ### Features
 - HTML tags in texts can be renedered as JSX.

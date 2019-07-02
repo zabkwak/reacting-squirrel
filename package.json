@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "./app/index.d.ts",
   "scripts": {
-    "test": "mocha __tests__/cases/server __tests__/cases/app --recursive --compilers js:@babel/register --require ignore-styles --timeout 20000",
+    "test": "./node_modules/.bin/mocha __tests__/cases/server __tests__/cases/app --recursive --require @babel/register --require ignore-styles --timeout 20000",
     "test_app_compile": "./node_modules/.bin/babel ./__tests__/dev/src --out-dir ./__tests__/dev/dist && node ./__tests__/dev/dist/index.js",
     "test_app": "npm run build_es6 && npm run test_app_compile",
     "posttest": "rm -rf ./__tests__/app/~rs && rm -rf ./__tests__/public",
@@ -85,6 +85,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.14.2",
     "ignore-styles": "^5.0.1",
+    "mocha": "^6.1.4",
     "react-gtm-module": "^2.0.7",
     "request": "^2.88.0",
     "run-script-os-fix": "^1.0.4",

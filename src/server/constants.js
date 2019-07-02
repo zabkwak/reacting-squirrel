@@ -12,6 +12,7 @@ const TSConfig = {
             'es6',
             'dom',
         ],
+        resolveJsonModule: true,
     },
     include: [
         '../**/*',
