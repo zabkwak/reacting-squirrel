@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.13.4
+### Updates
+- Updated dependencies.
+
 ## 0.13.3
 ### Updates
 - Updated test command
