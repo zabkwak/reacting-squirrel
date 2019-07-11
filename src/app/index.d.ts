@@ -87,7 +87,7 @@ declare class Application extends CallbackEmitter {
      * @param refresh Indicates if the component of the route should be refreshed if the route is currently rendered.
      */
     render(route: Route, refresh: boolean): void;
-    
+
     /**
      * Renders the component to the target.
      * 
@@ -200,6 +200,8 @@ declare class Router {
     getParams(): { [key: string]: string };
 }
 
+declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
+
 declare class Socket {
 
     readonly STATE_NONE: 'none';
@@ -209,6 +211,8 @@ declare class Socket {
     readonly STATE_CONNECTED: 'connected';
 
     readonly STATE_DISCONNECTED: 'disconnected';
+
+    private _state: SocketState;
 
     setChunkSize(chunkSize: number): this;
 
@@ -245,53 +249,6 @@ declare class Storage {
     delete(key: string): void;
 
     clear(): void;
-}
-
-interface IButtonProps {
-    href?: string;
-    refreshContent?: boolean;
-}
-
-interface IErrorPageProps extends IPageProps {
-    error: {
-        message: string;
-        code: string;
-        stack?: string;
-    };
-}
-
-interface ITextProps extends React.HTMLProps<Text> {
-    dictionaryKey: string;
-    tag?: string | Node;
-    args?: Array<any>;
-}
-
-interface ILoaderProps {
-    loaded: boolean;
-    size?: 'large' | 'normal' | 'small' | 'xsmall';
-    block?: boolean;
-}
-
-interface IDataComponentProps extends React.HTMLProps<DataComponent> {
-    events: Array<{ name: string, params?: any, key?: string }>;
-    renderData: (data: any) => JSX.Element;
-    renderError?: (error: { message: string, code: string }, component: this) => JSX.Element;
-    onError?: (error: any) => void;
-    onData?: (data: any) => any;
-    onStart?: () => void;
-    loaderBlock?: boolean;
-    loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
-}
-
-declare const App: Application;
-declare const R: Router;
-declare const S: Socket;
-declare const ST: Storage;
-
-export interface IPageProps {
-    params: any;
-    query: any;
-    initialData: any;
 }
 
 /**
@@ -350,6 +307,8 @@ export class CallbackEmitter {
      */
     protected _hasEventRegistered(event: string): boolean;
 }
+
+//#region COMPONENTS
 
 /**
  * Base RS Components.
@@ -432,41 +391,277 @@ export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS>
     protected getStateKey(): string;
 }
 
+/**
+ * Component using Socket API for communication.
+ */
 export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, SS> {
 
-    onSocketStateChanged(state: any): void;
-    onSocketError(error: any): void;
+    /**
+     * Called if the socket changes its state.
+     *
+     * @param state Current state of the socket.
+     */
+    protected onSocketStateChanged(state: SocketState): void;
 
-    on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+    /**
+     * Called if some socket error appeares.
+     *
+     * @param error Socket error.
+     */
+    protected onSocketError(error: any): void;
 
-    call<R = any>(event: string): Promise<R>;
-    call<P = any, R = any>(event: string, data: P): Promise<R>;
-    call<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
-    call<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
+    /**
+     * Registers socket event listener. This method should be called in `componentDidMount`.
+     *
+     * @param event Name of the event.
+     * @param callback Callback for the event.
+     */
+    protected on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 
-    requestAsync<R = any>(event: string): Promise<R>;
-    requestAsync<P = any, R = any>(event: string, data: P): Promise<R>;
-    requestAsync<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
-    requestAsync<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @typeparam R Type of response.
+     * @deprecated
+     */
+    protected call<R = any>(event: string): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     * @deprecated
+     */
+    protected call<P = any, R = any>(event: string, data: P): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     * @deprecated
+     */
+    protected call<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     * @deprecated
+     */
+    protected call<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
-    request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
-    request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
-    request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
-    request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void, onProgress: (progress: number) => void): this;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @typeparam R Type of response.
+     */
+    protected requestAsync<R = any>(event: string): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    protected requestAsync<P = any, R = any>(event: string, data: P): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    protected requestAsync<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    protected requestAsync<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
-    emit(event: string): this;
-    emit(event: string, key: string): this;
-    emit<P = any>(event: string, key: string, data: P): this;
-    emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param callback Callback function.
+     * @typeparam R Type of response.
+     */
+    protected request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param callback Callback function.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    protected request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @param callback Callback function.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @param callback Callback function.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void, onProgress: (progress: number) => void): this;
+
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @typeparam P Type of parameters.
+     */
+    protected emit(event: string): this;
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     */
+    protected emit(event: string, key: string): this;
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     */
+    protected emit<P = any>(event: string, key: string, data: P): this;
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     * @param data Event parameters.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     */
+    protected emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
 }
 
-export class Page<P extends IPageProps = { params: any, query: any, initialData: any }, S = {}, SS = any> extends SocketComponent<P, S, SS> {
-    onPageRender(): void;
+//#region Page
+
+/**
+ * Interface for Page props initialData.
+ *
+ * @typeparam U Type of user prop.
+ */
+interface IInitialDataProps<U> {
+    /**
+     * User data.
+     */
+    user: U;
+    /**
+     * Indicates if the app is in DEV mode.
+     */
+    dev: boolean;
+    /**
+     * Render timestamp.
+     */
+    timestamp: number;
 }
 
+/**
+ * Interface for Page props.
+ *
+ * @typeparam T Another types for the initial data.
+ * @typeparam U Type of the user.
+ */
+export interface IPageProps<T = {}, U = any> {
+    /**
+     * Route parameters.
+     */
+    params: any;
+    /**
+     * Data in query string.
+     */
+    query: any;
+    /**
+     * Initial data from the server.
+     */
+    initialData: IInitialDataProps<U> & T;
+}
+/**
+ * Base component for rendering pages.
+ * All registered pages in the application should be inherited from this class.
+ */
+export class Page<P extends IPageProps = { params: any, query: any, initialData: IInitialDataProps<any> }, S = {}, SS = any> extends SocketComponent<P, S, SS> {
+
+    /**
+     * Called after the page is rendered.
+     */
+    protected onPageRender(): void;
+}
+
+// #endregion
+
+//#region DataComponent
+
+interface IDataComponentProps extends React.HTMLProps<DataComponent> {
+    events: Array<{ name: string, params?: any, key?: string }>;
+    renderData: (data: any) => JSX.Element;
+    renderError?: (error: { message: string, code: string }, component: this) => JSX.Element;
+    onError?: (error: any) => void;
+    onData?: (data: any) => any;
+    onStart?: () => void;
+    loaderBlock?: boolean;
+    loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
+}
+
+/**
+ * Component to handle rendering of socket data.
+ */
 export class DataComponent extends SocketComponent<IDataComponentProps> {
 
-    load(): void;
+    /**
+     * Reloads the data.
+     */
+    public load(): void;
+}
+
+//#endregion
+
+//#region Button
+
+interface IButtonProps {
+    href?: string;
+    refreshContent?: boolean;
 }
 
 /**
@@ -475,36 +670,129 @@ export class DataComponent extends SocketComponent<IDataComponentProps> {
  */
 export class Button extends BaseComponent<IButtonProps & React.ButtonHTMLAttributes<Button>> { }
 
+//#endregion
+
+//#region Text
+
+interface ITextProps extends React.HTMLProps<Text> {
+    dictionaryKey: string;
+    tag?: string | Node;
+    args?: Array<any>;
+    jsx?: boolean;
+}
+/**
+ * Component for rendering texts from dictionary.
+ */
 export class Text extends BaseComponent<ITextProps> {
 
+    /**
+     * Adds the dictionary to the default dictionary.
+     *
+     * @param dictionary Dictionary data.
+     */
     static addDictionary(dictionary: { [key: string]: string }): Text;
+    /**
+     * Adds the dictionary to the specific key.
+     *
+     * @param key Key of the dictionary.
+     * @param dictionary Dictionary data.
+     */
     static addDictionary(key: string, dictionary: { [key: string]: string }): Text;
 
+    /**
+     * Sets the currently active dictionary.
+     *
+     * @param key Key of the dictionary.
+     */
     static setDictionary(key: string): Text;
 
+    /**
+     * Registers function to the text.
+     *
+     * @param name Name of the function.
+     * @param fn Called function.
+     */
     static addFunction(name: string, fn: (...args: any[]) => string): Text;
 
+    /**
+     * Gets the text from the dictionary.
+     *
+     * @param key Key of the text in the dictionary.
+     * @param args Arguments for text format.
+     */
     static get(key: string, ...args: any[]): string;
 
+    /**
+     * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
+     *
+     * @param key Key of the text in the dictionary.
+     * @param args Arguments for text format.
+     */
     static getJSX(key: string, ...args: any[]): JSX.Element;
 
+    /**
+     * Formats the text.
+     *
+     * @param text Text to format.
+     * @param args Arguments for text format.
+     */
     static format(text: string, ...args: any[]): string;
-
+    /**
+     * Formats the text with HTML converted to JSX.
+     *
+     * @param text Text to format.
+     * @param args Arguments for text format.
+     */
     static formatJSX(key: string, ...args: any[]): JSX.Element;
 }
 
-export class Loader extends BaseComponent<ILoaderProps> { }
+//#endregion
 
-export class ErrorPage extends Page<IErrorPageProps> {
+//#region Loader
 
-    renderStack(): JSX.Element;
+interface ILoaderProps {
+    loaded: boolean;
+    size?: 'large' | 'normal' | 'small' | 'xsmall';
+    block?: boolean;
 }
 
-export default App;
+/**
+ * Component as placeholder for loading data.
+ */
+export class Loader extends BaseComponent<ILoaderProps> { }
+
+//#endregion
+
+//#region ErrorPage
+
+interface IErrorPageProps extends IPageProps {
+    error: {
+        message: string;
+        code: string;
+        stack?: string;
+    };
+}
+
+/**
+ * Page for rendering errors.
+ */
+export class ErrorPage extends Page<IErrorPageProps> {
+
+    /**
+     * Renders the error stack.
+     */
+    public renderStack(): JSX.Element;
+}
+
+//#endregion
+
+//#endregion
+
+export default Application;
 
 export {
-    App as Application,
-    R as Router,
-    S as Socket,
-    ST as Storage,
+    Application,
+    Router,
+    Socket,
+    Storage,
 }

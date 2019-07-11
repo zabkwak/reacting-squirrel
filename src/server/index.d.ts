@@ -142,17 +142,20 @@ interface ISocketEvent<S extends Session = Session> {
     listener: (socket: Socket<S>, data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
 }
 
-interface ILayoutPropsInitialData {
-    user: any;
+/**
+ * @typeparam U Type of user prop.
+ */
+interface ILayoutPropsInitialData<U = any> {
+    user: U;
     dev: boolean;
     timestamp: number;
 }
 
-export interface ILayoutProps<T = {}> {
+export interface ILayoutProps<T = {}, U = any> {
     title: string;
-    initialData: ILayoutPropsInitialData & T;
+    initialData: ILayoutPropsInitialData<U> & T;
     /** @deprecated */
-    user?: any;
+    user?: U;
     scripts?: Array<string>;
     styles?: Array<string>;
     version: string;

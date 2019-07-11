@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.13.5
+### Updates
+- Updated docs.
+
 ## 0.13.4
 ### Updates
 - Updated dependencies.
