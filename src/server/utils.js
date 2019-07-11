@@ -33,6 +33,12 @@ export default {
                 this.registerSocketClassDir(app, path);
                 return;
             }
+            if (file.indexOf('.d.ts') >= 0) {
+                return;
+            }
+            if (file.indexOf('.js.map') >= 0) {
+                return;
+            }
             const m = require(path);
             const Class = m.default || m;
             if (this._isConstructor(Class) && new Class() instanceof SocketClass) {

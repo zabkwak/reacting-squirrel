@@ -2,6 +2,7 @@
 ## 0.13.5
 ### Updates
 - Updated docs.
+- Registering socket class dir ignores maps and type definitions.
 
 ## 0.13.4
 ### Updates
