@@ -174,81 +174,270 @@ declare class Application extends CallbackEmitter {
     getRef<T = any>(key: string): T;
 }
 
+/**
+ * Route options for creation.
+ */
+interface IRouteDefinition {
+    /** Specification of the route. */
+    spec: string;
+    /** Page component to render. */
+    component: JSX.Element;
+    /** Title of the page. */
+    title: string;
+    /** Initital data of the page. */
+    initialData?: any;
+}
+
 declare class Route {
 
-    static create(route: { spec: string, component: JSX.Element, title: string, initialData?: any }): Route;
+    /** Specification of the route. */
+    public spec: string;
+    /** Page component to render. */
+    public component: JSX.Element;
+    /** Title of the page. */
+    public title: string;
+    /** Initital data of the page. */
+    public initialData: any;
 
-    constructor(spec: string, component: JSX.Element, title: string);
-    constructor(spec: string, component: JSX.Element, title: string, initialData: any);
+    /**
+     * Creates new route instance from definition.
+     *
+     * @param route Route definition.
+     */
+    public static create(route: IRouteDefinition): Route;
 
-    getComponent(): JSX.Element;
+    /**
+     * Creates new route.
+     *
+     * @param spec Specification of the route.
+     * @param component Page component to render.
+     * @param title Title of the page.
+     */
+    public constructor(spec: string, component: JSX.Element, title: string);
+    /**
+     * Creates new route.
+     *
+     * @param spec Specification of the route.
+     * @param component Page component to render.
+     * @param title Title of the page.
+     * @param initialData Initial data of the page.
+     */
+    public constructor(spec: string, component: JSX.Element, title: string, initialData: any);
+
+    /**
+     * Gets the page component to render.
+     */
+    public getComponent(): JSX.Element;
 }
 
+/**
+ * Base application router.
+ */
 declare class Router {
 
-    addRoute(route: Route): this;
+    /**
+     * Defined routes.
+     */
+    private _routes: { [spec: string]: Route };
 
-    getRoute(): Route;
+    /**
+     * Registers the route to the router.
+     *
+     * @param route Route to register.
+     */
+    public addRoute(route: Route): this;
 
-    pushState(): void;
-    pushState(path: string): void;
-    pushState(path: string, q: { [key: string]: string }): void;
+    /**
+     * Gets the current route.
+     */
+    public getRoute(): Route;
 
-    parseUrl(): url.Url;
-    parseUrl(params: boolean): url.Url;
+    /**
+     * Pushes the state to the history.
+     */
+    public pushState(): void;
+    /**
+     * Pushes the state to the history.
+     *
+     * @param path URL path.
+     */
+    public pushState(path: string): void;
+    /**
+     * Pushes the state to the history.
+     *
+     * @param path URL path.
+     * @param q Query string data.
+     */
+    public pushState(path: string, q: { [key: string]: string }): void;
 
-    getParams(): { [key: string]: string };
+    /**
+     * Parses current url.
+     */
+    public parseUrl(): url.Url;
+    /**
+     * Parses current url.
+     *
+     * @param params Indicates if the route params are returned with the url.
+     */
+    public parseUrl(params: boolean): url.Url & { [key: string]: string };
+
+    /**
+     * Gets current route params.
+     */
+    public getParams(): { [key: string]: string };
 }
 
+/**
+ * Socket states.
+ */
 declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
 
-declare class Socket {
+/**
+ * Class for socket communication.
+ */
+declare class Socket extends CallbackEmitter {
 
-    readonly STATE_NONE: 'none';
+    /** Unknown state of the socket. */
+    public readonly STATE_NONE: 'none';
 
-    readonly STATE_CONNECTING: 'connecting';
+    /** The socket is connecting to the server. */
+    public readonly STATE_CONNECTING: 'connecting';
 
-    readonly STATE_CONNECTED: 'connected';
+    /** The socket is connected to the server. */
+    public readonly STATE_CONNECTED: 'connected';
 
-    readonly STATE_DISCONNECTED: 'disconnected';
+    /** The socket is disconnected from the server. */
+    public readonly STATE_DISCONNECTED: 'disconnected';
 
+    /** Current state of the socket */
     private _state: SocketState;
 
-    setChunkSize(chunkSize: number): this;
+    /**
+     * Sets the chunk size of socket message.
+     *
+     * @param chunkSize Size of the chunk.
+     */
+    public setChunkSize(chunkSize: number): this;
 
-    setMaxMessageSize(maxMessageSize: number): this;
+    /**
+     * Sets the maximal size of the socket message.
+     *
+     * @param maxMessageSize Maximal message size.
+     */
+    public setMaxMessageSize(maxMessageSize: number): this;
 
-    registerSocketEvents(events: Array<string>): void;
+    /**
+     * Registers socket events.
+     *
+     * This method is called automatically in after the bundle load.
+     *
+     * @param events List of socket events.
+     */
+    public registerSocketEvents(events: Array<string>): void;
 
-    connect(): void;
-    connect(address: string): void;
+    /**
+     * Connects the client to the server.
+     */
+    public connect(): void;
+    /**
+     * Connects the client to the server.
+     *
+     * @param address Server address.
+     */
+    public connect(address: string): void;
 
-    emit(event: string): this;
-    emit(event: string, key: string): this;
-    emit<P = any>(event: string, key: string, data: P): this;
-    emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
+    /**
+     * Emits the socket event. 
+     *
+     * @param event Name of the event.
+     */
+    public emit(event: string): this;
+    /**
+     * Emits the socket event. 
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     */
+    public emit(event: string, key: string): this;
+    /**
+     * Emits the socket event. 
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     */
+    public emit<P = any>(event: string, key: string, data: P): this;
+    /**
+     * Emits the socket event. 
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     * @param data Event parameters.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     */
+    public emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
 
-    disconnect(): void;
+    /**
+     * Disconnects the client from the server.
+     */
+    public disconnect(): void;
 
-    getState(): string;
+    /**
+     * Gets the current state of the socket.
+     */
+    public getState(): SocketState;
 
-    isConnected(): boolean;
+    /**
+     * Indicates if the socket is connected to the server.
+     */
+    public isConnected(): boolean;
 }
 
+/**
+ * Wrapper for `LocalStorage`.
+ */
 declare class Storage {
 
-    size(): number;
+    /**
+     * Gets the size of storage.
+     */
+    public size(): number;
 
-    has(key: string): boolean;
+    /**
+     * Checks if the storage has the key.
+     * @param key Key of the item in the storage.
+     */
+    public has(key: string): boolean;
 
-    set(key: string, data: any): void;
+    /**
+     * Sets the data to the key.
+     *
+     * @param key Key of the item in the storage.
+     * @param data Data to save.
+     */
+    public set(key: string, data: any): void;
 
-    get(key: string): any;
-    get<T>(key: string): T;
+    /**
+     * Gets the data from the storage.
+     *
+     * @param key Key of the item in the storage.
+     * @typeparam T Type of the returned data.
+     */
+    public get<T = any>(key: string): T;
 
-    delete(key: string): void;
+    /**
+     * Removes the item from the storage.
+     *
+     * @param eky Key of the item in the storage.
+     */
+    public delete(key: string): void;
 
-    clear(): void;
+    /**
+     * Clears the storage.
+     */
+    public clear(): void;
 }
 
 /**
@@ -310,6 +499,7 @@ export class CallbackEmitter {
 
 //#region COMPONENTS
 
+//#region Base components
 /**
  * Base RS Components.
  * All components in the application should be inherited from this class or its subclasses.
@@ -575,6 +765,8 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
     protected emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
 }
 
+//#endregion
+
 //#region Page
 
 /**
@@ -633,14 +825,57 @@ export class Page<P extends IPageProps = { params: any, query: any, initialData:
 
 //#region DataComponent
 
+/**
+ * Interface for DataComponent props.
+ */
 interface IDataComponentProps extends React.HTMLProps<DataComponent> {
-    events: Array<{ name: string, params?: any, key?: string }>;
+    /**
+     * List of events to load after the component did mount.
+     */
+    events: Array<{
+        /** Name of the event. */
+        name: string,
+        /** Parameters for the event. */
+        params?: any,
+        /** The key where the response data are stored in the `renderData` function. */
+        key?: string,
+    }>;
+    /**
+     * Function called for data rendering.
+     *
+     * @param data Loaded data. The event responses are accessible thought the key defined in the `events` or by the event name.
+     */
     renderData: (data: any) => JSX.Element;
+    /**
+     * Function called for error rendering.
+     * 
+     * @param error The error returned from the socket.
+     * @param component Reference to the component.
+     */
     renderError?: (error: { message: string, code: string }, component: this) => JSX.Element;
+    /**
+     * Function called if the error occured before the `renderError`.
+     *
+     * @param error The error returned from the socket.
+     */
     onError?: (error: any) => void;
+    /**
+     * Function called after the data load before the `renderData`. The data can be modified here.
+     *
+     * @param data Loaded data. The event responses are accessible thought the key defined in the `events` or by the event name.
+     */
     onData?: (data: any) => any;
+    /**
+     * Function called before the socket events execution.
+     */
     onStart?: () => void;
+    /**
+     * Indicates if the loader should have block prop set to `true`.
+     */
     loaderBlock?: boolean;
+    /**
+     * Loader size.
+     */
     loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
 }
 
@@ -674,10 +909,17 @@ export class Button extends BaseComponent<IButtonProps & React.ButtonHTMLAttribu
 
 //#region Text
 
+/**
+ * Interface for text component props.
+ */
 interface ITextProps extends React.HTMLProps<Text> {
+    /** Key in the dictionary. */
     dictionaryKey: string;
+    /** Tag where the text should be rendered. */
     tag?: string | Node;
+    /** List of arguments. */
     args?: Array<any>;
+    /** Indicates if the value of the dictionary should be converted to JSX. */
     jsx?: boolean;
 }
 /**
@@ -750,9 +992,17 @@ export class Text extends BaseComponent<ITextProps> {
 
 //#region Loader
 
+/**
+ * Interface for loader component props.
+ */
 interface ILoaderProps {
+    /** 
+     * Indicates if the data are loaded. If false the loader is rendered otherwise the children are rendered.
+     */
     loaded: boolean;
+    /** Size of the loader. */
     size?: 'large' | 'normal' | 'small' | 'xsmall';
+    /** Indicates if the loader should be wrapped with div. */
     block?: boolean;
 }
 
@@ -788,11 +1038,20 @@ export class ErrorPage extends Page<IErrorPageProps> {
 
 //#endregion
 
-export default Application;
+/** Instance of the current application. */
+declare const App: Application;
+/** Instance of the current router. */
+declare const R: Router;
+/** Instance of the client socket. */
+declare const S: Socket;
+/** Instance of the client storage. */
+declare const ST: Storage;
+
+export default App;
 
 export {
-    Application,
-    Router,
-    Socket,
-    Storage,
+    App as Application,
+    R as Router,
+    S as Socket,
+    ST as Storage,
 }

@@ -67,6 +67,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Interface for DataComponent props.</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -1905,9 +1912,14 @@
 					<div class="tsd-signature tsd-kind-icon">events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L637">app/index.d.ts:637</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L835">app/index.d.ts:835</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>List of events to load after the component did mount.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported">
 					<a name="form" class="tsd-anchor"></a>
@@ -2267,9 +2279,14 @@
 					<div class="tsd-signature tsd-kind-icon">loader<wbr>Block<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L643">app/index.d.ts:643</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L875">app/index.d.ts:875</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates if the loader should have block prop set to <code>true</code>.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
 					<a name="loadersize" class="tsd-anchor"></a>
@@ -2277,9 +2294,14 @@
 					<div class="tsd-signature tsd-kind-icon">loader<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"large"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"normal"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"small"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"xsmall"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L644">app/index.d.ts:644</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L879">app/index.d.ts:879</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Loader size.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited tsd-is-not-exported">
 					<a name="loop" class="tsd-anchor"></a>
@@ -2848,9 +2870,19 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L641">app/index.d.ts:641</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L867">app/index.d.ts:867</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function called after the data load before the <code>renderData</code>. The data can be modified here.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>Loaded data. The event responses are accessible thought the key defined in the <code>events</code> or by the event name.</p>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -3166,9 +3198,19 @@
 					<aside class="tsd-sources">
 						<p>Overrides DOMAttributes.onError</p>
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L640">app/index.d.ts:640</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L861">app/index.d.ts:861</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function called if the error occured before the <code>renderError</code>.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The error returned from the socket.</p>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -4044,9 +4086,14 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L642">app/index.d.ts:642</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L871">app/index.d.ts:871</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function called before the socket events execution.</p>
+						</div>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -4455,9 +4502,19 @@
 					<div class="tsd-signature tsd-kind-icon">render<wbr>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L638">app/index.d.ts:638</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L848">app/index.d.ts:848</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function called for data rendering.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>Loaded data. The event responses are accessible thought the key defined in the <code>events</code> or by the event name.</p>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -4486,9 +4543,22 @@
 					<div class="tsd-signature tsd-kind-icon">render<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/fe14dcb/src/app/index.d.ts#L639">app/index.d.ts:639</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/b20ce9c/src/app/index.d.ts#L855">app/index.d.ts:855</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Function called for error rendering.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>The error returned from the socket.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Reference to the component.</p>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -5002,7 +5072,7 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../classes/_app_index_d_.application.html" class="tsd-kind-icon">Application</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
@@ -6170,10 +6240,25 @@
 						<a href="_app_index_d_.ipageprops.html" class="tsd-kind-icon">IPage<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="_app_index_d_.iroutedefinition.html" class="tsd-kind-icon">IRoute<wbr>Definition</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="_app_index_d_.itextprops.html" class="tsd-kind-icon">IText<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-is-not-exported">
 						<a href="../modules/_app_index_d_.html#socketstate" class="tsd-kind-icon">Socket<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module">
+						<a href="../modules/_app_index_d_.html#app" class="tsd-kind-icon">App</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_app_index_d_.html#r" class="tsd-kind-icon">R</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_app_index_d_.html#s" class="tsd-kind-icon">S</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
+						<a href="../modules/_app_index_d_.html#st" class="tsd-kind-icon">ST</a>
 					</li>
 				</ul>
 			</nav>
