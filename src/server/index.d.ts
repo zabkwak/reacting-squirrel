@@ -206,6 +206,8 @@ export class Layout<P = ILayoutProps> extends Component<P> {
     renderContainer(): JSX.Element;
 
     renderLoader(): JSX.Element;
+
+    renderMeta(): JSX.Element;
 }
 
 export class SocketClass<S extends Session = Session> {

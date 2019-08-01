@@ -39,6 +39,7 @@ export default class Layout extends Component {
             <html lang={lang}>
                 <head>
                     <meta charSet={charSet} />
+                    {this.renderMeta()}
                     <title>{title}</title>
                     {scripts.map(s => <script key={s} src={this._createPath(s, version)} type="text/javascript" />)}
                     {styles.map(s => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
@@ -81,6 +82,10 @@ export default class Layout extends Component {
                 }}
             />
         );
+    }
+
+    renderMeta() {
+        return null;
     }
 
     _createPath(path, version) {

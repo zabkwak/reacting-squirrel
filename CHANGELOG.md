@@ -1,4 +1,8 @@
 # CHANGELOG
+## 0.13.6
+### Features
+- Layout has renderMeta method for rendering meta data in html head.
+
 ## 0.13.5
 ### Updates
 - Updated docs.
