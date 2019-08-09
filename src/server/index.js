@@ -328,10 +328,11 @@ class Server {
      * @param {string} contentComponent Relative path from the {config.appDir} to the component.
      * @param {string} title Title of the page.
      * @param {boolean=} requireAuth If true the route requires authorized user.
+     * @param {any} layout Alternative layout.
      * @param {function=} callback Callback to call when the route is called.
      */
-    registerRoute(method, route, contentComponent, title, requireAuth, callback) {
-        this._routes.push(new Route(method, route, contentComponent, title, requireAuth, callback));
+    registerRoute(method, route, contentComponent, title, requireAuth, layout, callback) {
+        this._routes.push(new Route(method, route, contentComponent, title, requireAuth, layout, callback));
         return this;
     }
 
@@ -444,13 +445,21 @@ class Server {
      */
     _setRoutes(cb) {
         this._log('Setting routes');
-        const { dev, appDir } = this._config;
+        const { dev, appDir, layoutComponent } = this._config;
         const componentsMap = {};
         this._routes.forEach((route) => {
             this._app[route.method](route.spec, (req, res, next) => {
                 if (route.requireAuth && req.session.getUser() === null) {
                     next(HttpError.create(401));
                     return;
+                }
+                let layout = layoutComponent;
+                if (route.layout) {
+                    if (typeof route.layout === 'string') {
+                        layout = require(route.layout);
+                    } else {
+                        layout = route.layout;
+                    }
                 }
                 let data = {
                     title: route.title,
@@ -459,6 +468,7 @@ class Server {
                         dev,
                         timestamp: Date.now(),
                     },
+                    layout,
                 };
                 if (typeof route.callback !== 'function') {
                     res.render(data);
@@ -869,7 +879,7 @@ Application
             staticDir, cookieSecret, session, layoutComponent, dev, errorHandler, cssDir,
         } = this._config;
         if (!afterRoutes) {
-            const LayoutComponent = layoutComponent;
+            // const LayoutComponent = layoutComponent;
             this._app.use(express.static(staticDir));
             this._app.use(cookieParser(cookieSecret));
             this._app.use(compression());
@@ -891,8 +901,9 @@ Application
                 }
                 req.session = new this.Session(sessionId);
                 res.render = ({
-                    scripts, styles, data, title,
+                    scripts, styles, data, title, layout,
                 }) => {
+                    const LayoutComponent = layout || layoutComponent;
                     res.setHeader('Content-Type', 'text/html; charset=utf-8');
                     res.end(ReactDOMServer.renderToString(<LayoutComponent
                         scripts={this._config.scripts.concat(scripts || [])}

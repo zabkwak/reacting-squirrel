@@ -34,6 +34,11 @@ export default class Route {
     requireAuth = false;
 
     /**
+     * Alternative layout component.
+     */
+    layout = null;
+
+    /**
      * Callback to call when the route is called.
      * @type {function}
      */
@@ -46,14 +51,16 @@ export default class Route {
      * @param {string} contentComponent Relative path from the {config.appDir} to the component.
      * @param {string} title Title of the page.
      * @param {boolean} requireAuth If true the route requires authorized user.
+     * @param {any} layout Alternative layout component.
      * @param {function=} callback Callback to call when the route is called.
      */
-    constructor(method, spec, contentComponent, title, requireAuth = false, callback = null) {
+    constructor(method, spec, contentComponent, title, requireAuth = false, layout = null, callback = null) {
         this.method = method;
         this.spec = spec;
         this.contentComponent = contentComponent;
         this.title = title;
         this.requireAuth = requireAuth;
+        this.layout = layout;
         this.callback = callback;
     }
 }

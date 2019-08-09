@@ -248,6 +248,7 @@ export namespace Utils {
             component: string;
             title: string;
             requireAuth?: boolean;
+            layout?: string | typeof Layout;
         }>
     ): void;
     /**
@@ -331,6 +332,26 @@ export default class Server {
      * @param callback 
      */
     registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
+    /**
+     * Registers route.
+     *
+     * @param method 
+     * @param route 
+     * @param contentComponent 
+     * @param title 
+     * @param requireAuth 
+     * @param layout
+     * @param callback 
+     */
+    registerRoute(
+        method: HttpMethod,
+        route: string,
+        contentComponent: string,
+        title: string,
+        requireAuth: boolean,
+        layout: typeof Layout | string,
+        callback: Function
+    ): this;
 
     registerSocketClass(cls: typeof SocketClass): this;
     /**
