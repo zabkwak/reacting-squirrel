@@ -456,8 +456,12 @@ class Server {
                 let layout = layoutComponent;
                 if (route.layout) {
                     if (typeof route.layout === 'string') {
-                        layout = require(route.layout);
+                        layout = require(path.resolve(route.layout));
+                        if (layout.default) {
+                            layout = layout.default;
+                        }
                     } else {
+                        // eslint-disable-next-line prefer-destructuring
                         layout = route.layout;
                     }
                 }
@@ -500,7 +504,7 @@ class Server {
     }
 
     /**
-     * Creates resources directory if doens't exists.
+     * Creates resources directory if doesn't exists.
      * If the res directory doesn't contain text.json the file is created as well.
      * @param {function(Error):void} cb Callback called after the directory is created.
      */

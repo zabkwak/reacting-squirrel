@@ -20,21 +20,6 @@ class CustomLayout extends Layout {
     }
 }
 
-class AnotherLayout extends Layout {
-    renderContainer() {
-        return (
-            <div id="container">
-                <div id="test" />
-                <div id="socket-status" />
-                <div id="content">
-                    {this.renderLoader()}
-                </div>
-                <h4>TEST</h4>
-            </div>
-        );
-    }
-}
-
 const app = new Server({
     appDir: './__tests__/app',
     staticDir: './__tests__/public',
@@ -65,8 +50,6 @@ app.registerSocketEvent('socket.test', async (socket, data) => data);
 app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
     fs.writeFileSync(`./tmp/${name}`, file);
 });
-
-app.registerRoute('get', '/layout-test', 'home', 'Home', false, AnotherLayout);
 
 app.start((err) => {
     if (err) {

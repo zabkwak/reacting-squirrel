@@ -3,6 +3,8 @@
 # 0.13.8
 ### Updates
 - Updated dependencies.
+### Fixes
+- Custom layout for route requiring as module.
 
 ## 0.13.7
 ### Features
