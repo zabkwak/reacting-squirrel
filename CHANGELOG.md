@@ -1,4 +1,9 @@
 # CHANGELOG
+
+# 0.13.8
+### Updates
+- Updated dependencies.
+
 ## 0.13.7
 ### Features
 - Custom layout for route.
