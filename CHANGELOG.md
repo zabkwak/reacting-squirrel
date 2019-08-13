@@ -1,6 +1,10 @@
 # CHANGELOG
 
-# 0.13.8
+## 0.13.9
+### Updates
+- Updated render methods in the base layout for possibility to override almost entire html.
+
+## 0.13.8
 ### Updates
 - Updated dependencies.
 - Suppression of the error if dom for component is not in the layout in production mode.

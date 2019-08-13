@@ -32,24 +32,49 @@ export default class Layout extends Component {
      * Renders the base html. This method shouldn't be overriden.
      */
     render() {
-        const {
-            title, scripts, styles, version, initialData, bundle, charSet, lang,
-        } = this.props;
+        const { lang } = this.props;
         return (
             <html lang={lang}>
-                <head>
-                    <meta charSet={charSet} />
-                    {this.renderMeta()}
-                    <title>{title}</title>
-                    {scripts.map(s => <script key={s} src={this._createPath(s, version)} type="text/javascript" />)}
-                    {styles.map(s => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
-                </head>
-                <body>
-                    {this.renderContainer()}
-                    <script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
-                    <script type="text/javascript" src={this._createPath(bundle, version)} />
-                </body>
+                {this.renderHead()}
+                {this.renderBody()}
+
             </html>
+        );
+    }
+
+    renderHead() {
+        const {
+            title, scripts, styles, version, charSet,
+        } = this.props;
+        return (
+            <head>
+                <meta charSet={charSet} />
+                {this.renderMeta()}
+                <title>{title}</title>
+                {scripts.map(s => <script key={s} src={this._createPath(s, version)} type="text/javascript" />)}
+                {styles.map(s => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
+            </head>
+        );
+    }
+
+    renderBody() {
+        return (
+            <body>
+                {this.renderContainer()}
+                {this.renderBundleData()}
+            </body>
+        );
+    }
+
+    renderBundleData() {
+        const {
+            version, initialData, bundle,
+        } = this.props;
+        return (
+            <>
+                <script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
+                <script type="text/javascript" src={this._createPath(bundle, version)} />
+            </>
         );
     }
 

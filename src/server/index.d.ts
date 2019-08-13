@@ -203,11 +203,19 @@ export class Session {
 
 export class Layout<P = ILayoutProps> extends Component<P> {
 
-    renderContainer(): JSX.Element;
+    public renderHead(): JSX.Element;
 
-    renderLoader(): JSX.Element;
+    public renderBody(): JSX.Element;
 
-    renderMeta(): JSX.Element;
+    public renderContainer(): JSX.Element;
+
+    public renderBundleData(): JSX.Element;
+
+    public renderLoader(): JSX.Element;
+
+    public renderMeta(): JSX.Element;
+
+    protected _createPath(path: string, version: string): string;
 }
 
 export class SocketClass<S extends Session = Session> {
