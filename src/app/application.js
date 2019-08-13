@@ -125,8 +125,8 @@ class Application extends CallbackEmitter {
         this._callListener('start');
         this._components.forEach((component) => {
             const target = document.getElementById(component.elementId);
-            if (!target) {
-                console.error(`Target DOM element with id '${component.elementId}' doesn't exist.`);
+            if (!target && this.DEV) {
+                console.warn(`Target DOM element with id '${component.elementId}' doesn't exist.`);
                 return;
             }
             const Component = component.component;

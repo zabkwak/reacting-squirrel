@@ -3,6 +3,7 @@
 # 0.13.8
 ### Updates
 - Updated dependencies.
+- Suppression of the error if dom for component is not in the layout in production mode.
 ### Fixes
 - Custom layout for route requiring as module.
 
