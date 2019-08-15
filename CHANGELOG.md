@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.13.10
+### Fixes
+- React error with non-existing DOM target in production mode.
+
 ## 0.13.9
 ### Updates
 - Updated render methods in the base layout for possibility to override almost entire html.
