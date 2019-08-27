@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.13.12
+### Updates
+- Using legacy decorators for typescript support.
+
 ## 0.13.11
 ### Updates
 - App version in the initial data.

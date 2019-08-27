@@ -5,8 +5,7 @@ import HttpError from 'http-smart-error';
  * @typedef {import('./session').default} Session
  */
 
-function requireAuth(d) {
-	const { descriptor } = d;
+function requireAuth(target, name, descriptor) {
 	const original = descriptor.value;
 	if (typeof original === 'function') {
 		// eslint-disable-next-line func-names
@@ -18,7 +17,7 @@ function requireAuth(d) {
 			return original.apply(this, args);
 		};
 	}
-	return d;
+	return descriptor;
 }
 
 /**
