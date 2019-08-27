@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.13.13
+### Updates
+- Updated type definition.
+
 ## 0.13.12
 ### Updates
 - Using legacy decorators for typescript support.
