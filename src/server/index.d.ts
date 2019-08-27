@@ -221,6 +221,8 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 
 export class SocketClass<S extends Session = Session> {
 
+	static requireAuth(): any;
+
     getEvents(): Array<ISocketEvent<S>>;
     broadcast(event: string, data: any): void;
     broadcast(event: string, data: any, includeSelf: boolean): void;

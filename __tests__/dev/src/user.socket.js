@@ -2,29 +2,30 @@ import { SocketClass } from '../../../server';
 
 export default class User extends SocketClass {
 
-    get(socket, data, next) {
-        next(null, { id: 1, name: 'Test User' });
-    }
+	@SocketClass.requireAuth
+	get(socket, data, next) {
+		next(null, { id: 1, name: 'Test User' });
+	}
 
-    getPromise(socket) {
-        return new Promise((resolve) => {
-            resolve({ id: 1, name: 'Test User' });
-        });
-    }
+	getPromise(socket) {
+		return new Promise((resolve) => {
+			resolve({ id: 1, name: 'Test User' });
+		});
+	}
 
-    async getAsyncError(socket) {
-        return a;
-    }
+	async getAsyncError(socket) {
+		return a;
+	}
 
-    getSyncError(socket) {
-        throw new Error('Error');
-    }
+	getSyncError(socket) {
+		throw new Error('Error');
+	}
 
-    async getVoidPromise(socket) {
-        console.log('VOID PROMISE');
-    }
+	async getVoidPromise(socket) {
+		console.log('VOID PROMISE');
+	}
 
-    getPayloadedError(socket, data, next) {
-        next({ message: 'Test error', code: 'ERR_TEST', statusCode: 403 });
-    }
+	getPayloadedError(socket, data, next) {
+		next({ message: 'Test error', code: 'ERR_TEST', statusCode: 403 });
+	}
 }

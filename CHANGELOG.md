@@ -3,6 +3,7 @@
 ## 0.13.11
 ### Updates
 - App version in the initial data.
+- SocketClass.requireAuth decorator. EXPERIMENTAL
 
 ## 0.13.10
 ### Fixes
