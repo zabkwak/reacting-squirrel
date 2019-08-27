@@ -148,7 +148,8 @@ interface ISocketEvent<S extends Session = Session> {
 interface ILayoutPropsInitialData<U = any> {
     user: U;
     dev: boolean;
-    timestamp: number;
+	timestamp: number;
+	version: string;
 }
 
 export interface ILayoutProps<T = {}, U = any> {

@@ -6,7 +6,7 @@
     "rules": {
         "indent": [
             2,
-            4,
+            "tab",
             {
                 "SwitchCase": 1
             }
@@ -97,7 +97,8 @@
         "global-require": 1,
         "no-restricted-globals": [
             2, "event"
-        ]
+		],
+		"no-tabs": 0
     },
     "plugins": [
         "react",

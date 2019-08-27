@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.13.11
+### Updates
+- App version in the initial data.
+
 ## 0.13.10
 ### Fixes
 - React error with non-existing DOM target in production mode.
