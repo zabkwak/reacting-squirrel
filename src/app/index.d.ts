@@ -450,14 +450,14 @@ export class SocketRequest extends CallbackEmitter {
      * @param event Name of the event.
      * @typeparam P Type of parameters.
      */
-    protected emit(event: string): this;
+    public emit(event: string): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
      * @param event Name of the event.
      * @param key Socket event key.
      */
-    protected emit(event: string, key: string): this;
+    public emit(event: string, key: string): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
@@ -466,7 +466,7 @@ export class SocketRequest extends CallbackEmitter {
      * @param data Event parameters.
      * @typeparam P Type of parameters.
      */
-    protected emit<P = any>(event: string, key: string, data: P): this;
+    public emit<P = any>(event: string, key: string, data: P): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
@@ -476,7 +476,12 @@ export class SocketRequest extends CallbackEmitter {
      * @param onProgress Function called in the progress tick.
      * @typeparam P Type of parameters.
      */
-    protected emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
+	public emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
+	
+	/**
+	 * Clears all registered listeners.
+	 */
+	public clearListeners(): void;
 }
 
 /**
@@ -670,6 +675,8 @@ export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS>
  */
 export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, SS> {
 
+	protected _socketRequest: SocketRequest;
+
     /**
      * Called if the socket changes its state.
      *
@@ -678,7 +685,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
     protected onSocketStateChanged(state: SocketState): void;
 
     /**
-     * Called if some socket error appeares.
+     * Called if some socket error appears.
      *
      * @param error Socket error.
      */

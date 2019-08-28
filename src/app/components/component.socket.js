@@ -1,7 +1,5 @@
-import uniqid from 'uniqid';
-
 import Component from './component';
-import Socket from '../socket';
+import SocketRequest from '../socket-request';
 
 const TIMEOUT = 30000;
 
@@ -13,10 +11,10 @@ export default class SocketComponent extends Component {
 
 	_queue = [];
 
+	_socketRequest = new SocketRequest();
+
+	// eslint-disable-next-line react/sort-comp
 	__state__ = (socket, state) => {
-		if (state === 'connected') {
-			this._executeQueue();
-		}
 		this.onSocketStateChanged(state);
 	};
 
@@ -24,20 +22,17 @@ export default class SocketComponent extends Component {
 
 	componentDidMount() {
 		super.componentDidMount();
-		Socket
+		this._socketRequest
 			.addListener('state', this.__state__)
 			.addListener('error', this.__error__);
 	}
 
 	componentWillUnmount() {
 		super.componentWillUnmount();
-		Socket
+		this._socketRequest
 			.removeListener('state', this.__state__)
-			.removeListener('error', this.__error__);
-		this._socketListeners.forEach(({ event, listener }, index) => {
-			Socket.removeListener(event, listener);
-			delete this._socketListeners[index];
-		});
+			.removeListener('error', this.__error__)
+			.clearListeners();
 	}
 
 	onSocketStateChanged(state) { }
@@ -45,9 +40,7 @@ export default class SocketComponent extends Component {
 	onSocketError(error) { }
 
 	on(event, callback) {
-		const listener = (socket, data) => callback(data.error, data.data);
-		this._socketListeners.push({ event, listener });
-		Socket.addListener(event, listener);
+		this._socketRequest.on(event, callback);
 		return this;
 	}
 
@@ -59,15 +52,7 @@ export default class SocketComponent extends Component {
 	}
 
 	requestAsync(event, data = {}, timeout = TIMEOUT, onProgress = null) {
-		return new Promise((resolve, reject) => {
-			this.request(event, data, timeout, (err, response) => {
-				if (err) {
-					reject(err);
-					return;
-				}
-				resolve(response);
-			}, onProgress);
-		});
+		return this._socketRequest.execute(event, data, timeout, onProgress);
 	}
 
 	/**
@@ -80,6 +65,9 @@ export default class SocketComponent extends Component {
 	 * @param {function} onProgress Function called in the progress of the request.
 	 */
 	request(event, data, timeout, callback, onProgress) {
+		if (this.getContext().DEV) {
+			console.warn('SocketComponent.request is deprecated. Use requestAsync instead.');
+		}
 		if (typeof data === 'function') {
 			callback = data;
 			timeout = TIMEOUT;
@@ -96,33 +84,10 @@ export default class SocketComponent extends Component {
 		if (!data) {
 			data = {};
 		}
-		const key = uniqid();
-		let done = false;
-		const start = Date.now();
-		const listener = (socket, data) => {
-			if (this.getContext().DEV) {
-				console.log(`Request ${event}`, { took: Date.now() - start, _key: data._key });
-			}
-			done = true;
-			if (data && data._key === key) {
-				callback(data.error, data.data);
-				Socket.removeListener(event, listener);
-				delete this._requests[key];
-			}
-		};
-		Socket.addListener(event, listener);
-		this.emit(event, key, data, onProgress);
-		setTimeout(() => {
-			if (done) {
-				return;
-			}
-			if (!this._requests[key]) {
-				return;
-			}
-			listener(Socket, { error: { message: `The request '${event}' timed out.`, code: 'ERR_TIMEOUT' }, _key: key });
-		}, timeout);
-		this._requests[key] = { event, listener };
-		this._socketListeners.push({ event, listener });
+		this._socketRequest
+			.execute(event, data, timeout, onProgress)
+			.then(d => process.nextTick(() => callback(null, d)))
+			.catch(e => process.nextTick(() => callback(e)));
 		return this;
 	}
 
@@ -135,20 +100,7 @@ export default class SocketComponent extends Component {
 	 * @param {function} onProgress Function called in the progress of the request.
 	 */
 	emit(event, key, data = {}, onProgress = null) {
-		if (!Socket.isConnected()) {
-			this._queue.push({
-				event, key, data, onProgress,
-			});
-			return this;
-		}
-		Socket.emit(event, key, data, onProgress);
+		this._socketRequest.emit(event, key, data, onProgress);
 		return this;
-	}
-
-	_executeQueue() {
-		while (this._queue.length) {
-			const item = this._queue.shift();
-			this.emit(item.event, item.key, item.data, item.onProgress);
-		}
 	}
 }

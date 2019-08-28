@@ -77,6 +77,13 @@ export default class SocketRequest extends CallbackEmitter {
 		});
 	}
 
+	clearListeners() {
+		this._socketListeners.forEach(({ event, listener }, index) => {
+			Socket.removeListener(event, listener);
+			delete this._socketListeners[index];
+		});
+	}
+
 	emit(event, key, data = {}, onProgress = null) {
 		if (!Socket.isConnected()) {
 			this._queue.push({
