@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.13.14
+### Features
+- SocketRequest class
+
 ## 0.13.13
 ### Updates
 - Updated type definition.

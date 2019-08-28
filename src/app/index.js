@@ -10,22 +10,24 @@ import CallbackEmitter from './callback-emitter';
 import Router from './router';
 
 import Socket from './socket';
+import SocketRequest from './socket-request';
 import Storage from './storage';
 import ErrorPage from './page.error';
 
 export {
-    Application as default,
-    Application,
-    Router,
-    CallbackEmitter,
-    Component,
-    SocketComponent,
-    DataComponent,
-    Page,
-    Button,
-    Text,
-    Loader,
-    Socket,
-    Storage,
-    ErrorPage,
+	Application as default,
+	Application,
+	Router,
+	CallbackEmitter,
+	Component,
+	SocketComponent,
+	DataComponent,
+	Page,
+	Button,
+	Text,
+	Loader,
+	Socket,
+	SocketRequest,
+	Storage,
+	ErrorPage,
 };

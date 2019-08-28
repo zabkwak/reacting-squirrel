@@ -395,6 +395,90 @@ declare class Socket extends CallbackEmitter {
     public isConnected(): boolean;
 }
 
+export class SocketRequest extends CallbackEmitter {
+
+	/**
+     * Registers socket event listener. This method should be called in `componentDidMount`.
+     *
+     * @param event Name of the event.
+     * @param callback Callback for the event.
+     */
+    public on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+
+	/**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @typeparam R Type of response.
+     */
+    public execute<R = any>(event: string): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    public execute<P = any, R = any>(event: string, data: P): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    public execute<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+    public execute<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
+
+
+	/**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @typeparam P Type of parameters.
+     */
+    protected emit(event: string): this;
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     */
+    protected emit(event: string, key: string): this;
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     */
+    protected emit<P = any>(event: string, key: string, data: P): this;
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     * @param data Event parameters.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     */
+    protected emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
+}
+
 /**
  * Wrapper for `LocalStorage`.
  */
