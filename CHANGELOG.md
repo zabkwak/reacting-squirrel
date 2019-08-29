@@ -2,7 +2,9 @@
 
 ## 0.13.14
 ### Features
-- SocketRequest class
+- SocketRequest class.
+### Updates
+- Removed some cycled dependencies.
 
 ## 0.13.13
 ### Updates

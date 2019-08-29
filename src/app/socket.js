@@ -56,6 +56,7 @@ class Socket extends CallbackEmitter {
 
 	registerEvents(events) {
 		this._events = this._events.concat(events);
+		return this;
 	}
 
 	/**

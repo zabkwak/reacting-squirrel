@@ -557,7 +557,7 @@ class Server {
 		fs.writeFile(
 			`${this._getRSDirPath()}/entry.js`,
 			`import '@babel/polyfill';
-import Application, { Text } from '${pathToTheModule}';
+import Application, { Socket, Text } from '${pathToTheModule}';
 ${entryFileImport || ''}
 import routingMap from './router.map';
 import socketEvents from './socket.map';
@@ -568,10 +568,12 @@ import defaultDictionary from '../res/text.json';
 Text.addDictionary(defaultDictionary);
 
 Application
-			.registerSocketEvents(socketEvents)
 			.registerRoutingMap(routingMap)
 			.registerComponents(components)
 			.start();
+Socket
+			.registerEvents(socketEvents)
+			.connect();
 		`, cb,
 		);
 	}

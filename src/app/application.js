@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 
 import Router, { Route } from './router';
-import Socket from './socket';
 import CallbackEmitter from './callback-emitter';
 import ErrorPage from './page.error';
 
@@ -90,17 +89,6 @@ class Application extends CallbackEmitter {
 	}
 
 	/**
-	 * Registeres the socket events to the Socket class.
-	 *
-	 * @param {*} events
-	 */
-	registerSocketEvents(events) {
-		this._checkStartedState();
-		Socket.registerEvents(events);
-		return this;
-	}
-
-	/**
 	 * Registers custom components to render after the start.
 	 *
 	 * @param {any[]} components
@@ -113,10 +101,8 @@ class Application extends CallbackEmitter {
 
 	/**
 	 * Starts the application. The application can be started only once.
-	 *
-	 * @param {boolean} connectSocket If true the socket is automatically connected.
 	 */
-	start(connectSocket = true) {
+	start() {
 		this._checkStartedState();
 		this._started = true;
 		if (this.DEV) {
@@ -137,9 +123,6 @@ class Application extends CallbackEmitter {
 			this.renderComponent(<Component ref={ref => this.setRef(ref, component.elementId)} />, target);
 		});
 		this.render(Router.getRoute());
-		if (connectSocket) {
-			Socket.connect();
-		}
 	}
 
 	/**
@@ -161,7 +144,10 @@ class Application extends CallbackEmitter {
 			const { error } = this._initialData;
 			delete this._initialData.error;
 			const p = Router.parseUrl();
-			this.renderComponent(<ErrorPage error={error} initialData={this._initialData} params={{}} query={p.query} />, this._content);
+			this.renderComponent(
+				<ErrorPage error={error} initialData={this._initialData} params={{}} query={p.query} />,
+				this._content,
+			);
 			return;
 		}
 		if (!route) {

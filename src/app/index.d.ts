@@ -60,14 +60,6 @@ declare class Application extends CallbackEmitter {
      * This method is called automatically in after the bundle load.
      */
     start(): void;
-    /**
-     * Starts the application.
-     *
-     * This method is called automatically in after the bundle load.
-     * 
-     * @param connectSocket Indicates if the socket should be connected.
-     */
-    start(connectSocket: boolean): void;
 
     /**
      * Forces the content refresh.
@@ -333,7 +325,7 @@ declare class Socket extends CallbackEmitter {
      *
      * @param events List of socket events.
      */
-    public registerSocketEvents(events: Array<string>): void;
+    public registerEvents(events: Array<string>): this;
 
     /**
      * Connects the client to the server.
