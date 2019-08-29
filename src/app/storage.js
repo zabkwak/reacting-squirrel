@@ -1,37 +1,37 @@
 class Storage {
 
-    size() {
-        return this._getLocalStorage().length;
-    }
+	size() {
+		return this._getLocalStorage().length;
+	}
 
-    has(key) {
-        return Boolean(this._getLocalStorage().getItem(key));
-    }
+	has(key) {
+		return Boolean(this._getLocalStorage().getItem(key));
+	}
 
-    set(key, data) {
-        this._getLocalStorage().setItem(key, JSON.stringify({ data }));
-    }
+	set(key, data) {
+		this._getLocalStorage().setItem(key, JSON.stringify({ data }));
+	}
 
-    get(key) {
-        const data = this._getLocalStorage().getItem(key);
-        if (!data) {
-            return null;
-        }
-        return JSON.parse(data).data;
-    }
+	get(key) {
+		const data = this._getLocalStorage().getItem(key);
+		if (!data) {
+			return null;
+		}
+		return JSON.parse(data).data;
+	}
 
-    delete(key) {
-        this._getLocalStorage().removeItem(key);
-    }
+	delete(key) {
+		this._getLocalStorage().removeItem(key);
+	}
 
-    clear() {
-        this._getLocalStorage().clear();
-    }
+	clear() {
+		this._getLocalStorage().clear();
+	}
 
-    _getLocalStorage() {
-        // TODO validate if localstorage exists
-        return localStorage;
-    }
+	_getLocalStorage() {
+		// TODO validate if localstorage exists
+		return localStorage;
+	}
 
 }
 

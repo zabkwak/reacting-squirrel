@@ -35,49 +35,49 @@ const RS_DIR = '~rs';
  */
 class Server {
 
-    /**
-     * @callback AuthCallback
-     */
-    /**
-     * @typedef SocketEvent
-     * @property {string} event
-     * @property {function} listener
-     */
-    /**
-     * @typedef CustomComponent
-     * @property {string} path Absolute path to the component.
-     * @property {string} elementId Identificator of the DOM element where the component should render.
-     */
-    /**
-     * @typedef AppConfig
-     * @property {number} port Port on which the app listens.
-     * @property {string} staticDir Relative path to the static directory for the express app.
-     * @property {boolean} dev Flag of the dev status of the app.
-     * @property {string} jsDir Name of the directory where the javascript is located in the staticDir.
-     * @property {string} cssDir Name of the directory where the css is located in the staticDir.
-     * @property {string} filename Name of the file.
-     * @property {string} appDir Relative path to the app directory.
-     * @property {string} entryFile Relative path to the entry file.
-     * @property {string} rsConfig Custom path to rsconfig.json file.
-     * @property {JSX.Element} layoutComponent React component with default html code. It must extend Layout from the module.
-     * @property {string} cookieSecret Secret which is used to sign cookies.
-     * @property {string[]} scripts List of the scripts loaded in the base html.
-     * @property {string[]} styles List of the styles loaded in the base html.
-     * @property {string[]} mergeStyles List of styles to merge to rs-app.css.
-     * @property {function} session Class of the session. It must extend Session from the module.
-     * @property {function} socketMessageMaxSize Maximal size of one socket message.
-     * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
-     * @property {function} errorHandler Function to handle errors in the route execution.
-     * @property {boolean} bundlePathRelative Indicates if the bundle is loaded relatively in the output html.
-     * @property {function(percents, message):void} onWebpackProgress Function to handle webpack progress.
-     * @property {any} socketIO Custom socketio config.
-     * @property {any} webpack Custom webpack config.
-     */
+	/**
+	 * @callback AuthCallback
+	 */
+	/**
+	 * @typedef SocketEvent
+	 * @property {string} event
+	 * @property {function} listener
+	 */
+	/**
+	 * @typedef CustomComponent
+	 * @property {string} path Absolute path to the component.
+	 * @property {string} elementId Identificator of the DOM element where the component should render.
+	 */
+	/**
+	 * @typedef AppConfig
+	 * @property {number} port Port on which the app listens.
+	 * @property {string} staticDir Relative path to the static directory for the express app.
+	 * @property {boolean} dev Flag of the dev status of the app.
+	 * @property {string} jsDir Name of the directory where the javascript is located in the staticDir.
+	 * @property {string} cssDir Name of the directory where the css is located in the staticDir.
+	 * @property {string} filename Name of the file.
+	 * @property {string} appDir Relative path to the app directory.
+	 * @property {string} entryFile Relative path to the entry file.
+	 * @property {string} rsConfig Custom path to rsconfig.json file.
+	 * @property {JSX.Element} layoutComponent React component with default html code. It must extend Layout from the module.
+	 * @property {string} cookieSecret Secret which is used to sign cookies.
+	 * @property {string[]} scripts List of the scripts loaded in the base html.
+	 * @property {string[]} styles List of the styles loaded in the base html.
+	 * @property {string[]} mergeStyles List of styles to merge to rs-app.css.
+	 * @property {function} session Class of the session. It must extend Session from the module.
+	 * @property {function} socketMessageMaxSize Maximal size of one socket message.
+	 * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
+	 * @property {function} errorHandler Function to handle errors in the route execution.
+	 * @property {boolean} bundlePathRelative Indicates if the bundle is loaded relatively in the output html.
+	 * @property {function(percents, message):void} onWebpackProgress Function to handle webpack progress.
+	 * @property {any} socketIO Custom socketio config.
+	 * @property {any} webpack Custom webpack config.
+	 */
 
-    /**
-     * Express app instance.
-     * @type {any}
-     */
+	/**
+	 * Express app instance.
+	 * @type {any}
+	 */
 	_app = null;
 
 	_server = null;
@@ -114,16 +114,16 @@ class Server {
 		moduleDev: false,
 	};
 
-    /**
-     * Absolute path to the javascript directory for the webpack config.
-     * @type {string}
-     */
+	/**
+	 * Absolute path to the javascript directory for the webpack config.
+	 * @type {string}
+	 */
 	_path = null;
 
-    /**
-     * Bundle path in the website structure.
-     * @type {string}
-     */
+	/**
+	 * Bundle path in the website structure.
+	 * @type {string}
+	 */
 	_bundlePath = null;
 
 	_version = null;
@@ -138,100 +138,100 @@ class Server {
 
 	_rsConfig = null;
 
-    /**
-     * Port on which the server listens.
-     * @type {number}
-     */
+	/**
+	 * Port on which the server listens.
+	 * @type {number}
+	 */
 	get port() {
 		return this._config.port;
 	}
 
-    /**
-     * Relative path to the static directory for the express app.
-     * @type {string}
-     */
+	/**
+	 * Relative path to the static directory for the express app.
+	 * @type {string}
+	 */
 	get staticDir() {
 		return this._config.staticDir;
 	}
 
-    /**
-     * Absolute path to the static directory for the express app.
-     * @type {string}
-     */
+	/**
+	 * Absolute path to the static directory for the express app.
+	 * @type {string}
+	 */
 	get staticDirAbsolute() {
 		return path.resolve(this.staticDir);
 	}
 
-    /**
-     * Flag of the dev status of the app.
-     * @type {boolean}
-     */
+	/**
+	 * Flag of the dev status of the app.
+	 * @type {boolean}
+	 */
 	get dev() {
 		return this._config.dev;
 	}
 
-    /**
-     * Absolute path to the javascript directory for the webpack config.
-     * @type {string}
-     */
+	/**
+	 * Absolute path to the javascript directory for the webpack config.
+	 * @type {string}
+	 */
 	get path() {
 		return this._path;
 	}
 
-    /**
-     * Bundle path in the website structure.
-     * @type {string}
-     */
+	/**
+	 * Bundle path in the website structure.
+	 * @type {string}
+	 */
 	get bundlePath() {
 		return this._bundlePath;
 	}
 
-    /**
-     * Absolute path to the bundle file in the application structure.
-     * @type {string}
-     */
+	/**
+	 * Absolute path to the bundle file in the application structure.
+	 * @type {string}
+	 */
 	get bundlePathAbsolute() {
 		const { staticDir, jsDir, filename } = this._config;
 		return path.resolve(staticDir, jsDir, filename);
 	}
 
-    /**
-     * Relative path to the application directory.
-     * @type {string}
-     */
+	/**
+	 * Relative path to the application directory.
+	 * @type {string}
+	 */
 	get appDir() {
 		return this._config.appDir;
 	}
 
-    /**
-     * Absolute path to the application directory.
-     * @type {string}
-     */
+	/**
+	 * Absolute path to the application directory.
+	 * @type {string}
+	 */
 	get appDirAbsolute() {
 		return path.resolve(this.appDir);
 	}
 
-    /**
-     * JSX element for the layout component
-     * @type {JSX.Element}
-     */
+	/**
+	 * JSX element for the layout component
+	 * @type {JSX.Element}
+	 */
 	get Layout() {
 		return this._config.layoutComponent;
 	}
 
-    /**
-     * Object of the session.
-     * @type {function}
-     */
+	/**
+	 * Object of the session.
+	 * @type {function}
+	 */
 	get Session() {
 		return this._config.session;
 	}
 
-    /**
-     * Creates the instance of the server and prepares express app with socket.io.
-     *
-     * @param {AppConfig} config
-     */
+	/**
+	 * Creates the instance of the server and prepares express app with socket.io.
+	 *
+	 * @param {AppConfig} config
+	 */
 	constructor(config = {}) {
 		if (!config.cookieSecret) {
 			this._warn('Using default cookieSecret. It\'s a random string which changes every server start. It should be overriden in config.\n');
@@ -263,11 +263,11 @@ class Server {
 		this._log(`Server created ${JSON.stringify(this._config)}`);
 	}
 
-    /**
-     * Gets the http server.
-     *
-     * @returns {http.Server}
-     */
+	/**
+	 * Gets the http server.
+	 *
+	 * @returns {http.Server}
+	 */
 	getServer() {
 		return this._server;
 	}
@@ -276,30 +276,30 @@ class Server {
 		return this._app;
 	}
 
-    /**
-     * Gets the list of registered socket events.
-     *
-     * @returns {SocketEvent[]}
-     */
+	/**
+	 * Gets the list of registered socket events.
+	 *
+	 * @returns {SocketEvent[]}
+	 */
 	getSocketEvents() {
 		return this._socketEvents;
 	}
 
-    /**
-     * Gets the list of registered socket classes.
-     *
-     * @returns {SocketClass[]}
-     */
+	/**
+	 * Gets the list of registered socket classes.
+	 *
+	 * @returns {SocketClass[]}
+	 */
 	getSocketClasses() {
 		return this._socketClasses;
 	}
 
-    /**
-     * Calls the auth function from the config.
-     *
-     * @param {Session} session
-     * @param {function} next
-     */
+	/**
+	 * Calls the auth function from the config.
+	 *
+	 * @param {Session} session
+	 * @param {function} next
+	 */
 	auth(session, next) {
 		const { auth } = this._config;
 		if (typeof auth === 'function') {
@@ -307,40 +307,40 @@ class Server {
 		}
 	}
 
-    /**
-     * Registers the GET route.
-     *
-     * @param {string} route Route spec.
-     * @param {string} contentComponent Relative path from the {config.appDir} to the component.
-     * @param {string} title Title of the page.
-     * @param {boolean=} requireAuth If true the route requires authorized user.
-     * @param {function=} callback Callback to call when the route is called.
-     */
+	/**
+	 * Registers the GET route.
+	 *
+	 * @param {string} route Route spec.
+	 * @param {string} contentComponent Relative path from the {config.appDir} to the component.
+	 * @param {string} title Title of the page.
+	 * @param {boolean=} requireAuth If true the route requires authorized user.
+	 * @param {function=} callback Callback to call when the route is called.
+	 */
 	get(route, contentComponent, title, requireAuth, callback) {
 		return this.registerRoute('get', route, contentComponent, title, requireAuth, callback);
 	}
 
-    /**
-     * Registers the route.
-     *
-     * @param {'get'|'post'|'put'|'delete'} method HTTP method of the route.
-     * @param {string} route Route spec.
-     * @param {string} contentComponent Relative path from the {config.appDir} to the component.
-     * @param {string} title Title of the page.
-     * @param {boolean=} requireAuth If true the route requires authorized user.
-     * @param {any} layout Alternative layout.
-     * @param {function=} callback Callback to call when the route is called.
-     */
+	/**
+	 * Registers the route.
+	 *
+	 * @param {'get'|'post'|'put'|'delete'} method HTTP method of the route.
+	 * @param {string} route Route spec.
+	 * @param {string} contentComponent Relative path from the {config.appDir} to the component.
+	 * @param {string} title Title of the page.
+	 * @param {boolean=} requireAuth If true the route requires authorized user.
+	 * @param {any} layout Alternative layout.
+	 * @param {function=} callback Callback to call when the route is called.
+	 */
 	registerRoute(method, route, contentComponent, title, requireAuth, layout, callback) {
 		this._routes.push(new Route(method, route, contentComponent, title, requireAuth, layout, callback));
 		return this;
 	}
 
-    /**
-     * Registers the socket class to handle socket events.
-     *
-     * @param {function} Cls Class inherited from SocketClass.
-     */
+	/**
+	 * Registers the socket class to handle socket events.
+	 *
+	 * @param {function} Cls Class inherited from SocketClass.
+	 */
 	registerSocketClass(Cls) {
 		const instance = new Cls();
 		if (!(instance instanceof SocketClass)) {
@@ -351,34 +351,34 @@ class Server {
 		return this;
 	}
 
-    /**
-     * Registers the socket event.
-     *
-     * @param {string} event Name of the event.
-     * @param {function} listener Listener to call after the socket request.
-     */
+	/**
+	 * Registers the socket event.
+	 *
+	 * @param {string} event Name of the event.
+	 * @param {function} listener Listener to call after the socket request.
+	 */
 	registerSocketEvent(event, listener) {
 		this._socketEvents.push({ event, listener });
 		return this;
 	}
 
-    /**
-     * Registers react components which are rendered into DOM elements.
-     *
-     * @param {string} componentPath Relative path from the {config.appDir} to the component.
-     * @param {string} elementId Identificator of the DOM element where the component should render.
-     */
+	/**
+	 * Registers react components which are rendered into DOM elements.
+	 *
+	 * @param {string} componentPath Relative path from the {config.appDir} to the component.
+	 * @param {string} elementId Identificator of the DOM element where the component should render.
+	 */
 	registerComponent(componentPath, elementId) {
 		const { appDir } = this._config;
 		this._components.push({ path: path.resolve(`${appDir}/${componentPath}`), elementId });
 		return this;
 	}
 
-    /**
-     * Starts the express server. In that process it creates all necessary files.
-     *
-     * @param {function=} cb Callback to call after the server start.
-     */
+	/**
+	 * Starts the express server. In that process it creates all necessary files.
+	 *
+	 * @param {function=} cb Callback to call after the server start.
+	 */
 	async start(cb = () => { }) {
 		const { dev } = this._config;
 		this._log(`App starting DEV: ${dev}`);
@@ -409,9 +409,9 @@ class Server {
 		}
 	}
 
-    /**
-     * Creates the reacting-squirrel files.
-     */
+	/**
+	 * Creates the reacting-squirrel files.
+	 */
 	async _createRSFiles() {
 		this._log('Creating RS files');
 		const { appDir, staticDir, cssDir } = this._config;
@@ -438,11 +438,11 @@ class Server {
 		});
 	}
 
-    /**
-     * Registers the routes to the express app and creates the routing map for the front-end.
-     *
-     * @param {function(Error):void} cb Callback called after the registration of the routes and creation of the routing map.
-     */
+	/**
+	 * Registers the routes to the express app and creates the routing map for the front-end.
+	 *
+	 * @param {function(Error):void} cb Callback called after the registration of the routes and creation of the routing map.
+	 */
 	_setRoutes(cb) {
 		this._log('Setting routes');
 		const { dev, appDir, layoutComponent } = this._config;
@@ -504,11 +504,11 @@ class Server {
 		this._createRoutingFile(componentsMap, cb);
 	}
 
-    /**
-     * Creates resources directory if doesn't exists.
-     * If the res directory doesn't contain text.json the file is created as well.
-     * @param {function(Error):void} cb Callback called after the directory is created.
-     */
+	/**
+	 * Creates resources directory if doesn't exists.
+	 * If the res directory doesn't contain text.json the file is created as well.
+	 * @param {function(Error):void} cb Callback called after the directory is created.
+	 */
 	async _createResDir(cb) {
 		const { appDir } = this._config;
 		try {
@@ -520,11 +520,11 @@ class Server {
 		this._createDefaultTextFile(cb);
 	}
 
-    /**
-     * Creates text.json file in resources directory if it doesn't exist.
-     *
-     * @param {function(Error):void} cb Callback after the text file creation.
-     */
+	/**
+	 * Creates text.json file in resources directory if it doesn't exist.
+	 *
+	 * @param {function(Error):void} cb Callback after the text file creation.
+	 */
 	_createDefaultTextFile(cb) {
 		const { appDir } = this._config;
 		const filePath = `${appDir}/res/text.json`;
@@ -538,11 +538,11 @@ class Server {
 		});
 	}
 
-    /**
-     * Creates the entry file required for the webpack.
-     *
-     * @param {function(Error):void} cb Callback to call after the creation process.
-     */
+	/**
+	 * Creates the entry file required for the webpack.
+	 *
+	 * @param {function(Error):void} cb Callback to call after the creation process.
+	 */
 	_createEntryFile(cb) {
 		this._log('Creating entry file');
 		const { moduleDev, entryFile, appDir } = this._config;
@@ -568,26 +568,26 @@ import defaultDictionary from '../res/text.json';
 Text.addDictionary(defaultDictionary);
 
 Application
-            .registerSocketEvents(socketEvents)
-            .registerRoutingMap(routingMap)
-            .registerComponents(components)
-            .start();
-        `, cb,
+			.registerSocketEvents(socketEvents)
+			.registerRoutingMap(routingMap)
+			.registerComponents(components)
+			.start();
+		`, cb,
 		);
 	}
 
-    /**
-     * @typedef RouteMappings
-     * @property {string} title Title of the page.
-     * @property {string} spec Route spec of the page.
-     * @property {string} path Absolute path to the component.
-     */
-    /**
-     * Creates the routing file for the front-end application.
-     *
-     * @param {Object.<string, RouteMappings>} map Map of the routes.
-     * @param {function(Error):void} cb Callback to call after the creation process.
-     */
+	/**
+	 * @typedef RouteMappings
+	 * @property {string} title Title of the page.
+	 * @property {string} spec Route spec of the page.
+	 * @property {string} path Absolute path to the component.
+	 */
+	/**
+	 * Creates the routing file for the front-end application.
+	 *
+	 * @param {Object.<string, RouteMappings>} map Map of the routes.
+	 * @param {function(Error):void} cb Callback to call after the creation process.
+	 */
 	_createRoutingFile(map, cb) {
 		this._log('Creating routing file');
 		const a = [];
@@ -602,11 +602,11 @@ Application
 		fs.writeFile(`${this._getRSDirPath()}/router.map.js`, s, cb);
 	}
 
-    /**
-     * Creates the file with custom components.
-     *
-     * @param {function(Error):void} cb Callback to call after the creation process.
-     */
+	/**
+	 * Creates the file with custom components.
+	 *
+	 * @param {function(Error):void} cb Callback to call after the creation process.
+	 */
 	_createComponentsFile(cb) {
 		this._log('Creating components file');
 		const a = [];
@@ -621,31 +621,31 @@ Application
 		fs.writeFile(`${this._getRSDirPath()}/component.map.js`, s, cb);
 	}
 
-    /**
-     * Creates the socket map for the front-end application.
-     *
-     * @param {function(Error):void} cb Callback to call after the creation process.
-     */
+	/**
+	 * Creates the socket map for the front-end application.
+	 *
+	 * @param {function(Error):void} cb Callback to call after the creation process.
+	 */
 	_createSocketMap(cb) {
 		this._log('Creating socket map');
 		fs.writeFile(`${this._getRSDirPath()}/socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
 	}
 
-    /**
-     * Creates the postcss config for the front-end application.
-     *
-     * @param {function(Error):void} cb Callback to call after the creation process.
-     */
+	/**
+	 * Creates the postcss config for the front-end application.
+	 *
+	 * @param {function(Error):void} cb Callback to call after the creation process.
+	 */
 	_createPostCSSConfig(cb) {
 		this._log('Creating postcss config');
 		fs.writeFile(`${this._getRSDirPath()}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
 	}
 
-    /**
-     * Creates tsconfig.json in the RS directory.
-     *
-     * @param {function(Error):void} cb Callback after the file is created in RS directory.
-     */
+	/**
+	 * Creates tsconfig.json in the RS directory.
+	 *
+	 * @param {function(Error):void} cb Callback after the file is created in RS directory.
+	 */
 	_createTSConfig(cb) {
 		this._log('Creating TS config');
 		fs.writeFile(
@@ -655,12 +655,12 @@ Application
 		);
 	}
 
-    /**
-     * Compiles and merges all css and scss files in the module and app directories into one minified css file.
-     * Available only in production mode.
-     *
-     * @param {function(Error):void} cb Callback after the styles are compiled.
-     */
+	/**
+	 * Compiles and merges all css and scss files in the module and app directories into one minified css file.
+	 * Available only in production mode.
+	 *
+	 * @param {function(Error):void} cb Callback after the styles are compiled.
+	 */
 	_compileProductionStyles(cb) {
 		const {
 			dev, appDir, staticDir, cssDir,
@@ -677,14 +677,14 @@ Application
 		compiler.compile(cb);
 	}
 
-    /**
-     * Checks if the directory exists. If doesn't the directory is created.
-     *
-     * @param {string} dir Directory to check.
-     * @param {string} message Message shown if the directory is creating.
-     * @param {'log'|'warn'} level Log level of the message.
-     * @returns {Promise<void>}
-     */
+	/**
+	 * Checks if the directory exists. If doesn't the directory is created.
+	 *
+	 * @param {string} dir Directory to check.
+	 * @param {string} message Message shown if the directory is creating.
+	 * @param {'log'|'warn'} level Log level of the message.
+	 * @returns {Promise<void>}
+	 */
 	_validateDir(dir, message = null, level = 'log') {
 		return new Promise((resolve, reject) => {
 			fs.exists(dir, (exists) => {
@@ -711,11 +711,11 @@ Application
 		});
 	}
 
-    /**
-     * Starts the webpack and the express server. If the app is in dev mode the webpack watcher is started.
-     *
-     * @param {function} cb Callback to call after the server start.
-     */
+	/**
+	 * Starts the webpack and the express server. If the app is in dev mode the webpack watcher is started.
+	 *
+	 * @param {function} cb Callback to call after the server start.
+	 */
 	_start(cb) {
 		this._log('Starting webpack');
 		const { dev, port, onWebpackProgress } = this._config;
@@ -777,9 +777,9 @@ Application
 		});
 	}
 
-    /**
-     * Sets the express app, webpack and registers socket server.
-     */
+	/**
+	 * Sets the express app, webpack and registers socket server.
+	 */
 	_setApp() {
 		this._app = express();
 		this._setMiddlewares();
@@ -788,9 +788,9 @@ Application
 		socket(this, this._config.socketIO);
 	}
 
-    /**
-     * Creates the webpack instance.
-     */
+	/**
+	 * Creates the webpack instance.
+	 */
 	_setWebpack() {
 		const {
 			dev, filename, staticDir, cssDir,
@@ -874,11 +874,11 @@ Application
 		});
 	}
 
-    /**
-     * Registers middlewares to the express instance.
-     *
-     * @param {boolean} afterRoutes If true the middlewares are registered after the routes registration.
-     */
+	/**
+	 * Registers middlewares to the express instance.
+	 *
+	 * @param {boolean} afterRoutes If true the middlewares are registered after the routes registration.
+	 */
 	_setMiddlewares(afterRoutes = false) {
 		const {
 			staticDir, cookieSecret, session, layoutComponent, dev, errorHandler, cssDir,
@@ -962,12 +962,12 @@ Application
 		});
 	}
 
-    /**
-     * Logs the webpack progress in stdout.
-     *
-     * @param {number} percentage Current progress of webpack processing.
-     * @param {string} message Current message of webpack processing.
-     */
+	/**
+	 * Logs the webpack progress in stdout.
+	 *
+	 * @param {number} percentage Current progress of webpack processing.
+	 * @param {string} message Current message of webpack processing.
+	 */
 	_webpackProgress(percentage, message) {
 		readline.cursorTo(process.stdout, 0);
 		process.stdout.write(`Webpack: ${(percentage * 100).toFixed(2)}% ${message}`);
@@ -977,11 +977,11 @@ Application
 		}
 	}
 
-    /**
-     * Combines all css files in css directory to rs-app.css in css directory.
-     *
-     * @param {function(Error):void} cb Callback after the compilation is finished.
-     */
+	/**
+	 * Combines all css files in css directory to rs-app.css in css directory.
+	 *
+	 * @param {function(Error):void} cb Callback after the compilation is finished.
+	 */
 	_compileStyles(cb = () => { }) {
 		const { cssDir, staticDir, mergeStyles } = this._config;
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
@@ -1005,9 +1005,9 @@ Application
 		});
 	}
 
-    /**
-     * Gets the list of css or scss files in css directory for webpack watch registration.
-     */
+	/**
+	 * Gets the list of css or scss files in css directory for webpack watch registration.
+	 */
 	_getStylesToWatch() {
 		const { staticDir, cssDir } = this._config;
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
@@ -1027,30 +1027,30 @@ Application
 			});
 	}
 
-    /**
-     * Gets the relative path to the RS directory.
-     *
-     * @returns {string}
-     */
+	/**
+	 * Gets the relative path to the RS directory.
+	 *
+	 * @returns {string}
+	 */
 	_getRSDirPath() {
 		const { appDir } = this._config;
 		return `${appDir}/${RS_DIR}`;
 	}
 
-    /**
-     * Gets the absolute path to the RS directory.
-     *
-     * @returns {string}
-     */
+	/**
+	 * Gets the absolute path to the RS directory.
+	 *
+	 * @returns {string}
+	 */
 	_getRSDirPathAbsolute() {
 		return path.resolve(this._getRSDirPath());
 	}
 
-    /**
-     * Logs the message to the console if the app is in the dev mode.
-     *
-     * @param {string} message Message to log.
-     */
+	/**
+	 * Logs the message to the console if the app is in the dev mode.
+	 *
+	 * @param {string} message Message to log.
+	 */
 	_log(message) {
 		const { dev } = this._config;
 		if (!dev) {
@@ -1060,11 +1060,11 @@ Application
 		console.log(new Date(), message);
 	}
 
-    /**
-     * Logs the warning message to the console.
-     *
-     * @param {string} message Message to log.
-     */
+	/**
+	 * Logs the warning message to the console.
+	 *
+	 * @param {string} message Message to log.
+	 */
 	_warn(message) {
 		// eslint-disable-next-line no-console
 		console.warn(new Date(), message);

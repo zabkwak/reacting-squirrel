@@ -9,29 +9,29 @@ import Component from './component';
  */
 export default class Button extends Component {
 
-    static propTypes = {
-        href: PropTypes.string,
-        refreshContent: PropTypes.bool,
-    };
+	static propTypes = {
+		href: PropTypes.string,
+		refreshContent: PropTypes.bool,
+	};
 
-    static defaultProps = {
-        href: null,
-        refreshContent: false,
-    };
+	static defaultProps = {
+		href: null,
+		refreshContent: false,
+	};
 
-    _click = () => {
-        const { href, refreshContent } = this.props;
-        if (!href) {
-            return;
-        }
-        this.getContext().navigate(href, null, refreshContent);
-    };
+	_click = () => {
+		const { href, refreshContent } = this.props;
+		if (!href) {
+			return;
+		}
+		this.getContext().navigate(href, null, refreshContent);
+	};
 
-    render() {
-        const {
-            refreshContent,
-            ...props
-        } = this.props;
-        return <button type="button" onClick={this._click} {...props} />;
-    }
+	render() {
+		const {
+			refreshContent,
+			...props
+		} = this.props;
+		return <button type="button" onClick={this._click} {...props} />;
+	}
 }

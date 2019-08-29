@@ -7,29 +7,29 @@ import SocketComponent from './component.socket';
  */
 export default class Page extends SocketComponent {
 
-    static propTypes = {
-        params: PropTypes.any.isRequired,
-        query: PropTypes.any.isRequired,
-        initialData: PropTypes.any.isRequired,
-    }
+	static propTypes = {
+		params: PropTypes.any.isRequired,
+		query: PropTypes.any.isRequired,
+		initialData: PropTypes.any.isRequired,
+	}
 
-    __pageRender__ = () => this.onPageRender();
+	__pageRender__ = () => this.onPageRender();
 
-    componentDidMount() {
-        super.componentDidMount();
-        this.getContext().addListener('pagerender', this.__pageRender__);
-        if (this.getContext().DEV) {
-            console.log(`Page '${this.constructor.name}' did mount`, this.props);
-        }
-    }
+	componentDidMount() {
+		super.componentDidMount();
+		this.getContext().addListener('pagerender', this.__pageRender__);
+		if (this.getContext().DEV) {
+			console.log(`Page '${this.constructor.name}' did mount`, this.props);
+		}
+	}
 
-    componentWillUnmount() {
-        super.componentWillUnmount();
-        this.getContext().removeListener('pagerender', this.__pageRender__);
-        if (this.getContext().DEV) {
-            console.log(`Page '${this.constructor.name}' will unmount`);
-        }
-    }
+	componentWillUnmount() {
+		super.componentWillUnmount();
+		this.getContext().removeListener('pagerender', this.__pageRender__);
+		if (this.getContext().DEV) {
+			console.log(`Page '${this.constructor.name}' will unmount`);
+		}
+	}
 
-    onPageRender() { }
+	onPageRender() { }
 }

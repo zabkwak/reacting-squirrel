@@ -18,65 +18,65 @@ import SocketClass from './socket-class';
  */
 
 export default {
-    /**
-     * Registers socket classes to the server app.
-     *
-     * @param {Server} app Server instance.
-     * @param {string} dir Relative path to the directory with socket classes.
-     */
-    registerSocketClassDir(app, dir) {
-        const files = fs.readdirSync(dir);
-        files.forEach((file) => {
-            const path = `${dir}/${file}`;
-            const stat = fs.statSync(path);
-            if (stat.isDirectory()) {
-                this.registerSocketClassDir(app, path);
-                return;
-            }
-            if (file.indexOf('.d.ts') >= 0) {
-                return;
-            }
-            if (file.indexOf('.js.map') >= 0) {
-                return;
-            }
-            const m = require(path);
-            const Class = m.default || m;
-            if (this._isConstructor(Class) && new Class() instanceof SocketClass) {
-                app.registerSocketClass(Class);
-            }
-        });
-    },
-    /**
-     * Registers routes to the server app.
-     *
-     * @param {Server} app Server instance.
-     * @param {Array<Route>} routes List of routes to register.
-     */
-    registerRoutes(app, routes) {
-        routes.forEach(({
-            method, route, component, title, requireAuth, layout,
-        }) => {
-            app.registerRoute(method || 'get', route, component, title, requireAuth, layout);
-        });
-    },
-    /**
-     * Registers components to the server app.
-     *
-     * @param {Server} app Server instance.
-     * @param {Array<Component>} components List of components to register.
-     */
-    registerComponents(app, components) {
-        components.forEach(({ id, component }) => {
-            app.registerComponent(component, id);
-        });
-    },
-    _isConstructor(Class) {
-        try {
-            // eslint-disable-next-line no-new
-            new Class();
-            return true;
-        } catch (e) {
-            return false;
-        }
-    },
+	/**
+	 * Registers socket classes to the server app.
+	 *
+	 * @param {Server} app Server instance.
+	 * @param {string} dir Relative path to the directory with socket classes.
+	 */
+	registerSocketClassDir(app, dir) {
+		const files = fs.readdirSync(dir);
+		files.forEach((file) => {
+			const path = `${dir}/${file}`;
+			const stat = fs.statSync(path);
+			if (stat.isDirectory()) {
+				this.registerSocketClassDir(app, path);
+				return;
+			}
+			if (file.indexOf('.d.ts') >= 0) {
+				return;
+			}
+			if (file.indexOf('.js.map') >= 0) {
+				return;
+			}
+			const m = require(path);
+			const Class = m.default || m;
+			if (this._isConstructor(Class) && new Class() instanceof SocketClass) {
+				app.registerSocketClass(Class);
+			}
+		});
+	},
+	/**
+	 * Registers routes to the server app.
+	 *
+	 * @param {Server} app Server instance.
+	 * @param {Array<Route>} routes List of routes to register.
+	 */
+	registerRoutes(app, routes) {
+		routes.forEach(({
+			method, route, component, title, requireAuth, layout,
+		}) => {
+			app.registerRoute(method || 'get', route, component, title, requireAuth, layout);
+		});
+	},
+	/**
+	 * Registers components to the server app.
+	 *
+	 * @param {Server} app Server instance.
+	 * @param {Array<Component>} components List of components to register.
+	 */
+	registerComponents(app, components) {
+		components.forEach(({ id, component }) => {
+			app.registerComponent(component, id);
+		});
+	},
+	_isConstructor(Class) {
+		try {
+			// eslint-disable-next-line no-new
+			new Class();
+			return true;
+		} catch (e) {
+			return false;
+		}
+	},
 };

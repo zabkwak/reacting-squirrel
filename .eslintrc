@@ -27,11 +27,11 @@
         "react/jsx-filename-extension": 0,
         "react/jsx-indent": [
             2,
-            4
+            "tab"
         ],
         "react/jsx-indent-props": [
             2,
-            4
+            "tab"
         ],
         "react/sort-comp": [
             2,

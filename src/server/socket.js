@@ -25,21 +25,21 @@ class Socket {
 
 	static _chunks = {};
 
-    /**
-     *
-     * @param {socketIO.Socket} socket
-     * @param {SocketEvent[]} events
-     * @param {number} maxMessageSize
-     */
+	/**
+	 *
+	 * @param {socketIO.Socket} socket
+	 * @param {SocketEvent[]} events
+	 * @param {number} maxMessageSize
+	 */
 	static add(socket, events, maxMessageSize) {
 		const s = new this(socket);
 		this._sockets.push(s);
-        /*
-        socket.use((packet, next) => {
-            console.log(packet);
-            next();
-        });
-        */
+		/*
+		socket.use((packet, next) => {
+			console.log(packet);
+			next();
+		});
+		*/
 		s.on('error', (err) => {
 			console.error(err);
 			this._callListener('error', s, err);
@@ -124,14 +124,14 @@ class Socket {
 		this._listeners[event].push(listener);
 	}
 
-    /**
-     * Broadcasts the event to all connected sockets which will pass the filter method.
-     *
-     * @param {string} event Name of the event to broadcast.
-     * @param {any} data Data to broadcast.
-     * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
-     * @param {function(Socket):boolean} filter Filter function to validate sockets.
-     */
+	/**
+	 * Broadcasts the event to all connected sockets which will pass the filter method.
+	 *
+	 * @param {string} event Name of the event to broadcast.
+	 * @param {any} data Data to broadcast.
+	 * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
+	 * @param {function(Socket):boolean} filter Filter function to validate sockets.
+	 */
 	static broadcast(event, data, filter = socket => true) {
 		this.iterateSockets((socket) => {
 			if (!filter(socket)) {
@@ -141,10 +141,10 @@ class Socket {
 		});
 	}
 
-    /**
-     *
-     * @param {function(Socket):void} iterator
-     */
+	/**
+	 *
+	 * @param {function(Socket):void} iterator
+	 */
 	static iterateSockets(iterator) {
 		this._sockets.forEach(iterator);
 	}
@@ -166,10 +166,10 @@ class Socket {
 	/** @type {string} */
 	_id = null;
 
-    /**
-     *
-     * @param {socketIO.Socket} socket
-     */
+	/**
+	 *
+	 * @param {socketIO.Socket} socket
+	 */
 	constructor(socket) {
 		this._socket = socket;
 		this._id = uniqid();
@@ -188,21 +188,21 @@ class Socket {
 		this._socket.disconnect();
 	}
 
-    /**
-     * @returns {Session}
-     */
+	/**
+	 * @returns {Session}
+	 */
 	getSession() {
 		return this._socket.session;
 	}
 
-    /**
-     * Broadcasts the event to all connected sockets which will pass the filter method.
-     *
-     * @param {string} event Name of the event to broadcast.
-     * @param {any} data Data to broadcast.
-     * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
-     * @param {function(Socket):boolean} filter Filter function to validate sockets.
-     */
+	/**
+	 * Broadcasts the event to all connected sockets which will pass the filter method.
+	 *
+	 * @param {string} event Name of the event to broadcast.
+	 * @param {any} data Data to broadcast.
+	 * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
+	 * @param {function(Socket):boolean} filter Filter function to validate sockets.
+	 */
 	broadcast(event, data, includeSelf = false, filter = socket => true) {
 		Socket.iterateSockets((socket) => {
 			if (!includeSelf && socket === this) {

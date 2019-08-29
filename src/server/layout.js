@@ -28,9 +28,9 @@ export default class Layout extends Component {
 		lang: 'en_US',
 	};
 
-    /**
-     * Renders the base html. This method shouldn't be overriden.
-     */
+	/**
+	 * Renders the base html. This method shouldn't be overriden.
+	 */
 	render() {
 		const { lang } = this.props;
 		return (
@@ -78,9 +78,9 @@ export default class Layout extends Component {
 		);
 	}
 
-    /**
-     * Renders the container of the website.
-     */
+	/**
+	 * Renders the container of the website.
+	 */
 	renderContainer() {
 		return (
 			<div id="container">
