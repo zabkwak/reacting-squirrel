@@ -62,19 +62,29 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="reacting-squirrel">Reacting Squirrel</h1>
+				<a href="#reacting-squirrel" id="reacting-squirrel" style="color: inherit; text-decoration: none;">
+					<h1>Reacting Squirrel</h1>
+				</a>
 				<p>Framework for creation of the <a href="https://reactjs.org/">React</a> apps using <a href="https://expressjs.com/">Express</a> and <a href="https://socket.io/">Socket.io</a>.
 				Sample app can be cloned from <a href="https://github.com/zabkwak/reacting-squirrel-sample">GitHub</a>.</p>
-				<h2 id="requirements">Requirements</h2>
+				<a href="#requirements" id="requirements" style="color: inherit; text-decoration: none;">
+					<h2>Requirements</h2>
+				</a>
 				<ul>
 					<li>The module needs to be able to write in the app directory (config.appDir). It creates the directory where are stored the frontend maps.</li>
 					<li>The module needs to be able to write in the css directory (config.cssDir). It creates one app style.</li>
 					<li>The frontend needs the possibility to work with websockets (connection upgrade in nginx).</li>
 				</ul>
-				<h2 id="installation">Installation</h2>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
 				<pre><code class="language-bash">npm install reacting-squirrel --save</code></pre>
-				<h2 id="usage">Usage</h2>
-				<h3 id="simple-app">Simple app</h3>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<a href="#simple-app" id="simple-app" style="color: inherit; text-decoration: none;">
+					<h3>Simple app</h3>
+				</a>
 				<pre><code class="language-javascript"><span class="hljs-comment">// ./index.js</span>
 <span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
 
@@ -99,7 +109,9 @@ app.start();
     }
 }</code></pre>
 				<p>This code will start simple app on the default port with one page which will be the home page.</p>
-				<h3 id="app-using-websockets-for-load-the-user">App using websockets for load the user</h3>
+				<a href="#app-using-websockets-for-load-the-user" id="app-using-websockets-for-load-the-user" style="color: inherit; text-decoration: none;">
+					<h3>App using websockets for load the user</h3>
+				</a>
 				<pre><code class="language-javascript"><span class="hljs-comment">// ./index.js</span>
 <span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
 
@@ -168,8 +180,12 @@ app.start();
     }
 }</code></pre>
 				<p>This code will start simple app on the default port. After the page load the <code>user.load</code> event is emitted and <code>UserSocket</code> class is trying to load the logged user and send it back to the page.</p>
-				<h2 id="core-functions">Core functions</h2>
-				<h3 id="routes-register">Routes register</h3>
+				<a href="#core-functions" id="core-functions" style="color: inherit; text-decoration: none;">
+					<h2>Core functions</h2>
+				</a>
+				<a href="#routes-register" id="routes-register" style="color: inherit; text-decoration: none;">
+					<h3>Routes register</h3>
+				</a>
 				<p>The routes are registered on the server-side. The module is using express based routes registering.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
 
@@ -179,7 +195,9 @@ app.start();
 app.get(<span class="hljs-string">'/'</span>, <span class="hljs-string">'home'</span>, <span class="hljs-string">'Home'</span>);
 
 app.start();</code></pre>
-				<h3 id="socket-events-register">Socket events register</h3>
+				<a href="#socket-events-register" id="socket-events-register" style="color: inherit; text-decoration: none;">
+					<h3>Socket events register</h3>
+				</a>
 				<p>The socket events can be directly registered. It should be used for simple socket events which don&#39;t need authorization.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
 
@@ -189,7 +207,9 @@ app.start();</code></pre>
 app.registerSocketEvent(<span class="hljs-string">'test'</span>, (socket, data, next) =&gt; next(<span class="hljs-literal">null</span>, data));
 
 app.start();</code></pre>
-				<h3 id="socket-classes-register">Socket classes register</h3>
+				<a href="#socket-classes-register" id="socket-classes-register" style="color: inherit; text-decoration: none;">
+					<h3>Socket classes register</h3>
+				</a>
 				<p>The socket classes can handle multiple socket events prefixed by the class name. After the registration of the socket class socket events are automatically registered to the server app.</p>
 				<pre><code class="language-javascript"><span class="hljs-comment">// ./socket.user.js</span>
 <span class="hljs-keyword">import</span> { SocketClass } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
@@ -226,7 +246,9 @@ app.start();</code></pre>
 app.registerSocketClass(UserSocket);
 
 app.start();</code></pre>
-				<h3 id="components-register">Components register</h3>
+				<a href="#components-register" id="components-register" style="color: inherit; text-decoration: none;">
+					<h3>Components register</h3>
+				</a>
 				<p>The module can register custom components which are rendered in custom DOM element in the layout. </p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
 
@@ -236,7 +258,9 @@ app.start();</code></pre>
 app.registerComponent(<span class="hljs-string">'test'</span>, <span class="hljs-string">'test'</span>);
 
 app.start();</code></pre>
-				<h3 id="rsconfig">RSConfig</h3>
+				<a href="#rsconfig" id="rsconfig" style="color: inherit; text-decoration: none;">
+					<h3>RSConfig</h3>
+				</a>
 				<p>RSConfig file can contain list of routes, list of components and the directory with the socket classes. By default the file <code>rsconfig.json</code> is searched in the <code>process.cwd()</code> directory. If the file doesn&#39;t exist nothing happens. The path to the file can by changed with config.rsConfig option.  </p>
 				<pre><code class="language-json">// rsconfig.json
 {
@@ -257,9 +281,13 @@ app.start();</code></pre>
     ],
     &quot;socketClassDir&quot;: &quot;./dist/network/socket&quot;
 }</code></pre>
-				<h3 id="texts">Texts</h3>
+				<a href="#texts" id="texts" style="color: inherit; text-decoration: none;">
+					<h3>Texts</h3>
+				</a>
 				<p>In the startup process, the <code>res</code> directory is created in <code>app</code> directory. In that directory is created default text file <code>text.json</code>. The content of the text file is used as default dictionary using <a href="https://www.npmjs.com/package/texting-squirrel">texting-squirrel</a> module.</p>
-				<h4 id="accessing-text-from-the-component">Accessing text from the component</h4>
+				<a href="#accessing-text-from-the-component" id="accessing-text-from-the-component" style="color: inherit; text-decoration: none;">
+					<h4>Accessing text from the component</h4>
+				</a>
 				<p>All components have <code>getText</code> method to access the text from the dictionary.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel'</span>;
 
@@ -270,7 +298,9 @@ app.start();</code></pre>
     }
 }
 </code></pre>
-				<h4 id="using-text-component">Using Text component</h4>
+				<a href="#using-text-component" id="using-text-component" style="color: inherit; text-decoration: none;">
+					<h4>Using Text component</h4>
+				</a>
 				<p>The module contains a text component to handle dictionary directly from the JSX code.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component, Text } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel'</span>;
 
@@ -281,17 +311,27 @@ app.start();</code></pre>
     }
 }
 </span></code></pre>
-				<h2 id="socket-communication">Socket communication</h2>
+				<a href="#socket-communication" id="socket-communication" style="color: inherit; text-decoration: none;">
+					<h2>Socket communication</h2>
+				</a>
 				<p>The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. </p>
-				<h3 id="uploading-files-experimental-">Uploading files (experimental)</h3>
+				<a href="#uploading-files-experimental" id="uploading-files-experimental" style="color: inherit; text-decoration: none;">
+					<h3>Uploading files (experimental)</h3>
+				</a>
 				<p>File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the <code>pingTimeout</code>. The file is sent to the server in chunks and converted to buffer on the server side.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> file = <span class="hljs-string">'get somehow a File instance'</span>;
 Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-literal">undefined</span>, { file }, (progress) =&gt; <span class="hljs-built_in">console</span>.log(progress));</code></pre>
-				<h4 id="limitations">Limitations</h4>
+				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
+					<h4>Limitations</h4>
+				</a>
 				<p>The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.</p>
-				<h2 id="docs">Docs</h2>
+				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
+					<h2>Docs</h2>
+				</a>
 				<p>Checkout the documentation <a href="https://zabkwak.github.io/reacting-squirrel/">here</a>.</p>
-				<h2 id="todo">TODO</h2>
+				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
+					<h2>TODO</h2>
+				</a>
 				<p><a href="https://trello.com/b/FepP7DPC/reacting-squirrel">https://trello.com/b/FepP7DPC/reacting-squirrel</a></p>
 			</div>
 		</div>
@@ -328,6 +368,7 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -376,7 +417,7 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>

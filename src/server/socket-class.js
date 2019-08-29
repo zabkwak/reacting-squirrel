@@ -26,7 +26,7 @@ function requireAuth(target, name, descriptor) {
  *
  * @example
  * class User extends SocketClass {
- *	  load(session, data, next) {
+ *	  load(socket, data, next) {
  *		  next(null, { id: 1, name: 'Baf Lek' });
  *	  }
  * }
@@ -55,7 +55,11 @@ export default class SocketClass {
 	getEvents() {
 		return Object
 			.getOwnPropertyNames(this.constructor.prototype)
-			.filter(method => ['constructor', 'getEvents', 'broadcast', 'setSocket', 'getSession', 'getUser'].indexOf(method) < 0)
+			// eslint-disable-next-line arrow-body-style
+			.filter((method) => {
+				return !['constructor', 'getEvents', 'broadcast', 'setSocket', 'getSession', 'getUser'].includes(method)
+					&& method.indexOf('_') !== 0;
+			})
 			.map((method) => {
 				const event = `${this.constructor.name.toLowerCase()}.${method}`;
 				const listener = (session, data, next) => this[method].apply(this, [session, data, next]);

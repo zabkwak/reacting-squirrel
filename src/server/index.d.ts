@@ -13,7 +13,7 @@ export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
  * @typeparam S Type of the Session
  */
 export interface IRequest<S extends Session = Session> extends express.Request {
-    session: S;
+	session: S;
 }
 
 /**
@@ -28,207 +28,277 @@ interface IAppConfig {
     /** Port on which the app listens. 
      * @default 8080 
      */
-    port?: number;
+	port?: number;
     /** 
      * Relative path to the static directory for the express app. 
      * @default './public'
      */
-    staticDir?: string;
+	staticDir?: string;
     /** 
      * Flag of the dev status of the app. 
      * @default false
      */
-    dev?: boolean;
+	dev?: boolean;
     /** 
      * Name of the directory where the javascript is located in the staticDir.
      * @default 'js'
      */
-    jsDir?: string;
+	jsDir?: string;
     /** 
      * Name of the directory where the css is located in the staticDir.
      * @default 'css'
      */
-    cssDir?: string;
+	cssDir?: string;
     /**
      * Name of the bundle file.
      * @default 'bundle.js'
      */
-    filename?: string;
+	filename?: string;
     /**
      * Relative path to the app directory.
      * @default './app'
      */
-    appDir?: string;
+	appDir?: string;
     /**
      * Relative path to the entry file.
      * @default null
      */
-    entryFile?: string;
+	entryFile?: string;
     /**
      * Custom path to rsconfig.json file.
      * @default null
      */
-    rsConfig?: string;
+	rsConfig?: string;
     /**
      * React component width default html code.
      * @default typeof Layout
      */
-    layoutComponent?: typeof Layout;
+	layoutComponent?: typeof Layout;
     /**
      * Secret which is used to sign cookies.
      * @default '[random generated string]'
      */
-    cookieSecret?: string;
+	cookieSecret?: string;
     /**
      * List of scripts loaded in the base html.
      * @default []
      */
-    scripts?: Array<string>;
+	scripts?: Array<string>;
     /**
      * List of styles loaded in the base html.
      * @default []
      */
-    styles?: Array<string>;
+	styles?: Array<string>;
     /**
      * List of styles to merge to rs-app.css.
      * @default []
      */
-    mergeStyles?: Array<string>;
+	mergeStyles?: Array<string>;
     /**
      * Class of the session.
      * @default typeof Session
      */
-    session?: typeof Session;
+	session?: typeof Session;
     /**
      * Maximal size of one socket message.
      * @default 104857600
      */
-    socketMessageMaxSize?: number;
+	socketMessageMaxSize?: number;
     /**
      * Auth function called before the route execution.
      * @param session Session instance.
      * @default (session, next) => next()
      */
-    auth?: (session: Session, next: (err?: any) => void) => void;
+	auth?: (session: Session, next: (err?: any) => void) => void;
     /**
      * Function to handle errors in the route execution.
      * @default (err, req, res, next) => next()
      */
-    errorHandler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
+	errorHandler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
     /**
      * Indicates if the bundle is loaded relatively in the output html.
      * @default false
      */
-    bundlePathRelative?: boolean;
+	bundlePathRelative?: boolean;
     /**
      * Function to handle webpack progress.
      * @default null
      */
-    onWebpackProgress?: (percents: number, message: string) => void;
+	onWebpackProgress?: (percents: number, message: string) => void;
     /**
      * Custom webpack config.
      * @default {}
      */
-    webpack?: any;
+	webpack?: any;
     /**
      * Custom socketIO config.
      * @default {}
      */
-    socketIO?: SocketServerOptions;
+	socketIO?: SocketServerOptions;
 }
 
 interface ISocketEvent<S extends Session = Session> {
-    event: string;
-    listener: (socket: Socket<S>, data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
+	event: string;
+	listener: (socket: Socket<S>, data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
 }
 
 /**
  * @typeparam U Type of user prop.
  */
 interface ILayoutPropsInitialData<U = any> {
-    user: U;
-    dev: boolean;
+	user: U;
+	dev: boolean;
 	timestamp: number;
 	version: string;
 }
 
 export interface ILayoutProps<T = {}, U = any> {
-    title: string;
-    initialData: ILayoutPropsInitialData<U> & T;
-    /** @deprecated */
-    user?: U;
-    scripts?: Array<string>;
-    styles?: Array<string>;
-    version: string;
-    bundle: string;
-    charSet?: string;
-    lang?: string;
+	title: string;
+	initialData: ILayoutPropsInitialData<U> & T;
+	/** @deprecated */
+	user?: U;
+	scripts?: Array<string>;
+	styles?: Array<string>;
+	version: string;
+	bundle: string;
+	charSet?: string;
+	lang?: string;
 }
 
 export class Socket<S extends Session = Session> {
 
-    static add(socket: net.Socket, events: Array<ISocketEvent>, maxMessageSize: number): void;
+	static add(socket: net.Socket, events: Array<ISocketEvent>, maxMessageSize: number): void;
 
-    static broadcast(event: string, data: any, filter: (socket: Socket) => boolean): void;
+	static broadcast(event: string, data: any, filter: (socket: Socket) => boolean): void;
 
-    static itereateSockets(iterator: (socket: Socket) => void): void;
+	static iterateSockets(iterator: (socket: Socket) => void): void;
 
-    static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>) => void): void;
-    static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>, ...args: Array<any>) => void): void;
+	static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>) => void): void;
+	static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>, ...args: Array<any>) => void): void;
 
-    constructor(socket: net.Socket);
+	constructor(socket: net.Socket);
 
-    emit(event: string, data: any): void;
+	emit(event: string, data: any): void;
 
-    on(event: string, listener: (data?: any) => void): void;
+	on(event: string, listener: (data?: any) => void): void;
 
-    broadcast(event: string, data: any): void;
-    broadcast(event: string, data: any, includeSelf: boolean): void;
-    broadcast(event: string, data: any, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
+	broadcast(event: string, data: any): void;
+	broadcast(event: string, data: any, includeSelf: boolean): void;
+	broadcast(event: string, data: any, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
 
-    getSession(): S;
+	getSession(): S;
 }
 
-export class Session {
+/**
+ * Base session class.
+ * @typeparam T User type.
+ */
+export class Session<T = any> {
 
-    static genereateId(): string;
+	/**
+	 * Generates new session ID.
+	 */
+	public static generateId(): string;
 
-    id: string;
+	/**
+	 * ID of the session.
+	 */
+	public id: string;
 
-    constructor(id: string);
+	/**
+	 * Creates new session instance.
+	 *
+	 * @param id ID of the session.
+	 */
+	public constructor(id: string);
 
-    setUser(user: any): void;
+	/**
+	 * Sets the user's data to the session.
+	 *
+	 * @param user User data.
+	 */
+	public setUser(user: T): void;
 
-    getUser(): any;
+	/**
+	 * Gets the user data from the session.
+	 */
+	public getUser(): T;
 }
 
 export class Layout<P = ILayoutProps> extends Component<P> {
 
-    public renderHead(): JSX.Element;
+	public renderHead(): JSX.Element;
 
-    public renderBody(): JSX.Element;
+	public renderBody(): JSX.Element;
 
-    public renderContainer(): JSX.Element;
+	public renderContainer(): JSX.Element;
 
-    public renderBundleData(): JSX.Element;
+	public renderBundleData(): JSX.Element;
 
-    public renderLoader(): JSX.Element;
+	public renderLoader(): JSX.Element;
 
-    public renderMeta(): JSX.Element;
+	public renderMeta(): JSX.Element;
 
-    protected _createPath(path: string, version: string): string;
+	protected _createPath(path: string, version: string): string;
 }
 
+/**
+ * Base class for grouping socket events. The event can be called from the client `[lowerCasedClassName].[method]`. 
+ * All underscored methods and methods of the base class are ignored in the event list.
+ * 
+ * @example
+ * 
+ * ```javascript
+ * class User extends SocketClass {
+ * 	// This method will be accessible from the client as user.get event.
+ * 	async get(socket, data) {
+ * 		return { id: 1, name: 'Baf Lek' };
+ * 	}
+ * }
+ * 
+ * ```
+ */
 export class SocketClass<S extends Session = Session> {
 
-	static requireAuth: MethodDecorator;
+	/**
+	 * Decorator for the methods to check the logged user before the execution.
+	 */
+	public static requireAuth: MethodDecorator;
 
-    getEvents(): Array<ISocketEvent<S>>;
-    broadcast(event: string, data: any): void;
-    broadcast(event: string, data: any, includeSelf: boolean): void;
-    broadcast(event: string, data: any, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
+	/**
+	 * Converts the methods to the list of events. 
+	 * The method is called automatically from the `Server`.
+	 */
+	public getEvents(): Array<ISocketEvent<S>>;
 
-    setSocket(socket: Socket): void;
+	/**
+	 * Broadcasts the event and data to the clients except the sender.
+	 *
+	 * @param event Event name.
+	 * @param data Data to broadcast.
+	 * @typeparam T Type of the data.
+	 */
+	broadcast<T = any>(event: string, data: T): void;
+	/**
+	 * Broadcasts the event and data to the clients.
+	 *
+	 * @param event Event name.
+	 * @param data Data to broadcast.
+	 * @param includeSelf Indicates if the broadcast should include the sender.
+	 * @typeparam T Type of the data.
+	 */
+	broadcast<T = any>(event: string, data: T, includeSelf: boolean): void;
+	/**
+	 * Broadcasts the event and data to the clients passed the filter.
+	 *
+	 * @param event Event name.
+	 * @param data Data to broadcast.
+	 * @param includeSelf Indicates if the broadcast should include the sender.
+	 * @param filter Function to filter receivers of the broadcast.
+	 * @typeparam T Type of the data.
+	 */
+	broadcast<T = any>(event: string, data: T, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
+
 }
 
 export { HttpSmartError as HttpError };
@@ -244,31 +314,31 @@ export namespace Utils {
      * @param app Server instance.
      * @param dir Path to the directory with socket classes.
      */
-    export function registerSocketClassDir(app: Server, dir: string): void;
+	export function registerSocketClassDir(app: Server, dir: string): void;
     /**
      * Registers routes to the server app.
      * 
      * @param app Server instance.
      * @param routes List of routes to register.
      */
-    export function registerRoutes(
-        app: Server,
-        routes: Array<{
-            method?: HttpMethod;
-            route: string;
-            component: string;
-            title: string;
-            requireAuth?: boolean;
-            layout?: string | typeof Layout;
-        }>
-    ): void;
+	export function registerRoutes(
+		app: Server,
+		routes: Array<{
+			method?: HttpMethod;
+			route: string;
+			component: string;
+			title: string;
+			requireAuth?: boolean;
+			layout?: string | typeof Layout;
+		}>
+	): void;
     /**
      * Registers components to the server app.
      * 
      * @param app Server instance.
      * @param components List of components to register.
      */
-    export function registerComponents(app: Server, components: Array<{ id: string, component: string }>): void;
+	export function registerComponents(app: Server, components: Array<{ id: string, component: string }>): void;
 }
 
 /**
@@ -276,38 +346,38 @@ export namespace Utils {
  */
 export default class Server {
 
-    port: number;
-    staticDir: string;
-    staticDirAbsolute: string;
-    dev: boolean;
-    path: string;
-    bundlePath: string;
-    bundlePathAbsolute: string;
-    appDir: string;
-    appDirAbsolute: string;
-    Layout: JSX.Element;
-    Session: typeof Session;
+	port: number;
+	staticDir: string;
+	staticDirAbsolute: string;
+	dev: boolean;
+	path: string;
+	bundlePath: string;
+	bundlePathAbsolute: string;
+	appDir: string;
+	appDirAbsolute: string;
+	Layout: JSX.Element;
+	Session: typeof Session;
 
-    constructor(config?: IAppConfig);
+	constructor(config?: IAppConfig);
 
     /**
      * Gets the instance of the server.
      */
-    getServer(): http.Server;
+	getServer(): http.Server;
     /**
      * Gets the instance of express application.
      */
-    getApp(): express.Application;
+	getApp(): express.Application;
 
     /**
      * Gets the list of registered socket events.
      */
-    getSocketEvents(): Array<ISocketEvent>;
+	getSocketEvents(): Array<ISocketEvent>;
 
     /**
      * Gets the list of registered socket classes.
      */
-    getSocketClasses(): Array<SocketClass>;
+	getSocketClasses(): Array<SocketClass>;
 
     /**
      * Authorizes the user.
@@ -315,10 +385,10 @@ export default class Server {
      * @param session Current session.
      * @param next Callback after the auth process.
      */
-    auth(session: Session, next: (err?: any) => void): void;
+	auth(session: Session, next: (err?: any) => void): void;
 
-    get(route: string, contentComponent: string, title: string): this;
-    get(route: string, contentComponent: string, title: string, requireAuth: boolean): this;
+	get(route: string, contentComponent: string, title: string): this;
+	get(route: string, contentComponent: string, title: string, requireAuth: boolean): this;
     /**
      * Registers the GET route.
      * @param route
@@ -328,10 +398,10 @@ export default class Server {
      * @param callback 
      * @deprecated
      */
-    get(route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
+	get(route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
 
-    registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
-    registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
+	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
+	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
     /**
      * Registers route.
      *
@@ -342,7 +412,7 @@ export default class Server {
      * @param requireAuth 
      * @param callback 
      */
-    registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
+	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
     /**
      * Registers route.
      *
@@ -354,23 +424,23 @@ export default class Server {
      * @param layout
      * @param callback 
      */
-    registerRoute(
-        method: HttpMethod,
-        route: string,
-        contentComponent: string,
-        title: string,
-        requireAuth: boolean,
-        layout: typeof Layout | string,
-        callback: Function
-    ): this;
+	registerRoute(
+		method: HttpMethod,
+		route: string,
+		contentComponent: string,
+		title: string,
+		requireAuth: boolean,
+		layout: typeof Layout | string,
+		callback: Function
+	): this;
 
-    registerSocketClass(cls: typeof SocketClass): this;
+	registerSocketClass(cls: typeof SocketClass): this;
     /**
      * Registers the socket class.
      *
      * @param cls Socket class to register.
      */
-    registerSocketClass(cls: new () => SocketClass<Session>): this;
+	registerSocketClass(cls: new () => SocketClass<Session>): this;
 
     /**
      * Registers the socket event.
@@ -378,7 +448,7 @@ export default class Server {
      * @param event Name of the event.
      * @param listener Listener executed in the event.
      */
-    registerSocketEvent(event: string, listener: ISocketEvent['listener']): this;
+	registerSocketEvent(event: string, listener: ISocketEvent['listener']): this;
 
     /**
      * Registers component.
@@ -386,12 +456,12 @@ export default class Server {
      * @param componentPath Relative path to the component from the app directory.
      * @param elementId Id of the element in the layout where the component should be rendered.
      */
-    registerComponent(componentPath: string, elementId: string): this;
+	registerComponent(componentPath: string, elementId: string): this;
 
     /**
      * Starts the application.
      *
      * @param cb Callback called after the application is started.
      */
-    start(cb?: (err?: any) => void): void;
+	start(cb?: (err?: any) => void): void;
 }

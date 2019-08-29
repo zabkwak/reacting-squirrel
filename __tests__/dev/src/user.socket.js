@@ -28,4 +28,8 @@ export default class User extends SocketClass {
 	getPayloadedError(socket, data, next) {
 		next({ message: 'Test error', code: 'ERR_TEST', statusCode: 403 });
 	}
+
+	_notEventMethod() {
+		return null;
+	}
 }
