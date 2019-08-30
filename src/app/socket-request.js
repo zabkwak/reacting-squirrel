@@ -1,11 +1,59 @@
+/* eslint-disable func-names */
 import uniqid from 'uniqid';
+import Type from 'runtime-type';
+
 import Application from './application';
 import Socket from './socket';
 import CallbackEmitter from './callback-emitter';
 
 const TIMEOUT = 30000;
 
+function castResponse(config = {}) {
+	return function (target, name, descriptor) {
+		const original = descriptor.value;
+		if (typeof original === 'function') {
+			// eslint-disable-next-line no-param-reassign
+			descriptor.value = async function (...args) {
+				let r;
+				try {
+					r = await original.apply(this, args);
+				} catch (e) {
+					throw e;
+				}
+				if (typeof r !== 'object') {
+					return r;
+				}
+				if (r instanceof Array) {
+					return r;
+				}
+				const out = {};
+				Object.keys(r).forEach((key) => {
+					const value = r[key];
+					if (!config[key]) {
+						if (Application.DEV) {
+							console.warn(`Key '${key}' not defined.`);
+						}
+						out[key] = value;
+						return;
+					}
+					if (!(config[key] instanceof Type.Type)) {
+						if (Application.DEV) {
+							console.error(`Type fro '${key}' in the instance of the runtime-type.`);
+						}
+						return;
+					}
+					out[key] = config[key].cast(value);
+				});
+				return out;
+			};
+		}
+		return descriptor;
+	};
+}
+
 export default class SocketRequest extends CallbackEmitter {
+
+	static castResponse = castResponse;
 
 	_requests = {};
 

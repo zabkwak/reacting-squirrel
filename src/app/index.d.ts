@@ -1,5 +1,6 @@
 import { Component as BaseComponent, ButtonHTMLAttributes } from 'react';
 import * as url from 'url';
+import Type from 'runtime-type';
 
 /**
  * Base client application.
@@ -9,23 +10,23 @@ declare class Application extends CallbackEmitter {
     /**
      * Indicates if the application is in dev mode.
      */
-    DEV: boolean;
-    /** @deprecated */
-    initialData: any;
+	DEV: boolean;
+	/** @deprecated */
+	initialData: any;
 
     /**
      * Gets the initial data registered to the app.
      *
      * @typeparam T Definition of the returned data.
      */
-    getInitialData<T = any>(): T;
+	getInitialData<T = any>(): T;
     /**
      * Gets the initial data value by its key.
      *
      * @typeparam T Definition of the returned data.
      * @param key Key in the initial data.
      */
-    getInitialData<T = any>(key: string): T;
+	getInitialData<T = any>(key: string): T;
 
     /**
      * Registers the routing map.
@@ -34,7 +35,7 @@ declare class Application extends CallbackEmitter {
      *
      * @param routingMap Map of routes.
      */
-    registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
+	registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
 
     /**
      * Registers socket events.
@@ -43,7 +44,7 @@ declare class Application extends CallbackEmitter {
      *
      * @param events List of socket events.
      */
-    registerSocketEvents(events: Array<string>): this;
+	registerSocketEvents(events: Array<string>): this;
 
     /**
      * Registers custom components.
@@ -52,33 +53,33 @@ declare class Application extends CallbackEmitter {
      * 
      * @param components List of components.
      */
-    registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
+	registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
 
     /**
      * Starts the application.
      *
      * This method is called automatically in after the bundle load.
      */
-    start(): void;
+	start(): void;
 
     /**
      * Forces the content refresh.
      */
-    refreshContent(): void;
+	refreshContent(): void;
 
     /**
      * Renders the route's component.
      * 
      * @param route Route to render.
      */
-    render(route: Route): void;
+	render(route: Route): void;
     /**
      * Renders the route's component.
      * 
      * @param route Route to render.
      * @param refresh Indicates if the component of the route should be refreshed if the route is currently rendered.
      */
-    render(route: Route, refresh: boolean): void;
+	render(route: Route, refresh: boolean): void;
 
     /**
      * Renders the component to the target.
@@ -86,7 +87,7 @@ declare class Application extends CallbackEmitter {
      * @param component The component.
      * @param target The target DOM element
      */
-    renderComponent(component: JSX.Element, target: HTMLElement): void;
+	renderComponent(component: JSX.Element, target: HTMLElement): void;
     /**
      * Renders the component to the target.
      * 
@@ -94,28 +95,28 @@ declare class Application extends CallbackEmitter {
      * @param target The target DOM element
      * @param callback Function called after the render.
      */
-    renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
+	renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
 
     /**
      * Alias for the `navigate` method with the refreshing the content.
      * 
      * @param path URL path.
      */
-    redirect(path: string): void;
+	redirect(path: string): void;
     /**
      * Alias for the `navigate` method with the refreshing the content.
      * 
      * @param path URL path.
      * @param q Query string data.
      */
-    redirect(path: string, q: { [key: string]: string }): void;
+	redirect(path: string, q: { [key: string]: string }): void;
 
     /**
      * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
      * 
      * @param path URL path.
      */
-    navigate(path: string): void;
+	navigate(path: string): void;
     /**
      * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
      * 
@@ -123,7 +124,7 @@ declare class Application extends CallbackEmitter {
      * @param q Query string data.
      * 
      */
-    navigate(path: string, q: { [key: string]: string }): void;
+	navigate(path: string, q: { [key: string]: string }): void;
     /**
      * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
      * 
@@ -131,7 +132,7 @@ declare class Application extends CallbackEmitter {
      * @param q Query string data.
      * @param refresh Indicates if the route should be refreshed if the route is currently rendered.
      */
-    navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
+	navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
 
     /**
      * Pushes the state to the history.
@@ -139,14 +140,14 @@ declare class Application extends CallbackEmitter {
      * @param path URL path.
      * @param q Query string data.
      */
-    pushState(path: string, q: { [key: string]: string }): void;
+	pushState(path: string, q: { [key: string]: string }): void;
 
     /**
      * Sets the page title.
      *
      * @param title Title of the page.
      */
-    setTitle(title: string): void;
+	setTitle(title: string): void;
 
     /**
      * Registers the component as the context reference.
@@ -155,7 +156,7 @@ declare class Application extends CallbackEmitter {
      * @param ref Component's reference.
      * @param key Key of the reference.
      */
-    setRef<T = any>(ref: T, key: string): void;
+	setRef<T = any>(ref: T, key: string): void;
 
     /**
      * Gets the component registered in the application context.
@@ -163,40 +164,40 @@ declare class Application extends CallbackEmitter {
      * @typparam T Type of the component.
      * @param key Key of the reference.
      */
-    getRef<T = any>(key: string): T;
+	getRef<T = any>(key: string): T;
 }
 
 /**
  * Route options for creation.
  */
 interface IRouteDefinition {
-    /** Specification of the route. */
-    spec: string;
-    /** Page component to render. */
-    component: JSX.Element;
-    /** Title of the page. */
-    title: string;
-    /** Initital data of the page. */
-    initialData?: any;
+	/** Specification of the route. */
+	spec: string;
+	/** Page component to render. */
+	component: JSX.Element;
+	/** Title of the page. */
+	title: string;
+	/** Initital data of the page. */
+	initialData?: any;
 }
 
 declare class Route {
 
-    /** Specification of the route. */
-    public spec: string;
-    /** Page component to render. */
-    public component: JSX.Element;
-    /** Title of the page. */
-    public title: string;
-    /** Initital data of the page. */
-    public initialData: any;
+	/** Specification of the route. */
+	public spec: string;
+	/** Page component to render. */
+	public component: JSX.Element;
+	/** Title of the page. */
+	public title: string;
+	/** Initital data of the page. */
+	public initialData: any;
 
     /**
      * Creates new route instance from definition.
      *
      * @param route Route definition.
      */
-    public static create(route: IRouteDefinition): Route;
+	public static create(route: IRouteDefinition): Route;
 
     /**
      * Creates new route.
@@ -205,7 +206,7 @@ declare class Route {
      * @param component Page component to render.
      * @param title Title of the page.
      */
-    public constructor(spec: string, component: JSX.Element, title: string);
+	public constructor(spec: string, component: JSX.Element, title: string);
     /**
      * Creates new route.
      *
@@ -214,12 +215,12 @@ declare class Route {
      * @param title Title of the page.
      * @param initialData Initial data of the page.
      */
-    public constructor(spec: string, component: JSX.Element, title: string, initialData: any);
+	public constructor(spec: string, component: JSX.Element, title: string, initialData: any);
 
     /**
      * Gets the page component to render.
      */
-    public getComponent(): JSX.Element;
+	public getComponent(): JSX.Element;
 }
 
 /**
@@ -230,53 +231,53 @@ declare class Router {
     /**
      * Defined routes.
      */
-    private _routes: { [spec: string]: Route };
+	private _routes: { [spec: string]: Route };
 
     /**
      * Registers the route to the router.
      *
      * @param route Route to register.
      */
-    public addRoute(route: Route): this;
+	public addRoute(route: Route): this;
 
     /**
      * Gets the current route.
      */
-    public getRoute(): Route;
+	public getRoute(): Route;
 
     /**
      * Pushes the state to the history.
      */
-    public pushState(): void;
+	public pushState(): void;
     /**
      * Pushes the state to the history.
      *
      * @param path URL path.
      */
-    public pushState(path: string): void;
+	public pushState(path: string): void;
     /**
      * Pushes the state to the history.
      *
      * @param path URL path.
      * @param q Query string data.
      */
-    public pushState(path: string, q: { [key: string]: string }): void;
+	public pushState(path: string, q: { [key: string]: string }): void;
 
     /**
      * Parses current url.
      */
-    public parseUrl(): url.Url;
+	public parseUrl(): url.Url;
     /**
      * Parses current url.
      *
      * @param params Indicates if the route params are returned with the url.
      */
-    public parseUrl(params: boolean): url.Url & { [key: string]: string };
+	public parseUrl(params: boolean): url.Url & { [key: string]: string };
 
     /**
      * Gets current route params.
      */
-    public getParams(): { [key: string]: string };
+	public getParams(): { [key: string]: string };
 }
 
 /**
@@ -289,34 +290,34 @@ declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
  */
 declare class Socket extends CallbackEmitter {
 
-    /** Unknown state of the socket. */
-    public readonly STATE_NONE: 'none';
+	/** Unknown state of the socket. */
+	public readonly STATE_NONE: 'none';
 
-    /** The socket is connecting to the server. */
-    public readonly STATE_CONNECTING: 'connecting';
+	/** The socket is connecting to the server. */
+	public readonly STATE_CONNECTING: 'connecting';
 
-    /** The socket is connected to the server. */
-    public readonly STATE_CONNECTED: 'connected';
+	/** The socket is connected to the server. */
+	public readonly STATE_CONNECTED: 'connected';
 
-    /** The socket is disconnected from the server. */
-    public readonly STATE_DISCONNECTED: 'disconnected';
+	/** The socket is disconnected from the server. */
+	public readonly STATE_DISCONNECTED: 'disconnected';
 
-    /** Current state of the socket */
-    private _state: SocketState;
+	/** Current state of the socket */
+	private _state: SocketState;
 
     /**
      * Sets the chunk size of socket message.
      *
      * @param chunkSize Size of the chunk.
      */
-    public setChunkSize(chunkSize: number): this;
+	public setChunkSize(chunkSize: number): this;
 
     /**
      * Sets the maximal size of the socket message.
      *
      * @param maxMessageSize Maximal message size.
      */
-    public setMaxMessageSize(maxMessageSize: number): this;
+	public setMaxMessageSize(maxMessageSize: number): this;
 
     /**
      * Registers socket events.
@@ -325,32 +326,32 @@ declare class Socket extends CallbackEmitter {
      *
      * @param events List of socket events.
      */
-    public registerEvents(events: Array<string>): this;
+	public registerEvents(events: Array<string>): this;
 
     /**
      * Connects the client to the server.
      */
-    public connect(): void;
+	public connect(): void;
     /**
      * Connects the client to the server.
      *
      * @param address Server address.
      */
-    public connect(address: string): void;
+	public connect(address: string): void;
 
     /**
      * Emits the socket event. 
      *
      * @param event Name of the event.
      */
-    public emit(event: string): this;
+	public emit(event: string): this;
     /**
      * Emits the socket event. 
      *
      * @param event Name of the event.
      * @param key Socket event key.
      */
-    public emit(event: string, key: string): this;
+	public emit(event: string, key: string): this;
     /**
      * Emits the socket event. 
      *
@@ -359,7 +360,7 @@ declare class Socket extends CallbackEmitter {
      * @param data Event parameters.
      * @typeparam P Type of parameters.
      */
-    public emit<P = any>(event: string, key: string, data: P): this;
+	public emit<P = any>(event: string, key: string, data: P): this;
     /**
      * Emits the socket event. 
      *
@@ -369,25 +370,30 @@ declare class Socket extends CallbackEmitter {
      * @param onProgress Function called in the progress tick.
      * @typeparam P Type of parameters.
      */
-    public emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
+	public emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
 
     /**
      * Disconnects the client from the server.
      */
-    public disconnect(): void;
+	public disconnect(): void;
 
     /**
      * Gets the current state of the socket.
      */
-    public getState(): SocketState;
+	public getState(): SocketState;
 
     /**
      * Indicates if the socket is connected to the server.
      */
-    public isConnected(): boolean;
+	public isConnected(): boolean;
 }
 
 export class SocketRequest extends CallbackEmitter {
+
+	/**
+	 * Decorator for casting response with defined types.
+	 */
+	public static castResponse: (options: { [key: string]: Type.Type }) => MethodDecorator;
 
 	/**
      * Registers socket event listener. This method should be called in `componentDidMount`.
@@ -395,7 +401,7 @@ export class SocketRequest extends CallbackEmitter {
      * @param event Name of the event.
      * @param callback Callback for the event.
      */
-    public on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+	public on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 
 	/**
      * Calls the socket event.
@@ -403,7 +409,7 @@ export class SocketRequest extends CallbackEmitter {
      * @param event Name of the event.
      * @typeparam R Type of response.
      */
-    public execute<R = any>(event: string): Promise<R>;
+	public execute<R = any>(event: string): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -412,7 +418,7 @@ export class SocketRequest extends CallbackEmitter {
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    public execute<P = any, R = any>(event: string, data: P): Promise<R>;
+	public execute<P = any, R = any>(event: string, data: P): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -422,7 +428,7 @@ export class SocketRequest extends CallbackEmitter {
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    public execute<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+	public execute<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -433,7 +439,7 @@ export class SocketRequest extends CallbackEmitter {
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    public execute<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
+	public execute<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
 
 	/**
@@ -442,14 +448,14 @@ export class SocketRequest extends CallbackEmitter {
      * @param event Name of the event.
      * @typeparam P Type of parameters.
      */
-    public emit(event: string): this;
+	public emit(event: string): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
      * @param event Name of the event.
      * @param key Socket event key.
      */
-    public emit(event: string, key: string): this;
+	public emit(event: string, key: string): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
@@ -458,7 +464,7 @@ export class SocketRequest extends CallbackEmitter {
      * @param data Event parameters.
      * @typeparam P Type of parameters.
      */
-    public emit<P = any>(event: string, key: string, data: P): this;
+	public emit<P = any>(event: string, key: string, data: P): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
@@ -469,7 +475,7 @@ export class SocketRequest extends CallbackEmitter {
      * @typeparam P Type of parameters.
      */
 	public emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
-	
+
 	/**
 	 * Clears all registered listeners.
 	 */
@@ -484,13 +490,13 @@ declare class Storage {
     /**
      * Gets the size of storage.
      */
-    public size(): number;
+	public size(): number;
 
     /**
      * Checks if the storage has the key.
      * @param key Key of the item in the storage.
      */
-    public has(key: string): boolean;
+	public has(key: string): boolean;
 
     /**
      * Sets the data to the key.
@@ -498,7 +504,7 @@ declare class Storage {
      * @param key Key of the item in the storage.
      * @param data Data to save.
      */
-    public set(key: string, data: any): void;
+	public set(key: string, data: any): void;
 
     /**
      * Gets the data from the storage.
@@ -506,19 +512,19 @@ declare class Storage {
      * @param key Key of the item in the storage.
      * @typeparam T Type of the returned data.
      */
-    public get<T = any>(key: string): T;
+	public get<T = any>(key: string): T;
 
     /**
      * Removes the item from the storage.
      *
      * @param eky Key of the item in the storage.
      */
-    public delete(key: string): void;
+	public delete(key: string): void;
 
     /**
      * Clears the storage.
      */
-    public clear(): void;
+	public clear(): void;
 }
 
 /**
@@ -532,14 +538,14 @@ export class CallbackEmitter {
      * @param event Name of the event.
      * @param listener Listener to execute when the event is called.
      */
-    public addListener(event: string, listener: (self: this) => void): this;
+	public addListener(event: string, listener: (self: this) => void): this;
     /**
      * Registers the listener of the event.
      *
      * @param event Name of the event.
      * @param listener Listener to execute when the event is called.
      */
-    public addListener(event: string, listener: (self: this, args: any) => void): this;
+	public addListener(event: string, listener: (self: this, args: any) => void): this;
 
     /**
      * Removes the listener of the event.
@@ -547,35 +553,35 @@ export class CallbackEmitter {
      * @param event Name of the event.
      * @param listener 
      */
-    public removeListener(event: string, listener: (self: this) => void): this;
+	public removeListener(event: string, listener: (self: this) => void): this;
     /**
      * Removes the listener of the event.
      *
      * @param event Name of the event.
      * @param listener 
      */
-    public removeListener(event: string, listener: (self: this, args: any) => void): this;
+	public removeListener(event: string, listener: (self: this, args: any) => void): this;
 
     /**
      * Calls all listeners registered in the event.
      *
      * @param event Name of the event.
      */
-    protected _callListener(event: string): void;
+	protected _callListener(event: string): void;
     /**
      * Calls all listeners registered in the event.
      *
      * @param event Name of the event.
      * @param args Data to send in the event.
      */
-    protected _callListener(event: string, args: any): void;
+	protected _callListener(event: string, args: any): void;
 
     /**
      * Checks if the emitter has registerd event.
      *
      * @param event Name of the event.
      */
-    protected _hasEventRegistered(event: string): boolean;
+	protected _hasEventRegistered(event: string): boolean;
 }
 
 //#region COMPONENTS
@@ -590,76 +596,76 @@ export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS>
     /**
      * Saved states of the component.
      */
-    private static _stateStorage: { [key: string]: any };
+	private static _stateStorage: { [key: string]: any };
 
     /**
      * Indicates if the component is mounted.
      */
-    protected _mounted: boolean;
+	protected _mounted: boolean;
 
-    public componentDidMount(): void;
+	public componentDidMount(): void;
 
-    public componentWillUnmount(): void;
+	public componentWillUnmount(): void;
 
     /**
      * Gets the application context.
      */
-    public getContext(): Application;
+	public getContext(): Application;
 
     /**
      * Gets the text from the dictionary.
      *
      * @param key Key of the text in the dictionary.
      */
-    public getText(key: string): string;
+	public getText(key: string): string;
     /**
      * Gets the text from the dictionary.
      *
      * @param key Key of the text in the dictionary.
      * @param args Arguments for text format.
      */
-    public getText(key: string, ...args: Array<any>): string;
+	public getText(key: string, ...args: Array<any>): string;
 
     /**
      * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
      *
      * @param key Key of the text in the dictionary.
      */
-    public getJSXText(key: string): JSX.Element;
+	public getJSXText(key: string): JSX.Element;
     /**
      * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
      *
      * @param key Key of the text in the dictionary.
      * @param args Arguments for text format.
      */
-    public getJSXText(key: string, ...args: Array<any>): JSX.Element;
+	public getJSXText(key: string, ...args: Array<any>): JSX.Element;
 
     /**
      * Method called after `window.onpopstate` event is triggered.
      * @param event 
      */
-    protected onPopState(event: any): void;
+	protected onPopState(event: any): void;
 
     /**
      * Saves the current state to the memory storage.
      *
      * @param key State key of the component instance.
      */
-    protected saveState(key: string): void;
+	protected saveState(key: string): void;
 
     /**
      * Loads the state from the memory storage.
      *
      * @param key State key of the component instance.
      */
-    protected loadState(key: string): Promise<void>;
+	protected loadState(key: string): Promise<void>;
 
     /**
      * Gets the state key of the component instance.
      * By default the method returns `null`.
      * If it's overriden to return a string value the `saveState` and `loadState` are handled automatically in the component's lifecycle.
      */
-    protected getStateKey(): string;
+	protected getStateKey(): string;
 }
 
 /**
@@ -674,14 +680,14 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      *
      * @param state Current state of the socket.
      */
-    protected onSocketStateChanged(state: SocketState): void;
+	protected onSocketStateChanged(state: SocketState): void;
 
     /**
      * Called if some socket error appears.
      *
      * @param error Socket error.
      */
-    protected onSocketError(error: any): void;
+	protected onSocketError(error: any): void;
 
     /**
      * Registers socket event listener. This method should be called in `componentDidMount`.
@@ -689,7 +695,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @param event Name of the event.
      * @param callback Callback for the event.
      */
-    protected on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+	protected on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 
     /**
      * Calls the socket event.
@@ -698,7 +704,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam R Type of response.
      * @deprecated
      */
-    protected call<R = any>(event: string): Promise<R>;
+	protected call<R = any>(event: string): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -708,7 +714,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam R Type of response.
      * @deprecated
      */
-    protected call<P = any, R = any>(event: string, data: P): Promise<R>;
+	protected call<P = any, R = any>(event: string, data: P): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -719,7 +725,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam R Type of response.
      * @deprecated
      */
-    protected call<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+	protected call<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -731,7 +737,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam R Type of response.
      * @deprecated
      */
-    protected call<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
+	protected call<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
     /**
      * Calls the socket event.
@@ -739,7 +745,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @param event Name of the event.
      * @typeparam R Type of response.
      */
-    protected requestAsync<R = any>(event: string): Promise<R>;
+	protected requestAsync<R = any>(event: string): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -748,7 +754,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    protected requestAsync<P = any, R = any>(event: string, data: P): Promise<R>;
+	protected requestAsync<P = any, R = any>(event: string, data: P): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -758,7 +764,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    protected requestAsync<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+	protected requestAsync<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
     /**
      * Calls the socket event.
      *
@@ -769,7 +775,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    protected requestAsync<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
+	protected requestAsync<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
     /**
      * Calls the socket event.
@@ -778,7 +784,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @param callback Callback function.
      * @typeparam R Type of response.
      */
-    protected request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
+	protected request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
     /**
      * Calls the socket event.
      *
@@ -788,7 +794,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    protected request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
+	protected request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
     /**
      * Calls the socket event.
      *
@@ -799,7 +805,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
+	protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
     /**
      * Calls the socket event.
      *
@@ -811,7 +817,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @typeparam P Type of parameters.
      * @typeparam R Type of response.
      */
-    protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void, onProgress: (progress: number) => void): this;
+	protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void, onProgress: (progress: number) => void): this;
 
     /**
      * Emits the socket event. The response can be handled in the `on` method.
@@ -819,33 +825,33 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
      * @param event Name of the event.
      * @typeparam P Type of parameters.
      */
-    protected emit(event: string): this;
-    /**
-     * Emits the socket event. The response can be handled in the `on` method.
-     *
-     * @param event Name of the event.
-     * @param key Socket event key.
-     */
-    protected emit(event: string, key: string): this;
+	protected emit(event: string): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
      * @param event Name of the event.
      * @param key Socket event key.
-     * @param data Event parameters.
-     * @typeparam P Type of parameters.
      */
-    protected emit<P = any>(event: string, key: string, data: P): this;
+	protected emit(event: string, key: string): this;
     /**
      * Emits the socket event. The response can be handled in the `on` method.
      *
      * @param event Name of the event.
      * @param key Socket event key.
      * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     */
+	protected emit<P = any>(event: string, key: string, data: P): this;
+    /**
+     * Emits the socket event. The response can be handled in the `on` method.
+     *
+     * @param event Name of the event.
+     * @param key Socket event key.
+     * @param data Event parameters.
      * @param onProgress Function called in the progress tick.
      * @typeparam P Type of parameters.
      */
-    protected emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
+	protected emit<P = any>(event: string, key: string, data: P, onProgress: (progress: number) => void): this;
 }
 
 //#endregion
@@ -861,15 +867,15 @@ interface IInitialDataProps<U> {
     /**
      * User data.
      */
-    user: U;
+	user: U;
     /**
      * Indicates if the app is in DEV mode.
      */
-    dev: boolean;
+	dev: boolean;
     /**
      * Render timestamp.
      */
-    timestamp: number;
+	timestamp: number;
 }
 
 /**
@@ -882,15 +888,15 @@ export interface IPageProps<T = {}, U = any> {
     /**
      * Route parameters.
      */
-    params: any;
+	params: any;
     /**
      * Data in query string.
      */
-    query: any;
+	query: any;
     /**
      * Initial data from the server.
      */
-    initialData: IInitialDataProps<U> & T;
+	initialData: IInitialDataProps<U> & T;
 }
 /**
  * Base component for rendering pages.
@@ -901,7 +907,7 @@ export class Page<P extends IPageProps = { params: any, query: any, initialData:
     /**
      * Called after the page is rendered.
      */
-    protected onPageRender(): void;
+	protected onPageRender(): void;
 }
 
 // #endregion
@@ -915,51 +921,51 @@ interface IDataComponentProps extends React.HTMLProps<DataComponent> {
     /**
      * List of events to load after the component did mount.
      */
-    events: Array<{
-        /** Name of the event. */
-        name: string,
-        /** Parameters for the event. */
-        params?: any,
-        /** The key where the response data are stored in the `renderData` function. */
-        key?: string,
-    }>;
+	events: Array<{
+		/** Name of the event. */
+		name: string,
+		/** Parameters for the event. */
+		params?: any,
+		/** The key where the response data are stored in the `renderData` function. */
+		key?: string,
+	}>;
     /**
      * Function called for data rendering.
      *
      * @param data Loaded data. The event responses are accessible thought the key defined in the `events` or by the event name.
      */
-    renderData: (data: any) => JSX.Element;
+	renderData: (data: any) => JSX.Element;
     /**
      * Function called for error rendering.
      * 
      * @param error The error returned from the socket.
      * @param component Reference to the component.
      */
-    renderError?: (error: { message: string, code: string }, component: this) => JSX.Element;
+	renderError?: (error: { message: string, code: string }, component: this) => JSX.Element;
     /**
      * Function called if the error occured before the `renderError`.
      *
      * @param error The error returned from the socket.
      */
-    onError?: (error: any) => void;
+	onError?: (error: any) => void;
     /**
      * Function called after the data load before the `renderData`. The data can be modified here.
      *
      * @param data Loaded data. The event responses are accessible thought the key defined in the `events` or by the event name.
      */
-    onData?: (data: any) => any;
+	onData?: (data: any) => any;
     /**
      * Function called before the socket events execution.
      */
-    onStart?: () => void;
+	onStart?: () => void;
     /**
      * Indicates if the loader should have block prop set to `true`.
      */
-    loaderBlock?: boolean;
+	loaderBlock?: boolean;
     /**
      * Loader size.
      */
-    loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
+	loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
 }
 
 /**
@@ -970,7 +976,7 @@ export class DataComponent extends SocketComponent<IDataComponentProps> {
     /**
      * Reloads the data.
      */
-    public load(): void;
+	public load(): void;
 }
 
 //#endregion
@@ -978,8 +984,8 @@ export class DataComponent extends SocketComponent<IDataComponentProps> {
 //#region Button
 
 interface IButtonProps {
-    href?: string;
-    refreshContent?: boolean;
+	href?: string;
+	refreshContent?: boolean;
 }
 
 /**
@@ -996,14 +1002,14 @@ export class Button extends BaseComponent<IButtonProps & React.ButtonHTMLAttribu
  * Interface for text component props.
  */
 interface ITextProps extends React.HTMLProps<Text> {
-    /** Key in the dictionary. */
-    dictionaryKey: string;
-    /** Tag where the text should be rendered. */
-    tag?: string | Node;
-    /** List of arguments. */
-    args?: Array<any>;
-    /** Indicates if the value of the dictionary should be converted to JSX. */
-    jsx?: boolean;
+	/** Key in the dictionary. */
+	dictionaryKey: string;
+	/** Tag where the text should be rendered. */
+	tag?: string | Node;
+	/** List of arguments. */
+	args?: Array<any>;
+	/** Indicates if the value of the dictionary should be converted to JSX. */
+	jsx?: boolean;
 }
 /**
  * Component for rendering texts from dictionary.
@@ -1015,21 +1021,21 @@ export class Text extends BaseComponent<ITextProps> {
      *
      * @param dictionary Dictionary data.
      */
-    static addDictionary(dictionary: { [key: string]: string }): Text;
+	static addDictionary(dictionary: { [key: string]: string }): Text;
     /**
      * Adds the dictionary to the specific key.
      *
      * @param key Key of the dictionary.
      * @param dictionary Dictionary data.
      */
-    static addDictionary(key: string, dictionary: { [key: string]: string }): Text;
+	static addDictionary(key: string, dictionary: { [key: string]: string }): Text;
 
     /**
      * Sets the currently active dictionary.
      *
      * @param key Key of the dictionary.
      */
-    static setDictionary(key: string): Text;
+	static setDictionary(key: string): Text;
 
     /**
      * Registers function to the text.
@@ -1037,7 +1043,7 @@ export class Text extends BaseComponent<ITextProps> {
      * @param name Name of the function.
      * @param fn Called function.
      */
-    static addFunction(name: string, fn: (...args: any[]) => string): Text;
+	static addFunction(name: string, fn: (...args: any[]) => string): Text;
 
     /**
      * Gets the text from the dictionary.
@@ -1045,7 +1051,7 @@ export class Text extends BaseComponent<ITextProps> {
      * @param key Key of the text in the dictionary.
      * @param args Arguments for text format.
      */
-    static get(key: string, ...args: any[]): string;
+	static get(key: string, ...args: any[]): string;
 
     /**
      * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
@@ -1053,7 +1059,7 @@ export class Text extends BaseComponent<ITextProps> {
      * @param key Key of the text in the dictionary.
      * @param args Arguments for text format.
      */
-    static getJSX(key: string, ...args: any[]): JSX.Element;
+	static getJSX(key: string, ...args: any[]): JSX.Element;
 
     /**
      * Formats the text.
@@ -1061,14 +1067,14 @@ export class Text extends BaseComponent<ITextProps> {
      * @param text Text to format.
      * @param args Arguments for text format.
      */
-    static format(text: string, ...args: any[]): string;
+	static format(text: string, ...args: any[]): string;
     /**
      * Formats the text with HTML converted to JSX.
      *
      * @param text Text to format.
      * @param args Arguments for text format.
      */
-    static formatJSX(key: string, ...args: any[]): JSX.Element;
+	static formatJSX(key: string, ...args: any[]): JSX.Element;
 }
 
 //#endregion
@@ -1082,11 +1088,11 @@ interface ILoaderProps {
     /** 
      * Indicates if the data are loaded. If false the loader is rendered otherwise the children are rendered.
      */
-    loaded: boolean;
-    /** Size of the loader. */
-    size?: 'large' | 'normal' | 'small' | 'xsmall';
-    /** Indicates if the loader should be wrapped with div. */
-    block?: boolean;
+	loaded: boolean;
+	/** Size of the loader. */
+	size?: 'large' | 'normal' | 'small' | 'xsmall';
+	/** Indicates if the loader should be wrapped with div. */
+	block?: boolean;
 }
 
 /**
@@ -1099,11 +1105,11 @@ export class Loader extends BaseComponent<ILoaderProps> { }
 //#region ErrorPage
 
 interface IErrorPageProps extends IPageProps {
-    error: {
-        message: string;
-        code: string;
-        stack?: string;
-    };
+	error: {
+		message: string;
+		code: string;
+		stack?: string;
+	};
 }
 
 /**
@@ -1114,7 +1120,7 @@ export class ErrorPage extends Page<IErrorPageProps> {
     /**
      * Renders the error stack.
      */
-    public renderStack(): JSX.Element;
+	public renderStack(): JSX.Element;
 }
 
 //#endregion
@@ -1133,8 +1139,8 @@ declare const ST: Storage;
 export default App;
 
 export {
-    App as Application,
-    R as Router,
-    S as Socket,
-    ST as Storage,
+	App as Application,
+	R as Router,
+	S as Socket,
+	ST as Storage,
 }

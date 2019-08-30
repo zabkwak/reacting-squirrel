@@ -13,6 +13,7 @@ const TSConfig = {
 			'dom',
 		],
 		resolveJsonModule: true,
+		experimentalDecorators: true,
 	},
 	include: [
 		'../**/*',

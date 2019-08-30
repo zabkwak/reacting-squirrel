@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-	Page, Button, Text, Loader, DataComponent,
+	Page, Button, Text, Loader, DataComponent
 } from '../../src/app';
 
 import './home.css';
 import './home.scss';
 import SocketRequest from '../../src/app/socket-request';
+
 
 export default class Home extends Page {
 
