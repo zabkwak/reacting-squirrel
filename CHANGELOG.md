@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.14.0
+### Updates
+- Updated major webpack loaders dependencies.
+### Breaking changes
+- Minimal nodejs version is 8.9.0.
+
 ## 0.13.14
 ### Features
 - SocketRequest class.
