@@ -259,5 +259,9 @@ The server limits the message size. If the size is bigger than allowed limit, th
 Checkout the documentation [here](https://zabkwak.github.io/reacting-squirrel/).
 
 ## TODO
+- Text component as separate module
+- res directory out of app directory to use texts in the server side
+
+### Deprecated
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)
 

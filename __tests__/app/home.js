@@ -46,7 +46,9 @@ export default class Home extends Page {
 		console.log(this.getContext().getRef('test'));
 
 		const r = new SocketRequest();
-		console.log(await r.execute('user.get'));
+		try {
+			console.log(await r.execute('user.get'));
+		} catch (e) { }
 	}
 
 	componentWillUnmount() {
