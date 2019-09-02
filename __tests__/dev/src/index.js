@@ -30,7 +30,7 @@ const app = new Server({
 	styles: ['/css/main.css'],
 	scripts: ['/js/script.js?api_key=API_KEY'],
 	mergeStyles: [
-		// path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
+		path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
 	],
 	rsConfig: path.resolve(__dirname, '../rsconfig.json'),
 	// cookieSecret: 'dev-secret',

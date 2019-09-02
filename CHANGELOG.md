@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.2
+### Updates
+- Updated styles processor.
+
 ## 0.14.1
 ### Updates
 - Merging styles are compiled before styles in `cssDir`.
