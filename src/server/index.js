@@ -994,7 +994,7 @@ Socket
 		if (fs.existsSync(stylesPath)) {
 			fs.unlinkSync(stylesPath);
 		}
-		const compiler = new StylesCompiler([dir, ...mergeStyles], dir, 'rs-app.css');
+		const compiler = new StylesCompiler([...mergeStyles, dir], dir, 'rs-app.css');
 		compiler.compile((err) => {
 			if (err) {
 				cb(err);

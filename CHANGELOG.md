@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.1
+### Updates
+- Merging styles are compiled before styles in `cssDir`.
+
 ## 0.14.0
 ### Updates
 - Updated major webpack loaders dependencies.
