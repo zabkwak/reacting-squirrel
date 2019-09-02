@@ -1,5 +1,4 @@
-import Type from 'runtime-type';
-import { SocketRequest } from '../../../src/app';
+import { SocketRequest, Type } from '../../../src/app';
 
 export default class User extends SocketRequest {
 

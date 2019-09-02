@@ -1,3 +1,5 @@
+import Type from 'runtime-type';
+
 import Application from './application';
 import Component from './components/component';
 import SocketComponent from './components/component.socket';
@@ -30,4 +32,5 @@ export {
 	SocketRequest,
 	Storage,
 	ErrorPage,
+	Type,
 };

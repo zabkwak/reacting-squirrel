@@ -14,12 +14,7 @@ function castResponse(config = {}) {
 		if (typeof original === 'function') {
 			// eslint-disable-next-line no-param-reassign
 			descriptor.value = async function (...args) {
-				let r;
-				try {
-					r = await original.apply(this, args);
-				} catch (e) {
-					throw e;
-				}
+				const r = await original.apply(this, args);
 				if (typeof r !== 'object') {
 					return r;
 				}
@@ -38,7 +33,7 @@ function castResponse(config = {}) {
 					}
 					if (!(config[key] instanceof Type.Type)) {
 						if (Application.DEV) {
-							console.error(`Type fro '${key}' in the instance of the runtime-type.`);
+							console.error(`Type for '${key}' in the instance of the runtime-type.`);
 						}
 						return;
 					}

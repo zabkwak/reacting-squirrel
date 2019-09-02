@@ -3,7 +3,7 @@
 ## 0.14.0
 ### Updates
 - Updated major webpack loaders dependencies.
-- SocketRequest.castResponse decorator for converting socket response with runtime-type module.
+- SocketRequest.castResponse decorator for converting socket response with runtime-type module. EXPERIMENTAL
 ### Breaking changes
 - Minimal nodejs version is 8.9.0.
 

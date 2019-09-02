@@ -392,6 +392,18 @@ export class SocketRequest extends CallbackEmitter {
 
 	/**
 	 * Decorator for casting response with defined types.
+	 * @example
+	 * ```javascript
+	 * class User extends SocketRequest {
+	 * 	@SocketRequest.castResponse({
+	 * 		id: Type.integer,
+	 * 		name: Type.string,
+	 * 	})
+	 * 	get() {
+	 * 		return this.execute('user.get');
+	 * 	}
+	 * }
+	 * ```
 	 */
 	public static castResponse: (options: { [key: string]: Type.Type }) => MethodDecorator;
 
@@ -1143,4 +1155,5 @@ export {
 	R as Router,
 	S as Socket,
 	ST as Storage,
+	Type,
 }
