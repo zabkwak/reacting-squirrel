@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import HttpError from 'http-smart-error';
 
 /**
@@ -8,7 +9,7 @@ import HttpError from 'http-smart-error';
 function requireAuth(target, name, descriptor) {
 	const original = descriptor.value;
 	if (typeof original === 'function') {
-		// eslint-disable-next-line func-names
+		// eslint-disable-next-line no-param-reassign
 		descriptor.value = function (...args) {
 			const socket = args[0];
 			if (!socket.getSession().getUser()) {
@@ -18,6 +19,32 @@ function requireAuth(target, name, descriptor) {
 		};
 	}
 	return descriptor;
+}
+
+function broadcast(filter = null, event = null, includeSelf = false) {
+	return function (target, name, descriptor) {
+		const ev = `${target.constructor.name.toLowerCase()}.${name}`;
+		const original = descriptor.value;
+		if (typeof original === 'function') {
+			// eslint-disable-next-line no-param-reassign
+			descriptor.value = function (...args) {
+				const socket = args[0];
+				const r = original.apply(this, args);
+				if (r instanceof Promise) {
+					r
+						.then((data) => {
+							socket.broadcast(event || ev, { data }, includeSelf, filter);
+						})
+						// The error is handled in the SocketClass. This code prevents logging of the UnhandledPromiseRejection.
+						.catch((e) => { });
+				} else {
+					// eslint-disable-next-line no-console
+					console.warn('Broadcast decorator is not supported in non-promise socket method.');
+				}
+				return r;
+			};
+		}
+	};
 }
 
 /**
@@ -36,6 +63,8 @@ function requireAuth(target, name, descriptor) {
 export default class SocketClass {
 
 	static requireAuth = requireAuth;
+
+	static broadcast = broadcast;
 
 	/**
 	 * @typedef SocketEvent

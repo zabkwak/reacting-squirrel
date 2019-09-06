@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.3
+### Features
+- SocketClass.broadcast decorator
+
 ## 0.14.2
 ### Updates
 - Updated styles processor.

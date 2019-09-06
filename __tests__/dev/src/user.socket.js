@@ -7,6 +7,7 @@ export default class User extends SocketClass {
 		next(null, { id: 1, name: 'Test User' });
 	}
 
+	@SocketClass.broadcast()
 	getPromise(socket) {
 		return new Promise((resolve) => {
 			resolve({ id: 1, name: 'Test User' });

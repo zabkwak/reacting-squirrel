@@ -266,6 +266,11 @@ export class SocketClass<S extends Session = Session> {
 	public static requireAuth: MethodDecorator;
 
 	/**
+	 * Decorator for the methods to broadcast the response after the execution.
+	 */
+	public static broadcast: (filter?: (socket: Socket) => boolean, event?: string, includeSelf?: boolean) => MethodDecorator;
+
+	/**
 	 * Converts the methods to the list of events. 
 	 * The method is called automatically from the `Server`.
 	 */
