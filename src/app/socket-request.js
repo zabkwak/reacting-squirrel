@@ -125,6 +125,7 @@ export default class SocketRequest extends CallbackEmitter {
 			Socket.removeListener(event, listener);
 			delete this._socketListeners[index];
 		});
+		this._requests = {};
 	}
 
 	emit(event, key, data = {}, onProgress = null) {

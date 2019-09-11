@@ -2,7 +2,9 @@
 
 ## 0.14.3
 ### Features
-- SocketClass.broadcast decorator
+- SocketClass.broadcast decorator.
+### Fixes
+- Socket request timeout after the clear process in the SocketRequest.
 
 ## 0.14.2
 ### Updates

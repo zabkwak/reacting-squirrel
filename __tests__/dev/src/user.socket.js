@@ -10,7 +10,9 @@ export default class User extends SocketClass {
 	@SocketClass.broadcast()
 	getPromise(socket) {
 		return new Promise((resolve) => {
-			resolve({ id: 1, name: 'Test User' });
+			setTimeout(() => {
+				resolve({ id: 1, name: 'Test User' });
+			}, 1000);
 		});
 	}
 

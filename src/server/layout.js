@@ -37,7 +37,6 @@ export default class Layout extends Component {
 			<html lang={lang}>
 				{this.renderHead()}
 				{this.renderBody()}
-
 			</html>
 		);
 	}
