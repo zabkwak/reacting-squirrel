@@ -1,10 +1,14 @@
 # CHANGELOG
 
+## 0.14.4
+### Updates
+- Updated dependencies.
+
 ## 0.14.3
 ### Features
 - SocketClass.broadcast decorator.
 ### Updates
-- Updated dependencies
+- Updated dependencies.
 ### Fixes
 - Socket request timeout after the clear process in the SocketRequest.
 
