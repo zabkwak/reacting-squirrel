@@ -18,6 +18,7 @@ import compression from 'compression';
 import readline from 'readline';
 import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import mkdirp from 'mkdirp';
+import _ from 'lodash';
 
 import Layout from './layout';
 import Session from './session';
@@ -86,6 +87,9 @@ class Server {
 
 	/** @type {Route[]} */
 	_routes = [];
+
+	/** @type Object.<string, Route> */
+	_routeCallbacks = {};
 
 	/** @type {AppConfig} */
 	_config = {
@@ -336,6 +340,11 @@ class Server {
 		return this;
 	}
 
+	registerRouteCallback(route, callback) {
+		this._routeCallbacks[route] = callback;
+		return this;
+	}
+
 	/**
 	 * Registers the socket class to handle socket events.
 	 *
@@ -398,7 +407,12 @@ class Server {
 		if (this._rsConfig) {
 			const { routes, components, socketClassDir } = this._rsConfig;
 			if (routes) {
-				Utils.registerRoutes(this, routes);
+				Utils.registerRoutes(this, routes.map(route => (
+					{
+						...route,
+						callback: this._routeCallbacks[route.route],
+					}
+				)));
 			}
 			if (components) {
 				Utils.registerComponents(this, components);
@@ -484,11 +498,7 @@ class Server {
 						next(err);
 						return;
 					}
-					data = {
-						...data,
-						...d,
-					};
-					res.render(data);
+					res.render(_.merge(data, d));
 				});
 			});
 			if (route.contentComponent) {

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.14.5
+### Features
+- Server.registerRouteCallback method
+- Page.setTitle method
+
 ## 0.14.4
 ### Updates
 - Updated dependencies.

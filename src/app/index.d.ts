@@ -916,6 +916,13 @@ export interface IPageProps<T = {}, U = any> {
  */
 export class Page<P extends IPageProps = { params: any, query: any, initialData: IInitialDataProps<any> }, S = {}, SS = any> extends SocketComponent<P, S, SS> {
 
+	/**
+     * Sets the page title.
+     *
+     * @param title Title of the page.
+     */
+	public setTitle(title: string): void;
+
     /**
      * Called after the page is rendered.
      */

@@ -19,7 +19,25 @@ export interface IRequest<S extends Session = Session> extends express.Request {
 /**
  * Express response.
  */
-export interface IResponse extends express.Response { }
+export interface IResponse extends express.Response {
+	/*
+	render(options?: {
+		scripts?: Array<string>;
+		styles?: Array<string>;
+		data?: any;
+		title?: string;
+		layout?: typeof Layout;
+	} | string): void;
+	*/
+}
+
+type RouteCallback = (req: IRequest, res: IResponse, next: (err: Error, data: {
+	scripts?: Array<string>;
+	styles?: Array<string>;
+	data?: any;
+	title?: string;
+	layout?: typeof Layout;
+}) => void) => void;
 
 /**
  * Server configuration.
@@ -441,6 +459,14 @@ export default class Server {
 		layout: typeof Layout | string,
 		callback: Function
 	): this;
+
+	/**
+	 * Registers callback to route registered with rsconfig.
+	 *
+	 * @param route Route spec.
+	 * @param callback Callback to call when the route is called.
+	 */
+	registerRouteCallback(route: string, callback: RouteCallback): this;
 
 	registerSocketClass(cls: typeof SocketClass): this;
     /**

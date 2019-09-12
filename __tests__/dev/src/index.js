@@ -3,7 +3,7 @@ import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
 
-import Server, { Layout, Socket, Utils } from '../../../server';
+import Server, { Layout, Socket } from '../../../server';
 
 class CustomLayout extends Layout {
 
@@ -34,7 +34,7 @@ const app = new Server({
 	],
 	rsConfig: path.resolve(__dirname, '../rsconfig.json'),
 	// cookieSecret: 'dev-secret',
-    /*
+	/*
     onWebpackProgress: (percents, message) => {
         console.log(`${percents * 100}%`, message);
     },
@@ -44,6 +44,10 @@ const app = new Server({
 
 app.get('/error', null, 'Error', false, (req, res, next) => {
 	next({ message: 'Test error', date: new Date(), statusCode: 501 });
+});
+
+app.registerRouteCallback('/', (req, res, next) => {
+	next(null, { title: 'JEBKA', data: { test: 'test' } });
 });
 
 app.registerSocketEvent('socket.test', async (socket, data) => data);

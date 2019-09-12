@@ -54,9 +54,9 @@ export default {
 	 */
 	registerRoutes(app, routes) {
 		routes.forEach(({
-			method, route, component, title, requireAuth, layout,
+			method, route, component, title, requireAuth, layout, callback,
 		}) => {
-			app.registerRoute(method || 'get', route, component, title, requireAuth, layout);
+			app.registerRoute(method || 'get', route, component, title, requireAuth, layout, callback);
 		});
 	},
 	/**

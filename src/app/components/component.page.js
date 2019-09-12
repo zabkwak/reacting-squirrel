@@ -32,4 +32,8 @@ export default class Page extends SocketComponent {
 	}
 
 	onPageRender() { }
+
+	setTitle(title) {
+		this.getContext().setTitle(title);
+	}
 }
