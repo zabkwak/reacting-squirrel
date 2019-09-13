@@ -255,6 +255,19 @@ Socket.emit('file.upload', undefined, { file }, (progress) => console.log(progre
 #### Limitations
 The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.
 
+## Decorators (experimental)
+### SocketClass
+Decorators are designed for the the `SocketClass` methods.
+#### broadcast
+Data returned in the method are broadcasted to the client side.
+#### requireAuth
+Before the method execution is checked the logged user in the session. If it's not the error is thrown.
+#### notSocketMethod
+The method is not registered as socket method and cannot be called from the client side.
+### SocketRequest
+#### castResponse
+The response is casted to defined types using [runtime-type](https://www.npmjs.com/package/runtime-type) module.
+
 ## Docs
 Checkout the documentation [here](https://zabkwak.github.io/reacting-squirrel/).
 

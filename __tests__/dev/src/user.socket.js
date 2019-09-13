@@ -2,6 +2,8 @@ import { SocketClass } from '../../../server';
 
 export default class User extends SocketClass {
 
+	variable = null;
+
 	@SocketClass.requireAuth
 	get(socket, data, next) {
 		next(null, { id: 1, name: 'Test User' });
@@ -30,6 +32,11 @@ export default class User extends SocketClass {
 
 	getPayloadedError(socket, data, next) {
 		next({ message: 'Test error', code: 'ERR_TEST', statusCode: 403 });
+	}
+
+	@SocketClass.notSocketMethod
+	notEventMethod() {
+
 	}
 
 	_notEventMethod() {

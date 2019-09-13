@@ -1,51 +1,11 @@
-/* eslint-disable func-names */
-import HttpError from 'http-smart-error';
+import requireAuth from './decorator.requireAuth';
+import broadcast from './decorator.broadcast';
+import notSocketMethod from './decorator.notSocketMethod';
 
 /**
- * @typedef {import('./socket').Socket} Socket
- * @typedef {import('./session').default} Session
+ * @typedef {import('../socket').Socket} Socket
+ * @typedef {import('../session').default} Session
  */
-
-function requireAuth(target, name, descriptor) {
-	const original = descriptor.value;
-	if (typeof original === 'function') {
-		// eslint-disable-next-line no-param-reassign
-		descriptor.value = function (...args) {
-			const socket = args[0];
-			if (!socket.getSession().getUser()) {
-				throw HttpError.create(401);
-			}
-			return original.apply(this, args);
-		};
-	}
-	return descriptor;
-}
-
-function broadcast(filter = null, event = null, includeSelf = false) {
-	return function (target, name, descriptor) {
-		const ev = `${target.constructor.name.toLowerCase()}.${name}`;
-		const original = descriptor.value;
-		if (typeof original === 'function') {
-			// eslint-disable-next-line no-param-reassign
-			descriptor.value = function (...args) {
-				const socket = args[0];
-				const r = original.apply(this, args);
-				if (r instanceof Promise) {
-					r
-						.then((data) => {
-							socket.broadcast(event || ev, { data }, includeSelf, filter);
-						})
-						// The error is handled in the SocketClass. This code prevents logging of the UnhandledPromiseRejection.
-						.catch((e) => { });
-				} else {
-					// eslint-disable-next-line no-console
-					console.warn('Broadcast decorator is not supported in non-promise socket method.');
-				}
-				return r;
-			};
-		}
-	};
-}
 
 /**
  * Base class to handle multiple socket events.
@@ -66,6 +26,8 @@ export default class SocketClass {
 
 	static broadcast = broadcast;
 
+	static notSocketMethod = notSocketMethod;
+
 	/**
 	 * @typedef SocketEvent
 	 * @property {string} event
@@ -76,24 +38,40 @@ export default class SocketClass {
 	/** @type {Socket} */
 	_socket = null;
 
+	static _notSocketMethods = {};
+
 	/**
 	 * Gets the list of all events and their listeners.
 	 *
 	 * @returns {SocketEvent[]}
 	 */
 	getEvents() {
+		const className = this.constructor.name;
+		// eslint-disable-next-line no-underscore-dangle
+		const notSocketMethods = SocketClass._notSocketMethods[className] || [];
 		return Object
 			.getOwnPropertyNames(this.constructor.prototype)
 			// eslint-disable-next-line arrow-body-style
 			.filter((method) => {
-				return !['constructor', 'getEvents', 'broadcast', 'setSocket', 'getSession', 'getUser'].includes(method)
+				return !['constructor', 'getEvents', 'addNotSocketMethod', 'broadcast', 'setSocket', 'getSession', 'getUser'].includes(method)
+					&& !notSocketMethods.includes(method)
 					&& method.indexOf('_') !== 0;
 			})
 			.map((method) => {
-				const event = `${this.constructor.name.toLowerCase()}.${method}`;
+				const event = `${className.toLowerCase()}.${method}`;
 				const listener = (session, data, next) => this[method].apply(this, [session, data, next]);
 				return { event, listener };
 			});
+	}
+
+	addNotSocketMethod(targetName, methodName) {
+		// eslint-disable-next-line no-underscore-dangle
+		if (!SocketClass._notSocketMethods[targetName]) {
+			// eslint-disable-next-line no-underscore-dangle
+			SocketClass._notSocketMethods[targetName] = [];
+		}
+		// eslint-disable-next-line no-underscore-dangle
+		SocketClass._notSocketMethods[targetName].push(methodName);
 	}
 
 	/**

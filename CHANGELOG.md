@@ -2,8 +2,9 @@
 
 ## 0.14.5
 ### Features
-- Server.registerRouteCallback method
-- Page.setTitle method
+- Server.registerRouteCallback method.
+- Page.setTitle method.
+- SocketClass.notSocketMethod decorator.
 
 ## 0.14.4
 ### Updates

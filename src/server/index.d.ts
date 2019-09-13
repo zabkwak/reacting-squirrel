@@ -284,6 +284,11 @@ export class SocketClass<S extends Session = Session> {
 	public static requireAuth: MethodDecorator;
 
 	/**
+	 * Decorator for methods to be not registered as socket methods. They cannot be called from socket.
+	 */
+	public static notSocketMethod: MethodDecorator;
+
+	/**
 	 * Decorator for the methods to broadcast the response after the execution.
 	 */
 	public static broadcast: (filter?: (socket: Socket) => boolean, event?: string, includeSelf?: boolean) => MethodDecorator;
