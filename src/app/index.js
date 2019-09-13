@@ -16,6 +16,8 @@ import SocketRequest from './socket-request';
 import Storage from './storage';
 import ErrorPage from './page.error';
 
+import Utils from './utils';
+
 export {
 	Application as default,
 	Application,
@@ -33,4 +35,5 @@ export {
 	Storage,
 	ErrorPage,
 	Type,
+	Utils,
 };

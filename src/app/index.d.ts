@@ -1146,6 +1146,15 @@ export class ErrorPage extends Page<IErrorPageProps> {
 
 //#endregion
 
+export namespace Utils {
+	/**
+	 * Function to register to anchors onClick property for using `Application` navigation.
+	 *
+	 * @param e Html event.
+	 */
+	export function anchorNavigation(e: any): void;
+}
+
 /** Instance of the current application. */
 declare const App: Application;
 /** Instance of the current router. */

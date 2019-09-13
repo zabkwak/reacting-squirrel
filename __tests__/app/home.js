@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Page, Button, Text, Loader, DataComponent
+	Page, Button, Text, Loader, DataComponent, Utils,
 } from '../../src/app';
 
 import './home.css';
@@ -130,8 +130,8 @@ export default class Home extends Page {
 					}}
 				>
 					Async request
-
-                </Button>
+				</Button>
+				<a href="/about" onClick={Utils.anchorNavigation}>About page anchor</a>
 				<div>
 					<Text tag="p" dictionaryKey="args" args={['one', 'two', 'three']} />
 				</div>

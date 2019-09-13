@@ -5,6 +5,7 @@
 - Server.registerRouteCallback method.
 - Page.setTitle method.
 - SocketClass.notSocketMethod decorator.
+- Client side Utils.
 
 ## 0.14.4
 ### Updates
