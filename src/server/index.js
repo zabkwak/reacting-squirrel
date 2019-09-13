@@ -479,7 +479,7 @@ class Server {
 						layout = route.layout;
 					}
 				}
-				let data = {
+				const data = {
 					title: route.title,
 					data: {
 						user: req.session.getUser(),

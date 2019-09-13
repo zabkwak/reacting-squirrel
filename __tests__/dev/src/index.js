@@ -47,7 +47,7 @@ app.get('/error', null, 'Error', false, (req, res, next) => {
 });
 
 app.registerRouteCallback('/', (req, res, next) => {
-	next(null, { title: 'JEBKA', data: { test: 'test' } });
+	next(null, { title: 'Dynamic title', data: { test: 'test' } });
 });
 
 app.registerSocketEvent('socket.test', async (socket, data) => data);
