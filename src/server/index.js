@@ -841,7 +841,8 @@ Socket
 				rules: [
 					{
 						test: /\.js?$/,
-						exclude: /node_modules/,
+						// exclude: /node_modules\/(?!(MY-MODULE|ANOTHER-ONE)\/).*/,
+						exclude: /node_modules(?!(\/|\\)debug)/,
 						loader: 'babel-loader',
 						options: {
 							presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -849,6 +850,14 @@ Socket
 								'@babel/plugin-transform-async-to-generator',
 								['@babel/plugin-proposal-decorators', { legacy: true }],
 							],
+						},
+					},
+					{
+						test: /\.js$/,
+						include: /node_modules\/debug/,
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-env'],
 						},
 					},
 					{
