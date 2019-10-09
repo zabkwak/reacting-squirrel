@@ -54,10 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="_server_index_d_.html">&quot;server/index.d&quot;</a>
+					<a href="_app_index_d_.html">&quot;app/index.d&quot;</a>
 				</li>
 				<li>
-					<a href="_server_index_d_.utils.html">Utils</a>
+					<a href="_app_index_d_.utils.html">Utils</a>
 				</li>
 			</ul>
 			<h1>Module Utils</h1>
@@ -67,18 +67,6 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Helper for register routes, components and socket class directory.</p>
-					</div>
-					<dl class="tsd-comment-tags">
-						<dt>deprecated</dt>
-						<dd><p>Use <code>rsconfig.json</code> instead.</p>
-						</dd>
-					</dl>
-				</div>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -86,9 +74,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_server_index_d_.utils.html#registercomponents" class="tsd-kind-icon">register<wbr>Components</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_server_index_d_.utils.html#registerroutes" class="tsd-kind-icon">register<wbr>Routes</a></li>
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_server_index_d_.utils.html#registersocketclassdir" class="tsd-kind-icon">register<wbr>Socket<wbr>Class<wbr>Dir</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_app_index_d_.utils.html#anchornavigation" class="tsd-kind-icon">anchor<wbr>Navigation</a></li>
 							</ul>
 						</section>
 					</div>
@@ -97,109 +83,29 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="registercomponents" class="tsd-anchor"></a>
-					<h3>register<wbr>Components</h3>
+					<a name="anchornavigation" class="tsd-anchor"></a>
+					<h3>anchor<wbr>Navigation</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Components<span class="tsd-signature-symbol">(</span>app<span class="tsd-signature-symbol">: </span><a href="../classes/_server_index_d_.server.html" class="tsd-signature-type">Server</a>, components<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">anchor<wbr>Navigation<span class="tsd-signature-symbol">(</span>e<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/5479ce9/src/server/index.d.ts#L377">server/index.d.ts:377</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/5479ce9/src/app/index.d.ts#L1155">app/index.d.ts:1155</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Registers components to the server app.</p>
+									<p>Function to register to anchors onClick property for using <code>Application</code> navigation.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>app: <a href="../classes/_server_index_d_.server.html" class="tsd-signature-type">Server</a></h5>
+									<h5>e: <span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Server instance.</p>
-									</div>
-								</li>
-								<li>
-									<h5>components: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>List of components to register.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="registerroutes" class="tsd-anchor"></a>
-					<h3>register<wbr>Routes</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Routes<span class="tsd-signature-symbol">(</span>app<span class="tsd-signature-symbol">: </span><a href="../classes/_server_index_d_.server.html" class="tsd-signature-type">Server</a>, routes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/5479ce9/src/server/index.d.ts#L360">server/index.d.ts:360</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Registers routes to the server app.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>app: <a href="../classes/_server_index_d_.server.html" class="tsd-signature-type">Server</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Server instance.</p>
-									</div>
-								</li>
-								<li>
-									<h5>routes: <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>List of routes to register.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="registersocketclassdir" class="tsd-anchor"></a>
-					<h3>register<wbr>Socket<wbr>Class<wbr>Dir</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Socket<wbr>Class<wbr>Dir<span class="tsd-signature-symbol">(</span>app<span class="tsd-signature-symbol">: </span><a href="../classes/_server_index_d_.server.html" class="tsd-signature-type">Server</a>, dir<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/5479ce9/src/server/index.d.ts#L353">server/index.d.ts:353</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Registers socket classes to the server app.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>app: <a href="../classes/_server_index_d_.server.html" class="tsd-signature-type">Server</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Server instance.</p>
-									</div>
-								</li>
-								<li>
-									<h5>dir: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Path to the directory with socket classes.</p>
+										<p>Html event.</p>
 									</div>
 								</li>
 							</ul>
@@ -220,13 +126,7 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_server_index_d_.utils.html#registercomponents" class="tsd-kind-icon">register<wbr>Components</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_server_index_d_.utils.html#registerroutes" class="tsd-kind-icon">register<wbr>Routes</a>
-					</li>
-					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_server_index_d_.utils.html#registersocketclassdir" class="tsd-kind-icon">register<wbr>Socket<wbr>Class<wbr>Dir</a>
+						<a href="_app_index_d_.utils.html#anchornavigation" class="tsd-kind-icon">anchor<wbr>Navigation</a>
 					</li>
 				</ul>
 			</nav>

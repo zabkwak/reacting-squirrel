@@ -325,6 +325,32 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 					<h4>Limitations</h4>
 				</a>
 				<p>The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.</p>
+				<a href="#decorators-experimental" id="decorators-experimental" style="color: inherit; text-decoration: none;">
+					<h2>Decorators (experimental)</h2>
+				</a>
+				<a href="#socketclass" id="socketclass" style="color: inherit; text-decoration: none;">
+					<h3>SocketClass</h3>
+				</a>
+				<p>Decorators are designed for the the <code>SocketClass</code> methods.</p>
+				<a href="#broadcast" id="broadcast" style="color: inherit; text-decoration: none;">
+					<h4>broadcast</h4>
+				</a>
+				<p>Data returned in the method are broadcasted to the client side.</p>
+				<a href="#requireauth" id="requireauth" style="color: inherit; text-decoration: none;">
+					<h4>requireAuth</h4>
+				</a>
+				<p>Before the method execution is checked the logged user in the session. If it&#39;s not the error is thrown.</p>
+				<a href="#notsocketmethod" id="notsocketmethod" style="color: inherit; text-decoration: none;">
+					<h4>notSocketMethod</h4>
+				</a>
+				<p>The method is not registered as socket method and cannot be called from the client side.</p>
+				<a href="#socketrequest" id="socketrequest" style="color: inherit; text-decoration: none;">
+					<h3>SocketRequest</h3>
+				</a>
+				<a href="#castresponse" id="castresponse" style="color: inherit; text-decoration: none;">
+					<h4>castResponse</h4>
+				</a>
+				<p>The response is casted to defined types using <a href="https://www.npmjs.com/package/runtime-type">runtime-type</a> module.</p>
 				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
 					<h2>Docs</h2>
 				</a>
