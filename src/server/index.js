@@ -853,8 +853,7 @@ Socket
 				rules: [
 					{
 						test: /\.js?$/,
-						// exclude: /node_modules\/(?!(MY-MODULE|ANOTHER-ONE)\/).*/,
-						exclude: /node_modules(?!(\/|\\)debug)/,
+						exclude: /node_modules/,
 						loader: 'babel-loader',
 						options: {
 							presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -866,7 +865,9 @@ Socket
 					},
 					{
 						test: /\.js$/,
-						include: /node_modules\/debug/,
+						include: [
+							new RegExp(`node_modules\\${path.sep}debug`),
+						],
 						loader: 'babel-loader',
 						options: {
 							presets: ['@babel/preset-env'],
@@ -1051,7 +1052,7 @@ Socket
 					return;
 				}
 				postcss([autoprefixer(this._config.autoprefixer)])
-					.process(css)
+					.process(css, { from: stylesPath })
 					.then((result) => {
 						fs.writeFile(stylesPath, result.css, cb);
 					}).catch((err) => {

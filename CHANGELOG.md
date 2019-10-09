@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.6
+### Updates
+- RegExp for including debug module in babel-loader.
+
 ## 0.14.5
 ### Features
 - Server.registerRouteCallback method.
