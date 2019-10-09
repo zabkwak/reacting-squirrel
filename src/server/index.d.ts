@@ -153,6 +153,11 @@ interface IAppConfig {
      * @default {}
      */
 	socketIO?: SocketServerOptions;
+	/**
+	 * Custom autoprefixer config.
+	 * @default {}
+	 */
+	autoprefixer?: any;
 }
 
 interface ISocketEvent<S extends Session = Session> {

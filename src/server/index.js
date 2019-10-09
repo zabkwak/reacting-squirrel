@@ -19,6 +19,8 @@ import readline from 'readline';
 import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import mkdirp from 'mkdirp';
 import _ from 'lodash';
+import postcss from 'postcss';
+import autoprefixer from 'autoprefixer';
 
 import Layout from './layout';
 import Session from './session';
@@ -73,6 +75,7 @@ class Server {
 	 * @property {function(percents, message):void} onWebpackProgress Function to handle webpack progress.
 	 * @property {any} socketIO Custom socketio config.
 	 * @property {any} webpack Custom webpack config.
+	 * @property {any} autoprefixer Autoprefixer config.
 	 */
 
 	/**
@@ -115,6 +118,7 @@ class Server {
 		onWebpackProgress: null,
 		webpack: {},
 		socketIO: {},
+		autoprefixer: {},
 		moduleDev: false,
 	};
 
@@ -649,7 +653,11 @@ Socket
 	 */
 	_createPostCSSConfig(cb) {
 		this._log('Creating postcss config');
-		fs.writeFile(`${this._getRSDirPath()}/postcss.config.js`, 'module.exports={plugins:{autoprefixer: {}}};', cb);
+		fs.writeFile(
+			`${this._getRSDirPath()}/postcss.config.js`,
+			`module.exports={plugins:{autoprefixer:${JSON.stringify(this._config.autoprefixer)}}};`,
+			cb,
+		);
 	}
 
 	/**
@@ -751,16 +759,20 @@ Socket
 					this._error(err);
 					return;
 				}
-				this._compileStyles();
-				this._log(stats.toJson('minimal'));
-				Socket.broadcast('webpack.stats', stats.toJson('minimal'));
-				if (!listening) {
-					listening = true;
-					this._server.listen(port, () => {
-						this._log(`App listening on ${port}`);
-						cb();
-					});
-				}
+				this._compileStyles((err) => {
+					if (err) {
+						this._error(err);
+					}
+					this._log(stats.toJson('minimal'));
+					Socket.broadcast('webpack.stats', stats.toJson('minimal'));
+					if (!listening) {
+						listening = true;
+						this._server.listen(port, () => {
+							this._log(`App listening on ${port}`);
+							cb();
+						});
+					}
+				});
 			});
 			return;
 		}
@@ -1007,6 +1019,7 @@ Socket
 	 * @param {function(Error):void} cb Callback after the compilation is finished.
 	 */
 	_compileStyles(cb = () => { }) {
+		this._log('Compiling styles');
 		const { cssDir, staticDir, mergeStyles } = this._config;
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
 		const stylesPath = `${dir}/rs-app.css`;
@@ -1020,12 +1033,31 @@ Socket
 				return;
 			}
 			const files = fs.readdirSync(dir);
-			files.forEach((file) => {
-				if (file.indexOf('rs-tmp') >= 0) {
-					fs.unlinkSync(`${dir}/${file}`);
+			try {
+				files.forEach((file) => {
+					if (file.indexOf('rs-tmp') >= 0) {
+						fs.unlinkSync(`${dir}/${file}`);
+					}
+					if (file.indexOf('cs-tmp') >= 0) {
+						fs.unlinkSync(`${dir}/${file}`);
+					}
+				});
+			} catch (e) {
+				this._error(e);
+			}
+			fs.readFile(stylesPath, (err, css) => {
+				if (err) {
+					cb(err);
+					return;
 				}
+				postcss([autoprefixer(this._config.autoprefixer)])
+					.process(css)
+					.then((result) => {
+						fs.writeFile(stylesPath, result.css, cb);
+					}).catch((err) => {
+						process.nextTick(() => cb(err));
+					});
 			});
-			cb();
 		});
 	}
 

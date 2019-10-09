@@ -6,6 +6,7 @@
 - Page.setTitle method.
 - SocketClass.notSocketMethod decorator.
 - Client side Utils.
+- Autoprefixer config as server option.
 ### Updates
 - Babel polyfill loaded with webpack.
 - Including debug module in babel-loader for properly working in IE11.
