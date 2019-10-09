@@ -566,8 +566,7 @@ class Server {
 		}
 		fs.writeFile(
 			`${this._getRSDirPath()}/entry.js`,
-			`import '@babel/polyfill';
-import Application, { Socket, Text } from '${pathToTheModule}';
+			`import Application, { Socket, Text } from '${pathToTheModule}';
 ${entryFileImport || ''}
 import routingMap from './router.map';
 import socketEvents from './socket.map';
@@ -825,7 +824,7 @@ Socket
 		};
 		this._webpack = webpack({
 			mode: dev ? 'development' : 'production',
-			entry: `${this._getRSDirPath()}/entry.js`,
+			entry: ['@babel/polyfill', `${this._getRSDirPath()}/entry.js`],
 			output: {
 				path: this._path,
 				filename,
@@ -926,7 +925,7 @@ Socket
 				}) => {
 					const LayoutComponent = layout || layoutComponent;
 					res.setHeader('Content-Type', 'text/html; charset=utf-8');
-					res.end(ReactDOMServer.renderToString(<LayoutComponent
+					res.end(`<!DOCTYPE html>${ReactDOMServer.renderToString(<LayoutComponent
 						scripts={this._config.scripts.concat(scripts || [])}
 						styles={this._config.styles.concat(styles || [`/${cssDir}/rs-app.css`])}
 						initialData={data || {}}
@@ -934,7 +933,7 @@ Socket
 						user={req.user}
 						version={this._version}
 						bundle={this._bundlePath}
-					/>));
+					/>)}`);
 				};
 				this.auth(req.session, next);
 			});
