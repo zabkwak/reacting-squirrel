@@ -777,6 +777,7 @@ Socket
 				cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
 				return;
 			}
+			// eslint-disable-next-line no-shadow
 			this._compileStyles((err) => {
 				if (err) {
 					cb(err);

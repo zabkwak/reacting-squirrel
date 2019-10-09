@@ -3,7 +3,7 @@
 
 export default function notSocketMethod(target, name, descriptor) {
 	try {
-		target.addNotSocketMethod(target.constructor.name, name);
+		target.addNotSocketMethod(name);
 	} catch (e) { }
 	return descriptor;
 }

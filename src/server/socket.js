@@ -41,6 +41,7 @@ class Socket {
 		});
 		*/
 		s.on('error', (err) => {
+			// eslint-disable-next-line no-console
 			console.error(err);
 			this._callListener('error', s, err);
 		});
@@ -66,23 +67,29 @@ class Socket {
 				s.emit(`${key}~progress`, { total: size, done: chunks.length });
 				if (chunks.length === size) {
 					const data = decode(Buffer.concat(chunks));
+					// eslint-disable-next-line no-shadow
 					const handle = (err, data) => {
 						const response = {};
 						if (err) {
 							if (!(err instanceof SmartError)) {
+								// eslint-disable-next-line no-shadow
 								const { message, code, ...payload } = err;
+								// eslint-disable-next-line no-param-reassign
 								err = new SmartError(message, code, SmartError.parsePayload(payload));
 							}
 							response.error = err.toJSON();
 						} else {
 							response.data = data;
 						}
+						// eslint-disable-next-line no-underscore-dangle
 						response._key = key;
 						s.emit(event, response);
 					};
 					try {
+						// eslint-disable-next-line no-shadow
 						const p = listener(s, data, (err, data) => {
 							if (sent) {
+								// eslint-disable-next-line no-console
 								console.warn('Data already sent using Promise.');
 								return;
 							}
@@ -92,8 +99,10 @@ class Socket {
 						if (!(p instanceof Promise)) {
 							return;
 						}
+						// eslint-disable-next-line no-shadow
 						p.then((data) => {
 							if (sent) {
+								// eslint-disable-next-line no-console
 								console.warn('Data already sent using callback.');
 								return;
 							}
@@ -101,6 +110,7 @@ class Socket {
 							handle(null, data === null ? undefined : data);
 						}).catch((err) => {
 							if (sent) {
+								// eslint-disable-next-line no-console
 								console.warn('Data already sent using callback.');
 								return;
 							}
@@ -222,6 +232,7 @@ class Socket {
  */
 const func = (server, options = {}) => {
 	const io = socketIO(server.getServer(), options);
+	// eslint-disable-next-line no-underscore-dangle
 	const { cookieSecret, socketMessageMaxSize } = server._config;
 	io.use((socket, next) => {
 		if (!socket.request.headers.cookie) {
@@ -238,6 +249,7 @@ const func = (server, options = {}) => {
 			next(new Error('Session id not created'));
 			return;
 		}
+		// eslint-disable-next-line no-param-reassign
 		socket.session = new server.Session(sessionId);
 		server.auth(socket.session, next);
 	});
@@ -246,6 +258,7 @@ const func = (server, options = {}) => {
 		Socket.add(socket, server.getSocketEvents(), socketMessageMaxSize);
 	});
 
+	// eslint-disable-next-line no-console
 	io.on('error', err => console.error(err));
 };
 

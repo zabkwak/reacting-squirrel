@@ -64,14 +64,15 @@ export default class SocketClass {
 			});
 	}
 
-	addNotSocketMethod(targetName, methodName) {
+	addNotSocketMethod(name) {
+		const targetName = this.constructor.name;
 		// eslint-disable-next-line no-underscore-dangle
 		if (!SocketClass._notSocketMethods[targetName]) {
 			// eslint-disable-next-line no-underscore-dangle
 			SocketClass._notSocketMethods[targetName] = [];
 		}
 		// eslint-disable-next-line no-underscore-dangle
-		SocketClass._notSocketMethods[targetName].push(methodName);
+		SocketClass._notSocketMethods[targetName].push(name);
 	}
 
 	/**
