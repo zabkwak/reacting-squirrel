@@ -34,6 +34,10 @@ export default class CallbackEmitter {
 			console.warn(`Event '${event}' not set`);
 			return this;
 		}
+		const index = this._listeners[event].indexOf(listener);
+		if (index < 0) {
+			return this;
+		}
 		this._listeners[event].splice(this._listeners[event].indexOf(listener), 1);
 		return this;
 	}

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.7
+### Fixes
+- Wrong removing listeners in the callback-emitter.
+
 ## 0.14.6
 ### Updates
 - RegExp for including debug module in babel-loader.
