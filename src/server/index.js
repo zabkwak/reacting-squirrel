@@ -52,6 +52,12 @@ class Server {
 	 * @property {string} elementId Identificator of the DOM element where the component should render.
 	 */
 	/**
+	 * @typedef CookieConfig
+	 * @property {string} secret Secret which is used to sign cookies.
+	 * @property {boolean} secure Secure flag for the cookies.
+	 * @property {boolean} httpOnly HttpOnly flag for the cookies.
+	 */
+	/**
 	 * @typedef AppConfig
 	 * @property {number} port Port on which the app listens.
 	 * @property {string} staticDir Relative path to the static directory for the express app.
@@ -63,7 +69,8 @@ class Server {
 	 * @property {string} entryFile Relative path to the entry file.
 	 * @property {string} rsConfig Custom path to rsconfig.json file.
 	 * @property {JSX.Element} layoutComponent React component with default html code. It must extend Layout from the module.
-	 * @property {string} cookieSecret Secret which is used to sign cookies.
+	 * @property {string} cookieSecret Secret which is used to sign cookies. DEPRECATED
+	 * @property {CookieConfig} cookies Configuration for cookies.
 	 * @property {string[]} scripts List of the scripts loaded in the base html.
 	 * @property {string[]} styles List of the styles loaded in the base html.
 	 * @property {string[]} mergeStyles List of styles to merge to rs-app.css.
@@ -108,7 +115,12 @@ class Server {
 		entryFile: null,
 		rsConfig: null,
 		layoutComponent: Layout,
-		cookieSecret: Math.random().toString(36).substring(7),
+		cookieSecret: null,
+		cookies: {
+			secret: Math.random().toString(36).substring(7),
+			secure: true,
+			httpOnly: true,
+		},
 		scripts: [],
 		styles: [],
 		mergeStyles: [],
@@ -243,13 +255,15 @@ class Server {
 	 * @param {AppConfig} config
 	 */
 	constructor(config = {}) {
-		if (!config.cookieSecret) {
-			this._warn('Using default cookieSecret. It\'s a random string which changes every server start. It should be overriden in config.\n');
+		if (!config.cookies || !config.cookies.secret) {
+			if (config.cookieSecret) {
+				// eslint-disable-next-line no-param-reassign
+				config.cookies = { secret: config.cookieSecret };
+			} else {
+				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.\n');
+			}
 		}
-		this._config = {
-			...this._config,
-			...config,
-		};
+		this._config = _.merge(this._config, config);
 		if (!(new this.Session() instanceof Session)) {
 			throw new Error('Cannot create instance of Session.');
 		}
@@ -936,24 +950,29 @@ Socket
 	 */
 	_setMiddlewares(afterRoutes = false) {
 		const {
-			staticDir, cookieSecret, session, layoutComponent, dev, errorHandler, cssDir,
+			staticDir, session, layoutComponent, dev, errorHandler, cssDir, cookies,
 		} = this._config;
+		const { secret, secure, httpOnly } = cookies;
 		if (!afterRoutes) {
 			// const LayoutComponent = layoutComponent;
 			this._app.use(express.static(staticDir));
-			this._app.use(cookieParser(cookieSecret));
+			this._app.use(cookieParser(secret));
 			this._app.use(compression());
 			this._app.use((req, res, next) => {
 				let sessionId;
 				const setSession = () => {
 					sessionId = session.generateId();
-					res.cookie('session_id', cookieSignature.sign(sessionId, cookieSecret));
+					res.cookie(
+						'session_id',
+						cookieSignature.sign(sessionId, secret),
+						{ secure, httpOnly },
+					);
 				};
 				if (!req.cookies.session_id) {
 					this._log('Session id not found. Generating.');
 					setSession();
 				} else {
-					sessionId = cookieSignature.unsign(req.cookies.session_id, cookieSecret);
+					sessionId = cookieSignature.unsign(req.cookies.session_id, secret);
 					if (!sessionId) {
 						this._log('Session secret not match. Generating.');
 						setSession();

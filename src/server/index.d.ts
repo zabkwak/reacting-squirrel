@@ -94,9 +94,30 @@ interface IAppConfig {
 	layoutComponent?: typeof Layout;
     /**
      * Secret which is used to sign cookies.
-     * @default '[random generated string]'
+     * @default null
+	 * @deprecated
      */
 	cookieSecret?: string;
+	/**
+	 * Configuration for cookies.
+	 */
+	cookies?: {
+		/**
+		 * Secret which is used to sign cookies.
+     	 * @default '[random generated string]'
+		 */
+		secret?: string;
+		/**
+		 * Secure flag for the cookies. 
+		 * @default true
+		 */
+		secure?: boolean;
+		/**
+		 * HttpOnly flag for the cookies.
+		 * @default true
+		 */
+		httpOnly?: boolean;
+	};
     /**
      * List of scripts loaded in the base html.
      * @default []

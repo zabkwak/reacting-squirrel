@@ -33,6 +33,9 @@ const app = new Server({
 		path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
 	],
 	rsConfig: path.resolve(__dirname, '../rsconfig.json'),
+	cookies: {
+		secure: false,
+	},
 	// autoprefixer: { grid: 'autoplace' },
 	// cookieSecret: 'dev-secret',
 	/*

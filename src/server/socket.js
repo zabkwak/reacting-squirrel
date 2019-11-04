@@ -233,7 +233,7 @@ class Socket {
 const func = (server, options = {}) => {
 	const io = socketIO(server.getServer(), options);
 	// eslint-disable-next-line no-underscore-dangle
-	const { cookieSecret, socketMessageMaxSize } = server._config;
+	const { socketMessageMaxSize } = server._config;
 	io.use((socket, next) => {
 		if (!socket.request.headers.cookie) {
 			next();
@@ -244,7 +244,8 @@ const func = (server, options = {}) => {
 			next(new Error('Session id not created'));
 			return;
 		}
-		const sessionId = cookieSignature.unsign(cookies.session_id, cookieSecret);
+		// eslint-disable-next-line no-underscore-dangle
+		const sessionId = cookieSignature.unsign(cookies.session_id, server._config.cookies.secret);
 		if (!sessionId) {
 			next(new Error('Session id not created'));
 			return;

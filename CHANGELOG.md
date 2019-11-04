@@ -3,6 +3,7 @@
 ## 0.14.9
 ### Features
 - Custom error page.
+- Cookies config.
 ### Fixes
 - Callback error in `Server.get` method.
 
