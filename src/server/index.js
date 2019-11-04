@@ -955,6 +955,11 @@ Socket
 						user={req.user}
 						version={this._version}
 						bundle={this._bundlePath}
+						url={{
+							protocol: req.protocol,
+							hostname: req.get('host'),
+							pathname: req.originalUrl,
+						}}
 					/>)}`);
 				};
 				this.auth(req.session, next);

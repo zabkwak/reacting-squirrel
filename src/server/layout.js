@@ -10,6 +10,11 @@ export default class Layout extends Component {
 	static propTypes = {
 		title: PropTypes.string.isRequired,
 		initialData: PropTypes.any.isRequired,
+		url: PropTypes.shape({
+			protocol: PropTypes.string.isRequired,
+			hostname: PropTypes.string.isRequired,
+			pathname: PropTypes.string.isRequired,
+		}).isRequired,
 		// eslint-disable-next-line react/no-unused-prop-types
 		user: PropTypes.any,
 		scripts: PropTypes.arrayOf(PropTypes.string),

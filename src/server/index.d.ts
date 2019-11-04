@@ -178,6 +178,11 @@ interface ILayoutPropsInitialData<U = any> {
 export interface ILayoutProps<T = {}, U = any> {
 	title: string;
 	initialData: ILayoutPropsInitialData<U> & T;
+	url: {
+		protocol: string;
+		hostname: string;
+		pathname: string;
+	};
 	/** @deprecated */
 	user?: U;
 	scripts?: Array<string>;

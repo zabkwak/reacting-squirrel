@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## 0.14.8
+### Features
+- Url passed to the layout
 ### Updates
 - Updated types
 
