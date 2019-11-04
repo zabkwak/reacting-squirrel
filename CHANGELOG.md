@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.9
+### Fixes
+- Callback error in `Server.get` method.
+
 ## 0.14.8
 ### Features
 - Url passed to the layout

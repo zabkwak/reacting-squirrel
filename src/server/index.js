@@ -325,7 +325,7 @@ class Server {
 	 * @param {function=} callback Callback to call when the route is called.
 	 */
 	get(route, contentComponent, title, requireAuth, callback) {
-		return this.registerRoute('get', route, contentComponent, title, requireAuth, callback);
+		return this.registerRoute('get', route, contentComponent, title, requireAuth, null, callback);
 	}
 
 	/**
