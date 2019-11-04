@@ -3,7 +3,6 @@ import React from 'react';
 
 import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';
-import ErrorPage from './page.error';
 
 /**
  * Base class for client application context.
@@ -23,6 +22,8 @@ class Application extends CallbackEmitter {
 	_components = [];
 
 	_refs = {};
+
+	_errorPage = null;
 
 	/**
 	 * @returns {boolean}
@@ -99,6 +100,12 @@ class Application extends CallbackEmitter {
 		return this;
 	}
 
+	registerErrorPage(errorPage) {
+		this._checkStartedState();
+		this._errorPage = errorPage;
+		return this;
+	}
+
 	/**
 	 * Starts the application. The application can be started only once.
 	 */
@@ -144,8 +151,15 @@ class Application extends CallbackEmitter {
 			const { error } = this._initialData;
 			delete this._initialData.error;
 			const p = Router.parseUrl();
+			if (!this._errorPage) {
+				if (this.DEV) {
+					// eslint-disable-next-line no-console
+					console.error('Error Page not registered');
+				}
+				return;
+			}
 			this.renderComponent(
-				<ErrorPage error={error} initialData={this._initialData} params={{}} query={p.query} />,
+				<this._errorPage error={error} initialData={this._initialData} params={{}} query={p.query} />,
 				this._content,
 			);
 			return;

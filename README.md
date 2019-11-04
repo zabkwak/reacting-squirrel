@@ -210,7 +210,8 @@ RSConfig file can contain list of routes, list of components and the directory w
             "component": "test"
         }
     ],
-    "socketClassDir": "./dist/network/socket"
+	"socketClassDir": "./dist/network/socket",
+	"errorPage": "error-page"
 }
 ```
 

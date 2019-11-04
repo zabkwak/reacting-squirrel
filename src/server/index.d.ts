@@ -507,6 +507,13 @@ export default class Server {
      */
 	registerComponent(componentPath: string, elementId: string): this;
 
+	/**
+	 * Registers the error page.
+	 * 
+	 * @param componentPath Relative path to the component from the app directory.
+	 */
+	registerErrorPage(componentPath: string): this;
+
     /**
      * Starts the application.
      *

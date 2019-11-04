@@ -37,5 +37,6 @@
             "component": "socket-status"
         }
     ],
-    "socketClassDir": "__tests__/dev/dist"
+	"socketClassDir": "__tests__/dev/dist",
+	"errorPage": "page.error"
 }

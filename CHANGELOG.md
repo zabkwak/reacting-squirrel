@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## 0.14.9
+### Features
+- Custom error page.
 ### Fixes
 - Callback error in `Server.get` method.
 

@@ -55,6 +55,15 @@ declare class Application extends CallbackEmitter {
      */
 	registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
 
+	/**
+	 * Registers error page for rendering errors.
+	 * 
+	 * This method is called automatically in the bundle load.
+	 * 
+	 * @param errorPage ErrorPage component to register.
+	 */
+	registerErrorPage(errorPage: typeof ErrorPage): this;
+
     /**
      * Starts the application.
      *

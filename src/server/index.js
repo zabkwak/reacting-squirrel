@@ -94,6 +94,8 @@ class Server {
 	/** @type Object.<string, Route> */
 	_routeCallbacks = {};
 
+	_errorPage = null;
+
 	/** @type {AppConfig} */
 	_config = {
 		port: 8080,
@@ -387,6 +389,12 @@ class Server {
 		return this;
 	}
 
+	registerErrorPage(componentPath) {
+		const { appDir } = this._config;
+		this._errorPage = path.resolve(`${appDir}/${componentPath}`);
+		return this;
+	}
+
 	/**
 	 * Starts the express server. In that process it creates all necessary files.
 	 *
@@ -409,7 +417,9 @@ class Server {
 
 	_registerRsConfig() {
 		if (this._rsConfig) {
-			const { routes, components, socketClassDir } = this._rsConfig;
+			const {
+				routes, components, socketClassDir, errorPage,
+			} = this._rsConfig;
 			if (routes) {
 				Utils.registerRoutes(this, routes.map(route => (
 					{
@@ -423,6 +433,9 @@ class Server {
 			}
 			if (socketClassDir) {
 				Utils.registerSocketClassDir(this, path.resolve(process.cwd(), socketClassDir));
+			}
+			if (errorPage) {
+				this.registerErrorPage(errorPage);
 			}
 		}
 	}
@@ -568,9 +581,13 @@ class Server {
 			const pathToTheEntryFile = path.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, entryFile)).replace(/\\/g, '/');
 			entryFileImport = `import '${pathToTheEntryFile.replace(/\.js/, '')}';`;
 		}
+		const errorPageImport = this._errorPage
+			? `import ErrorPage from '${path.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, this._errorPage)).replace(/\\/g, '/')}';`
+			: `import { ErrorPage } from '${pathToTheModule}'`;
 		fs.writeFile(
 			`${this._getRSDirPath()}/entry.js`,
 			`import Application, { Socket, Text } from '${pathToTheModule}';
+${errorPageImport}
 ${entryFileImport || ''}
 import routingMap from './router.map';
 import socketEvents from './socket.map';
@@ -583,6 +600,7 @@ Text.addDictionary(defaultDictionary);
 Application
 			.registerRoutingMap(routingMap)
 			.registerComponents(components)
+			.registerErrorPage(ErrorPage)
 			.start();
 Socket
 			.registerEvents(socketEvents)
