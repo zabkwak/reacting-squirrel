@@ -31,7 +31,7 @@ export interface IResponse extends express.Response {
 	*/
 }
 
-type RouteCallback = (req: IRequest, res: IResponse, next: (err: Error, data: {
+type RouteCallback = (req: IRequest, res: IResponse, next: (err: Error, data?: {
 	scripts?: Array<string>;
 	styles?: Array<string>;
 	data?: any;

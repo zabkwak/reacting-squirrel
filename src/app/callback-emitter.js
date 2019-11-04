@@ -38,7 +38,7 @@ export default class CallbackEmitter {
 		if (index < 0) {
 			return this;
 		}
-		this._listeners[event].splice(this._listeners[event].indexOf(listener), 1);
+		this._listeners[event].splice(index, 1);
 		return this;
 	}
 

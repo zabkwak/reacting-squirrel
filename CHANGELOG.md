@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.8
+### Updates
+- Updated types
+
 ## 0.14.7
 ### Fixes
 - Wrong removing listeners in the callback-emitter.
