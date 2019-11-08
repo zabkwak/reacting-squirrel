@@ -1,6 +1,6 @@
 {
   "name": "reacting-squirrel",
-  "version": "0.14.10",
+  "version": "0.14.11",
   "description": "React and Express framework for creating web apps.",
   "main": "index.js",
   "types": "./app/index.d.ts",
