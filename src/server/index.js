@@ -841,7 +841,10 @@ Socket
 		this._setMiddlewares();
 		this._server = http.createServer(this._app);
 		// this._setWebpack();
-		socket(this, this._config.socketIO);
+		socket(this, {
+			cookie: false,
+			...this._config.socketIO,
+		});
 	}
 
 	/**
