@@ -2,7 +2,7 @@
 
 ## 0.14.10
 ### Updates
-- Undefined are note sent from the client.
+- Undefined are not sent from the client.
 - Removed socket.io cookie by default.
 
 ## 0.14.9
