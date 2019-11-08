@@ -111,9 +111,6 @@ class Socket extends CallbackEmitter {
 		if (this._events.indexOf(event) < 0) {
 			console.warn(`Unknown socket event '${event}'`);
 		}
-		if (Application.DEV) {
-			console.log(`Emit '${event}'`, data);
-		}
 		this._emit(event, key, data, onProgress)
 			.catch((e) => {
 				// Force to handle event as error
@@ -155,6 +152,9 @@ class Socket extends CallbackEmitter {
 
 	async _emit(event, key, data, onProgress) {
 		data = await this._convertData(data);
+		if (Application.DEV) {
+			console.log(`Emit '${event}'`, data);
+		}
 		const bin = encode(data);
 		const { byteLength } = bin;
 		if (byteLength > this._maxMessageSize) {
@@ -194,6 +194,9 @@ class Socket extends CallbackEmitter {
 					return;
 				}
 				data[key] = await this._convertData(value);
+			}
+			if (value === undefined) {
+				delete data[key];
 			}
 		}));
 		return data;
