@@ -22,6 +22,7 @@ import _ from 'lodash';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import RouteParser from 'route-parser';
+import uniqid from 'uniqid';
 
 import Layout from './layout';
 import Session from './session';
@@ -163,6 +164,8 @@ class Server {
 
 	_beforeExecution = [];
 
+	_nonce = Buffer.from(uniqid()).toString('base64');
+
 	/**
 	 * Port on which the server listens.
 	 * @type {number}
@@ -250,6 +253,10 @@ class Server {
 	 */
 	get Session() {
 		return this._config.session;
+	}
+
+	get nonce() {
+		return this._nonce;
 	}
 
 	/**
@@ -479,6 +486,7 @@ class Server {
 		return new Promise((resolve, reject) => {
 			async.each([
 				'_createResDir',
+				'_createNonceFile',
 				'_createEntryFile',
 				'_setRoutes',
 				'_createComponentsFile',
@@ -598,6 +606,15 @@ class Server {
 		});
 	}
 
+	_createNonceFile(cb) {
+		this._log('Creating nonce file');
+		fs.writeFile(
+			`${this._getRSDirPath()}/nonce.js`,
+			`__webpack_nonce__ = '${this._nonce}'`,
+			cb,
+		);
+	}
+
 	/**
 	 * Creates the entry file required for the webpack.
 	 *
@@ -619,7 +636,8 @@ class Server {
 			: `import { ErrorPage } from '${pathToTheModule}'`;
 		fs.writeFile(
 			`${this._getRSDirPath()}/entry.js`,
-			`import Application, { Socket, Text } from '${pathToTheModule}';
+			`import './nonce';
+import Application, { Socket, Text } from '${pathToTheModule}';
 ${errorPageImport}
 ${entryFileImport || ''}
 import routingMap from './router.map';
@@ -966,7 +984,14 @@ Socket
 					{
 						test: /\.css?$/,
 						use: dev ? [
-							'style-loader',
+							{
+								loader: 'style-loader',
+								options: {
+									attributes: {
+										nonce: this._nonce,
+									},
+								},
+							},
 							'css-loader',
 							postCSSLoader,
 						] : prodStyleLoader,
@@ -974,7 +999,14 @@ Socket
 					{
 						test: /\.scss?$/,
 						use: dev ? [
-							'style-loader',
+							{
+								loader: 'style-loader',
+								options: {
+									attributes: {
+										nonce: this._nonce,
+									},
+								},
+							},
 							'css-loader',
 							postCSSLoader,
 							'sass-loader',
@@ -1119,7 +1151,11 @@ Socket
 		if (fs.existsSync(stylesPath)) {
 			fs.unlinkSync(stylesPath);
 		}
-		const compiler = new StylesCompiler([...mergeStyles, dir], dir, 'rs-app.css');
+		const compiler = new StylesCompiler([
+			path.resolve(__dirname, './assets/loader.scss'),
+			...mergeStyles,
+			dir,
+		], dir, 'rs-app.css');
 		compiler.compile((err) => {
 			if (err) {
 				cb(err);

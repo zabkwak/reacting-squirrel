@@ -47,7 +47,7 @@ const app = new Server({
 });
 
 app.registerBeforeExecution('*', async (req, res) => {
-	res.header('x-some-header', 'some header');
+	res.header('Content-Security-Policy', `style-src 'self' 'nonce-${app.nonce}'`);
 });
 
 app.get('/error', null, 'Error', false, (req, res, next) => {

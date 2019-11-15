@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.12
+### Features
+- webpack nonce for CSP
+
 ## 0.14.11
 ### Features
 - `Server.registerBeforeExecution` method for registering callbacks before the route execution.

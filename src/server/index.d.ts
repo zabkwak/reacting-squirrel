@@ -419,6 +419,7 @@ export default class Server {
 	appDirAbsolute: string;
 	Layout: JSX.Element;
 	Session: typeof Session;
+	nonce: string;
 
 	constructor(config?: IAppConfig);
 
