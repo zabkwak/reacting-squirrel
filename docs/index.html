@@ -262,25 +262,25 @@ app.start();</code></pre>
 					<h3>RSConfig</h3>
 				</a>
 				<p>RSConfig file can contain list of routes, list of components and the directory with the socket classes. By default the file <code>rsconfig.json</code> is searched in the <code>process.cwd()</code> directory. If the file doesn&#39;t exist nothing happens. The path to the file can by changed with config.rsConfig option.  </p>
-				<pre><code class="language-json">// rsconfig.json
+				<pre><code class="language-json"><span class="hljs-comment">// rsconfig.json</span>
 {
-    &quot;routes&quot;: [
+    <span class="hljs-attr">"routes"</span>: [
         {
-            &quot;route&quot;: &quot;/&quot;,
-            &quot;component&quot;: &quot;home&quot;,
-            &quot;title&quot;: &quot;Home&quot;,
-            &quot;requiredAuth&quot;: false,
-            &quot;method&quot;: &quot;GET&quot;
+            <span class="hljs-attr">"route"</span>: <span class="hljs-string">"/"</span>,
+            <span class="hljs-attr">"component"</span>: <span class="hljs-string">"home"</span>,
+            <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Home"</span>,
+            <span class="hljs-attr">"requiredAuth"</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">"method"</span>: <span class="hljs-string">"GET"</span>
         }
     ],
-    &quot;components&quot;: [
+    <span class="hljs-attr">"components"</span>: [
         {
-            &quot;id&quot;: &quot;test&quot;,
-            &quot;component&quot;: &quot;test&quot;
+            <span class="hljs-attr">"id"</span>: <span class="hljs-string">"test"</span>,
+            <span class="hljs-attr">"component"</span>: <span class="hljs-string">"test"</span>
         }
     ],
-    &quot;socketClassDir&quot;: &quot;./dist/network/socket&quot;,
-    &quot;errorPage&quot;: &quot;error-page&quot;
+    <span class="hljs-attr">"socketClassDir"</span>: <span class="hljs-string">"./dist/network/socket"</span>,
+    <span class="hljs-attr">"errorPage"</span>: <span class="hljs-string">"error-page"</span>
 }</code></pre>
 				<a href="#texts" id="texts" style="color: inherit; text-decoration: none;">
 					<h3>Texts</h3>
@@ -376,10 +376,10 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_app_index_d_.html">"app/index.d"</a>
+						<a href="modules/_app_index_d_.html">&quot;app/index.d&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_server_index_d_.html">"server/index.d"</a>
+						<a href="modules/_server_index_d_.html">&quot;server/index.d&quot;</a>
 					</li>
 				</ul>
 			</nav>
