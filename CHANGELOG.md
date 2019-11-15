@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.11
+### Features
+- `Server.registerBeforeExecution` method for registering callbacks before the route execution.
+
 ## 0.14.10
 ### Updates
 - Undefined are not sent from the client.

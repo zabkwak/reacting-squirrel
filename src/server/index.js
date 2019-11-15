@@ -21,6 +21,7 @@ import mkdirp from 'mkdirp';
 import _ from 'lodash';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
+import RouteParser from 'route-parser';
 
 import Layout from './layout';
 import Session from './session';
@@ -159,6 +160,8 @@ class Server {
 	_components = [];
 
 	_rsConfig = null;
+
+	_beforeExecution = [];
 
 	/**
 	 * Port on which the server listens.
@@ -409,6 +412,16 @@ class Server {
 		return this;
 	}
 
+	registerBeforeExecution(spec, callback) {
+		const index = this._beforeExecution.map(({ spec }) => spec).indexOf(spec);
+		if (index >= 0) {
+			this._warn(`Before execution callback for '${spec}' is already registered. Rewriting.`);
+			this._beforeExecution.splice(index, 1);
+		}
+		this._beforeExecution.push({ spec, callback });
+		return this;
+	}
+
 	/**
 	 * Starts the express server. In that process it creates all necessary files.
 	 *
@@ -493,9 +506,15 @@ class Server {
 		const { dev, appDir, layoutComponent } = this._config;
 		const componentsMap = {};
 		this._routes.forEach((route) => {
-			this._app[route.method](route.spec, (req, res, next) => {
+			this._app[route.method](route.spec, async (req, res, next) => {
 				if (route.requireAuth && req.session.getUser() === null) {
 					next(HttpError.create(401));
+					return;
+				}
+				try {
+					await this._beforeCallback(req, res);
+				} catch (e) {
+					next(e);
 					return;
 				}
 				let layout = layoutComponent;
@@ -831,6 +850,34 @@ Socket
 				});
 			});
 		});
+	}
+
+	/**
+     *
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @returns {Promise<void>}
+     */
+	async _beforeCallback(req, res) {
+		if (this._beforeExecution.length) {
+			for (let i = 0; i < this._beforeExecution.length; i++) {
+				const { spec, callback } = this._beforeExecution[i];
+				if (spec === '*') {
+					// eslint-disable-next-line no-await-in-loop
+					await callback(req, res);
+					// eslint-disable-next-line no-continue
+					continue;
+				}
+				const r = new RouteParser(spec);
+				const match = r.match(req.path);
+				if (!match) {
+					// eslint-disable-next-line no-continue
+					continue;
+				}
+				// eslint-disable-next-line no-await-in-loop
+				await callback(req, res);
+			}
+		}
 	}
 
 	/**

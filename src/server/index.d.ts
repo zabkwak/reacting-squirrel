@@ -535,6 +535,16 @@ export default class Server {
 	 */
 	registerErrorPage(componentPath: string): this;
 
+	/**
+	 * Registers the callback executing before the route execution.
+	 *
+	 * @param spec Route specification. If '*' is used the callback is called for every route.
+	 * @param callback Callback to execute before the route execution.
+	 */
+	registerBeforeExecution<R extends IRequest = IRequest>(
+		spec: string, callback: (req: R, res: IResponse) => Promise<void>,
+	): this;
+
     /**
      * Starts the application.
      *

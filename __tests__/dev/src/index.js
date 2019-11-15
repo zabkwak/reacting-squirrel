@@ -46,6 +46,10 @@ const app = new Server({
 	// socketMessageMaxSize: 1,
 });
 
+app.registerBeforeExecution('*', async (req, res) => {
+	res.header('x-some-header', 'some header');
+});
+
 app.get('/error', null, 'Error', false, (req, res, next) => {
 	next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
