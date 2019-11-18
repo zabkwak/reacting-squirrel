@@ -3,6 +3,7 @@
 ## 0.14.12
 ### Features
 - Webpack nonce for CSP.
+- Accessing to texts in res directory. EXPERIMENTAL
 
 ## 0.14.11
 ### Features

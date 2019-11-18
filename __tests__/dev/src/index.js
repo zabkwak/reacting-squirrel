@@ -63,6 +63,8 @@ app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 	fs.writeFileSync(`./tmp/${name}`, file);
 });
 
+// console.log(app.Text.get('test'));
+
 app.start((err) => {
 	if (err) {
 		console.error(err);

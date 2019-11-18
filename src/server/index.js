@@ -23,6 +23,7 @@ import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import RouteParser from 'route-parser';
 import uniqid from 'uniqid';
+import Text from 'texting-squirrel';
 
 import Layout from './layout';
 import Session from './session';
@@ -257,6 +258,10 @@ class Server {
 
 	get nonce() {
 		return this._nonce;
+	}
+
+	get Text() {
+		return Text;
 	}
 
 	/**
@@ -910,6 +915,7 @@ Socket
 			cookie: false,
 			...this._config.socketIO,
 		});
+		Text.addDictionary(require(path.resolve(this._config.appDir, 'res', 'text.json')));
 	}
 
 	/**

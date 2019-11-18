@@ -4,6 +4,7 @@ import * as express from 'express';
 import { Component } from 'react';
 import HttpSmartError from 'http-smart-error';
 import { ServerOptions as SocketServerOptions } from 'socket.io';
+import { TextType } from 'texting-squirrel';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
@@ -419,6 +420,7 @@ export default class Server {
 	appDirAbsolute: string;
 	Layout: JSX.Element;
 	Session: typeof Session;
+	Text: TextType;
 	nonce: string;
 
 	constructor(config?: IAppConfig);
