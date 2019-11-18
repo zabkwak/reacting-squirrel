@@ -28,7 +28,7 @@ export default class Home extends Page {
 				this.setState({ user });
 			});
 		}
-		this.request('user.getPromise', {test: undefined}, (err, user) => {
+		this.request('user.getPromise', { test: undefined }, (err, user) => {
 			if (err) {
 				console.error(err);
 				return;

@@ -2,7 +2,7 @@
 
 ## 0.14.12
 ### Features
-- webpack nonce for CSP
+- Webpack nonce for CSP.
 
 ## 0.14.11
 ### Features

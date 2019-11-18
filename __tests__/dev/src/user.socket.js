@@ -19,6 +19,7 @@ export default class User extends SocketClass {
 	}
 
 	async getAsyncError(socket) {
+		// eslint-disable-next-line no-undef
 		return a;
 	}
 
