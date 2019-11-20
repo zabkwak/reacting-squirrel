@@ -180,6 +180,11 @@ interface IAppConfig {
 	 * @default {}
 	 */
 	autoprefixer?: any;
+	/**
+	 * List of modules to add to the babel-loader.
+	 * @default []
+	 */
+	babelTranspileModules?: Array<string>;
 }
 
 interface ISocketEvent<S extends Session = Session> {

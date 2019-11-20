@@ -35,6 +35,7 @@ import StylesCompiler from './styles-compiler';
 import { TSConfig } from './constants';
 
 const RS_DIR = '~rs';
+const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid'];
 
 /**
  * Server part of the application.
@@ -86,6 +87,7 @@ class Server {
 	 * @property {any} socketIO Custom socketio config.
 	 * @property {any} webpack Custom webpack config.
 	 * @property {any} autoprefixer Autoprefixer config.
+	 * @property {string[]} babelTranspileModules List of modules to add to the babel-loader.
 	 */
 
 	/**
@@ -136,6 +138,7 @@ class Server {
 		webpack: {},
 		socketIO: {},
 		autoprefixer: {},
+		babelTranspileModules: [],
 		moduleDev: false,
 	};
 
@@ -924,7 +927,7 @@ Socket
 	 */
 	_setWebpack() {
 		const {
-			dev, filename, staticDir, cssDir,
+			dev, filename, staticDir, cssDir, babelTranspileModules,
 		} = this._config;
 		const { plugins, ...config } = this._config.webpack;
 		const postCSSLoader = {
@@ -970,26 +973,19 @@ Socket
 							],
 						},
 					},
-					{
-						test: /\.js$/,
-						include: [
-							new RegExp(`node_modules\\${path.sep}debug`),
-						],
-						loader: 'babel-loader',
-						options: {
-							presets: ['@babel/preset-env'],
-						},
-					},
-					{
-						test: /\.js$/,
-						include: [
-							new RegExp(`node_modules\\${path.sep}uniqid`),
-						],
-						loader: 'babel-loader',
-						options: {
-							presets: ['@babel/preset-env'],
-						},
-					},
+					// eslint-disable-next-line arrow-body-style
+					...([...BABEL_TRANSPILE_MODULES, ...babelTranspileModules].map((m) => {
+						return {
+							test: /\.js$/,
+							include: [
+								new RegExp(`node_modules\\${path.sep}${m}`),
+							],
+							loader: 'babel-loader',
+							options: {
+								presets: ['@babel/preset-env'],
+							},
+						};
+					})),
 					{
 						test: /\.ts$|\.tsx$/,
 						// exclude: /node_modules/,

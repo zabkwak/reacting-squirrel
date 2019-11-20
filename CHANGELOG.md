@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.13
+### Features
+- Option to add modules to babel-loader.
+
 ## 0.14.12
 ### Features
 - Webpack nonce for CSP.

@@ -44,6 +44,7 @@ const app = new Server({
     },
     */
 	// socketMessageMaxSize: 1,
+	// babelTranspileModules: ['react'],
 });
 
 app.registerBeforeExecution('*', async (req, res) => {
