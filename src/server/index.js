@@ -425,6 +425,7 @@ class Server {
 	}
 
 	registerBeforeExecution(spec, callback) {
+		// eslint-disable-next-line no-shadow
 		const index = this._beforeExecution.map(({ spec }) => spec).indexOf(spec);
 		if (index >= 0) {
 			this._warn(`Before execution callback for '${spec}' is already registered. Rewriting.`);
@@ -973,6 +974,16 @@ Socket
 						test: /\.js$/,
 						include: [
 							new RegExp(`node_modules\\${path.sep}debug`),
+						],
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-env'],
+						},
+					},
+					{
+						test: /\.js$/,
+						include: [
+							new RegExp(`node_modules\\${path.sep}uniqid`),
 						],
 						loader: 'babel-loader',
 						options: {

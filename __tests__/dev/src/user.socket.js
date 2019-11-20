@@ -28,6 +28,7 @@ export default class User extends SocketClass {
 	}
 
 	async getVoidPromise(socket) {
+		// eslint-disable-next-line no-console
 		console.log('VOID PROMISE');
 	}
 

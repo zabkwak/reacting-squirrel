@@ -409,18 +409,57 @@ export namespace Utils {
  */
 export default class Server {
 
+	/**
+	 * Port number where the app listens.
+	 */
 	port: number;
+	/**
+	 * Relative path to the static dir.
+	 */
 	staticDir: string;
+	/**
+	 * Absolute path to the static dir.
+	 */
 	staticDirAbsolute: string;
+	/**
+	 * Indicates if the app is in DEV mode.
+	 */
 	dev: boolean;
+	/**
+	 * Absolute path to the javascript directory for the webpack config.
+	 */
 	path: string;
+	/**
+	 * Bundle path in the website structure.
+	 */
 	bundlePath: string;
+	/**
+	 * Absolute path to the bundle file in the application structure.
+	 */
 	bundlePathAbsolute: string;
+	/**
+	 * Relative path to the application directory.
+	 */
 	appDir: string;
+	/**
+	 * Absolute path to the application directory.
+	 */
 	appDirAbsolute: string;
+	/**
+	 * JSX class for the layout component.
+	 */
 	Layout: JSX.Element;
+	/**
+	 * Session class.
+	 */
 	Session: typeof Session;
+	/**
+	 * Instance of the Text.
+	 */
 	Text: TextType;
+	/**
+	 * CSP nonce.
+	 */
 	nonce: string;
 
 	constructor(config?: IAppConfig);
