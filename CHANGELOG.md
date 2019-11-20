@@ -4,6 +4,8 @@
 ### Features
 - Webpack nonce for CSP.
 - Accessing to texts in res directory. EXPERIMENTAL
+### Updates
+- RegExp for including debug module in babel-loader.
 
 ## 0.14.11
 ### Features
