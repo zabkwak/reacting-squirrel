@@ -814,7 +814,6 @@ Socket
 	 * @param {function} cb Callback to call after the server start.
 	 */
 	_start(cb) {
-		this._log('Starting webpack');
 		const { dev, port, onWebpackProgress } = this._config;
 		let webpackDone = false;
 		const p = new webpack.ProgressPlugin((percentage, message, ...args) => {
@@ -830,16 +829,27 @@ Socket
 			}
 		});
 		p.apply(this._webpack);
-		if (dev) {
-			let listening = false;
-			this._webpack.watch({ aggregateTimeout: 300 }, (err, stats) => {
-				if (err) {
-					this._error(err);
-					return;
-				}
-				this._compileStyles((err) => {
+		this._compileStyles((err) => {
+			if (err) {
+				cb(err);
+				return;
+			}
+			this._log('Starting webpack');
+			if (dev) {
+				let listening = false;
+				// eslint-disable-next-line no-shadow
+				this._webpack.watch({ aggregateTimeout: 300 }, (err, stats) => {
 					if (err) {
 						this._error(err);
+						return;
+					}
+					if (listening) {
+						// eslint-disable-next-line no-shadow
+						this._compileStyles((err) => {
+							if (err) {
+								this._error(err);
+							}
+						});
 					}
 					this._log(stats.toJson('minimal'));
 					Socket.broadcast('webpack.stats', stats.toJson('minimal'));
@@ -851,25 +861,20 @@ Socket
 						});
 					}
 				});
-			});
-			return;
-		}
-		this._webpack.run((err, stats) => {
-			if (err) {
-				cb(err);
-				return;
-			}
-			const minimalStats = stats.toJson('minimal');
-			this._log(minimalStats);
-			const { errors } = minimalStats;
-			if (errors && errors.length) {
-				cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
 				return;
 			}
 			// eslint-disable-next-line no-shadow
-			this._compileStyles((err) => {
+			this._webpack.run((err, stats) => {
 				if (err) {
 					cb(err);
+					return;
+				}
+				const minimalStats = stats.toJson('minimal');
+				this._log(minimalStats);
+				const { errors } = minimalStats;
+				if (errors && errors.length) {
+					cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
+					return;
 				}
 				this._server.listen(port, () => {
 					this._log(`App listening on ${port}`);

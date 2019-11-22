@@ -3,6 +3,8 @@
 ## 0.14.13
 ### Features
 - Option to add modules to babel-loader.
+### Updates
+- Styles are compiled before webpack start.
 
 ## 0.14.12
 ### Features
