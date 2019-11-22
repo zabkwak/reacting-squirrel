@@ -83,7 +83,7 @@ export default class SocketClass {
 	 * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
 	 * @param {function(Socket):boolean} filter Filter function to validate sockets.
 	 */
-	broadcast(event, data, includeSelf = false, filter = socket => true) {
+	broadcast(event, data, includeSelf = false, filter = (socket) => true) {
 		this._socket.broadcast(event, { data }, includeSelf, filter);
 	}
 

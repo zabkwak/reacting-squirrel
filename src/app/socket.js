@@ -93,7 +93,7 @@ class Socket extends CallbackEmitter {
 			}
 			this._callListener('error', err);
 		});
-		this._events.forEach(event => this._socket.on(event, data => this._handleEvent(event, data)));
+		this._events.forEach((event) => this._socket.on(event, (data) => this._handleEvent(event, data)));
 	}
 
 	/**
@@ -229,7 +229,7 @@ class Socket extends CallbackEmitter {
 		return new Promise((resolve, reject) => {
 			const fr = new FileReader();
 			fr.onload = () => resolve(fr.result);
-			fr.onerror = e => reject(e);
+			fr.onerror = (e) => reject(e);
 			fr.readAsArrayBuffer(file);
 		});
 	}

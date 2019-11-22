@@ -52,7 +52,7 @@ export default class CallbackEmitter {
 		if (!this._hasEventRegistered(event)) {
 			return;
 		}
-		this._listeners[event].forEach(listener => listener(this, args));
+		this._listeners[event].forEach((listener) => listener(this, args));
 	}
 
 	/**

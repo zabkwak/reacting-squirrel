@@ -1,120 +1,123 @@
 {
-    "parser": "babel-eslint",
-    "extends": [
-        "airbnb"
-    ],
-    "rules": {
-        "indent": [
-            2,
-            "tab",
-            {
-                "SwitchCase": 1
-            }
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "react/prefer-es6-class": [
-            0
-        ],
-        "react/prefer-stateless-function": [
-            0,
-            {
-                "ignorePureComponents": true
-            }
-        ],
-        "react/jsx-filename-extension": 0,
-        "react/jsx-indent": [
-            2,
-            "tab"
-        ],
-        "react/jsx-indent-props": [
-            2,
-            "tab"
-        ],
-        "react/sort-comp": [
-            2,
-            {
-                "order": [
-                    "static-methods",
-                    "instance-variables",
-                    "/^_.+=.+$/",
-                    "lifecycle",
-                    "everything-else",
-                    "rendering",
-                    "/^_(.(?!=))+\\(.+\\)$/"
-                ]
-            }
-        ],
-        "react/prop-types": [
-            2,
-            {
-                "ignore": [
-                    "children"
-                ]
-            }
-        ],
-        "no-unused-vars": [
-            "error",
-            {
-                "ignoreRestSiblings": true,
-                "ignoreDestructuringVars": true,
-                "args": "none"
-            }
-        ],
-        "no-underscore-dangle": [
-            1,
-            {
-                "allowAfterSuper": true,
-                "allowAfterThis": true
-            }
-        ],
-        "class-methods-use-this": 0,
-        "padded-blocks": 0,
-        "no-shadow": 1,
-        "no-param-reassign": 1,
-        "camelcase": 1,
-        "radix": 1,
-        "max-len": [
-            2,
-            {
-                "ignoreComments": true,
-                "ignoreTrailingComments": true,
-                "ignoreUrls": true,
-                "ignoreStrings": true,
-                "code": 120
-            }
-        ],
-        "no-plusplus": 0,
-        "no-empty": [
-            2,
-            {
-                "allowEmptyCatch": true
-            }
-        ],
-        "import/no-dynamic-require": 1,
-        "global-require": 1,
-        "no-restricted-globals": [
-            2, "event"
+	"parser": "babel-eslint",
+	"extends": [
+		"airbnb"
+	],
+	"rules": {
+		"indent": [
+			2,
+			"tab",
+			{
+				"SwitchCase": 1
+			}
+		],
+		"linebreak-style": [
+			"error",
+			"windows"
+		],
+		"react/prefer-es6-class": [
+			0
+		],
+		"react/prefer-stateless-function": [
+			0,
+			{
+				"ignorePureComponents": true
+			}
+		],
+		"react/jsx-filename-extension": 0,
+		"react/jsx-indent": [
+			2,
+			"tab"
+		],
+		"react/jsx-indent-props": [
+			2,
+			"tab"
+		],
+		"react/sort-comp": [
+			2,
+			{
+				"order": [
+					"static-methods",
+					"instance-variables",
+					"/^_.+=.+$/",
+					"lifecycle",
+					"everything-else",
+					"rendering",
+					"/^_(.(?!=))+\\(.+\\)$/"
+				]
+			}
+		],
+		"react/prop-types": [
+			2,
+			{
+				"ignore": [
+					"children"
+				]
+			}
+		],
+		"react/static-property-placement": 0,
+		"react/jsx-props-no-spreading": 0,
+		"no-unused-vars": [
+			"error",
+			{
+				"ignoreRestSiblings": true,
+				"ignoreDestructuringVars": true,
+				"args": "none"
+			}
+		],
+		"no-underscore-dangle": [
+			1,
+			{
+				"allowAfterSuper": true,
+				"allowAfterThis": true
+			}
+		],
+		"class-methods-use-this": 0,
+		"padded-blocks": 0,
+		"no-shadow": 1,
+		"no-param-reassign": 1,
+		"camelcase": 1,
+		"radix": 1,
+		"max-len": [
+			2,
+			{
+				"ignoreComments": true,
+				"ignoreTrailingComments": true,
+				"ignoreUrls": true,
+				"ignoreStrings": true,
+				"code": 120
+			}
+		],
+		"no-plusplus": 0,
+		"no-empty": [
+			2,
+			{
+				"allowEmptyCatch": true
+			}
+		],
+		"import/no-dynamic-require": 1,
+		"global-require": 1,
+		"no-restricted-globals": [
+			2,
+			"event"
 		],
 		"no-tabs": 0
-    },
-    "plugins": [
-        "react",
-        "jsx-a11y",
-        "import"
-    ],
-    "globals": {
-        "window": true,
-        "document": true,
-        "localStorage": true,
-        "describe": true,
-        "it": true,
-        "location": true,
-        "history": true,
-        "File": true,
-        "FileReader": true,
-        "navigator": true
-    }
+	},
+	"plugins": [
+		"react",
+		"jsx-a11y",
+		"import"
+	],
+	"globals": {
+		"window": true,
+		"document": true,
+		"localStorage": true,
+		"describe": true,
+		"it": true,
+		"location": true,
+		"history": true,
+		"File": true,
+		"FileReader": true,
+		"navigator": true
+	}
 }

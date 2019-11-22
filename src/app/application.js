@@ -127,7 +127,7 @@ class Application extends CallbackEmitter {
 				return;
 			}
 			const Component = component.component;
-			this.renderComponent(<Component ref={ref => this.setRef(ref, component.elementId)} />, target);
+			this.renderComponent(<Component ref={(ref) => this.setRef(ref, component.elementId)} />, target);
 		});
 		this.render(Router.getRoute());
 	}

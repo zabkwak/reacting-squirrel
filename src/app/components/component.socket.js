@@ -86,8 +86,8 @@ export default class SocketComponent extends Component {
 		}
 		this._socketRequest
 			.execute(event, data, timeout, onProgress)
-			.then(d => process.nextTick(() => callback(null, d)))
-			.catch(e => process.nextTick(() => callback(e)));
+			.then((d) => process.nextTick(() => callback(null, d)))
+			.catch((e) => process.nextTick(() => callback(e)));
 		return this;
 	}
 

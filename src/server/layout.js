@@ -55,8 +55,8 @@ export default class Layout extends Component {
 				<meta charSet={charSet} />
 				{this.renderMeta()}
 				<title>{title}</title>
-				{scripts.map(s => <script key={s} src={this._createPath(s, version)} type="text/javascript" />)}
-				{styles.map(s => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
+				{scripts.map((s) => <script key={s} src={this._createPath(s, version)} type="text/javascript" />)}
+				{styles.map((s) => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
 			</head>
 		);
 	}

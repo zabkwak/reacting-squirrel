@@ -74,4 +74,4 @@ app.start((err) => {
 	console.log('App started');
 });
 
-Socket.on('connection', socket => console.log('SOCKET CONNECTED'));
+Socket.on('connection', (socket) => console.log('SOCKET CONNECTED'));

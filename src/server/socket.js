@@ -62,7 +62,7 @@ class Socket {
 				if (!this._chunks[key]) {
 					this._chunks[key] = [];
 				}
-				this._chunks[key][index] = Buffer.from(Object.keys(message.data).map(k => message.data[k]));
+				this._chunks[key][index] = Buffer.from(Object.keys(message.data).map((k) => message.data[k]));
 				const chunks = this._chunks[key];
 				s.emit(`${key}~progress`, { total: size, done: chunks.length });
 				if (chunks.length === size) {
@@ -142,7 +142,7 @@ class Socket {
 	 * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
 	 * @param {function(Socket):boolean} filter Filter function to validate sockets.
 	 */
-	static broadcast(event, data, filter = socket => true) {
+	static broadcast(event, data, filter = (socket) => true) {
 		this.iterateSockets((socket) => {
 			if (!filter(socket)) {
 				return;
@@ -213,7 +213,7 @@ class Socket {
 	 * @param {boolean} includeSelf If true the data are broadcasting also to the requesting socket.
 	 * @param {function(Socket):boolean} filter Filter function to validate sockets.
 	 */
-	broadcast(event, data, includeSelf = false, filter = socket => true) {
+	broadcast(event, data, includeSelf = false, filter = (socket) => true) {
 		Socket.iterateSockets((socket) => {
 			if (!includeSelf && socket === this) {
 				return;
@@ -260,7 +260,7 @@ const func = (server, options = {}) => {
 	});
 
 	// eslint-disable-next-line no-console
-	io.on('error', err => console.error(err));
+	io.on('error', (err) => console.error(err));
 };
 
 export {

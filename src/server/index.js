@@ -464,7 +464,7 @@ class Server {
 				routes, components, socketClassDir, errorPage,
 			} = this._rsConfig;
 			if (routes) {
-				Utils.registerRoutes(this, routes.map(route => (
+				Utils.registerRoutes(this, routes.map((route) => (
 					{
 						...route,
 						callback: this._routeCallbacks[route.route],
@@ -721,7 +721,7 @@ Socket
 	 */
 	_createSocketMap(cb) {
 		this._log('Creating socket map');
-		fs.writeFile(`${this._getRSDirPath()}/socket.map.js`, `export default [${this._socketEvents.map(e => `'${e.event}'`).join(',')}];`, cb);
+		fs.writeFile(`${this._getRSDirPath()}/socket.map.js`, `export default [${this._socketEvents.map((e) => `'${e.event}'`).join(',')}];`, cb);
 	}
 
 	/**
@@ -1121,12 +1121,15 @@ Socket
 				res.status(err.statusCode);
 			}
 			if (!err.path) {
+				// eslint-disable-next-line no-param-reassign
 				err.path = req.originalUrl;
 			}
 			if (!err.spec) {
+				// eslint-disable-next-line no-param-reassign
 				err.spec = req.route ? req.route.path : req.path;
 			}
 			if (!err.pathname) {
+				// eslint-disable-next-line no-param-reassign
 				err.pathname = req.path;
 			}
 			this._error(err);
@@ -1225,7 +1228,7 @@ Socket
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
 		const files = fs.readdirSync(dir);
 		return files
-			.map(f => `${dir}/${f}`)
+			.map((f) => `${dir}/${f}`)
 			.filter((f) => {
 				const stat = fs.statSync(f);
 				if (stat.isDirectory()) {
