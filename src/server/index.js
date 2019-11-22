@@ -924,7 +924,11 @@ Socket
 			cookie: false,
 			...this._config.socketIO,
 		});
-		Text.addDictionary(require(path.resolve(this._config.appDir, 'res', 'text.json')));
+		try {
+			Text.addDictionary(require(path.resolve(this._config.appDir, 'res', 'text.json')));
+		} catch (e) {
+			this._warn(e.message);
+		}
 	}
 
 	/**

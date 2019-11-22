@@ -35,6 +35,9 @@ const CONFIG_FIELDS = [
 	'rsConfig',
 	'socketIO',
 	'socketMessageMaxSize',
+	'autoprefixer',
+	'babelTranspileModules',
+	'cookies',
 ];
 
 describe('Server instance', () => {
@@ -54,7 +57,7 @@ describe('Server instance', () => {
 		expect(entryFile).to.be.equal(null);
 		expect(layoutComponent).to.be.an('function');
 		expect(new layoutComponent()).to.be.an.instanceOf(Layout);
-		expect(cookieSecret).to.be.an('string');
+		// expect(cookieSecret).to.be.an('string');
 		expect(scripts).to.be.an.instanceOf(Array);
 		expect(scripts.length).to.be.equal(0);
 		expect(styles).to.be.an.instanceOf(Array);
@@ -220,7 +223,7 @@ describe('Start of the server', () => {
 		request.get({
 			url: `${URL}/user`,
 			headers: {
-				cookie: `session_id=${cookieSignature.sign(TEST_SESSION_ID, server._config.cookieSecret)}`,
+				cookie: `session_id=${cookieSignature.sign(TEST_SESSION_ID, server._config.cookies.secret)}`,
 			},
 		}, (err, res, body) => {
 			expect(err).to.be.equal(null);

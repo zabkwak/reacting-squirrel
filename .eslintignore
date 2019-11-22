@@ -2,3 +2,4 @@
 /app
 /server
 /public
+/__tests__/cases
