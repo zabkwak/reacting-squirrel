@@ -1120,6 +1120,15 @@ Socket
 			if (res.statusCode === 200) {
 				res.status(err.statusCode);
 			}
+			if (!err.path) {
+				err.path = req.originalUrl;
+			}
+			if (!err.spec) {
+				err.spec = req.route ? req.route.path : req.path;
+			}
+			if (!err.pathname) {
+				err.pathname = req.path;
+			}
 			this._error(err);
 			const render = () => {
 				res.render({

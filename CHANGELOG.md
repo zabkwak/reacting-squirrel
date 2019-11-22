@@ -5,6 +5,7 @@
 - Option to add modules to babel-loader.
 ### Updates
 - Styles are compiled before webpack start.
+- Route info in error logging.
 
 ## 0.14.12
 ### Features
