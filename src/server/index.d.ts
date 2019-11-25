@@ -202,6 +202,11 @@ interface ILayoutPropsInitialData<U = any> {
 	version: string;
 }
 
+/**
+ * Layout props.
+ * @typeparam T Additional of the initial data.
+ * @typeparam U Type of the user.
+ */
 export interface ILayoutProps<T = {}, U = any> {
 	title: string;
 	initialData: ILayoutPropsInitialData<U> & T;
@@ -220,28 +225,114 @@ export interface ILayoutProps<T = {}, U = any> {
 	lang?: string;
 }
 
+/**
+ * Wrapper for the websocket socket.
+ * @typeparam S Session type.
+ */
 export class Socket<S extends Session = Session> {
 
-	static add(socket: net.Socket, events: Array<ISocketEvent>, maxMessageSize: number): void;
+	/**
+	 * Adds new socket and registers all socket events.
+	 * This method is called automatically after the socket connection.
+	 *
+	 * @param socket Socket instance.
+	 * @param events List of socket events to register.
+	 * @param maxMessageSize Maximal size fo the message.
+	 */
+	public static add(socket: net.Socket, events: Array<ISocketEvent>, maxMessageSize: number): void;
 
-	static broadcast(event: string, data: any, filter: (socket: Socket) => boolean): void;
+	/**
+	 * Broadcasts socket event with data.
+	 *
+	 * @param event Event to broadcast.
+	 * @param data Data to broadcast.
+	 * @param filter Function filters sockets for broadcasting.
+	 */
+	public static broadcast<T = any>(event: string, data: T, filter: (socket: Socket) => boolean): void;
 
-	static iterateSockets(iterator: (socket: Socket) => void): void;
+	/**
+	 * Iterates through all registered sockets.
+	 *
+	 * @param iterator Function called for every socket.
+	 */
+	public static iterateSockets(iterator: (socket: Socket) => void): void;
 
-	static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>) => void): void;
-	static on<S extends Session = Session>(event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>, ...args: Array<any>) => void): void;
+	/**
+	 * Registers listener for socket state events.
+	 * 
+	 * @param event Socket event.
+	 * @param listener Listener to execute after the socket state event.
+	 */
+	public static on<S extends Session = Session>(
+		event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>) => void,
+	): void;
+	/**
+	 * Registers listener for socket state events.
+	 * 
+	 * @param event Socket event.
+	 * @param listener Function to execute after the socket state event.
+	 */
+	public static on<S extends Session = Session>(
+		event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>, ...args: Array<any>) => void,
+	): void;
 
-	constructor(socket: net.Socket);
+	/**
+	 * Creates new instance of the socket.
+	 *
+	 * @param socket Socket instance.
+	 */
+	private constructor(socket: net.Socket);
 
-	emit(event: string, data: any): void;
+	/**
+	 * Emits event with data.
+	 *
+	 * @param event Event to emit.
+	 * @param data Data to emit.
+	 * @typeparam T Data type.
+	 */
+	public emit<T = any>(event: string, data: T): void;
 
-	on(event: string, listener: (data?: any) => void): void;
+	/**
+	 * Registers listener for registered event.
+	 *
+	 * @param event Event to listen.
+	 * @param listener Function called for event handling.
+	 * @typeparam T Data type.
+	 */
+	public on<T = any>(event: string, listener: (data?: T) => void): void;
 
-	broadcast(event: string, data: any): void;
-	broadcast(event: string, data: any, includeSelf: boolean): void;
-	broadcast(event: string, data: any, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
+	/**
+	 * Broadcasts socket event with data.
+	 *
+	 * @param event Event to broadcast.
+	 * @param data Data to broadcast.
+	 * @typeparam T Data type.
+	 */
+	public broadcast(event: string, data: any): void;
+	/**
+	 * Broadcasts socket event with data.
+	 *
+	 * @param event Event to broadcast.
+	 * @param data Data to broadcast.
+	 * @param includeSelf Indicates if the socket should include current socket to broadcast.
+	 * @typeparam T Data type.
+	 */
+	public broadcast(event: string, data: any, includeSelf: boolean): void;
+	/**
+	 * Broadcasts socket event with data.
+	 *
+	 * @param event Event to broadcast.
+	 * @param data Data to broadcast.
+	 * @param includeSelf Indicates if the socket should include current socket to broadcast.
+	 * @param filter Function filters sockets for broadcasting.
+	 * @typeparam T Data type.
+	 */
+	public broadcast<T = any>(event: string, data: T, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
 
-	getSession(): S;
+	/**
+	 * Gets the socket session.
+	 */
+	public getSession(): S;
 }
 
 /**
@@ -280,20 +371,47 @@ export class Session<T = any> {
 	public getUser(): T;
 }
 
+/**
+ * Server layout component.
+ */
 export class Layout<P = ILayoutProps> extends Component<P> {
 
+	/**
+	 * Renders `<head>` tag with charset, metas, title, scripts and styles.
+	 */
 	public renderHead(): JSX.Element;
 
+	/**
+	 * Renders `<body>` tag with with container and bundle data.
+	 */
 	public renderBody(): JSX.Element;
 
+	/**
+	 * Renders container with content div. In the content div are rendered client pages.
+	 */
 	public renderContainer(): JSX.Element;
 
+	/**
+	 * Renders initial data and bundle `<script>` tag.
+	 */
 	public renderBundleData(): JSX.Element;
 
+	/**
+	 * Renders the loader before the content data are rendered.
+	 */
 	public renderLoader(): JSX.Element;
 
+	/**
+	 * Renders the meta tags.
+	 */
 	public renderMeta(): JSX.Element;
 
+	/**
+	 * Creates path with version parameter.
+	 * 
+	 * @param path Path of the loaded link.
+	 * @param version Version of the app.
+	 */
 	protected _createPath(path: string, version: string): string;
 }
 
