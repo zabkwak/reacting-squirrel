@@ -30,7 +30,7 @@ export default class Layout extends Component {
 		scripts: [],
 		styles: [],
 		charSet: 'UTF-8',
-		lang: 'en_US',
+		lang: 'en',
 	};
 
 	/**

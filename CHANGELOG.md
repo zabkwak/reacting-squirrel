@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.14.14
+### Updates
+- Changed default lang of the server html.
+
 ## 0.14.13
 ### Features
 - Option to add modules to babel-loader.
