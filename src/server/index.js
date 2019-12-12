@@ -829,13 +829,13 @@ Socket
 			}
 		});
 		p.apply(this._webpack);
-		this._compileStyles((err) => {
-			if (err) {
-				cb(err);
-				return;
-			}
-			this._log('Starting webpack');
-			if (dev) {
+		if (dev) {
+			this._compileStyles((err) => {
+				if (err) {
+					cb(err);
+					return;
+				}
+				this._log('Starting webpack');
 				let listening = false;
 				// eslint-disable-next-line no-shadow
 				this._webpack.watch({ aggregateTimeout: 300 }, (err, stats) => {
@@ -861,19 +861,26 @@ Socket
 						});
 					}
 				});
+			});
+			return;
+		}
+		this._log('Starting webpack');
+		// eslint-disable-next-line no-shadow
+		this._webpack.run((err, stats) => {
+			if (err) {
+				cb(err);
 				return;
 			}
-			// eslint-disable-next-line no-shadow
-			this._webpack.run((err, stats) => {
+			const minimalStats = stats.toJson('minimal');
+			this._log(minimalStats);
+			const { errors } = minimalStats;
+			if (errors && errors.length) {
+				cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
+				return;
+			}
+			this._compileStyles((err) => {
 				if (err) {
 					cb(err);
-					return;
-				}
-				const minimalStats = stats.toJson('minimal');
-				this._log(minimalStats);
-				const { errors } = minimalStats;
-				if (errors && errors.length) {
-					cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
 					return;
 				}
 				this._server.listen(port, () => {
@@ -885,11 +892,11 @@ Socket
 	}
 
 	/**
-     *
-     * @param {express.Request} req
-     * @param {express.Response} res
-     * @returns {Promise<void>}
-     */
+	 *
+	 * @param {express.Request} req
+	 * @param {express.Response} res
+	 * @returns {Promise<void>}
+	 */
 	async _beforeCallback(req, res) {
 		if (this._beforeExecution.length) {
 			for (let i = 0; i < this._beforeExecution.length; i++) {
@@ -1086,7 +1093,6 @@ Socket
 				res.render = ({
 					scripts, styles, data, title, layout,
 				}) => {
-					console.log(req.headers["accept-language"]);
 					const LayoutComponent = layout || layoutComponent;
 					res.setHeader('Content-Type', 'text/html; charset=utf-8');
 					res.end(`<!DOCTYPE html>${ReactDOMServer.renderToString(<LayoutComponent
