@@ -1086,6 +1086,7 @@ Socket
 				res.render = ({
 					scripts, styles, data, title, layout,
 				}) => {
+					console.log(req.headers["accept-language"]);
 					const LayoutComponent = layout || layoutComponent;
 					res.setHeader('Content-Type', 'text/html; charset=utf-8');
 					res.end(`<!DOCTYPE html>${ReactDOMServer.renderToString(<LayoutComponent
@@ -1101,6 +1102,7 @@ Socket
 							hostname: req.get('host'),
 							pathname: req.originalUrl,
 						}}
+						getText={Text.get}
 					/>)}`);
 				};
 				this.auth(req.session, next);

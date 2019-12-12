@@ -66,6 +66,8 @@ app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 
 // console.log(app.Text.get('test'));
 
+app.Text.addDictionary('cs-CZ', require(path.resolve(app.appDirAbsolute, 'res', 'text_cs-CZ.json')));
+
 app.start((err) => {
 	if (err) {
 		console.error(err);

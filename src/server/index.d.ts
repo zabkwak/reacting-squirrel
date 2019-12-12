@@ -407,6 +407,20 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 	public renderMeta(): JSX.Element;
 
 	/**
+     * Gets the text from the dictionary.
+     *
+     * @param key Key of the text in the dictionary.
+     */
+	public getText(key: string): string;
+    /**
+     * Gets the text from the dictionary.
+     *
+     * @param key Key of the text in the dictionary.
+     * @param args Arguments for text format.
+     */
+	public getText(key: string, ...args: Array<any>): string;
+
+	/**
 	 * Creates path with version parameter.
 	 * 
 	 * @param path Path of the loaded link.

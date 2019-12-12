@@ -244,6 +244,8 @@ export default class CustomComponent extends Component {
 }
 
 ```
+#### Using texts on the server side (experimental)
+The instance of the server has a property `Text` which is just `texting-squirrel` module with registered default dictionary.
 
 ## Socket communication
 The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. 

@@ -23,6 +23,7 @@ export default class Layout extends Component {
 		bundle: PropTypes.string.isRequired,
 		charSet: PropTypes.string,
 		lang: PropTypes.string,
+		getText: PropTypes.func.isRequired,
 	};
 
 	static defaultProps = {
@@ -107,6 +108,11 @@ export default class Layout extends Component {
 
 	renderMeta() {
 		return null;
+	}
+
+	getText(key, ...args) {
+		const { getText } = this.props;
+		return getText(key, ...args);
 	}
 
 	_createPath(path, version) {
