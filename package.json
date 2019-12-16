@@ -41,7 +41,7 @@
     "cookie": "^0.4.0",
     "cookie-parser": "^1.4.4",
     "cookie-signature": "^1.1.0",
-    "css-loader": "^3.3.0",
+    "css-loader": "^3.3.2",
     "express": "^4.17.1",
     "extra-watch-webpack-plugin": "^1.0.3",
     "html-to-react": "^1.4.2",
@@ -58,7 +58,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "route-parser": "0.0.5",
-    "runtime-type": "^3.1.0",
+    "runtime-type": "^3.2.0",
     "sass-loader": "^8.0.0",
     "smart-error": "^3.0.0",
     "socket.io": "^2.3.0",
@@ -68,7 +68,7 @@
     "ts-loader": "^6.2.0",
     "typescript": "^3.7.3",
     "uniqid": "^5.2.0",
-    "webpack": "^4.41.0"
+    "webpack": "^4.41.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.5",
@@ -90,7 +90,7 @@
     "request": "^2.88.0",
     "run-script-os-fix": "^1.0.4",
     "source-map-support": "^0.5.16",
-    "typedoc": "^0.15.4"
+    "typedoc": "^0.15.5"
   },
   "engines": {
     "node": ">=8.9"

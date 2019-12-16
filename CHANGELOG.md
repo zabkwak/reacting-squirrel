@@ -3,6 +3,8 @@
 ## 0.14.14
 ### Updates
 - Changed default lang of the server html.
+### Fixes
+- Modules styles compilation in production mode.
 
 ## 0.14.13
 ### Features
