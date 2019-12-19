@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.14.15
+### Features
+- Exported `runtime-type` Model class.
+- `SocketModel` class using Model class.
+
 ## 0.14.14
 ### Updates
 - Changed default lang of the server html.

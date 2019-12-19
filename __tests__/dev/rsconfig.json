@@ -19,6 +19,11 @@
             "route": "/decorators",
             "component": "decorators",
             "title": "Decorators"
+		},
+		{
+            "route": "/models",
+            "component": "models",
+            "title": "Models"
         },
         {
             "route": "/layout-test",

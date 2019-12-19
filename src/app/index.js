@@ -1,4 +1,4 @@
-import Type from 'runtime-type';
+import Type, { Model } from 'runtime-type';
 
 import Application from './application';
 import Component from './components/component';
@@ -13,6 +13,7 @@ import Router from './router';
 
 import Socket from './socket';
 import SocketRequest from './socket-request';
+import SocketModel from './socket-model';
 import Storage from './storage';
 import ErrorPage from './page.error';
 
@@ -32,8 +33,10 @@ export {
 	Loader,
 	Socket,
 	SocketRequest,
+	SocketModel,
 	Storage,
 	ErrorPage,
 	Type,
 	Utils,
+	Model,
 };

@@ -1,6 +1,6 @@
 import { Component as BaseComponent, ButtonHTMLAttributes } from 'react';
 import * as url from 'url';
-import Type from 'runtime-type';
+import Type, { Model } from 'runtime-type';
 
 /**
  * Base client application.
@@ -462,7 +462,6 @@ export class SocketRequest extends CallbackEmitter {
      */
 	public execute<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
-
 	/**
      * Emits the socket event. The response can be handled in the `on` method.
      *
@@ -501,6 +500,52 @@ export class SocketRequest extends CallbackEmitter {
 	 * Clears all registered listeners.
 	 */
 	public clearListeners(): void;
+}
+
+/**
+ * Class for defining models from socket communication.
+ */
+export class SocketModel extends Model {
+
+	protected _socketRequest: SocketRequest;
+
+		/**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @typeparam R Type of response.
+     */
+	protected _execute<R = any>(event: string): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+	protected _execute<P = any, R = any>(event: string, data: P): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+	protected _execute<P = any, R = any>(event: string, data: P, timeout: number): Promise<R>;
+    /**
+     * Calls the socket event.
+     *
+     * @param event Name of the event.
+     * @param data Event parameters.
+     * @param timeout Timeout of the event.
+     * @param onProgress Function called in the progress tick.
+     * @typeparam P Type of parameters.
+     * @typeparam R Type of response.
+     */
+	protected _execute<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 }
 
 /**
@@ -1181,4 +1226,5 @@ export {
 	S as Socket,
 	ST as Storage,
 	Type,
+	Model,
 }
