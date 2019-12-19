@@ -1274,6 +1274,29 @@ Socket
 	}
 
 	/**
+	 * Checks if component exists. If the path doesn't contain extension js(x) and ts(x) extensions are tried.
+	 *
+	 * @param {string} filePath Absolute path to the component.
+	 * @param {boolean} tryIndexFile Indicates if the component should be checked within the index file in directory.
+	 */
+	_componentExists(filePath, tryIndexFile = true) {
+		if (path.extname(filePath)) {
+			return fs.existsSync(filePath);
+		}
+		let exists = false;
+		['js', 'jsx', 'ts', 'tsx'].forEach((ext) => {
+			if (exists) {
+				return;
+			}
+			exists = fs.existsSync(`${filePath}.${ext}`);
+		});
+		if (!exists && tryIndexFile) {
+			return this._componentExists(path.resolve(filePath, 'index'), false);
+		}
+		return exists;
+	}
+
+	/**
 	 * Logs the message to the console if the app is in the dev mode.
 	 *
 	 * @param {string} message Message to log.

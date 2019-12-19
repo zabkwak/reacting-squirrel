@@ -19,7 +19,7 @@ export default class Decorators extends Page {
 		}
 	}
 
-	render() {
+	_render() {
 		return null;
 	}
 }

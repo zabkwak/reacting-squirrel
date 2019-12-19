@@ -4,6 +4,7 @@
 ### Features
 - Exported `runtime-type` Model class.
 - `SocketModel` class using Model class.
+- Default `Page.render` in DEV mode.
 
 ## 0.14.14
 ### Updates
