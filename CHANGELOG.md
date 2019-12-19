@@ -5,6 +5,7 @@
 - Exported `runtime-type` Model class.
 - `SocketModel` class using Model class.
 - Default `Page.render` in DEV mode.
+- Generating missing registered pages and components. 
 
 ## 0.14.14
 ### Updates

@@ -88,6 +88,8 @@ class Server {
 	 * @property {any} webpack Custom webpack config.
 	 * @property {any} autoprefixer Autoprefixer config.
 	 * @property {string[]} babelTranspileModules List of modules to add to the babel-loader.
+	 * @property {boolean} createMissingComponents Indicates if registered components should be created if missing.
+	 * @property {'js'|'jsx'|'ts'|'tsx'} generatedComponentsExtension Extension of the generated components.
 	 */
 
 	/**
@@ -139,6 +141,8 @@ class Server {
 		socketIO: {},
 		autoprefixer: {},
 		babelTranspileModules: [],
+		createMissingComponents: false,
+		generatedComponentsExtension: 'tsx',
 		moduleDev: false,
 	};
 
@@ -631,10 +635,8 @@ class Server {
 	 */
 	_createEntryFile(cb) {
 		this._log('Creating entry file');
-		const { moduleDev, entryFile, appDir } = this._config;
-		const pathToTheModule = moduleDev
-			? path.relative(path.resolve(this._getRSDirPath()), path.resolve('./src/app')).replace(/\\/g, '/')
-			: 'reacting-squirrel';
+		const { entryFile, appDir } = this._config;
+		const pathToTheModule = this._getPathToModule(path.resolve(this._getRSDirPath()));
 		let entryFileImport = null;
 		if (entryFile) {
 			const pathToTheEntryFile = path.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, entryFile)).replace(/\\/g, '/');
@@ -682,11 +684,25 @@ Socket
 	 * @param {function(Error):void} cb Callback to call after the creation process.
 	 */
 	_createRoutingFile(map, cb) {
+		const { createMissingComponents, generatedComponentsExtension } = this._config;
 		this._log('Creating routing file');
 		const a = [];
 		const b = [];
 		Object.keys(map).forEach((key) => {
 			const route = map[key];
+			if (!this._componentExists(route.path)) {
+				this._warn(`Page ${route.path} doesn't exist.`, createMissingComponents ? 'GENERATING' : 'SKIPPING');
+				if (!createMissingComponents) {
+					return;
+				}
+				const dirName = path.dirname(route.path);
+				const fileName = path.basename(route.path);
+				const filePath = `${route.path}.${generatedComponentsExtension}`;
+				fs.writeFileSync(filePath, `import { Page } from '${this._getPathToModule(dirName)}';
+
+export default class ${this._createClassName(fileName, 'Page')} extends Page {}
+`);
+			}
 			const p = path.relative(path.resolve(this._getRSDirPath()), route.path).replace(/\\/g, '/');
 			a.push(`import ${key} from '${p}';`);
 			b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}'}`);
@@ -701,10 +717,24 @@ Socket
 	 * @param {function(Error):void} cb Callback to call after the creation process.
 	 */
 	_createComponentsFile(cb) {
+		const { createMissingComponents, generatedComponentsExtension } = this._config;
 		this._log('Creating components file');
 		const a = [];
 		const b = [];
 		this._components.forEach((component) => {
+			if (!this._componentExists(component.path)) {
+				this._warn(`Component ${component.path} doesn't exist.`, createMissingComponents ? 'GENERATING' : 'SKIPPING');
+				if (!createMissingComponents) {
+					return;
+				}
+				const dirName = path.dirname(component.path);
+				const fileName = path.basename(component.path);
+				const filePath = `${component.path}.${generatedComponentsExtension}`;
+				fs.writeFileSync(filePath, `import { Component } from '${this._getPathToModule(dirName)}';
+
+export default class ${this._createClassName(fileName, 'Component')} extends Component {}
+`);
+			}
 			const key = `__${md5(`${component.path}${component.elementId}}`)}__`;
 			const p = path.relative(path.resolve(this._getRSDirPath()), component.path).replace(/\\/g, '/');
 			a.push(`import ${key} from '${p}'`);
@@ -1297,6 +1327,38 @@ Socket
 	}
 
 	/**
+	 * Gets the path to the module depending on the module development status.
+	 */
+	_getPathToModule(sourceDir) {
+		const { moduleDev } = this._config;
+		return moduleDev
+			? path.relative(sourceDir, path.resolve('./src/app')).replace(/\\/g, '/')
+			: 'reacting-squirrel';
+	}
+
+	/**
+	 * Creates class name from the string.
+	 *
+	 * @param {string} s
+	 * @param {string} suffix
+	 */
+	_createClassName(s, suffix = '') {
+		return this._capitalizeFirstLetter(s).replace(/\./g, '_').replace(/\-/g, '_') + suffix;
+	}
+
+	/**
+	 * Capitalizes first letter.
+	 *
+	 * @param {string} s String to capitalize.
+	 */
+	_capitalizeFirstLetter(s) {
+		if (s.length < 1) {
+			return null;
+		}
+		return s.charAt(0).toUpperCase() + s.slice(1);
+	}
+
+	/**
 	 * Logs the message to the console if the app is in the dev mode.
 	 *
 	 * @param {string} message Message to log.
@@ -1315,9 +1377,9 @@ Socket
 	 *
 	 * @param {string} message Message to log.
 	 */
-	_warn(message) {
+	_warn(message, ...args) {
 		// eslint-disable-next-line no-console
-		console.warn(new Date(), message);
+		console.warn(new Date(), message, ...args);
 	}
 
 	_error(message) {

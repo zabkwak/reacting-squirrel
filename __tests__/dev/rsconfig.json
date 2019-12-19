@@ -30,7 +30,12 @@
             "component": "home",
             "title": "Layout test",
             "layout": "__tests__/dev/dist/layout"
-        }
+		},
+		{
+			"route": "/generated-page",
+			"component": "generated",
+			"title": "Generated page"
+		}
     ],
     "components": [
         {
@@ -40,7 +45,11 @@
         {
             "id": "socket-status",
             "component": "socket-status"
-        }
+		},
+		{
+			"id": "generated",
+			"component": "generated-component"
+		}
     ],
 	"socketClassDir": "__tests__/dev/dist",
 	"errorPage": "page.error"

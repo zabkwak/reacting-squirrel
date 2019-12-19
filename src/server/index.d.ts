@@ -185,6 +185,16 @@ interface IAppConfig {
 	 * @default []
 	 */
 	babelTranspileModules?: Array<string>;
+	/**
+	 * Indicates if registered components should be created if missing.
+	 * @default false
+	 */
+	createMissingComponents?: boolean;
+	/**
+	 * Extension of the generated components.
+	 * @default 'tsx'
+	 */
+	generatedComponentsExtension?: 'js' | 'jsx' | 'ts' | 'tsx';
 }
 
 interface ISocketEvent<S extends Session = Session> {

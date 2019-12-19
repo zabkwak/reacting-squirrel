@@ -36,6 +36,7 @@ const app = new Server({
 	cookies: {
 		secure: false,
 	},
+	createMissingComponents: true,
 	// autoprefixer: { grid: 'autoplace' },
 	// cookieSecret: 'dev-secret',
 	/*

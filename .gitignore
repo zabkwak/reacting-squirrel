@@ -6,6 +6,7 @@
 /__tests__/app/~rs
 /__tests__/public
 /__tests__/dev/dist
+/__tests__/app/generated*
 /__types__
 /package-lock.json
 
