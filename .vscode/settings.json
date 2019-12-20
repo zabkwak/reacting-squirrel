@@ -1,0 +1,10 @@
+{
+	"json.schemas": [
+		{
+			"fileMatch": [
+				"*rsconfig.json"
+			],
+			"url": "./schemas/rsconfig.schema.json"
+		}
+	]
+}

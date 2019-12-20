@@ -6,6 +6,7 @@
 - `SocketModel` class using Model class.
 - Default `Page.render` in DEV mode.
 - Generating missing registered pages and components. 
+- App config in RS config.
 
 ## 0.14.14
 ### Updates

@@ -285,7 +285,18 @@ class Server {
 				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.\n');
 			}
 		}
-		this._config = _.merge(this._config, config);
+		try {
+			this._rsConfig = require(config.rsConfig || path.resolve('./rsconfig.json'));
+		} catch (e) {
+			if (config.rsConfig) {
+				throw e;
+			}
+		}
+		this._config = _.merge(
+			this._config,
+			this._getConfigFromRSConfig(),
+			config,
+		);
 		if (!(new this.Session() instanceof Session)) {
 			throw new Error('Cannot create instance of Session.');
 		}
@@ -293,13 +304,6 @@ class Server {
 			throw new Error('Cannot create instance of Layout.');
 		}
 		this._path = path.resolve(`${this._config.staticDir}/${this._config.jsDir}`);
-		try {
-			this._rsConfig = require(this._config.rsConfig || path.resolve('./rsconfig.json'));
-		} catch (e) {
-			if (this._config.rsConfig) {
-				throw e;
-			}
-		}
 		this._bundlePath = `${this._config.bundlePathRelative
 			? ''
 			: '/'}${this._config.jsDir}/${this._config.filename}`;
@@ -1343,7 +1347,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {string} suffix
 	 */
 	_createClassName(s, suffix = '') {
-		return this._capitalizeFirstLetter(s).replace(/\./g, '_').replace(/\-/g, '_') + suffix;
+		return this._capitalizeFirstLetter(s).replace(/\./g, '_').replace(/-/g, '_') + suffix;
 	}
 
 	/**
@@ -1356,6 +1360,54 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			return null;
 		}
 		return s.charAt(0).toUpperCase() + s.slice(1);
+	}
+
+	/**
+	 * Gets the config from rsconfig file.
+	 */
+	_getConfigFromRSConfig() {
+		if (!this._rsConfig) {
+			return {};
+		}
+		const {
+			routes, components, socketClassDir, errorPage, ...config
+		} = this._rsConfig;
+		const {
+			layoutComponent, session, auth, errorHandler, onWebpackProgress, webpack, ...restConfig
+		} = config;
+		return {
+			...restConfig,
+			layoutComponent: layoutComponent ? this._tryRequireModule(layoutComponent) : undefined,
+			session: session ? this._tryRequireModule(session) : undefined,
+			auth: auth ? this._tryRequireModule(auth) : undefined,
+			errorHandler: errorHandler ? this._tryRequireModule(errorHandler) : undefined,
+			onWebpackProgress: onWebpackProgress ? this._tryRequireModule(onWebpackProgress) : undefined,
+			// eslint-disable-next-line no-nested-ternary
+			webpack: webpack
+				? typeof webpack === 'string'
+					? this._tryRequireModule(webpack)
+					: webpack
+				: undefined,
+		};
+	}
+
+	/**
+	 * Tries to require file.
+	 *
+	 * @param {string} filePath Path to the file to require.
+	 * @param {boolean} resolve Indicates if `path.resolve` should be used on the filePath.
+	 */
+	_tryRequireModule(filePath, resolve = true) {
+		if (!filePath) {
+			return null;
+		}
+		try {
+			const m = require(resolve ? path.resolve(filePath) : filePath);
+			return m.default || m;
+		} catch (e) {
+			this._warn(e);
+			return null;
+		}
 	}
 
 	/**

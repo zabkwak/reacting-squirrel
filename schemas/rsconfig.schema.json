@@ -1,0 +1,239 @@
+{
+	"title": "JSON schema for rsconfig.json file.",
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"additionalProperties": true,
+	"required": [
+		"routes"
+	],
+	"properties": {
+		"routes": {
+			"type": "array",
+			"title": "Definition of routes.",
+			"items": {
+				"type": "object",
+				"required": [
+					"route",
+					"component",
+					"title"
+				],
+				"properties": {
+					"route": {
+						"type": "string",
+						"title": "Route for the browser."
+					},
+					"component": {
+						"type": "string",
+						"title": "Relative path to the component in app directory."
+					},
+					"title": {
+						"type": "string",
+						"title": "Title for the <title> tag in HTML."
+					},
+					"requireAuth": {
+						"type": "boolean",
+						"title": "Indicates if the route requires authorization.",
+						"default": false
+					},
+					"method": {
+						"type": "string",
+						"enum": [
+							"GET",
+							"POST",
+							"PUT",
+							"DELETE"
+						],
+						"title": "HTTP method.",
+						"default": "GET"
+					}
+				}
+			}
+		},
+		"components": {
+			"type": "array",
+			"title": "Definition of components rendered in server DOM.",
+			"items": {
+				"type": "object",
+				"required": [
+					"id",
+					"component"
+				],
+				"properties": {
+					"id": {
+						"type": "string",
+						"title": "ID of the HTML element in server DOM."
+					},
+					"component": {
+						"type": "string",
+						"title": "Relative path to the component from app directory."
+					}
+				}
+			}
+		},
+		"socketClassDir": {
+			"type": "string",
+			"title": "Relative to the directory with socket classes from application root.",
+			"default": null
+		},
+		"errorPage": {
+			"type": "string",
+			"title": "Relative path to the Error page from the app directory.",
+			"default": null
+		},
+		"port": {
+			"type": "integer",
+			"title": "Port on which the app listens.",
+			"default": 8080
+		},
+		"staticDir": {
+			"type": "string",
+			"title": "Relative path to the static directory for the express app from the application root.",
+			"default": "./public"
+		},
+		"dev": {
+			"type": "boolean",
+			"title": "Indicates if the application is in DEV mode.",
+			"default": false
+		},
+		"jsDir": {
+			"type": "string",
+			"title": "Name of the directory where the javascript is located in the staticDir",
+			"default": "js"
+		},
+		"cssDir": {
+			"type": "string",
+			"title": "Name of the directory where the css is located in the staticDir",
+			"default": "css"
+		},
+		"filename": {
+			"type": "string",
+			"title": "Name of the bundle file",
+			"default": "bundle.js"
+		},
+		"appDir": {
+			"type": "string",
+			"title": "Relative path to the app directory from the application root.",
+			"default": "./app"
+		},
+		"entryFile": {
+			"type": "string",
+			"title": "Relative path to the entry file from the app directory.",
+			"default": null
+		},
+		"layoutComponent": {
+			"type": "string",
+			"title": "Relative path to the Layout component file from the application root.",
+			"default": null
+		},
+		"cookies": {
+			"type": "object",
+			"title": "Configuration for cookies.",
+			"properties": {
+				"secret": {
+					"type": "string",
+					"title": "Secret which is used to sign cookies",
+					"default": null
+				},
+				"secure": {
+					"type": "boolean",
+					"title": "Secure flat for the cookies",
+					"default": true
+				},
+				"httpOnly": {
+					"type": "boolean",
+					"title": "HttpOnly flag for the cookies",
+					"default": true
+				}
+			}
+		},
+		"scripts": {
+			"type": "array",
+			"title": "List of scripts loaded in the server HTML.",
+			"items": {
+				"type": "string"
+			}
+		},
+		"styles": {
+			"type": "array",
+			"title": "List of styles loaded in the server HTML.",
+			"items": {
+				"type": "string"
+			}
+		},
+		"mergeStyles": {
+			"type": "array",
+			"title": "List of styles to merge to rs-app.css.",
+			"items": {
+				"type": "string"
+			}
+		},
+		"session": {
+			"type": "string",
+			"title": "Relative path to the Session class file from the application root.",
+			"default": null
+		},
+		"socketMessageMaxSize": {
+			"type": "integer",
+			"title": "Maximal size of one socket message.",
+			"default": 104857600
+		},
+		"auth": {
+			"type": "string",
+			"title": "Relative path to the file with exported auth function.",
+			"default": null
+		},
+		"errorHandler": {
+			"type": "string",
+			"title": "Relative path to the file with exported error handler function.",
+			"default": null
+		},
+		"bundlePathRelative": {
+			"type": "boolean",
+			"title": "Indicates if the bundle is loaded relatively in the server HTML.",
+			"default": false
+		},
+		"onWebpackProgress": {
+			"type": "string",
+			"title": "Relative path to the file with exported webpack progress function.",
+			"default": null
+		},
+		"webpack": {
+			"type": [
+				"string",
+				"object"
+			],
+			"title": "Custom webpack config. It can be object or relative path to the webpack config file."
+		},
+		"socketIO": {
+			"type": "object",
+			"title": "Custom socketIO config."
+		},
+		"autoprefixer": {
+			"type": "object",
+			"title": "Custom autoprefixer config."
+		},
+		"babelTranspileModules": {
+			"type": "array",
+			"title": "List of modules to add to the babel-loader.",
+			"items": {
+				"type": "string"
+			}
+		},
+		"createMissingComponents": {
+			"type": "boolean",
+			"title": "Indicates if registered components should be created if missing.",
+			"default": false
+		},
+		"generatedComponentsExtension": {
+			"type": "string",
+			"title": "Extension of the generated components.",
+			"enum": [
+				"js",
+				"jsx",
+				"ts",
+				"tsx"
+			],
+			"default": "tsx"
+		}
+	}
+}

@@ -38,6 +38,8 @@ const CONFIG_FIELDS = [
 	'autoprefixer',
 	'babelTranspileModules',
 	'cookies',
+	'createMissingComponents',
+	'generatedComponentsExtension',
 ];
 
 describe('Server instance', () => {

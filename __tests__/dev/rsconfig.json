@@ -52,5 +52,6 @@
 		}
     ],
 	"socketClassDir": "__tests__/dev/dist",
-	"errorPage": "page.error"
+	"errorPage": "page.error",
+	"createMissingComponents": true
 }
