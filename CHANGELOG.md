@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.14.15
+## 0.15.0
 ### Features
 - Exported `runtime-type` Model class.
 - `SocketModel` class using Model class.
