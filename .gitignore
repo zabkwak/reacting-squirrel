@@ -6,8 +6,8 @@
 /markdown
 /__tests__/app/~rs
 /__tests__/public
-/__tests__/dev/dist
-/__tests__/app/generated*
+/__tests__app__/dev/dist
+/__tests__app__/app/generated*
 /__types__
 /package-lock.json
 

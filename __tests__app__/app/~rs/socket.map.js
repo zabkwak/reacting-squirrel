@@ -1,0 +1,1 @@
+export default ['socket.test','socket.file','user.get','user.getPromise','user.getAsyncError','user.getSyncError','user.getVoidPromise','user.getPayloadedError'];

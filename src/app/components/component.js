@@ -68,6 +68,7 @@ export default class Component extends Base {
 	 * @param {string} key
 	 */
 	saveState(key) {
+		// eslint-disable-next-line no-underscore-dangle
 		Component._stateStorage[`${STATE_STORAGE_PREFIX}${key}`] = { ...this.state };
 	}
 
@@ -78,6 +79,7 @@ export default class Component extends Base {
 	 */
 	loadState(key) {
 		return new Promise((resolve) => {
+			// eslint-disable-next-line no-underscore-dangle
 			const state = Component._stateStorage[`${STATE_STORAGE_PREFIX}${key}`];
 			if (state) {
 				this.setState(state, resolve);

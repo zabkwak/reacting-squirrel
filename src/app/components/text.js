@@ -20,6 +20,7 @@ export default class TextComponent extends Component {
 		jsx: true,
 	};
 
+	// eslint-disable-next-line react/sort-comp
 	static addDictionary(key, dictionary) {
 		Text.addDictionary(key, dictionary);
 		return this;

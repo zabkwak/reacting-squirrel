@@ -156,23 +156,25 @@ describe('Server instance', () => {
 describe('Start of the server', () => {
 
 	const URL = 'http://localhost:8080';
-	const server = new Server({
-		appDir: './__tests__/app',
-		staticDir: './__tests__/public',
-		moduleDev: true,
-		auth: (session, next) => {
-			if (session.id === TEST_SESSION_ID) {
-				session.setUser({ id: 1 });
-			}
-			next();
-		},
-	});
-
-	server.get('/', 'home', 'Home');
-
-	server.get('/user', 'user', 'User', true);
+	let server;
 
 	it('starts the server', (done) => {
+		server = new Server({
+			appDir: './__tests__/app',
+			staticDir: './__tests__/public',
+			moduleDev: true,
+			auth: (session, next) => {
+				if (session.id === TEST_SESSION_ID) {
+					session.setUser({ id: 1 });
+				}
+				next();
+			},
+		});
+
+		server.get('/', 'home', 'Home');
+
+		server.get('/user', 'user', 'User', true);
+
 		const RS_DIR = server._getRSDirPathAbsolute();
 
 		server.start(() => {

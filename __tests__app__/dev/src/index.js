@@ -21,8 +21,8 @@ class CustomLayout extends Layout {
 }
 
 const app = new Server({
-	appDir: './__tests__/app',
-	staticDir: './__tests__/public',
+	appDir: './__tests__app__/app',
+	staticDir: './__tests__app__/public',
 	moduleDev: true,
 	dev: true,
 	layoutComponent: CustomLayout,

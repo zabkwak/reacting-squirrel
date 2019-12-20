@@ -1,0 +1,12 @@
+{
+    "test": "Test",
+    "home": "Domů",
+    "args": "Text s agrumenty {0}, {1} a {2}",
+    "header": "Testovací komponenta vložena do testovacího kontejneru",
+    "socket_status": "Status: {0}",
+    "socket_state_connecting": "Připojování",
+    "socket_state_connected": "Připojeno",
+    "socket_state_disconnected": "Odpojeno",
+    "socket_error": "Chyba připojení: {0}",
+    "reload": "Znovu načíst"
+}

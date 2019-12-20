@@ -1,6 +1,6 @@
 /src
 /.babelrc
-/__tests__
+/__tests__*
 /.npmignore
 /.gitignore
 /.eslintrc

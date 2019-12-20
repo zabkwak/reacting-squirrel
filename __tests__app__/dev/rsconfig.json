@@ -29,7 +29,7 @@
             "route": "/layout-test",
             "component": "home",
             "title": "Layout test",
-            "layout": "__tests__/dev/dist/layout"
+            "layout": "__tests__app__/dev/dist/layout"
 		},
 		{
 			"route": "/generated-page",
@@ -51,11 +51,11 @@
 			"component": "generated-component"
 		}
     ],
-	"socketClassDir": "__tests__/dev/dist",
+	"socketClassDir": "__tests__app__/dev/dist",
 	"errorPage": "page.error",
 	"createMissingComponents": true,
 	"mergeStyles": [
 		"./node_modules/bootstrap/dist/css/bootstrap.css"
 	],
-	"layoutComponent": "./__tests__/dev/dist/layout"
+	"layoutComponent": "./__tests__app__/dev/dist/layout"
 }
