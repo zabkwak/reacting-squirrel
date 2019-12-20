@@ -45,6 +45,11 @@
 						],
 						"title": "HTTP method.",
 						"default": "GET"
+					},
+					"layout": {
+						"type": "string",
+						"title": "Relative path to the custom layout file from the application root.",
+						"default": null
 					}
 				}
 			}
@@ -164,7 +169,8 @@
 			"type": "array",
 			"title": "List of styles to merge to rs-app.css.",
 			"items": {
-				"type": "string"
+				"type": "string",
+				"title": "Relative path to the style from the application root."
 			}
 		},
 		"session": {

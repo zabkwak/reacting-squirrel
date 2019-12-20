@@ -1373,7 +1373,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			routes, components, socketClassDir, errorPage, ...config
 		} = this._rsConfig;
 		const {
-			layoutComponent, session, auth, errorHandler, onWebpackProgress, webpack, ...restConfig
+			layoutComponent, session, auth, errorHandler, onWebpackProgress, webpack, mergeStyles, ...restConfig
 		} = config;
 		return {
 			...restConfig,
@@ -1387,6 +1387,9 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				? typeof webpack === 'string'
 					? this._tryRequireModule(webpack)
 					: webpack
+				: undefined,
+			mergeStyles: mergeStyles && mergeStyles.length
+				? mergeStyles.map((style) => path.resolve(style))
 				: undefined,
 		};
 	}

@@ -29,9 +29,9 @@ const app = new Server({
 	entryFile: 'entry.js',
 	styles: ['/css/main.css'],
 	scripts: ['/js/script.js?api_key=API_KEY'],
-	mergeStyles: [
+	/* mergeStyles: [
 		path.resolve('./node_modules/bootstrap/dist/css/bootstrap.css'),
-	],
+	], */
 	rsConfig: path.resolve(__dirname, '../rsconfig.json'),
 	cookies: {
 		secure: false,
