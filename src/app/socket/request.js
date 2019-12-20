@@ -2,9 +2,9 @@
 import uniqid from 'uniqid';
 import Type from 'runtime-type';
 
-import Application from './application';
-import Socket from './socket';
-import CallbackEmitter from './callback-emitter';
+import Application from '../application';
+import Socket from './index';
+import CallbackEmitter from '../callback-emitter';
 
 const TIMEOUT = 30000;
 

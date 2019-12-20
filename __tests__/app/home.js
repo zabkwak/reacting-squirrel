@@ -1,11 +1,10 @@
 import React from 'react';
 import {
-	Page, Button, Text, Loader, DataComponent, Utils,
+	Page, Button, Text, Loader, DataComponent, Utils, SocketRequest,
 } from '../../src/app';
 
 import './home.css';
 import './home.scss';
-import SocketRequest from '../../src/app/socket-request';
 
 
 export default class Home extends Page {

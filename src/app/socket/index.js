@@ -3,8 +3,8 @@ import io from 'socket.io-client';
 import { encode } from 'msgpack-lite';
 import uniqid from 'uniqid';
 
-import CallbackEmitter from './callback-emitter';
-import Application from './application';
+import CallbackEmitter from '../callback-emitter';
+import Application from '../application';
 
 /**
  * Class to handle communication with the server app using websockets.

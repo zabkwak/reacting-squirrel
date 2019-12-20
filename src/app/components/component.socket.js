@@ -1,5 +1,5 @@
 import Component from './component';
-import SocketRequest from '../socket-request';
+import SocketRequest from '../socket/request';
 
 const TIMEOUT = 30000;
 

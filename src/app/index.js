@@ -12,8 +12,8 @@ import CallbackEmitter from './callback-emitter';
 import Router from './router';
 
 import Socket from './socket';
-import SocketRequest from './socket-request';
-import SocketModel from './socket-model';
+import SocketRequest from './socket/request';
+import SocketModel from './socket/model';
 import Storage from './storage';
 import ErrorPage from './page.error';
 

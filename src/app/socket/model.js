@@ -1,6 +1,6 @@
 import { Model } from 'runtime-type';
 
-import SocketRequest from './socket-request';
+import SocketRequest from './request';
 
 export default class SocketModel extends Model {
 
