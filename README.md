@@ -113,6 +113,9 @@ export default class HomePage extends Page {
 ```
 This code will start simple app on the default port. After the page load the `user.load` event is emitted and `UserSocket` class is trying to load the logged user and send it back to the page.
 
+### CLI
+The simple server can be started over the CLI using `./node_modules/.bin/rs-start-server` and creating `rsconfig.json` in application root.
+
 ## Core functions
 ### Routes register
 The routes are registered on the server-side. The module is using express based routes registering.
@@ -191,6 +194,8 @@ app.start();
 ```
 ### RSConfig
 RSConfig file can contain list of routes, list of components and the directory with the socket classes. By default the file `rsconfig.json` is searched in the `process.cwd()` directory. If the file doesn't exist nothing happens. The path to the file can by changed with config.rsConfig option.  
+
+The schema for the file is located in `[pathToModule]/schemas/rsconfig.schema.json`.
 
 ```json
 // rsconfig.json

@@ -7,6 +7,7 @@
 - Default `Page.render` in DEV mode.
 - Generating missing registered pages and components. 
 - App config in RS config.
+- CLI server start.
 
 ## 0.14.14
 ### Updates

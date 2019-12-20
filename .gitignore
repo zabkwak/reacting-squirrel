@@ -1,6 +1,7 @@
 /node_modules
 /server
 /app
+/cli
 /index.js
 /markdown
 /__tests__/app/~rs
