@@ -181,11 +181,15 @@ describe('Start of the server', () => {
 			expect(fs.existsSync(server.staticDirAbsolute)).to.be.equal(true);
 			expect(fs.existsSync(server.bundlePathAbsolute)).to.be.equal(true);
 			expect(fs.existsSync(RS_DIR)).to.be.equal(true);
+			expect(fs.existsSync(path.normalize(`${RS_DIR}/nonce.js`))).to.be.equal(true);
 			expect(fs.existsSync(path.normalize(`${RS_DIR}/entry.js`))).to.be.equal(true);
 			expect(fs.existsSync(path.normalize(`${RS_DIR}/router.map.js`))).to.be.equal(true);
 			expect(fs.existsSync(path.normalize(`${RS_DIR}/component.map.js`))).to.be.equal(true);
 			expect(fs.existsSync(path.normalize(`${RS_DIR}/socket.map.js`))).to.be.equal(true);
 			expect(fs.existsSync(path.normalize(`${RS_DIR}/postcss.config.js`))).to.be.equal(true);
+			expect(fs.existsSync(path.normalize(`${RS_DIR}/tsconfig.json`))).to.be.equal(true);
+			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res`))).to.be.equal(true);
+			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res/text.json`))).to.be.equal(true);
 
 			done();
 		});

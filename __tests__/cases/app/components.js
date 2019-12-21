@@ -15,8 +15,6 @@ chai.use(chaiEnzyme());
 
 describe('<Text />', () => {
 
-	// Text.addDictionary('default', { test: 'test', testJSX: '<strong>test</strong>', testArgs: 'test {0} {1}' });
-
 	it('checks if the wrapper contains rendered span with the value from dictionary', () => {
 		const wrapper = mount(<Text dictionaryKey="mocha_test" />);
 		expect(wrapper.contains(<span>test</span>)).to.equal(true);
