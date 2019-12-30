@@ -169,6 +169,7 @@ describe('Start of the server', () => {
 				}
 				next();
 			},
+			createMissingComponents: true,
 		});
 
 		server.get('/', 'home', 'Home');

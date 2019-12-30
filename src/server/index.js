@@ -528,9 +528,27 @@ class Server {
 	 */
 	_setRoutes(cb) {
 		this._log('Setting routes');
-		const { dev, appDir, layoutComponent } = this._config;
+		const {
+			dev, appDir, layoutComponent, createMissingComponents,
+		} = this._config;
 		const componentsMap = {};
 		this._routes.forEach((route) => {
+			if (!route.contentComponent) {
+				this._warn(`Content component for ${route.spec} no set.`);
+				return;
+			}
+			const key = `__${md5(`${route.type}${route.spec}`)}__`;
+			const modulePath = path.resolve(`${appDir}/${route.contentComponent}`);
+			componentsMap[key] = {
+				title: route.title,
+				spec: route.spec,
+				path: modulePath,
+			};
+			// If the page component doesn't exist and the server shouldn't generate page components don't register the route.
+			if (!this._componentExists(modulePath) && !createMissingComponents) {
+				this._warn(`Content component for ${route.spec} doesn't exist.`);
+				return;
+			}
 			this._app[route.method](route.spec, async (req, res, next) => {
 				if (route.requireAuth && req.session.getUser() === null) {
 					next(HttpError.create(401));
@@ -576,15 +594,6 @@ class Server {
 					res.render(_.merge(data, d));
 				});
 			});
-			if (route.contentComponent) {
-				const key = `__${md5(`${route.type}${route.spec}`)}__`;
-				const modulePath = path.resolve(`${appDir}/${route.contentComponent}`);
-				componentsMap[key] = {
-					title: route.title,
-					spec: route.spec,
-					path: modulePath,
-				};
-			}
 		});
 		this._createRoutingFile(componentsMap, cb);
 	}
