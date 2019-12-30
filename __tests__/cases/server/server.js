@@ -176,6 +176,10 @@ describe('Start of the server', () => {
 
 		server.get('/user', 'user', 'User', true);
 
+		server.registerSocketEvent('test', async () => {
+			return 'test';
+		});
+
 		const RS_DIR = server._getRSDirPathAbsolute();
 
 		server.start(() => {

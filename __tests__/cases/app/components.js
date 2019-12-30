@@ -2,16 +2,32 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 
 import chai, { expect } from 'chai';
-import Enzyme, { mount } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import chaiEnzyme from 'chai-enzyme';
 
 import '../../globals';
 
-import { Text } from '../../../src/app';
+import { Text, DataComponent, CallbackEmitter } from '../../../src/app';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 chai.use(chaiEnzyme());
+
+describe('<DataComponent />', () => {
+
+	it('renders the content of the test event', (done) => {
+		const wrapper = shallow(
+			<DataComponent
+				events={[{ name: 'test' }]}
+				renderData={({ test }) => <span>{test}</span>}
+			/>
+		);
+		wrapper.setState({ data: { test: 'test' } });
+		wrapper.update();
+		expect(wrapper.contains(<span>test</span>)).to.equal(true);
+		done();
+	});
+});
 
 describe('<Text />', () => {
 

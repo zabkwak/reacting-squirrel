@@ -4,6 +4,8 @@ import { Socket } from '../../../src/app';
 
 const URL = 'http://localhost:8080';
 
+Socket.registerEvents(['test']);
+
 describe('Socket connection', () => {
 
     it('connects to the socket', (done) => {
@@ -25,7 +27,16 @@ describe('Socket connection', () => {
             done();
         });
         Socket.emit('handshake');
-    });
+	});
+	
+	it('calls the test event', (done) => {
+		Socket.addListener('test', (socket, data) => {
+			expect(data).to.have.all.keys('data', '_key');
+			expect(data.data).to.be.equal('test');
+			done();
+		})
+		Socket.emit('test');
+	});
 
     it('disconnects the socket', (done) => {
         Socket.addListener('state', (socket, state) => {

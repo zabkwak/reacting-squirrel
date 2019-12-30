@@ -56,6 +56,9 @@ class Socket extends CallbackEmitter {
 
 	registerEvents(events) {
 		this._events = this._events.concat(events);
+		if (Application.DEV) {
+			console.log('Registered socket evens', events);
+		}
 		return this;
 	}
 
