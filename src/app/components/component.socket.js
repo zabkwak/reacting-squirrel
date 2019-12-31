@@ -65,19 +65,25 @@ export default class SocketComponent extends Component {
 	request(event, data, timeout, callback, onProgress) {
 		this.getContext().logWarning('SocketComponent.request is deprecated. Use requestAsync instead.');
 		if (typeof data === 'function') {
+			// eslint-disable-next-line no-param-reassign
 			callback = data;
+			// eslint-disable-next-line no-param-reassign
 			timeout = TIMEOUT;
+			// eslint-disable-next-line no-param-reassign
 			data = {};
 		}
 		if (typeof timeout === 'function') {
+			// eslint-disable-next-line no-param-reassign
 			callback = timeout;
+			// eslint-disable-next-line no-param-reassign
 			timeout = TIMEOUT;
 		}
 		if (typeof callback !== 'function') {
-			console.error('No callback for socket request');
+			this.getContext().logError('No callback for socket request');
 			return this;
 		}
 		if (!data) {
+			// eslint-disable-next-line no-param-reassign
 			data = {};
 		}
 		this._socketRequest

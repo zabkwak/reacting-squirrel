@@ -37,7 +37,7 @@ class Application extends CallbackEmitter {
 	 * @deprecated
 	 */
 	get initialData() {
-		console.warn('Getting initialData from the context is deprecated. Use getInitialData method.');
+		this.logWarning('Getting initialData from the context is deprecated. Use getInitialData method.');
 		return this._initialData;
 	}
 
@@ -51,10 +51,10 @@ class Application extends CallbackEmitter {
 			this._initialData = JSON.parse(initialDataElement.getAttribute('data'));
 		}
 		if (!this._container) {
-			console.warn('Container wrapper not found');
+			this.logWarning('Container wrapper not found');
 		}
 		if (!this._content) {
-			console.error('Content wrapper not found');
+			this.logError('Content wrapper not found');
 		}
 		window.onpopstate = (event) => {
 			this.render(Router.getRoute());

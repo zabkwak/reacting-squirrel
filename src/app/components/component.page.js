@@ -10,8 +10,11 @@ import SocketComponent from './component.socket';
 export default class Page extends SocketComponent {
 
 	static propTypes = {
+		// eslint-disable-next-line react/forbid-prop-types
 		params: PropTypes.any.isRequired,
+		// eslint-disable-next-line react/forbid-prop-types
 		query: PropTypes.any.isRequired,
+		// eslint-disable-next-line react/forbid-prop-types
 		initialData: PropTypes.any.isRequired,
 	}
 

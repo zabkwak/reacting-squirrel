@@ -49,6 +49,7 @@ class Router {
 	pushState(path = null, q = {}) {
 		const { query, pathname } = this.parseUrl();
 		if (!path) {
+			// eslint-disable-next-line no-param-reassign
 			path = pathname;
 		}
 		if (q === null) {

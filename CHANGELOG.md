@@ -1,6 +1,8 @@
 # CHANGELOG
 
 ## 0.15.2
+### Features
+- Application has `log[Info|Warning|Error]` methods to prevent using console.
 ### Updates
 - Creating subdirectories if needed while creating components.
 
