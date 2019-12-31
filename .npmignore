@@ -4,9 +4,12 @@
 /.npmignore
 /.gitignore
 /.eslintrc
+/.eslintignore
 /jsdoc.json
 /markdown
 /docs
 /tmp
 /test.ts
 /tsconfig.json
+/.vscode
+/_config.yml
