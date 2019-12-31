@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.15.1
+### Fixes
+- Wrong path to the cli/server.js.
+
 ## 0.15.0
 ### Features
 - Exported `runtime-type` Model class.

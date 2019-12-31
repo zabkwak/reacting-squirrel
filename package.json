@@ -116,6 +116,6 @@
 	],
 	"readme": "README.md",
 	"bin": {
-		"rs-start-server": "./dist/cli/server.js"
+		"rs-start-server": "./cli/server.js"
 	}
 }
