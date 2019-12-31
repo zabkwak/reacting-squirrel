@@ -172,9 +172,9 @@ describe('Start of the server', () => {
 			createMissingComponents: true,
 		});
 
-		server.get('/', 'home', 'Home');
+		server.get('/', 'pages/home', 'Home');
 
-		server.get('/user', 'user', 'User', true);
+		server.get('/user', 'pages/user', 'User', true);
 
 		server.registerSocketEvent('test', async () => {
 			return 'test';
@@ -182,7 +182,8 @@ describe('Start of the server', () => {
 
 		const RS_DIR = server._getRSDirPathAbsolute();
 
-		server.start(() => {
+		server.start((err) => {
+			expect(err).to.be.undefined;
 			expect(fs.existsSync(server.staticDirAbsolute)).to.be.equal(true);
 			expect(fs.existsSync(server.bundlePathAbsolute)).to.be.equal(true);
 			expect(fs.existsSync(RS_DIR)).to.be.equal(true);
@@ -195,6 +196,8 @@ describe('Start of the server', () => {
 			expect(fs.existsSync(path.normalize(`${RS_DIR}/tsconfig.json`))).to.be.equal(true);
 			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res`))).to.be.equal(true);
 			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res/text.json`))).to.be.equal(true);
+			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/home.tsx`))).to.be.equal(true);
+			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/user.tsx`))).to.be.equal(true);
 
 			done();
 		});

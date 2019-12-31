@@ -709,6 +709,7 @@ Socket
 					return;
 				}
 				const dirName = path.dirname(route.path);
+				mkdirp.sync(dirName);
 				const fileName = path.basename(route.path);
 				const filePath = `${route.path}.${generatedComponentsExtension}`;
 				fs.writeFileSync(filePath, `import { Page } from '${this._getPathToModule(dirName)}';
@@ -741,6 +742,7 @@ export default class ${this._createClassName(fileName, 'Page')} extends Page {}
 					return;
 				}
 				const dirName = path.dirname(component.path);
+				mkdirp.sync(dirName);
 				const fileName = path.basename(component.path);
 				const filePath = `${component.path}.${generatedComponentsExtension}`;
 				fs.writeFileSync(filePath, `import { Component } from '${this._getPathToModule(dirName)}';

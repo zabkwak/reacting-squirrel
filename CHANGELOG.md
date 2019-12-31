@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.15.2
+### Updates
+- Creating subdirectories if needed while creating components.
+
 ## 0.15.1
 ### Fixes
 - Wrong path to the cli/server.js.
