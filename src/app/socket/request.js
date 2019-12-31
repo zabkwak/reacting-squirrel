@@ -25,16 +25,12 @@ function castResponse(config = {}) {
 				Object.keys(r).forEach((key) => {
 					const value = r[key];
 					if (!config[key]) {
-						if (Application.DEV) {
-							console.warn(`Key '${key}' not defined.`);
-						}
+						Application.logWarning(`Key '${key}' not defined.`);
 						out[key] = value;
 						return;
 					}
 					if (!(config[key] instanceof Type.Type)) {
-						if (Application.DEV) {
-							console.error(`Type for '${key}' in the instance of the runtime-type.`);
-						}
+						Application.logError(`Type for '${key}' in the instance of the runtime-type.`);
 						return;
 					}
 					out[key] = config[key].cast(value);
@@ -84,16 +80,18 @@ export default class SocketRequest extends CallbackEmitter {
 	execute(event, data = null, timeout = TIMEOUT, onProgress = null) {
 		return new Promise((resolve, reject) => {
 			if (!data) {
+				// eslint-disable-next-line no-param-reassign
 				data = {};
 			}
 			const key = uniqid();
 			let done = false;
 			const start = Date.now();
+			// eslint-disable-next-line no-shadow
 			const listener = (socket, data) => {
-				if (Application.DEV) {
-					console.log(`Request ${event}`, { took: Date.now() - start, _key: data._key });
-				}
+				// eslint-disable-next-line no-underscore-dangle
+				Application.logInfo(`Request ${event}`, { took: Date.now() - start, _key: data._key });
 				done = true;
+				// eslint-disable-next-line no-underscore-dangle
 				if (data && data._key === key) {
 					if (data.error) {
 						reject(data.error);

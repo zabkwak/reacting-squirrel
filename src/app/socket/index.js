@@ -56,9 +56,7 @@ class Socket extends CallbackEmitter {
 
 	registerEvents(events) {
 		this._events = this._events.concat(events);
-		if (Application.DEV) {
-			console.log('Registered socket evens', events);
-		}
+		Application.logInfo('Registered socket evens', events);
 		return this;
 	}
 
@@ -74,26 +72,18 @@ class Socket extends CallbackEmitter {
 		this._setState(this.STATE_CONNECTING);
 		this._socket = io(address);
 		this._socket.on('connect', () => {
-			if (Application.DEV) {
-				console.log('Socket connected');
-			}
+			Application.logInfo('Socket connected');
 			this._setState(this.STATE_CONNECTED);
 		});
 		this._socket.on('reconnect', () => {
-			if (Application.DEV) {
-				console.log('Socket reconnected');
-			}
+			Application.logInfo('Socket reconnected');
 		});
 		this._socket.on('disconnect', (reason) => {
-			if (Application.DEV) {
-				console.log('Socket disconnected', reason);
-			}
+			Application.logInfo('Socket disconnected', reason);
 			this._setState(this.STATE_DISCONNECTED);
 		});
 		this._socket.on('error', (err) => {
-			if (Application.DEV) {
-				console.error('Socket connection error', err);
-			}
+			Application.logError('Socket connection error', err);
 			this._callListener('error', err);
 		});
 		this._events.forEach((event) => this._socket.on(event, (data) => this._handleEvent(event, data)));
@@ -112,11 +102,12 @@ class Socket extends CallbackEmitter {
 			throw new Error('Socket not connected');
 		}
 		if (this._events.indexOf(event) < 0) {
-			console.warn(`Unknown socket event '${event}'`);
+			Application.logWarning(`Unknown socket event '${event}'`);
 		}
 		this._emit(event, key, data, onProgress)
 			.catch((e) => {
 				// Force to handle event as error
+				// eslint-disable-next-line no-underscore-dangle
 				const [handle] = this._socket._callbacks[`$${event}`];
 				handle({ error: e, _key: key });
 			});
@@ -154,14 +145,13 @@ class Socket extends CallbackEmitter {
 	}
 
 	async _emit(event, key, data, onProgress) {
+		// eslint-disable-next-line no-param-reassign
 		data = await this._convertData(data);
-		if (Application.DEV) {
-			console.log(`Emit '${event}'`, data);
-		}
+		Application.logInfo(`Emit '${event}'`, data);
 		const bin = encode(data);
 		const { byteLength } = bin;
 		if (byteLength > this._maxMessageSize) {
-			throw new Error('Overcomed allowed size of the message.');
+			throw new Error('Overcame allowed size of the message.');
 		}
 		const chunked = this._chunkArray(bin, this._chunkSize);
 		const size = chunked.length;
@@ -186,6 +176,7 @@ class Socket extends CallbackEmitter {
 			const value = data[key];
 			if (value instanceof File) {
 				const buffer = await this._convertFileToArrayBuffer(value);
+				// eslint-disable-next-line no-param-reassign
 				data[key] = new Uint8Array(buffer);
 				return;
 			}
@@ -196,9 +187,11 @@ class Socket extends CallbackEmitter {
 				if (value === undefined) {
 					return;
 				}
+				// eslint-disable-next-line no-param-reassign
 				data[key] = await this._convertData(value);
 			}
 			if (value === undefined) {
+				// eslint-disable-next-line no-param-reassign
 				delete data[key];
 			}
 		}));
@@ -206,14 +199,13 @@ class Socket extends CallbackEmitter {
 	}
 
 	_handleEvent(event, data) {
-		if (Application.DEV) {
-			console.log(`Handling event '${event}'`, data);
+		Application.logInfo(`Handling event '${event}'`, data);
+		if (data && data.errorV) {
+			Application.logError('Socket error', data.error);
 		}
-		if (data && data.error && Application.DEV) {
-			console.error('Socket error', data.error);
-		}
-		if (data && data._deprecated && Application.DEV) {
-			console.warn(`Event '${event}' is deprecated`);
+		// eslint-disable-next-line no-underscore-dangle
+		if (data && data._deprecated) {
+			Application.logWarning(`Event '${event}' is deprecated`);
 		}
 		this._callListener(event, data);
 	}

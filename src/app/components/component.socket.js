@@ -45,9 +45,7 @@ export default class SocketComponent extends Component {
 	}
 
 	call(event, data = {}, timeout = TIMEOUT, onProgress = null) {
-		if (this.getContext().DEV) {
-			console.warn('SocketComponent.call is deprecated. Use requestAsync instead.');
-		}
+		this.getContext().logWarning('SocketComponent.call is deprecated. Use requestAsync instead.');
 		return this.requestAsync(event, data, timeout, onProgress);
 	}
 
@@ -65,9 +63,7 @@ export default class SocketComponent extends Component {
 	 * @param {function} onProgress Function called in the progress of the request.
 	 */
 	request(event, data, timeout, callback, onProgress) {
-		if (this.getContext().DEV) {
-			console.warn('SocketComponent.request is deprecated. Use requestAsync instead.');
-		}
+		this.getContext().logWarning('SocketComponent.request is deprecated. Use requestAsync instead.');
 		if (typeof data === 'function') {
 			callback = data;
 			timeout = TIMEOUT;

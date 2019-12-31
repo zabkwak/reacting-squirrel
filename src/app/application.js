@@ -112,18 +112,14 @@ class Application extends CallbackEmitter {
 	start() {
 		this._checkStartedState();
 		this._started = true;
-		if (this.DEV) {
-			console.log('Application started', {
-				DEV: this.DEV, timestamp: this.getInitialData('timestamp'), version: this.getInitialData('version'),
-			});
-		}
+		this.logInfo('Application started', {
+			DEV: this.DEV, timestamp: this.getInitialData('timestamp'), version: this.getInitialData('version'),
+		});
 		this._callListener('start');
 		this._components.forEach((component) => {
 			const target = document.getElementById(component.elementId);
 			if (!target) {
-				if (this.DEV) {
-					console.warn(`Target DOM element with id '${component.elementId}' doesn't exist.`);
-				}
+				this.logWarning(`Target DOM element with id '${component.elementId}' doesn't exist.`);
 				return;
 			}
 			const Component = component.component;
@@ -248,6 +244,27 @@ class Application extends CallbackEmitter {
 	 */
 	getRef(key) {
 		return this._refs[key];
+	}
+
+	logInfo(message, ...optionalParams) {
+		if (this.DEV) {
+			// eslint-disable-next-line no-console
+			console.log(message, ...optionalParams);
+		}
+	}
+
+	logWarning(message, ...optionalParams) {
+		if (this.DEV) {
+			// eslint-disable-next-line no-console
+			console.warn(message, ...optionalParams);
+		}
+	}
+
+	logError(message, ...optionalParams) {
+		if (this.DEV) {
+			// eslint-disable-next-line no-console
+			console.error(message, ...optionalParams);
+		}
 	}
 
 	_checkStartedState() {

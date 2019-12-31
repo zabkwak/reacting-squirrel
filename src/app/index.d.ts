@@ -174,6 +174,30 @@ declare class Application extends CallbackEmitter {
      * @param key Key of the reference.
      */
 	getRef<T = any>(key: string): T;
+
+	/**
+	 * Logs the message to the console using `console.log` if the app is in DEV mode.
+	 *
+	 * @param message 
+	 * @param optionalParams 
+	 */
+	logInfo(message: string, ...optionalParams: Array<any>): void;
+
+	/**
+	 * Logs the message to the console using `console.warn` if the app is in DEV mode.
+	 *
+	 * @param message 
+	 * @param optionalParams 
+	 */
+	logWarning(message: string, ...optionalParams: Array<any>): void;
+
+	/**
+	 * Logs the message to the console using `console.error` if the app is in DEV mode.
+	 *
+	 * @param message 
+	 * @param optionalParams 
+	 */
+	logError(message: string, ...optionalParams: Array<any>): void;
 }
 
 /**
