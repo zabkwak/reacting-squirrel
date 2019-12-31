@@ -172,35 +172,35 @@ describe('Start of the server', () => {
 			createMissingComponents: true,
 		});
 
-		server.get('/', 'pages/home', 'Home');
-
-		server.get('/user', 'pages/user', 'User', true);
-
-		server.registerSocketEvent('test', async () => {
-			return 'test';
-		});
-
 		const RS_DIR = server._getRSDirPathAbsolute();
 
-		server.start((err) => {
-			expect(err).to.be.undefined;
-			expect(fs.existsSync(server.staticDirAbsolute)).to.be.equal(true);
-			expect(fs.existsSync(server.bundlePathAbsolute)).to.be.equal(true);
-			expect(fs.existsSync(RS_DIR)).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${RS_DIR}/nonce.js`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${RS_DIR}/entry.js`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${RS_DIR}/router.map.js`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${RS_DIR}/component.map.js`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${RS_DIR}/socket.map.js`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${RS_DIR}/postcss.config.js`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${RS_DIR}/tsconfig.json`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res/text.json`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/home.tsx`))).to.be.equal(true);
-			expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/user.tsx`))).to.be.equal(true);
+		server
+			.get('/', 'pages/home', 'Home')
+			.get('/user', 'pages/user', 'User', true)
+			.registerComponent('components/test', 'test')
+			.registerSocketEvent('test', async () => {
+				return 'test';
+			})
+			.start((err) => {
+				expect(err).to.be.undefined;
+				expect(fs.existsSync(server.staticDirAbsolute)).to.be.equal(true);
+				expect(fs.existsSync(server.bundlePathAbsolute)).to.be.equal(true);
+				expect(fs.existsSync(RS_DIR)).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${RS_DIR}/nonce.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${RS_DIR}/entry.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${RS_DIR}/router.map.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${RS_DIR}/component.map.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${RS_DIR}/socket.map.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${RS_DIR}/postcss.config.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${RS_DIR}/tsconfig.json`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/res/text.json`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/home.tsx`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/user.tsx`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/components/test.tsx`))).to.be.equal(true);
 
-			done();
-		});
+				done();
+			});
 	});
 
 	it('checks if the home page is accessible with http request', (done) => {
