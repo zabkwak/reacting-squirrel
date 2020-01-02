@@ -232,8 +232,7 @@ class Socket {
  */
 const func = (server, options = {}) => {
 	const io = socketIO(server.getServer(), options);
-	// eslint-disable-next-line no-underscore-dangle
-	const { socketMessageMaxSize } = server._config;
+	const { socketMessageMaxSize } = server.getConfig();
 	io.use((socket, next) => {
 		if (!socket.request.headers.cookie) {
 			next();

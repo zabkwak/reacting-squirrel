@@ -326,6 +326,10 @@ class Server {
 		return this._app;
 	}
 
+	getConfig(key = null) {
+		return key ? this._config[key] : this._config;
+	}
+
 	/**
 	 * Gets the list of registered socket events.
 	 *

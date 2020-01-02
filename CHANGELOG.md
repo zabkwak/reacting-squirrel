@@ -3,6 +3,7 @@
 ## 0.15.2
 ### Features
 - Application has `log[Info|Warning|Error]` methods to prevent using console.
+- Server has `getConfig` method to property access to the server configuration.
 ### Updates
 - Creating subdirectories if needed while creating components.
 

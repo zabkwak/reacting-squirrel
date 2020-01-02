@@ -10,6 +10,7 @@
 /__tests__app__/dev/dist
 /__tests__app__/app/generated*
 /__tests__app__/public
+/__tests__app__/app/~rs
 /__types__
 /package-lock.json
 

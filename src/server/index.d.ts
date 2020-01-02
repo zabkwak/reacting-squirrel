@@ -620,6 +620,18 @@ export default class Server {
      */
 	getApp(): express.Application;
 
+	/**
+	 * Gets the server config.
+	 */
+	getConfig(): IAppConfig;
+
+	/**
+	 * Gets the server config by it's key.
+	 *
+	 * @param key Key of the config field.
+	 */
+	getConfig<K extends keyof IAppConfig>(key: K): IAppConfig[K];
+
     /**
      * Gets the list of registered socket events.
      */
