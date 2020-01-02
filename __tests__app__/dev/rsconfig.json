@@ -57,5 +57,6 @@
 	"mergeStyles": [
 		"./node_modules/bootstrap/dist/css/bootstrap.css"
 	],
-	"layoutComponent": "./__tests__app__/dev/dist/layout"
+	"layoutComponent": "./__tests__app__/dev/dist/layout",
+	"sourceStylesDir": "./__tests__app__/dev/src/styles"
 }

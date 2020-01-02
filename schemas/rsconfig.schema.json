@@ -240,6 +240,11 @@
 				"tsx"
 			],
 			"default": "tsx"
+		},
+		"sourceStylesDir": {
+			"type": "string",
+			"title": "Relative path to the directory containing source styles that are merged to app styles.",
+			"default": null
 		}
 	}
 }

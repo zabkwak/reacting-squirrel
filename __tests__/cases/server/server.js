@@ -40,6 +40,7 @@ const CONFIG_FIELDS = [
 	'cookies',
 	'createMissingComponents',
 	'generatedComponentsExtension',
+	'sourceStylesDir',
 ];
 
 describe('Server instance', () => {

@@ -56,40 +56,7 @@ class Server {
 	 * @property {string} elementId Identificator of the DOM element where the component should render.
 	 */
 	/**
-	 * @typedef CookieConfig
-	 * @property {string} secret Secret which is used to sign cookies.
-	 * @property {boolean} secure Secure flag for the cookies.
-	 * @property {boolean} httpOnly HttpOnly flag for the cookies.
-	 */
-	/**
-	 * @typedef AppConfig
-	 * @property {number} port Port on which the app listens.
-	 * @property {string} staticDir Relative path to the static directory for the express app.
-	 * @property {boolean} dev Flag of the dev status of the app.
-	 * @property {string} jsDir Name of the directory where the javascript is located in the staticDir.
-	 * @property {string} cssDir Name of the directory where the css is located in the staticDir.
-	 * @property {string} filename Name of the file.
-	 * @property {string} appDir Relative path to the app directory.
-	 * @property {string} entryFile Relative path to the entry file.
-	 * @property {string} rsConfig Custom path to rsconfig.json file.
-	 * @property {JSX.Element} layoutComponent React component with default html code. It must extend Layout from the module.
-	 * @property {string} cookieSecret Secret which is used to sign cookies. DEPRECATED
-	 * @property {CookieConfig} cookies Configuration for cookies.
-	 * @property {string[]} scripts List of the scripts loaded in the base html.
-	 * @property {string[]} styles List of the styles loaded in the base html.
-	 * @property {string[]} mergeStyles List of styles to merge to rs-app.css.
-	 * @property {function} session Class of the session. It must extend Session from the module.
-	 * @property {function} socketMessageMaxSize Maximal size of one socket message.
-	 * @property {function(Session, AuthCallback):void} auth Auth function called on the routes which are requiring authorization.
-	 * @property {function} errorHandler Function to handle errors in the route execution.
-	 * @property {boolean} bundlePathRelative Indicates if the bundle is loaded relatively in the output html.
-	 * @property {function(percents, message):void} onWebpackProgress Function to handle webpack progress.
-	 * @property {any} socketIO Custom socketio config.
-	 * @property {any} webpack Custom webpack config.
-	 * @property {any} autoprefixer Autoprefixer config.
-	 * @property {string[]} babelTranspileModules List of modules to add to the babel-loader.
-	 * @property {boolean} createMissingComponents Indicates if registered components should be created if missing.
-	 * @property {'js'|'jsx'|'ts'|'tsx'} generatedComponentsExtension Extension of the generated components.
+	 * @typedef {import('./').IAppConfig} AppConfig
 	 */
 
 	/**
@@ -144,6 +111,7 @@ class Server {
 		createMissingComponents: false,
 		generatedComponentsExtension: 'tsx',
 		moduleDev: false,
+		sourceStylesDir: null,
 	};
 
 	/**
@@ -297,6 +265,14 @@ class Server {
 			this._getConfigFromRSConfig(),
 			config,
 		);
+		if (!this._config.sourceStylesDir) {
+			this._warn('Using default sourceStylesDir. It\'s in the express static directory and all sources are accessible over the http.');
+			this._config.sourceStylesDir = path.resolve(`${this._configstaticDir}/${this._config.cssDir}`);
+		} else {
+			this._config.sourceStylesDir = !path.isAbsolute(this._config.sourceStylesDir)
+				? path.resolve(this._config.sourceStylesDir)
+				: this._config.sourceStylesDir;
+		}
 		if (!(new this.Session() instanceof Session)) {
 			throw new Error('Cannot create instance of Session.');
 		}
@@ -310,7 +286,7 @@ class Server {
 		const pkg = require(path.resolve('./package.json'));
 		this._version = pkg.version;
 		this._setApp();
-		this._log(`Server created ${JSON.stringify(this._config)}`);
+		this._log('Server created', this._config);
 	}
 
 	/**
@@ -1236,8 +1212,11 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 */
 	_compileStyles(cb = () => { }) {
 		this._log('Compiling styles');
-		const { cssDir, staticDir, mergeStyles } = this._config;
+		const {
+			cssDir, staticDir, mergeStyles, sourceStylesDir,
+		} = this._config;
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
+		const sourceDir = sourceStylesDir ? path.resolve(sourceStylesDir) : dir;
 		const stylesPath = `${dir}/rs-app.css`;
 		if (fs.existsSync(stylesPath)) {
 			fs.unlinkSync(stylesPath);
@@ -1245,7 +1224,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		const compiler = new StylesCompiler([
 			path.resolve(__dirname, './assets/loader.scss'),
 			...mergeStyles,
-			dir,
+			sourceDir,
 		], dir, 'rs-app.css');
 		compiler.compile((err) => {
 			if (err) {
@@ -1285,11 +1264,12 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * Gets the list of css or scss files in css directory for webpack watch registration.
 	 */
 	_getStylesToWatch() {
-		const { staticDir, cssDir } = this._config;
+		const { staticDir, cssDir, sourceStylesDir } = this._config;
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
-		const files = fs.readdirSync(dir);
+		const sourceDir = sourceStylesDir ? path.resolve(sourceStylesDir) : dir;
+		const files = fs.readdirSync(sourceDir);
 		return files
-			.map((f) => `${dir}/${f}`)
+			.map((f) => `${sourceDir}/${f}`)
 			.filter((f) => {
 				const stat = fs.statSync(f);
 				if (stat.isDirectory()) {
@@ -1433,13 +1413,13 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 *
 	 * @param {string} message Message to log.
 	 */
-	_log(message) {
+	_log(message, ...args) {
 		const { dev } = this._config;
 		if (!dev) {
 			return;
 		}
 		// eslint-disable-next-line no-console
-		console.log(new Date(), message);
+		console.log(new Date(), message, ...args);
 	}
 
 	/**

@@ -284,8 +284,6 @@ Checkout the documentation [here](https://zabkwak.github.io/reacting-squirrel/).
 - Text component as separate module.
 - res directory out of app directory to use texts in the server side.
 - Redirect on layout change.
-- Option to change location of source styles.
-- Creating directories with components.
 
 ### Deprecated
 [https://trello.com/b/FepP7DPC/reacting-squirrel](https://trello.com/b/FepP7DPC/reacting-squirrel)

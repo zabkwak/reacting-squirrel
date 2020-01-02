@@ -43,7 +43,7 @@ type RouteCallback = (req: IRequest, res: IResponse, next: (err: Error, data?: {
 /**
  * Server configuration.
  */
-interface IAppConfig {
+export interface IAppConfig {
     /** Port on which the app listens. 
      * @default 8080 
      */
@@ -195,6 +195,11 @@ interface IAppConfig {
 	 * @default 'tsx'
 	 */
 	generatedComponentsExtension?: 'js' | 'jsx' | 'ts' | 'tsx';
+	/**
+	 * Path to the directory containing source styles that are merged to app styles.
+	 * @default './[staticDir]/[cssDir]'
+	 */
+	sourceStylesDir?: string;
 }
 
 interface ISocketEvent<S extends Session = Session> {
