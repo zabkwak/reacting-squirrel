@@ -3,8 +3,8 @@ import broadcast from './decorator.broadcast';
 import notSocketMethod from './decorator.notSocketMethod';
 
 /**
- * @typedef {import('../socket').Socket} Socket
- * @typedef {import('../session').default} Session
+ * @typedef {import('../').Socket} Socket
+ * @typedef {import('../').Session} Session
  */
 
 /**

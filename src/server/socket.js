@@ -7,11 +7,9 @@ import { decode } from 'msgpack-lite';
 
 /**
  * @typedef {import('./').default} Server
- * @typedef {import('./session').default} Session
- * @typedef {import('./socket-class').default} SocketClass
- * @typedef SocketEvent
- * @property {string} event
- * @property {function(any, function):void|Promise<any>} listener
+ * @typedef {import('./').Session} Session
+ * @typedef {import('./').SocketClass} SocketClass
+ * @typedef {import('./').ISocketEvent['listener']} SocketEvent
  */
 
 const MAX_MESSAGE_SIZE = (2 ** 20) * 100;

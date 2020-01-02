@@ -41,15 +41,6 @@ const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid'];
  * Server part of the application.
  */
 class Server {
-
-	/**
-	 * @callback AuthCallback
-	 */
-	/**
-	 * @typedef SocketEvent
-	 * @property {string} event
-	 * @property {function} listener
-	 */
 	/**
 	 * @typedef CustomComponent
 	 * @property {string} path Absolute path to the component.
@@ -57,6 +48,7 @@ class Server {
 	 */
 	/**
 	 * @typedef {import('./').IAppConfig} AppConfig
+	 * @typedef {import('./').ISocketEvent} SocketEvent
 	 */
 
 	/**
