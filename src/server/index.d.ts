@@ -202,7 +202,7 @@ export interface IAppConfig {
 	sourceStylesDir?: string;
 }
 
-interface ISocketEvent<S extends Session = Session> {
+export interface ISocketEvent<S extends Session = Session> {
 	event: string;
 	listener: (socket: Socket<S>, data: any, next?: (err?: any, data?: any) => void) => void | Promise<any>;
 }
