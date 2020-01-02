@@ -259,7 +259,7 @@ class Server {
 		);
 		if (!this._config.sourceStylesDir) {
 			this._warn('Using default sourceStylesDir. It\'s in the express static directory and all sources are accessible over the http.');
-			this._config.sourceStylesDir = path.resolve(`${this._configstaticDir}/${this._config.cssDir}`);
+			this._config.sourceStylesDir = path.resolve(`${this._config.staticDir}/${this._config.cssDir}`);
 		} else {
 			this._config.sourceStylesDir = !path.isAbsolute(this._config.sourceStylesDir)
 				? path.resolve(this._config.sourceStylesDir)
@@ -1208,7 +1208,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			cssDir, staticDir, mergeStyles, sourceStylesDir,
 		} = this._config;
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
-		const sourceDir = sourceStylesDir ? path.resolve(sourceStylesDir) : dir;
 		const stylesPath = `${dir}/rs-app.css`;
 		if (fs.existsSync(stylesPath)) {
 			fs.unlinkSync(stylesPath);
@@ -1216,7 +1215,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		const compiler = new StylesCompiler([
 			path.resolve(__dirname, './assets/loader.scss'),
 			...mergeStyles,
-			sourceDir,
+			sourceStylesDir,
 		], dir, 'rs-app.css');
 		compiler.compile((err) => {
 			if (err) {
@@ -1256,12 +1255,10 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * Gets the list of css or scss files in css directory for webpack watch registration.
 	 */
 	_getStylesToWatch() {
-		const { staticDir, cssDir, sourceStylesDir } = this._config;
-		const dir = path.resolve(`${staticDir}/${cssDir}`);
-		const sourceDir = sourceStylesDir ? path.resolve(sourceStylesDir) : dir;
-		const files = fs.readdirSync(sourceDir);
+		const { sourceStylesDir } = this._config;
+		const files = fs.readdirSync(sourceStylesDir);
 		return files
-			.map((f) => `${sourceDir}/${f}`)
+			.map((f) => `${sourceStylesDir}/${f}`)
 			.filter((f) => {
 				const stat = fs.statSync(f);
 				if (stat.isDirectory()) {
