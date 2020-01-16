@@ -33,6 +33,7 @@ import SocketClass from './socket-class';
 import Utils from './utils';
 import StylesCompiler from './styles-compiler';
 import { TSConfig } from './constants';
+import Plugin from './plugin';
 
 const RS_DIR = '~rs';
 const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid'];
@@ -134,6 +135,10 @@ class Server {
 	_beforeExecution = [];
 
 	_nonce = Buffer.from(uniqid()).toString('base64');
+
+	_entryInjections = [];
+
+	_plugins = [];
 
 	/**
 	 * Port on which the server listens.
@@ -419,6 +424,15 @@ class Server {
 		return this;
 	}
 
+	registerPlugin(plugin) {
+		if (!(plugin instanceof Plugin)) {
+			throw new Error('The plugin must be instance of Plugin.');
+		}
+		this._plugins.push(plugin);
+		plugin.getEntryInjections().forEach((injection) => this._injectToEntry(injection));
+		return this;
+	}
+
 	/**
 	 * Starts the express server. In that process it creates all necessary files.
 	 *
@@ -646,12 +660,14 @@ import defaultDictionary from '../res/text.json';
 Text.addDictionary(defaultDictionary);
 
 Application
-			.registerRoutingMap(routingMap)
-			.registerComponents(components)
-			.registerErrorPage(ErrorPage)
-			.start();
+	.registerRoutingMap(routingMap)
+	.registerComponents(components)
+	.registerErrorPage(ErrorPage)
+	.start();
 Socket.registerEvents(socketEvents);
-${connectSocketAutomatically ? 'Socket.connect()' : ''}
+${connectSocketAutomatically ? 'Socket.connect();' : ''}
+// Injected code
+${this._entryInjections.join('\n')}
 		`, cb,
 		);
 	}
@@ -823,6 +839,18 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				});
 			});
 		});
+	}
+
+	/**
+	 * Injects the code to the generated entry file.
+	 *
+	 * @param {string} code
+	 */
+	_injectToEntry(code) {
+		if (code) {
+			this._entryInjections.push(code);
+		}
+		return this;
 	}
 
 	/**
@@ -1435,4 +1463,5 @@ export {
 	HttpError,
 	Socket,
 	Utils,
+	Plugin,
 };

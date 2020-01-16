@@ -6,6 +6,7 @@
 - Server has `getConfig` method to property access to the server configuration.
 - Option to change location of source styles that are merged into the application styles.
 - Option to disable automatically socket connection.
+- Preparation for plugins.
 ### Updates
 - Creating subdirectories if needed while creating components.
 

@@ -1,9 +1,10 @@
+/* eslint-disable max-classes-per-file */
 import React from 'react';
 import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
 
-import Server, { Layout, Socket } from '../../../server';
+import Server, { Layout, Socket, Plugin } from '../../../server';
 
 class CustomLayout extends Layout {
 
@@ -65,6 +66,14 @@ app.registerSocketEvent('socket.test', async (socket, data) => data);
 app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 	fs.writeFileSync(`./tmp/${name}`, file);
 });
+
+class CustomPlugin extends Plugin {
+	getEntryInjections() {
+		return ['console.log(\'custom plugin\');'];
+	}
+}
+
+app.registerPlugin(new CustomPlugin());
 
 // console.log(app.Text.get('test'));
 

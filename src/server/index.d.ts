@@ -521,6 +521,11 @@ export class SocketClass<S extends Session = Session> {
 
 }
 
+export abstract class Plugin {
+
+	public getEntryInjections(): Array<string>;
+}
+
 export { HttpSmartError as HttpError };
 
 /**
@@ -755,6 +760,13 @@ export default class Server {
 	registerBeforeExecution<R extends IRequest = IRequest>(
 		spec: string, callback: (req: R, res: IResponse) => Promise<void>,
 	): this;
+
+	/**
+	 * Registers the plugin.
+	 *
+	 * @param plugin Instance of plugin.
+	 */
+	registerPlugin(plugin: Plugin): this;
 
     /**
      * Starts the application.

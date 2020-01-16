@@ -148,10 +148,7 @@ class Application extends CallbackEmitter {
 			delete this._initialData.error;
 			const p = Router.parseUrl();
 			if (!this._errorPage) {
-				if (this.DEV) {
-					// eslint-disable-next-line no-console
-					console.error('Error Page not registered');
-				}
+				this.logError('Error Page not registered');
 				return;
 			}
 			this.renderComponent(
