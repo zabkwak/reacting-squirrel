@@ -200,6 +200,11 @@ export interface IAppConfig {
 	 * @default './[staticDir]/[cssDir]'
 	 */
 	sourceStylesDir?: string;
+	/**
+	 * Indicates if the socket should be connected automatically after the bundle load.
+	 * @default true
+	 */
+	connectSocketAutomatically?: boolean;
 }
 
 export interface ISocketEvent<S extends Session = Session> {

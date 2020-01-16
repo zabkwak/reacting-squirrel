@@ -41,6 +41,7 @@ const CONFIG_FIELDS = [
 	'createMissingComponents',
 	'generatedComponentsExtension',
 	'sourceStylesDir',
+	'connectSocketAutomatically',
 ];
 
 describe('Server instance', () => {

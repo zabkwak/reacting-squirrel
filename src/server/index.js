@@ -104,6 +104,7 @@ class Server {
 		generatedComponentsExtension: 'tsx',
 		moduleDev: false,
 		sourceStylesDir: null,
+		connectSocketAutomatically: true,
 	};
 
 	/**
@@ -620,7 +621,7 @@ class Server {
 	 */
 	_createEntryFile(cb) {
 		this._log('Creating entry file');
-		const { entryFile, appDir } = this._config;
+		const { entryFile, appDir, connectSocketAutomatically } = this._config;
 		const pathToTheModule = this._getPathToModule(path.resolve(this._getRSDirPath()));
 		let entryFileImport = null;
 		if (entryFile) {
@@ -649,9 +650,8 @@ Application
 			.registerComponents(components)
 			.registerErrorPage(ErrorPage)
 			.start();
-Socket
-			.registerEvents(socketEvents)
-			.connect();
+Socket.registerEvents(socketEvents);
+${connectSocketAutomatically ? 'Socket.connect()' : ''}
 		`, cb,
 		);
 	}

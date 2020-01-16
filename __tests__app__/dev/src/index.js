@@ -46,6 +46,7 @@ const app = new Server({
     */
 	// socketMessageMaxSize: 1,
 	// babelTranspileModules: ['react'],
+	// connectSocketAutomatically: false,
 });
 
 app.registerBeforeExecution('*', async (req, res) => {

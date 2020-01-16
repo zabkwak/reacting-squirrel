@@ -245,6 +245,11 @@
 			"type": "string",
 			"title": "Relative path to the directory containing source styles that are merged to app styles.",
 			"default": null
+		},
+		"connectSocketAutomatically": {
+			"type": "boolean",
+			"title": "Indicates if the socket should be connected automatically after the bundle load.",
+			"default": true
 		}
 	}
 }
