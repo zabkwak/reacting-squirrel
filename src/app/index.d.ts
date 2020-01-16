@@ -617,10 +617,27 @@ declare class Storage {
 	public clear(): void;
 }
 
+export type EventMap = {
+	[key: string]: any;
+}
 /**
  * Simple class to handle callbacks.
+ * @typeparam T Event map for the listeners as object with event name and the type of the arguments in the callback.
+ * @example
+ * ```javascript
+ * type EventMap = {
+ * 	test: number;
+ * }
+ * class SomeEmitter extends CallbackEmitter<EventMap> {}
+ * 
+ * const emitter = new SomeEmitter();
+ * emitter.addListener('test', (e, test) => {
+ * 	// e is instance of the emitter
+ * 	// test is number
+ * })
+ * ```
  */
-export class CallbackEmitter {
+export class CallbackEmitter<T = EventMap> {
 
     /**
      * Registers the listener of the event.
@@ -628,14 +645,14 @@ export class CallbackEmitter {
      * @param event Name of the event.
      * @param listener Listener to execute when the event is called.
      */
-	public addListener(event: string, listener: (self: this) => void): this;
+	public addListener<K extends keyof T>(event: K, listener: (self: this) => void): this;
     /**
      * Registers the listener of the event.
      *
      * @param event Name of the event.
      * @param listener Listener to execute when the event is called.
      */
-	public addListener(event: string, listener: (self: this, args: any) => void): this;
+	public addListener<K extends keyof T>(event: K, listener: (self: this, args: T[K]) => void): this;
 
     /**
      * Removes the listener of the event.
@@ -643,28 +660,28 @@ export class CallbackEmitter {
      * @param event Name of the event.
      * @param listener 
      */
-	public removeListener(event: string, listener: (self: this) => void): this;
+	public removeListener<K extends keyof T>(event: K, listener: (self: this) => void): this;
     /**
      * Removes the listener of the event.
      *
      * @param event Name of the event.
      * @param listener 
      */
-	public removeListener(event: string, listener: (self: this, args: any) => void): this;
+	public removeListener<K extends keyof T>(event: K, listener: (self: this, args: T[K]) => void): this;
 
     /**
      * Calls all listeners registered in the event.
      *
      * @param event Name of the event.
      */
-	protected _callListener(event: string): void;
+	protected _callListener<K extends keyof T>(event: K): void;
     /**
      * Calls all listeners registered in the event.
      *
      * @param event Name of the event.
      * @param args Data to send in the event.
      */
-	protected _callListener(event: string, args: any): void;
+	protected _callListener<K extends keyof T>(event: K, args: T[K]): void;
 
     /**
      * Checks if the emitter has registerd event.
