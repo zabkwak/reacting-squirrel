@@ -1,4 +1,4 @@
-const TSConfig = {
+export const TSConfig = {
 	compilerOptions: {
 		module: 'commonjs',
 		noImplicitAny: true,
@@ -22,8 +22,5 @@ const TSConfig = {
 		'node_modules',
 	],
 };
-
-export {
-	// eslint-disable-next-line import/prefer-default-export
-	TSConfig,
-};
+export const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid'];
+export const RS_DIR = '~rs';

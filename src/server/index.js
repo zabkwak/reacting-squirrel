@@ -3,7 +3,6 @@
 import '@babel/polyfill';
 import express from 'express';
 import http from 'http';
-import webpack from 'webpack';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import md5 from 'md5';
@@ -12,8 +11,6 @@ import async from 'async';
 import Error from 'smart-error';
 import HttpError from 'http-smart-error';
 import compression from 'compression';
-import readline from 'readline';
-import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import mkdirp from 'mkdirp';
 import _ from 'lodash';
 import postcss from 'postcss';
@@ -29,15 +26,14 @@ import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
 import Utils from './utils';
 import StylesCompiler from './styles-compiler';
-import { TSConfig } from './constants';
+import { TSConfig, RS_DIR } from './constants';
 import Plugin from './plugin';
-
 import {
 	LocaleMiddleware, SessionMiddleware, RenderMiddleware, PageNotFoundMiddleware, ErrorMiddleware,
 } from './middleware';
-
-const RS_DIR = '~rs';
-const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid'];
+import {
+	WebpackConfig,
+} from './config';
 
 /**
  * Server part of the application.
@@ -482,7 +478,7 @@ class Server {
 			process.nextTick(() => cb(e));
 			return;
 		}
-		this._setWebpack();
+		this._webpack = WebpackConfig(this);
 		this._setMiddlewares(true);
 		this._start(cb);
 	}
@@ -930,21 +926,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {function} cb Callback to call after the server start.
 	 */
 	_start(cb) {
-		const { dev, port, onWebpackProgress } = this._config;
-		let webpackDone = false;
-		const p = new webpack.ProgressPlugin((percentage, message, ...args) => {
-			if (!webpackDone) {
-				if (typeof onWebpackProgress === 'function') {
-					onWebpackProgress(percentage, message);
-				} else if (dev) {
-					this._webpackProgress(percentage, message);
-				}
-				if (percentage === 1) {
-					webpackDone = true;
-				}
-			}
-		});
-		p.apply(this._webpack);
+		const { dev, port } = this._config;
 		if (dev) {
 			this._compileStyles((err) => {
 				if (err) {
@@ -1036,14 +1018,13 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	}
 
 	/**
-	 * Sets the express app, webpack and registers socket server.
+	 * Sets the express app and registers socket server.
 	 */
 	_setApp() {
 		const { appDir, locale } = this._config;
 		this._app = express();
 		this._setMiddlewares();
 		this._server = http.createServer(this._app);
-		// this._setWebpack();
 		socket(this, {
 			cookie: false,
 			...this._config.socketIO,
@@ -1059,122 +1040,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		} catch (e) {
 			this._warn(e.message);
 		}
-	}
-
-	/**
-	 * Creates the webpack instance.
-	 */
-	_setWebpack() {
-		const {
-			dev, filename, staticDir, cssDir, babelTranspileModules,
-		} = this._config;
-		const { plugins, ...config } = this._config.webpack;
-		const postCSSLoader = {
-			loader: 'postcss-loader',
-			options: {
-				config: {
-					path: `${this._getRSDirPath()}/postcss.config.js`,
-				},
-			},
-		};
-		const prodStyleLoader = {
-			loader: 'prod-style-loader',
-			options: {
-				outDir: path.resolve(`${staticDir}/${cssDir}`),
-			},
-		};
-		this._webpack = webpack({
-			mode: dev ? 'development' : 'production',
-			entry: ['@babel/polyfill', `${this._getRSDirPath()}/entry.js`],
-			output: {
-				path: this._path,
-				filename,
-			},
-			resolve: {
-				extensions: ['.js', '.jsx', '.ts', '.tsx'],
-			},
-			resolveLoader: {
-				alias: {
-					'prod-style-loader': path.resolve(__dirname, './style-loader'),
-				},
-			},
-			module: {
-				rules: [
-					{
-						test: /\.js?$/,
-						exclude: /node_modules/,
-						loader: 'babel-loader',
-						options: {
-							presets: ['@babel/preset-env', '@babel/preset-react'],
-							plugins: [
-								'@babel/plugin-transform-async-to-generator',
-								['@babel/plugin-proposal-decorators', { legacy: true }],
-							],
-						},
-					},
-					// eslint-disable-next-line arrow-body-style
-					...([...BABEL_TRANSPILE_MODULES, ...babelTranspileModules].map((m) => {
-						return {
-							test: /\.js$/,
-							include: [
-								new RegExp(`node_modules\\${path.sep}${m}`),
-							],
-							loader: 'babel-loader',
-							options: {
-								presets: ['@babel/preset-env'],
-							},
-						};
-					})),
-					{
-						test: /\.ts$|\.tsx$/,
-						// exclude: /node_modules/,
-						loader: 'ts-loader',
-						options: {
-							configFile: '~rs/tsconfig.json',
-						},
-					},
-					{
-						test: /\.css?$/,
-						use: dev ? [
-							{
-								loader: 'style-loader',
-								options: {
-									attributes: {
-										nonce: this._nonce,
-									},
-								},
-							},
-							'css-loader',
-							postCSSLoader,
-						] : prodStyleLoader,
-					},
-					{
-						test: /\.scss?$/,
-						use: dev ? [
-							{
-								loader: 'style-loader',
-								options: {
-									attributes: {
-										nonce: this._nonce,
-									},
-								},
-							},
-							'css-loader',
-							postCSSLoader,
-							'sass-loader',
-						] : prodStyleLoader,
-					},
-				],
-			},
-			target: 'web',
-			devtool: dev ? 'source-map' : undefined,
-			plugins: [
-				new ExtraWatchWebpackPlugin({
-					files: this._getStylesToWatch(),
-				}),
-			].concat(plugins || []),
-			...config,
-		});
 	}
 
 	/**
@@ -1198,21 +1063,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		}
 		this._app.use('*', PageNotFoundMiddleware());
 		this._app.use(ErrorMiddleware(this));
-	}
-
-	/**
-	 * Logs the webpack progress in stdout.
-	 *
-	 * @param {number} percentage Current progress of webpack processing.
-	 * @param {string} message Current message of webpack processing.
-	 */
-	_webpackProgress(percentage, message) {
-		readline.cursorTo(process.stdout, 0);
-		process.stdout.write(`Webpack: ${(percentage * 100).toFixed(2)}% ${message}`);
-		readline.clearLine(process.stdout, 1);
-		if (percentage === 1) {
-			process.stdout.write('\n');
-		}
 	}
 
 	/**
@@ -1267,27 +1117,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					});
 			});
 		});
-	}
-
-	/**
-	 * Gets the list of css or scss files in css directory for webpack watch registration.
-	 */
-	_getStylesToWatch() {
-		const { sourceStylesDir } = this._config;
-		const files = fs.readdirSync(sourceStylesDir);
-		return files
-			.map((f) => `${sourceStylesDir}/${f}`)
-			.filter((f) => {
-				const stat = fs.statSync(f);
-				if (stat.isDirectory()) {
-					// TODO nested
-					return false;
-				}
-				if (f.indexOf('rs-') >= 0) {
-					return false;
-				}
-				return ['.css', '.scss'].includes(path.extname(f));
-			});
 	}
 
 	/**
