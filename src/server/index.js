@@ -365,6 +365,8 @@ class Server {
 		}
 	}
 
+	// #region Registers
+
 	/**
 	 * Registers the GET route.
 	 *
@@ -377,8 +379,6 @@ class Server {
 	get(route, contentComponent, title, requireAuth, callback) {
 		return this.registerRoute('get', route, contentComponent, title, requireAuth, null, callback);
 	}
-
-	// #region Registers
 
 	/**
 	 * Registers the route.
@@ -1050,12 +1050,12 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		});
 		try {
 			Text.addDictionary(require(path.resolve(appDir, 'res', 'text.json')));
-			for (let i = 0; i < locale.accepted.length; i++) {
-				const acceptedLocale = locale.accepted[i];
-				if (acceptedLocale !== locale.default) {
-					Text.addDictionary(acceptedLocale, require(path.resolve(appDir, 'res', this.getLocaleFileName(acceptedLocale))));
-				}
-			}
+			locale.accepted
+				.filter((l) => l !== locale.default)
+				.forEach((acceptedLocale) => Text.addDictionary(
+					acceptedLocale,
+					require(path.resolve(appDir, 'res', this.getLocaleFileName(acceptedLocale))),
+				));
 		} catch (e) {
 			this._warn(e.message);
 		}
