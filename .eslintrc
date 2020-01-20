@@ -12,7 +12,7 @@
 			}
 		],
 		"linebreak-style": [
-			"error",
+			0,
 			"windows"
 		],
 		"react/prefer-es6-class": [

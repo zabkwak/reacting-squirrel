@@ -2,10 +2,18 @@ import { Component as BaseComponent, ButtonHTMLAttributes } from 'react';
 import * as url from 'url';
 import Type, { Model } from 'runtime-type';
 
+declare type ApplicationEventMap = {
+     'popstate': any;
+     'start': undefined;
+     'refresh': undefined;
+     'pagerender': Page;
+     'locale.set': string;
+};
+
 /**
  * Base client application.
  */
-declare class Application extends CallbackEmitter {
+declare class Application extends CallbackEmitter<ApplicationEventMap> {
 
 	LOCALE_COOKIE_NAME: string;
 

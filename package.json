@@ -18,7 +18,10 @@
 		"postpublish": "npm run clear",
 		"docs_generate": "./node_modules/.bin/typedoc --out docs ./src --includeDeclarations --excludeExternals",
 		"docs": "rm -rf ./docs && npm run docs_generate && touch ./docs/.nojekyll",
-		"preversion": "git branch %npm_package_version% && git checkout %npm_package_version%"
+		"preversion": "git branch %npm_package_version% && git checkout %npm_package_version%",
+		"eslint": "./node_modules/.bin/eslint ./src",
+		"eslint:server": "./node_modules/.bin/eslint ./src/server",
+		"eslint:app": "./node_modules/.bin/eslint ./src/app"
 	},
 	"author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
 	"license": "MIT",

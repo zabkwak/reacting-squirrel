@@ -243,6 +243,7 @@ class Application extends CallbackEmitter {
 				secure: location.protocol === 'https:',
 				expires,
 			});
+			this._callListener('locale.set', locale);
 		} else {
 			this.logWarning(`Locale ${locale} dictionary not registered.`);
 		}
