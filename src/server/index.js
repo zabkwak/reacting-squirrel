@@ -1174,7 +1174,10 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 							hostname: req.get('host'),
 							pathname: req.originalUrl,
 						}}
-						getText={Text.get}
+						getText={(key, ...args) => {
+							return Text.getFromDictionary(req.locale, key, ...args)
+								|| Text.getFromDictionary('default', key, ...args);
+						}}
 					/>)}`);
 				};
 				this.auth(req.session, next);
