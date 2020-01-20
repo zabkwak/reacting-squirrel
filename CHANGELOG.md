@@ -10,6 +10,9 @@
 - Definition of accepted locales.
 ### Updates
 - Creating subdirectories if needed while creating components.
+### Breaking changes
+- If the option `locale` is set on the server all accepted locales are registered (created if don't exist) to the `texting-squirrel` in the server startup and registered dictionaries in the application default entry. It's no needed to do that again in custom entry or elsewhere.
+- Browser language from `navigator.language` is set as default dictionary in the default entry.
 
 ## 0.15.1
 ### Fixes

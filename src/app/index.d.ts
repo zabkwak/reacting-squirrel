@@ -158,6 +158,13 @@ declare class Application extends CallbackEmitter {
      */
 	setTitle(title: string): void;
 
+	/**
+	 * Sets the locale as a dictionary.
+	 *
+	 * @param locale Locale dictionary to set.
+	 */
+	setLocale(locale: string): void;
+
     /**
      * Registers the component as the context reference.
      *

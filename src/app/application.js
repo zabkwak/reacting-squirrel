@@ -227,6 +227,14 @@ class Application extends CallbackEmitter {
 		this._title.textContent = title;
 	}
 
+	setLocale(locale) {
+		if (Text.getDictionary(locale)) {
+			Text.setDictionary(locale);
+		} else {
+			this.logWarning(`Locale ${locale} dictionary not registered.`);
+		}
+	}
+
 	/**
 	 * Sets the reference of the component to the application context.
 	 *

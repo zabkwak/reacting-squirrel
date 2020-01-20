@@ -12,9 +12,4 @@ Socket.setMaxMessageSize((2 ** 20) * 100);
 console.log('Custom entry', 'imported');
 Application.addListener('start', () => {
 	console.log('Custom entry', 'Application started.');
-	let dictionary = 'default';
-	if (navigator && navigator.language) {
-		dictionary = navigator.language;
-	}
-	Text.setDictionary(dictionary);
 });

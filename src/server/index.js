@@ -715,7 +715,14 @@ import components from './component.map';
 // Import and register default dictionary.
 import defaultDictionary from '../res/text.json';
 Text.addDictionary(defaultDictionary);
+// Import and register accepted locale dictionaries.
 ${locale.accepted.filter((l) => !this.isLocaleDefault(l)).map((l) => `Text.addDictionary('${l}', require('../res/${this.getLocaleFileName(l)}'));`).join('\n')}
+// Set the dictionary from locale
+let dictionary = 'default';
+if (navigator && navigator.language) {
+	dictionary = navigator.language;
+}
+Application.setLocale(dictionary);
 
 // Register data to application and start it.
 Application
