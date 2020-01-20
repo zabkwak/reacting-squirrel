@@ -5,10 +5,7 @@ import express from 'express';
 import http from 'http';
 import webpack from 'webpack';
 import path from 'path';
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import cookieParser from 'cookie-parser';
-import cookieSignature from 'cookie-signature';
 import md5 from 'md5';
 import fs from 'fs';
 import async from 'async';
@@ -34,6 +31,10 @@ import Utils from './utils';
 import StylesCompiler from './styles-compiler';
 import { TSConfig } from './constants';
 import Plugin from './plugin';
+
+import {
+	LocaleMiddleware, SessionMiddleware, RenderMiddleware, PageNotFoundMiddleware, ErrorMiddleware,
+} from './middleware';
 
 const RS_DIR = '~rs';
 const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid'];
@@ -1183,126 +1184,20 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 */
 	_setMiddlewares(afterRoutes = false) {
 		const {
-			staticDir, session, layoutComponent, dev, errorHandler, cssDir, cookies, locale,
+			staticDir, cookies,
 		} = this._config;
-		const { secret, secure, httpOnly } = cookies;
+		const { secret } = cookies;
 		if (!afterRoutes) {
 			this._app.use(express.static(staticDir));
 			this._app.use(cookieParser(secret));
 			this._app.use(compression());
-			this._app.use((req, res, next) => {
-				let sessionId;
-				const setSession = () => {
-					sessionId = session.generateId();
-					res.cookie(
-						'session_id',
-						cookieSignature.sign(sessionId, secret),
-						{ secure, httpOnly },
-					);
-				};
-				if (!req.cookies.session_id) {
-					this._log('Session id not found. Generating.');
-					setSession();
-				} else {
-					sessionId = cookieSignature.unsign(req.cookies.session_id, secret);
-					if (!sessionId) {
-						this._log('Session secret not match. Generating.');
-						setSession();
-					}
-				}
-				req.session = new this.Session(sessionId);
-				let userLocale = locale.default;
-				// TODO somehow share constants between app and server
-				if (req.cookies['rs~locale']) {
-					userLocale = req.cookies['rs~locale'];
-				} else {
-					const [preferredLocale] = req.acceptsLanguages();
-					if (locale.accepted.includes(preferredLocale)) {
-						userLocale = preferredLocale;
-					} else {
-						for (let i = 0; i < locale.accepted.length; i++) {
-							const acceptedLocale = locale.accepted[i];
-							if (req.acceptsLanguages(acceptedLocale)) {
-								userLocale = acceptedLocale;
-								break;
-							}
-						}
-					}
-				}
-				req.locale = userLocale;
-				res.render = ({
-					scripts, styles, data, title, layout,
-				}) => {
-					const LayoutComponent = layout || layoutComponent;
-					res.setHeader('Content-Type', 'text/html; charset=utf-8');
-					res.end(`<!DOCTYPE html>${ReactDOMServer.renderToString(<LayoutComponent
-						scripts={this._config.scripts.concat(scripts || [])}
-						styles={this._config.styles.concat(styles || [`/${cssDir}/rs-app.css`])}
-						initialData={data || {}}
-						title={title.indexOf(':') === 0 ? this._getLocaleText(req.locale, title.substr(1)) : title}
-						user={req.user}
-						version={this._version}
-						bundle={this._bundlePath}
-						url={{
-							protocol: req.protocol,
-							hostname: req.get('host'),
-							pathname: req.originalUrl,
-						}}
-						getText={(key, ...args) => this._getLocaleText(req.locale, key, ...args)}
-					/>)}`);
-				};
-				this.auth(req.session, next);
-			});
+			this._app.use(SessionMiddleware(this));
+			this._app.use(LocaleMiddleware(this));
+			this._app.use(RenderMiddleware(this));
 			return;
 		}
-
-		this._app.use('*', (req, res, next) => {
-			next(HttpError.create(404, 'Page not found'));
-		});
-		this._app.use((err, req, res, next) => {
-			if (!(err instanceof HttpError)) {
-				if (typeof err === 'string') {
-					// eslint-disable-next-line no-param-reassign
-					err = { message: err };
-				}
-				const { message, code, ...payload } = err;
-				// eslint-disable-next-line no-param-reassign
-				err = HttpError.create(err.statusCode || 500, message, code, Error.parsePayload(payload));
-			}
-			if (res.statusCode === 200) {
-				res.status(err.statusCode);
-			}
-			if (!err.path) {
-				// eslint-disable-next-line no-param-reassign
-				err.path = req.originalUrl;
-			}
-			if (!err.spec) {
-				// eslint-disable-next-line no-param-reassign
-				err.spec = req.route ? req.route.path : req.path;
-			}
-			if (!err.pathname) {
-				// eslint-disable-next-line no-param-reassign
-				err.pathname = req.path;
-			}
-			this._error(err);
-			const render = () => {
-				res.render({
-					title: err.message,
-					data: {
-						user: req.session.getUser(),
-						dev,
-						timestamp: Date.now(),
-						error: err.toJSON(dev),
-						version: this._version,
-					},
-				});
-			};
-			if (typeof errorHandler !== 'function') {
-				render();
-				return;
-			}
-			errorHandler(err, req, res, () => render());
-		});
+		this._app.use('*', PageNotFoundMiddleware());
+		this._app.use(ErrorMiddleware(this));
 	}
 
 	/**
