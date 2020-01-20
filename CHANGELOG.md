@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.15.2
+## 0.16.0
 ### Features
 - Application has `log[Info|Warning|Error]` methods to prevent using console.
 - Server has `getConfig` method to property access to the server configuration.
