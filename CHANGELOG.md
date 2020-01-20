@@ -7,6 +7,7 @@
 - Option to change location of source styles that are merged into the application styles.
 - Option to disable automatically socket connection.
 - Preparation for plugins.
+- Definition of accepted locales.
 ### Updates
 - Creating subdirectories if needed while creating components.
 

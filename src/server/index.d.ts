@@ -15,6 +15,7 @@ export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
  */
 export interface IRequest<S extends Session = Session> extends express.Request {
 	session: S;
+	locale: string;
 }
 
 /**
@@ -205,6 +206,21 @@ export interface IAppConfig {
 	 * @default true
 	 */
 	connectSocketAutomatically?: boolean;
+	/**
+	 * Locale settings.
+	 */
+	locale?: {
+		/**
+		 * Default locale of the website. This locale will be used in default.json.
+		 * @default 'en-US'
+		 */
+		default?: string;
+		/**
+		 * List of accepted locales. 
+		 * @default []
+		 */
+		accepted?: Array<string>;
+	};
 }
 
 export interface ISocketEvent<S extends Session = Session> {

@@ -106,6 +106,10 @@ class Server {
 		moduleDev: false,
 		sourceStylesDir: null,
 		connectSocketAutomatically: true,
+		locale: {
+			default: 'en-US',
+			accepted: [],
+		},
 	};
 
 	/**
@@ -263,6 +267,12 @@ class Server {
 			this._getConfigFromRSConfig(),
 			config,
 		);
+		if (!(this._config.locale.accepted instanceof Array)) {
+			this._config.locale.accepted = [];
+		}
+		if (!this._config.locale.accepted.includes(this._config.locale.default)) {
+			this._config.locale.accepted.unshift(this._config.locale.default);
+		}
 		if (!this._config.sourceStylesDir) {
 			this._warn('Using default sourceStylesDir. It\'s in the express static directory and all sources are accessible over the http.');
 			this._config.sourceStylesDir = path.resolve(`${this._config.staticDir}/${this._config.cssDir}`);
@@ -598,25 +608,28 @@ class Server {
 			process.nextTick(() => cb(e));
 			return;
 		}
-		this._createDefaultTextFile(cb);
+		this._createTextFiles(cb);
 	}
 
 	/**
-	 * Creates text.json file in resources directory if it doesn't exist.
+	 * Creates all text files in the resources directory if don't exist.
 	 *
-	 * @param {function(Error):void} cb Callback after the text file creation.
+	 * @param {function(Error): void} cb Callback after the file creation. 
 	 */
-	_createDefaultTextFile(cb) {
-		const { appDir } = this._config;
-		const filePath = `${appDir}/res/text.json`;
-		fs.exists(filePath, (exists) => {
-			if (exists) {
-				cb();
-				return;
-			}
-			this._log('Creating default text file');
-			fs.writeFile(filePath, '{}', cb);
-		});
+	_createTextFiles(cb) {
+		const { appDir, locale } = this._config;
+		async.eachSeries(locale.accepted, (acceptedLocale, callback) => {
+			const fileName = `text${acceptedLocale === locale.default ? '' : `_${acceptedLocale}`}.json`
+			const filePath = `${appDir}/res/${fileName}`;
+			fs.exists(filePath, (exists) => {
+				if (exists) {
+					callback();
+					return;
+				}
+				this._log(`Cerating text file ${fileName}`);
+				fs.writeFile(filePath, '{}', callback);
+			});
+		}, cb);
 	}
 
 	_createNonceFile(cb) {
@@ -1106,11 +1119,10 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 */
 	_setMiddlewares(afterRoutes = false) {
 		const {
-			staticDir, session, layoutComponent, dev, errorHandler, cssDir, cookies,
+			staticDir, session, layoutComponent, dev, errorHandler, cssDir, cookies, locale,
 		} = this._config;
 		const { secret, secure, httpOnly } = cookies;
 		if (!afterRoutes) {
-			// const LayoutComponent = layoutComponent;
 			this._app.use(express.static(staticDir));
 			this._app.use(cookieParser(secret));
 			this._app.use(compression());
@@ -1135,6 +1147,15 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					}
 				}
 				req.session = new this.Session(sessionId);
+				let userLocale = locale.default;
+				for (let i = 0; i < locale.accepted.length; i++) {
+					const acceptedLocale = locale.accepted[i];
+					if (req.acceptsLanguages(acceptedLocale)) {
+						userLocale = acceptedLocale;
+						break;
+					}
+				}
+				req.locale = userLocale;
 				res.render = ({
 					scripts, styles, data, title, layout,
 				}) => {

@@ -250,6 +250,25 @@
 			"type": "boolean",
 			"title": "Indicates if the socket should be connected automatically after the bundle load.",
 			"default": true
+		},
+		"locale": {
+			"type": "object",
+			"title": "Configuration for locale.",
+			"properties": {
+				"default": {
+					"type": "string",
+					"title": "Default locale of the website. This locale will be used in default.json.",
+					"default": "en-US"
+				},
+				"secure": {
+					"type": "array",
+					"title": "List of accepted locales.",
+					"items": {
+						"type": "string"
+					},
+					"default": []
+				}
+			}
 		}
 	}
 }

@@ -42,16 +42,31 @@ const CONFIG_FIELDS = [
 	'generatedComponentsExtension',
 	'sourceStylesDir',
 	'connectSocketAutomatically',
+	'locale',
 ];
 
 describe('Server instance', () => {
 
 	it('checks default config fields of the server', () => {
 		const server = new Server();
-		expect(server._config).to.have.all.keys(CONFIG_FIELDS);
+		expect(server.getConfig()).to.have.all.keys(CONFIG_FIELDS);
 		const {
-			port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, errorHandler, webpack,
-		} = server._config;
+			port,
+			staticDir,
+			dev,
+			jsDir,
+			filename,
+			appDir,
+			entryFile,
+			layoutComponent,
+			scripts,
+			styles,
+			session,
+			auth,
+			errorHandler,
+			webpack,
+			locale,
+		} = server.getConfig();
 		expect(port).to.be.equal(8080);
 		expect(staticDir).to.be.equal('./public');
 		expect(dev).to.be.equal(false);
@@ -71,6 +86,9 @@ describe('Server instance', () => {
 		expect(auth).to.be.an('function');
 		expect(errorHandler).to.be.an('function');
 		expect(webpack).to.be.an('object');
+		expect(locale).to.have.all.keys(['default', 'accepted']);
+		expect(locale.default).to.be.equal('en-US');
+		expect(locale.accepted).to.be.deep.equal(['en-US']);
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
@@ -101,10 +119,29 @@ describe('Server instance', () => {
 			session: Session,
 			auth: (session, next) => next(),
 			webpack: {},
+			locale: {
+				default: 'cs-CZ',
+				accepted: ['en-US'],
+			},
 		});
 		expect(server._config).to.have.all.keys(CONFIG_FIELDS);
 		const {
-			port, staticDir, dev, jsDir, filename, appDir, entryFile, layoutComponent, cookieSecret, scripts, styles, session, auth, errorHandler, webpack,
+			port,
+			staticDir,
+			dev,
+			jsDir,
+			filename,
+			appDir,
+			entryFile,
+			layoutComponent,
+			cookieSecret,
+			scripts,
+			styles,
+			session,
+			auth,
+			errorHandler,
+			webpack,
+			locale,
 		} = server._config;
 		expect(port).to.be.equal(9000);
 		expect(staticDir).to.be.equal('./__static__');
@@ -127,6 +164,9 @@ describe('Server instance', () => {
 		expect(auth).to.be.an('function');
 		expect(errorHandler).to.be.an('function');
 		expect(webpack).to.be.an('object');
+		expect(locale).to.have.all.keys(['default', 'accepted']);
+		expect(locale.default).to.be.equal('cs-CZ');
+		expect(locale.accepted).to.be.deep.equal(['cs-CZ', 'en-US']);
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
