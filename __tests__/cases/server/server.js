@@ -243,7 +243,7 @@ describe('Start of the server', () => {
 
 				done();
 			});
-	});
+	}).timeout(20000);
 
 	it('checks if the home page is accessible with http request', (done) => {
 		request.get(URL, (err, res, body) => {

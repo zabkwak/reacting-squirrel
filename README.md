@@ -251,7 +251,11 @@ export default class CustomComponent extends Component {
 
 ```
 #### Using texts on the server side (experimental)
-The instance of the server has a property `Text` which is just `texting-squirrel` module with registered default dictionary.
+The instance of the server has a property `Text` which is just `texting-squirrel` module with registered directories.  
+Server option `locale` defines supported locales and dictionary text files are created (if not exist) and registered in the server startup.
+
+##### Page titles
+If the page title starts with the `:` the key (without the first character) is searched in the locale dictionary.
 
 ## Socket communication
 The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. 

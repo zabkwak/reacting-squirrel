@@ -48,6 +48,10 @@ const app = new Server({
 	// socketMessageMaxSize: 1,
 	// babelTranspileModules: ['react'],
 	// connectSocketAutomatically: false,
+	locale: {
+		default: 'en-US',
+		accepted: ['cs-CZ'],
+	},
 });
 
 app.registerBeforeExecution('*', async (req, res) => {
@@ -57,11 +61,11 @@ app.registerBeforeExecution('*', async (req, res) => {
 app.get('/error', null, 'Error', false, (req, res, next) => {
 	next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
-
+/*
 app.registerRouteCallback('/', (req, res, next) => {
 	next(null, { title: 'Dynamic title', data: { test: 'test' } });
 });
-
+*/
 app.registerSocketEvent('socket.test', async (socket, data) => data);
 app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 	fs.writeFileSync(`./tmp/${name}`, file);
@@ -77,7 +81,7 @@ app.registerPlugin(new CustomPlugin());
 
 // console.log(app.Text.get('test'));
 
-app.Text.addDictionary('cs-CZ', require(path.resolve(app.appDirAbsolute, 'res', 'text_cs-CZ.json')));
+// app.Text.addDictionary('cs-CZ', require(path.resolve(app.appDirAbsolute, 'res', 'text_cs-CZ.json')));
 
 app.start((err) => {
 	if (err) {

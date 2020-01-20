@@ -657,6 +657,20 @@ export default class Server {
 	getConfig(): IAppConfig;
 
 	/**
+	 * Gets the filename of the dictionary file in the resources directory.
+	 *
+	 * @param locale Locale to check.
+	 */
+	getLocaleFileName(locale: string): string;
+
+	/**
+	 * Checks if the locale is default locale.
+	 *
+	 * @param locale Locale to check.
+	 */
+	isLocaleDefault(locale: string): boolean;
+
+	/**
 	 * Gets the server config by it's key.
 	 *
 	 * @param key Key of the config field.
@@ -790,4 +804,15 @@ export default class Server {
      * @param cb Callback called after the application is started.
      */
 	start(cb?: (err?: any) => void): void;
+
+	/**
+     * Stops the application.
+     */
+	stop(): void;
+	/**
+	 * Stops the application.
+	 * 
+	 * @param cb Callback called after the server stopped.
+	 */
+	stop(cb?: () => void): void;
 }

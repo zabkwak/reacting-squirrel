@@ -3,7 +3,7 @@
         {
             "route": "/",
             "component": "home",
-            "title": "Home"
+            "title": ":home"
         },
         {
             "route": "/about",

@@ -144,6 +144,8 @@ class Server {
 
 	_plugins = [];
 
+	// #region Property getters
+
 	/**
 	 * Port on which the server listens.
 	 * @type {number}
@@ -241,6 +243,8 @@ class Server {
 		return Text;
 	}
 
+	// #endregion
+
 	/**
 	 * Creates the instance of the server and prepares express app with socket.io.
 	 *
@@ -297,6 +301,8 @@ class Server {
 		this._log('Server created', this._config);
 	}
 
+	// #region Getters
+
 	/**
 	 * Gets the http server.
 	 *
@@ -312,6 +318,13 @@ class Server {
 
 	getConfig(key = null) {
 		return key ? this._config[key] : this._config;
+	}
+
+	getLocaleFileName(locale) {
+		if (this.isLocaleDefault(locale)) {
+			return 'text.json';
+		}
+		return `text_${locale}.json`;
 	}
 
 	/**
@@ -330,6 +343,12 @@ class Server {
 	 */
 	getSocketClasses() {
 		return this._socketClasses;
+	}
+
+	// #endregion
+
+	isLocaleDefault(locale) {
+		return locale === this._config.locale.default;
 	}
 
 	/**
@@ -357,6 +376,8 @@ class Server {
 	get(route, contentComponent, title, requireAuth, callback) {
 		return this.registerRoute('get', route, contentComponent, title, requireAuth, null, callback);
 	}
+
+	// #region Registers
 
 	/**
 	 * Registers the route.
@@ -443,6 +464,8 @@ class Server {
 		return this;
 	}
 
+	// #endregion
+
 	/**
 	 * Starts the express server. In that process it creates all necessary files.
 	 *
@@ -461,6 +484,23 @@ class Server {
 		this._setWebpack();
 		this._setMiddlewares(true);
 		this._start(cb);
+	}
+
+	/**
+     * Stops the application.
+     * @param {function} cb
+     */
+	stop(cb = () => { }) {
+		if (!this._server) {
+			this._warn('Server cannot be stopped beceause it was not started.');
+			return;
+		}
+		this._server.close(() => {
+			this._log('The server is stopped.');
+			if (typeof cb === 'function') {
+				cb();
+			}
+		});
 	}
 
 	_registerRsConfig() {
@@ -487,6 +527,8 @@ class Server {
 			}
 		}
 	}
+
+	// #region RS files creators
 
 	/**
 	 * Creates the reacting-squirrel files.
@@ -614,19 +656,19 @@ class Server {
 	/**
 	 * Creates all text files in the resources directory if don't exist.
 	 *
-	 * @param {function(Error): void} cb Callback after the file creation. 
+	 * @param {function(Error): void} cb Callback after the file creation.
 	 */
 	_createTextFiles(cb) {
 		const { appDir, locale } = this._config;
 		async.eachSeries(locale.accepted, (acceptedLocale, callback) => {
-			const fileName = `text${acceptedLocale === locale.default ? '' : `_${acceptedLocale}`}.json`
+			const fileName = this.getLocaleFileName(acceptedLocale);
 			const filePath = `${appDir}/res/${fileName}`;
 			fs.exists(filePath, (exists) => {
 				if (exists) {
 					callback();
 					return;
 				}
-				this._log(`Cerating text file ${fileName}`);
+				this._log(`Creating text file ${fileName}`);
 				fs.writeFile(filePath, '{}', callback);
 			});
 		}, cb);
@@ -648,7 +690,9 @@ class Server {
 	 */
 	_createEntryFile(cb) {
 		this._log('Creating entry file');
-		const { entryFile, appDir, connectSocketAutomatically } = this._config;
+		const {
+			entryFile, appDir, connectSocketAutomatically, locale,
+		} = this._config;
 		const pathToTheModule = this._getPathToModule(path.resolve(this._getRSDirPath()));
 		let entryFileImport = null;
 		if (entryFile) {
@@ -668,10 +712,12 @@ import routingMap from './router.map';
 import socketEvents from './socket.map';
 import components from './component.map';
 
+// Import and register default dictionary.
 import defaultDictionary from '../res/text.json';
-
 Text.addDictionary(defaultDictionary);
+${locale.accepted.filter((l) => !this.isLocaleDefault(l)).map((l) => `Text.addDictionary('${l}', require('../res/${this.getLocaleFileName(l)}'));`).join('\n')}
 
+// Register data to application and start it.
 Application
 	.registerRoutingMap(routingMap)
 	.registerComponents(components)
@@ -681,7 +727,7 @@ Socket.registerEvents(socketEvents);
 ${connectSocketAutomatically ? 'Socket.connect();' : ''}
 // Injected code
 ${this._entryInjections.join('\n')}
-		`, cb,
+`, cb,
 		);
 	}
 
@@ -797,6 +843,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			cb,
 		);
 	}
+
+	// #endregion
 
 	/**
 	 * Compiles and merges all css and scss files in the module and app directories into one minified css file.
@@ -981,6 +1029,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * Sets the express app, webpack and registers socket server.
 	 */
 	_setApp() {
+		const { appDir, locale } = this._config;
 		this._app = express();
 		this._setMiddlewares();
 		this._server = http.createServer(this._app);
@@ -990,7 +1039,13 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			...this._config.socketIO,
 		});
 		try {
-			Text.addDictionary(require(path.resolve(this._config.appDir, 'res', 'text.json')));
+			Text.addDictionary(require(path.resolve(appDir, 'res', 'text.json')));
+			for (let i = 0; i < locale.accepted.length; i++) {
+				const acceptedLocale = locale.accepted[i];
+				if (acceptedLocale !== locale.default) {
+					Text.addDictionary(acceptedLocale, require(path.resolve(appDir, 'res', this.getLocaleFileName(acceptedLocale))));
+				}
+			}
 		} catch (e) {
 			this._warn(e.message);
 		}
@@ -1148,11 +1203,16 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				}
 				req.session = new this.Session(sessionId);
 				let userLocale = locale.default;
-				for (let i = 0; i < locale.accepted.length; i++) {
-					const acceptedLocale = locale.accepted[i];
-					if (req.acceptsLanguages(acceptedLocale)) {
-						userLocale = acceptedLocale;
-						break;
+				const [preferredLocale] = req.acceptsLanguages();
+				if (locale.accepted.includes(preferredLocale)) {
+					userLocale = preferredLocale;
+				} else {
+					for (let i = 0; i < locale.accepted.length; i++) {
+						const acceptedLocale = locale.accepted[i];
+						if (req.acceptsLanguages(acceptedLocale)) {
+							userLocale = acceptedLocale;
+							break;
+						}
 					}
 				}
 				req.locale = userLocale;
@@ -1165,7 +1225,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 						scripts={this._config.scripts.concat(scripts || [])}
 						styles={this._config.styles.concat(styles || [`/${cssDir}/rs-app.css`])}
 						initialData={data || {}}
-						title={title}
+						title={title.indexOf(':') === 0 ? this._getLocaleText(req.locale, title.substr(1)) : title}
 						user={req.user}
 						version={this._version}
 						bundle={this._bundlePath}
@@ -1174,10 +1234,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 							hostname: req.get('host'),
 							pathname: req.originalUrl,
 						}}
-						getText={(key, ...args) => {
-							return Text.getFromDictionary(req.locale, key, ...args)
-								|| Text.getFromDictionary('default', key, ...args);
-						}}
+						getText={(key, ...args) => this._getLocaleText(req.locale, key, ...args)}
 					/>)}`);
 				};
 				this.auth(req.session, next);
@@ -1430,6 +1487,13 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		};
 	}
 
+	_getLocaleText(locale, key, ...args) {
+		if (this.isLocaleDefault(locale)) {
+			return Text.getFromDictionary('default', key, ...args);
+		}
+		return Text.getFromDictionary(locale, key, ...args) || Text.getFromDictionary('default', key, ...args);
+	}
+
 	/**
 	 * Tries to require file.
 	 *
@@ -1460,7 +1524,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			return;
 		}
 		// eslint-disable-next-line no-console
-		console.log(new Date(), message, ...args);
+		console.log(new Date(), '[INFO]', message, ...args);
 	}
 
 	/**
@@ -1470,12 +1534,12 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 */
 	_warn(message, ...args) {
 		// eslint-disable-next-line no-console
-		console.warn(new Date(), message, ...args);
+		console.warn(new Date(), '[WARN]', message, ...args);
 	}
 
 	_error(message) {
 		// eslint-disable-next-line no-console
-		console.error(new Date(), message);
+		console.error(new Date(), '[ERROR]', message);
 	}
 }
 

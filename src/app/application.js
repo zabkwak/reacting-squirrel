@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import Text from 'texting-squirrel';
 
 import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';
@@ -164,7 +165,9 @@ class Application extends CallbackEmitter {
 			}
 			return;
 		}
-		this.setTitle(route.title);
+		if (route.title) {
+			this.setTitle(route.title.indexOf(':' === 0) ? Text.get(route.title.substr(1)) : route.title);
+		}
 		if (refresh) {
 			ReactDOM.unmountComponentAtNode(this._content);
 		}

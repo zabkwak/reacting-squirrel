@@ -28,7 +28,7 @@
 					},
 					"title": {
 						"type": "string",
-						"title": "Title for the <title> tag in HTML."
+						"title": "Title for the <title> tag in HTML. If the text starts with the ':' the title is searched in the dictionaries without the first character."
 					},
 					"requireAuth": {
 						"type": "boolean",
