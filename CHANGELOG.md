@@ -8,6 +8,7 @@
 - Option to disable automatically socket connection.
 - Preparation for plugins.
 - Definition of accepted locales.
+- Option to set locale from the application.
 ### Updates
 - Creating subdirectories if needed while creating components.
 ### Breaking changes

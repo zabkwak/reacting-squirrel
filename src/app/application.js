@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import Text from 'texting-squirrel';
+import Cookies from 'universal-cookie';
 
 import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';
@@ -9,6 +10,8 @@ import CallbackEmitter from './callback-emitter';
  * Base class for client application context.
  */
 class Application extends CallbackEmitter {
+
+	LOCALE_COOKIE_NAME = 'rs~locale';
 
 	_container = null;
 
@@ -25,6 +28,8 @@ class Application extends CallbackEmitter {
 	_refs = {};
 
 	_errorPage = null;
+
+	_cookies = new Cookies();
 
 	/**
 	 * @returns {boolean}
@@ -230,6 +235,14 @@ class Application extends CallbackEmitter {
 	setLocale(locale) {
 		if (Text.getDictionary(locale)) {
 			Text.setDictionary(locale);
+			const expires = new Date();
+			expires.setFullYear(expires.getFullYear() + 1);
+			this._cookies.set(this.LOCALE_COOKIE_NAME, locale, {
+				path: '/',
+				// httpOnly: true,
+				secure: location.protocol === 'https:',
+				expires,
+			});
 		} else {
 			this.logWarning(`Locale ${locale} dictionary not registered.`);
 		}
@@ -252,6 +265,10 @@ class Application extends CallbackEmitter {
 	 */
 	getRef(key) {
 		return this._refs[key];
+	}
+
+	getCookie(name) {
+		return this._cookies.get(name);
 	}
 
 	logInfo(message, ...optionalParams) {

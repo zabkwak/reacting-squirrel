@@ -257,6 +257,12 @@ Server option `locale` defines supported locales and dictionary text files are c
 ##### Page titles
 If the page title starts with the `:` the key (without the first character) is searched in the locale dictionary.
 
+#### Translations
+The dictionaries can be registered for different languages. The accepted languages should be set with the `locale.accepted` option on the server and dictionaries will be created in the `res` directory. The default language is taken from the browser (the dictionary must exist). 
+##### Changing the locale
+The locale can be changed on the client side using `Application.setLocale` method and it's handled on the server side (still experimental) with cookie `rs~locale`.  
+<b>NOTE:</b> In case of setting locale to the default dictionary it has to be the `default` keyword instead of the value.
+
 ## Socket communication
 The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. 
 ### Uploading files (experimental)

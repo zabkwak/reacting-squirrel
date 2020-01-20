@@ -4,4 +4,5 @@
 - Redirect on layout change.
 - Plugins.
 - Serverless production.
-- Method to force language.
+- Common code.
+- Recognition of the default language.

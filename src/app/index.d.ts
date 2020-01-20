@@ -7,6 +7,8 @@ import Type, { Model } from 'runtime-type';
  */
 declare class Application extends CallbackEmitter {
 
+	LOCALE_COOKIE_NAME: string;
+
     /**
      * Indicates if the application is in dev mode.
      */
@@ -181,6 +183,11 @@ declare class Application extends CallbackEmitter {
      * @param key Key of the reference.
      */
 	getRef<T = any>(key: string): T;
+
+	/**
+	 * Gets the cookie by its name.
+	 */
+	getCookie(name: string): any;
 
 	/**
 	 * Logs the message to the console using `console.log` if the app is in DEV mode.

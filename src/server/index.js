@@ -719,7 +719,9 @@ Text.addDictionary(defaultDictionary);
 ${locale.accepted.filter((l) => !this.isLocaleDefault(l)).map((l) => `Text.addDictionary('${l}', require('../res/${this.getLocaleFileName(l)}'));`).join('\n')}
 // Set the dictionary from locale
 let dictionary = 'default';
-if (navigator && navigator.language) {
+if (Application.getCookie(Application.LOCALE_COOKIE_NAME)) {
+	dictionary = Application.getCookie(Application.LOCALE_COOKIE_NAME);
+} else if (navigator && navigator.language) {
 	dictionary = navigator.language;
 }
 Application.setLocale(dictionary);
@@ -1210,15 +1212,20 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				}
 				req.session = new this.Session(sessionId);
 				let userLocale = locale.default;
-				const [preferredLocale] = req.acceptsLanguages();
-				if (locale.accepted.includes(preferredLocale)) {
-					userLocale = preferredLocale;
+				// TODO somehow share constants between app and server
+				if (req.cookies['rs~locale']) {
+					userLocale = req.cookies['rs~locale'];
 				} else {
-					for (let i = 0; i < locale.accepted.length; i++) {
-						const acceptedLocale = locale.accepted[i];
-						if (req.acceptsLanguages(acceptedLocale)) {
-							userLocale = acceptedLocale;
-							break;
+					const [preferredLocale] = req.acceptsLanguages();
+					if (locale.accepted.includes(preferredLocale)) {
+						userLocale = preferredLocale;
+					} else {
+						for (let i = 0; i < locale.accepted.length; i++) {
+							const acceptedLocale = locale.accepted[i];
+							if (req.acceptsLanguages(acceptedLocale)) {
+								userLocale = acceptedLocale;
+								break;
+							}
 						}
 					}
 				}
