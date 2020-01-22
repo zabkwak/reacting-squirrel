@@ -167,7 +167,7 @@ class Application extends CallbackEmitter {
 			return;
 		}
 		if (route.title) {
-			this.setTitle(route.title.indexOf(':' === 0) ? Text.get(route.title.substr(1)) : route.title);
+			this.setTitle(route.title.indexOf(':') === 0 ? Text.get(route.title.substr(1)) : route.title);
 		}
 		if (refresh) {
 			ReactDOM.unmountComponentAtNode(this._content);

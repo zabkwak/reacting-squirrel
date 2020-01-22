@@ -29,6 +29,7 @@ export default (server) => (req, res, next) => {
 			}}
 			// eslint-disable-next-line no-underscore-dangle
 			getText={(key, ...args) => server._getLocaleText(req.locale, key, ...args)}
+			nonce={server.nonce}
 		/>)}`);
 	};
 	server.auth(req.session, next);

@@ -439,6 +439,7 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 
 	/**
 	 * Renders the meta tags.
+	 * If it's used in inherited Layout `super.renderMeta()` should be called.
 	 */
 	public renderMeta(): JSX.Element;
 

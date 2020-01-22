@@ -24,6 +24,7 @@ export default class Layout extends Component {
 		charSet: PropTypes.string,
 		lang: PropTypes.string,
 		getText: PropTypes.func.isRequired,
+		nonce: PropTypes.string.isRequired,
 	};
 
 	static defaultProps = {
@@ -107,7 +108,12 @@ export default class Layout extends Component {
 	}
 
 	renderMeta() {
-		return null;
+		const { nonce } = this.props;
+		return (
+			<>
+				<meta property="csp-nonce" content={nonce} />
+			</>
+		);
 	}
 
 	getText(key, ...args) {
