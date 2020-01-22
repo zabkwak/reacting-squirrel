@@ -86,6 +86,11 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
      */
 	refreshContent(): void;
 
+	/**
+	 * Forces all registered component to refresh.
+	 */
+	refreshComponents(): void;
+
     /**
      * Renders the route's component.
      * 

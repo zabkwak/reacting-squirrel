@@ -1,4 +1,4 @@
-import { Component as Base } from 'react';
+import React, { Component as Base } from 'react';
 
 import Application from '../application';
 import Text from './text';
@@ -39,6 +39,22 @@ export default class Component extends Base {
 			this.saveState(this.getStateKey());
 		}
 		this._mounted = false;
+	}
+
+	render() {
+		if (!this.getContext().DEV) {
+			return null;
+		}
+		return (
+			<div
+				style={{
+					padding: 10,
+					backgroundColor: '#F0F0F0',
+				}}
+			>
+				<h1 style={{ textAlign: 'center' }}>{this.constructor.name}</h1>
+			</div>
+		);
 	}
 
 	/**

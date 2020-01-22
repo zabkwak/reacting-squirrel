@@ -51,10 +51,11 @@ class Server {
 
 	/**
 	 * Express app instance.
-	 * @type {any}
+	 * @type {import('express').Express}
 	 */
 	_app = null;
 
+	/** @type {http.Server} */
 	_server = null;
 
 	_webpack = null;

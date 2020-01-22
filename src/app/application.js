@@ -122,15 +122,7 @@ class Application extends CallbackEmitter {
 			DEV: this.DEV, timestamp: this.getInitialData('timestamp'), version: this.getInitialData('version'),
 		});
 		this._callListener('start');
-		this._components.forEach((component) => {
-			const target = document.getElementById(component.elementId);
-			if (!target) {
-				this.logWarning(`Target DOM element with id '${component.elementId}' doesn't exist.`);
-				return;
-			}
-			const Component = component.component;
-			this.renderComponent(<Component ref={(ref) => this.setRef(ref, component.elementId)} />, target);
-		});
+		this._renderRegisteredComponents();
 		this.render(Router.getRoute());
 	}
 
@@ -140,6 +132,10 @@ class Application extends CallbackEmitter {
 	refreshContent() {
 		this.render(Router.getRoute(), true);
 		this._callListener('refresh');
+	}
+
+	refreshComponents() {
+		this._renderRegisteredComponents(true);
 	}
 
 	/**
@@ -291,6 +287,21 @@ class Application extends CallbackEmitter {
 			// eslint-disable-next-line no-console
 			console.error(message, ...optionalParams);
 		}
+	}
+
+	_renderRegisteredComponents(refresh = false) {
+		this._components.forEach((component) => {
+			const target = document.getElementById(component.elementId);
+			if (!target) {
+				this.logWarning(`Target DOM element with id '${component.elementId}' doesn't exist.`);
+				return;
+			}
+			if (refresh) {
+				ReactDOM.unmountComponentAtNode(target);
+			}
+			const Component = component.component;
+			this.renderComponent(<Component ref={(ref) => this.setRef(ref, component.elementId)} />, target);
+		});
 	}
 
 	_checkStartedState() {

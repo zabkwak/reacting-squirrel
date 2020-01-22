@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import SocketComponent from './component.socket';
@@ -30,22 +29,6 @@ export default class Page extends SocketComponent {
 		super.componentWillUnmount();
 		this.getContext().removeListener('pagerender', this.__pageRender__);
 		this.getContext().logInfo(`Page '${this.constructor.name}' will unmount`);
-	}
-
-	render() {
-		if (!this.getContext().DEV) {
-			return null;
-		}
-		return (
-			<div
-				style={{
-					padding: 10,
-					backgroundColor: '#F0F0F0',
-				}}
-			>
-				<h1 style={{ textAlign: 'center' }}>{this.constructor.name}</h1>
-			</div>
-		);
 	}
 
 	onPageRender() { }

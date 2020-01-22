@@ -652,11 +652,6 @@ export default class Server {
 	getApp(): express.Application;
 
 	/**
-	 * Gets the server config.
-	 */
-	getConfig(): IAppConfig;
-
-	/**
 	 * Gets the filename of the dictionary file in the resources directory.
 	 *
 	 * @param locale Locale to check.
@@ -668,8 +663,12 @@ export default class Server {
 	 *
 	 * @param locale Locale to check.
 	 */
-	isLocaleDefault(locale: string): boolean;
+	isLocaleDefault(locale: string): boolean;	
 
+	/**
+	 * Gets the server config.
+	 */
+	getConfig(): IAppConfig;
 	/**
 	 * Gets the server config by it's key.
 	 *
