@@ -33,7 +33,7 @@ export interface IResponse extends express.Response {
 	*/
 }
 
-type RouteCallback = (req: IRequest, res: IResponse, next: (err: Error, data?: {
+type RouteCallback = (req: IRequest, res: IResponse, next: (err?: Error, data?: {
 	scripts?: Array<string>;
 	styles?: Array<string>;
 	data?: any;
@@ -259,6 +259,11 @@ export interface ILayoutProps<T = {}, U = any> {
 	bundle: string;
 	charSet?: string;
 	lang?: string;
+}
+
+export interface IMiddleware {
+	afterRoutes?: boolean;
+	callback: (server: Server) => (req: IRequest, res: IResponse, next: (err?: Error) => void) => void;
 }
 
 /**
@@ -538,9 +543,55 @@ export class SocketClass<S extends Session = Session> {
 
 }
 
+/**
+ * Base class for plugins. The plugin must extend this class.
+ */
 export abstract class Plugin {
 
+	/**
+	 * Gets the list of javascript code to inject in the generated entry file.
+	 */
 	public getEntryInjections(): Array<string>;
+
+	/**
+	 * Gets the list of socket classes to register.
+	 */
+	public getSocketClasses(): Array<typeof SocketClass>;
+
+	/**
+	 * Gets the list of socket events to register.
+	 */
+	public getSocketEvents(): Array<ISocketEvent>;
+
+	/**
+	 * Gets the list of route callbacks.
+	 */
+	public getRouteCallbacks(): Array<{ route: string, callback: RouteCallback }>;
+
+	/**
+	 * Gets the list of callbacks called before the route execution.
+	 */
+	public getBeforeExecutions(): Array<{spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
+
+	/**
+	 * Gets the list of scripts to require in the html header.
+	 */
+	public getScripts(): Array<string>;
+
+	/**
+	 * Gets the list of styles to require in the html header.
+	 */
+	public getStyles(): Array<string>;
+
+	/**
+	 * Gets the list of styles to merge in the rs app css.
+	 */
+	public getMergeStyles(): Array<string>;
+
+	/**
+	 * Gets the list of middlewares.
+	 */
+	public getMiddlewares(): Array<IMiddleware>;
 }
 
 export { HttpSmartError as HttpError };
@@ -640,6 +691,10 @@ export default class Server {
 	 * CSP nonce.
 	 */
 	nonce: string;
+	/**
+	 * App version.
+	 */
+	version: string;
 
 	constructor(config?: IAppConfig);
 
@@ -653,6 +708,15 @@ export default class Server {
 	getApp(): express.Application;
 
 	/**
+	 * Gets the text from the locale dictionary.
+	 *
+	 * @param locale
+	 * @param key 
+	 * @param args 
+	 */
+	getLocaleText(locale: string, key: string, ...args: Array<any>): string;
+
+	/**
 	 * Gets the filename of the dictionary file in the resources directory.
 	 *
 	 * @param locale Locale to check.
@@ -664,7 +728,7 @@ export default class Server {
 	 *
 	 * @param locale Locale to check.
 	 */
-	isLocaleDefault(locale: string): boolean;	
+	isLocaleDefault(locale: string): boolean;
 
 	/**
 	 * Gets the server config.
@@ -797,6 +861,20 @@ export default class Server {
 	 * @param plugin Instance of plugin.
 	 */
 	registerPlugin(plugin: Plugin): this;
+
+	/**
+	 * Registers the middleware.
+	 *
+	 * @param middleware Middleware to register.
+	 */
+	registerMiddleware(middleware: IMiddleware['callback']): this;
+	/**
+	 * Registers the middleware.
+	 *
+	 * @param middleware Middleware to register.
+	 * @param afterRoutes Indicates if the middleware should be executed after the routes register.
+	 */
+	registerMiddleware(middleware: IMiddleware['callback'], afterRoutes: boolean): this;
 
     /**
      * Starts the application.

@@ -72,8 +72,20 @@ app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 });
 
 class CustomPlugin extends Plugin {
+
 	getEntryInjections() {
 		return ['console.log(\'custom plugin\');'];
+	}
+
+	getMiddlewares() {
+		return [
+			{
+				callback: (server) => (req, res, next) => {
+					// res.render = () => res.end('OVERRIDDEN RENDER');
+					next();
+				},
+			},
+		];
 	}
 }
 

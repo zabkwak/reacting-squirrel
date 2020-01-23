@@ -15,22 +15,18 @@ export default (server) => (req, res, next) => {
 			scripts={server.getConfig().scripts.concat(scripts || [])}
 			styles={server.getConfig().styles.concat(styles || [`/${cssDir}/rs-app.css`])}
 			initialData={data || {}}
-			// eslint-disable-next-line no-underscore-dangle
-			title={title.indexOf(':') === 0 ? server._getLocaleText(req.locale, title.substr(1)) : title}
+			title={title.indexOf(':') === 0 ? server.getLocaleText(req.locale, title.substr(1)) : title}
 			user={req.user}
-			// eslint-disable-next-line no-underscore-dangle
-			version={server._version}
-			// eslint-disable-next-line no-underscore-dangle
-			bundle={server._bundlePath}
+			version={server.version}
+			bundle={server.bundlePath}
 			url={{
 				protocol: req.protocol,
 				hostname: req.get('host'),
 				pathname: req.originalUrl,
 			}}
-			// eslint-disable-next-line no-underscore-dangle
-			getText={(key, ...args) => server._getLocaleText(req.locale, key, ...args)}
+			getText={(key, ...args) => server.getLocaleText(req.locale, key, ...args)}
 			nonce={server.nonce}
 		/>)}`);
 	};
-	server.auth(req.session, next);
+	next();
 };

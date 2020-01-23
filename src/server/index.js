@@ -29,7 +29,7 @@ import StylesCompiler from './styles-compiler';
 import { TSConfig, RS_DIR } from './constants';
 import Plugin from './plugin';
 import {
-	LocaleMiddleware, SessionMiddleware, RenderMiddleware, PageNotFoundMiddleware, ErrorMiddleware,
+	LocaleMiddleware, SessionMiddleware, RenderMiddleware, PageNotFoundMiddleware, ErrorMiddleware, AuthMiddleware,
 } from './middleware';
 import {
 	WebpackConfig,
@@ -47,6 +47,7 @@ class Server {
 	/**
 	 * @typedef {import('./').IAppConfig} AppConfig
 	 * @typedef {import('./').ISocketEvent} SocketEvent
+	 * @typedef {import('./').IMiddleware} IMiddleware
 	 */
 
 	/**
@@ -141,6 +142,9 @@ class Server {
 	_entryInjections = [];
 
 	_plugins = [];
+
+	/** @type {IMiddleware[]} */
+	_middlewares = [];
 
 	// #region Property getters
 
@@ -241,6 +245,10 @@ class Server {
 		return Text;
 	}
 
+	get version() {
+		return this._version;
+	}
+
 	// #endregion
 
 	/**
@@ -323,6 +331,10 @@ class Server {
 			return 'text.json';
 		}
 		return `text_${locale}.json`;
+	}
+
+	getLocaleText(locale, key, ...args) {
+		return this._getLocaleText(locale, key, ...args);
 	}
 
 	/**
@@ -459,6 +471,22 @@ class Server {
 		}
 		this._plugins.push(plugin);
 		plugin.getEntryInjections().forEach((injection) => this._injectToEntry(injection));
+		plugin.getSocketClasses().forEach((cls) => this.registerSocketClass(cls));
+		plugin.getSocketEvents().forEach(({ event, listener }) => this.registerSocketEvent(event, listener));
+		plugin.getRouteCallbacks().forEach(({ route, callback }) => this.registerRouteCallback(route, callback));
+		plugin.getBeforeExecutions().forEach(({ spec, callback }) => this.registerBeforeExecution(spec, callback));
+		plugin.getMiddlewares().forEach(({ afterRoutes, callback }) => this.registerMiddleware(callback, afterRoutes));
+		plugin.getScripts().forEach((script) => this._config.scripts.push(script));
+		plugin.getStyles().forEach((style) => this._config.styles.push(style));
+		plugin.getMergeStyles().forEach((style) => this._config.mergeStyles.push(style));
+		return this;
+	}
+
+	registerMiddleware(middleware, afterRoutes = false) {
+		if (typeof middleware !== 'function') {
+			throw new Error('The middleware must be function.');
+		}
+		this._middlewares.push({ callback: middleware, afterRoutes: afterRoutes || false });
 		return this;
 	}
 
@@ -472,6 +500,7 @@ class Server {
 	async start(cb = () => { }) {
 		const { dev } = this._config;
 		this._log(`App starting DEV: ${dev}`);
+		this._setMiddlewares();
 		this._registerRsConfig();
 		try {
 			await this._createRSFiles();
@@ -1024,7 +1053,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	_setApp() {
 		const { appDir, locale } = this._config;
 		this._app = express();
-		this._setMiddlewares();
 		this._server = http.createServer(this._app);
 		socket(this, {
 			cookie: false,
@@ -1060,8 +1088,17 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			this._app.use(SessionMiddleware(this));
 			this._app.use(LocaleMiddleware(this));
 			this._app.use(RenderMiddleware(this));
+			this._app.use(AuthMiddleware(this));
+			this._middlewares
+				// eslint-disable-next-line no-shadow
+				.filter(({ afterRoutes }) => !afterRoutes)
+				.forEach(({ callback }) => this._app.use(callback(this)));
 			return;
 		}
+		this._middlewares
+			// eslint-disable-next-line no-shadow
+			.filter(({ afterRoutes }) => afterRoutes)
+			.forEach(({ callback }) => this._app.use(callback(this)));
 		this._app.use('*', PageNotFoundMiddleware());
 		this._app.use(ErrorMiddleware(this));
 	}

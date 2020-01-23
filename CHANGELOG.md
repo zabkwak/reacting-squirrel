@@ -9,6 +9,7 @@
 - Preparation for plugins.
 - Definition of accepted locales.
 - Option to set locale from the application.
+- Server can register middlewares.
 ### Updates
 - Creating subdirectories if needed while creating components.
 ### Breaking changes
