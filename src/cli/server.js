@@ -1,10 +1,15 @@
 #! /usr/bin/env node
 
 import argsParser from 'args-parser';
+import path from 'path';
 
 import Server from '../server';
 
 const { log, ...config } = argsParser(process.argv);
+
+if (config.rsConfig) {
+	config.rsConfig = path.resolve(config.rsConfig);
+}
 
 const app = new Server(config);
 

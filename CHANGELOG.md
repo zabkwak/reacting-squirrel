@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.2
+### Updates
+- Updated cli script.
+
 ## 0.16.1
 ### Updates
 - Deprecation of `res.render` function.
