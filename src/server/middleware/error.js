@@ -32,7 +32,7 @@ export default (server) => (err, req, res, next) => {
 	// eslint-disable-next-line no-underscore-dangle
 	server._error(err);
 	const render = () => {
-		res.render({
+		res.renderLayout({
 			title: err.message,
 			data: {
 				user: req.session.getUser(),

@@ -661,7 +661,7 @@ class Server {
 					layout,
 				};
 				if (typeof route.callback !== 'function') {
-					res.render(data);
+					res.renderLayout(data);
 					return;
 				}
 				route.callback(req, res, (err, d = {}) => {
@@ -669,7 +669,7 @@ class Server {
 						next(err);
 						return;
 					}
-					res.render(_.merge(data, d));
+					res.renderLayout(_.merge(data, d));
 				});
 			});
 		});

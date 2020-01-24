@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.1
+### Updates
+- Deprecation of `res.render` function.
+
 ## 0.16.0
 ### Features
 - Application has `log[Info|Warning|Error]` methods to prevent using console.

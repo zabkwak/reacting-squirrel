@@ -18,22 +18,22 @@ export interface IRequest<S extends Session = Session> extends express.Request {
 	locale: string;
 }
 
+export interface IRenderLayoutData {
+	scripts?: Array<string>;
+	styles?: Array<string>;
+	data?: any;
+	title?: string;
+	layout?: typeof Layout;
+}
+
 /**
  * Express response.
  */
 export interface IResponse extends express.Response {
-	/*
-	render(options?: {
-		scripts?: Array<string>;
-		styles?: Array<string>;
-		data?: any;
-		title?: string;
-		layout?: typeof Layout;
-	} | string): void;
-	*/
+	renderLayout: (data: IRenderLayoutData) => void;
 }
 
-type RouteCallback = (req: IRequest, res: IResponse, next: (err?: Error, data?: {
+export type RouteCallback = (req: IRequest, res: IResponse, next: (err?: Error, data?: {
 	scripts?: Array<string>;
 	styles?: Array<string>;
 	data?: any;

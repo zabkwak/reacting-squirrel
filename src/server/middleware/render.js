@@ -6,7 +6,7 @@ import ReactDOMServer from 'react-dom/server';
  */
 export default (server) => (req, res, next) => {
 	const { layoutComponent, cssDir } = server.getConfig();
-	res.render = ({
+	res.renderLayout = ({
 		scripts, styles, data, title, layout,
 	}) => {
 		const LayoutComponent = layout || layoutComponent;
@@ -27,6 +27,10 @@ export default (server) => (req, res, next) => {
 			getText={(key, ...args) => server.getLocaleText(req.locale, key, ...args)}
 			nonce={server.nonce}
 		/>)}`);
+	};
+	res.render = (data) => {
+		server._warn('res.render is deprecated and will be removed in future major release.');
+		res.renderLayout(data);
 	};
 	next();
 };
