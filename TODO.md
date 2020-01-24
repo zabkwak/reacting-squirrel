@@ -6,3 +6,5 @@
 - Serverless production.
 - Common code.
 - Recognition of the default language.
+
+- Remove `res.render`

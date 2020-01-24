@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import argsParser from 'args-parser';
 
 import Server from '../server';
