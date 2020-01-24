@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>reacting-squirrel - v0.15.2</title>
+	<title>reacting-squirrel - v0.16.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">reacting-squirrel - v0.15.2</a>
+					<a href="index.html" class="title">reacting-squirrel - v0.16.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> reacting-squirrel - v0.15.2</h1>
+			<h1> reacting-squirrel - v0.16.0</h1>
 		</div>
 	</div>
 </header>
@@ -321,7 +321,20 @@ app.start();</code></pre>
 				<a href="#using-texts-on-the-server-side-experimental" id="using-texts-on-the-server-side-experimental" style="color: inherit; text-decoration: none;">
 					<h4>Using texts on the server side (experimental)</h4>
 				</a>
-				<p>The instance of the server has a property <code>Text</code> which is just <code>texting-squirrel</code> module with registered default dictionary.</p>
+				<p>The instance of the server has a property <code>Text</code> which is just <code>texting-squirrel</code> module with registered directories.<br>Server option <code>locale</code> defines supported locales and dictionary text files are created (if not exist) and registered in the server startup.</p>
+				<a href="#page-titles" id="page-titles" style="color: inherit; text-decoration: none;">
+					<h5>Page titles</h5>
+				</a>
+				<p>If the page title starts with the <code>:</code> the key (without the first character) is searched in the locale dictionary.</p>
+				<a href="#translations" id="translations" style="color: inherit; text-decoration: none;">
+					<h4>Translations</h4>
+				</a>
+				<p>The dictionaries can be registered for different languages. The accepted languages should be set with the <code>locale.accepted</code> option on the server and dictionaries will be created in the <code>res</code> directory. The default language is taken from the browser (the dictionary must exist). </p>
+				<a href="#changing-the-locale" id="changing-the-locale" style="color: inherit; text-decoration: none;">
+					<h5>Changing the locale</h5>
+				</a>
+				<p>The locale can be changed on the client side using <code>Application.setLocale</code> method and it&#39;s handled on the server side (still experimental) with cookie <code>rs~locale</code>.
+				<b>NOTE:</b> In case of setting locale to the default dictionary it has to be the <code>default</code> keyword instead of the value.</p>
 				<a href="#socket-communication" id="socket-communication" style="color: inherit; text-decoration: none;">
 					<h2>Socket communication</h2>
 				</a>
@@ -362,20 +375,26 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 					<h4>castResponse</h4>
 				</a>
 				<p>The response is casted to defined types using <a href="https://www.npmjs.com/package/runtime-type">runtime-type</a> module.</p>
+				<a href="#plugins-experimental" id="plugins-experimental" style="color: inherit; text-decoration: none;">
+					<h2>Plugins (experimental)</h2>
+				</a>
+				<p>The plugins can be registered with <code>Server.registerPlugin</code> method. The plugin should extent <code>Plugin</code> class in the module.
+				Plugin can:</p>
+				<ul>
+					<li>Inject script to the entry file.</li>
+					<li>Add socket events.</li>
+					<li>Add socket classes.</li>
+					<li>Register route callbacks.</li>
+					<li>Register before execution functions.</li>
+					<li>Register scripts.</li>
+					<li>Register styles.</li>
+					<li>Register styles to merge.</li>
+					<li>Add middleware.</li>
+				</ul>
 				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
 					<h2>Docs</h2>
 				</a>
 				<p>Checkout the documentation <a href="https://zabkwak.github.io/reacting-squirrel/">here</a>.</p>
-				<a href="#todo" id="todo" style="color: inherit; text-decoration: none;">
-					<h2>TODO</h2>
-				</a>
-				<ul>
-					<li>Text component as separate module.</li>
-					<li>res directory out of app directory to use texts in the server side.</li>
-					<li>Redirect on layout change.</li>
-					<li>Option to change location of source styles.</li>
-					<li>Creating directories with components.</li>
-				</ul>
 				<a href="#deprecated" id="deprecated" style="color: inherit; text-decoration: none;">
 					<h3>Deprecated</h3>
 				</a>
