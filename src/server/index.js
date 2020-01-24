@@ -532,6 +532,19 @@ class Server {
 	}
 
 	_registerPlugins() {
+		if (this._rsConfig) {
+			const { plugins } = this._rsConfig;
+			if (plugins) {
+				plugins.forEach((plugin) => {
+					const PluginModule = this._tryRequireModule(plugin) || this._tryRequireModule(plugin, true);
+					if (!PluginModule) {
+						this._error(`Couldn't import plugin module ${plugin}.`);
+						return;
+					}
+					this.registerPlugin(new PluginModule());
+				});
+			}
+		}
 		this._plugins.forEach((plugin) => {
 			try {
 				plugin.register(this);
@@ -1281,7 +1294,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			return null;
 		}
 		try {
-			const m = require(resolve ? path.resolve(filePath) : filePath);
+			const m = require(path.normalize(resolve ? path.resolve(filePath) : filePath));
 			return m.default || m;
 		} catch (e) {
 			this._warn(e);

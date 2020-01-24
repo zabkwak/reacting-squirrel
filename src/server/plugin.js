@@ -50,6 +50,4 @@ export default class Plugin {
 
 	// TODO register routes -> pages on client side
 	// TODO register components -> components on client side
-
-	// TODO plugins in rsconfig
 }

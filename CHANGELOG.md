@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.3
+### Features
+- Plugins defined in rsconfig.
+
 ## 0.16.2
 ### Updates
 - Updated cli script.

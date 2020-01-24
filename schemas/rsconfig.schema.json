@@ -260,7 +260,7 @@
 					"title": "Default locale of the website. This locale will be used in default.json.",
 					"default": "en-US"
 				},
-				"secure": {
+				"accepted": {
 					"type": "array",
 					"title": "List of accepted locales.",
 					"items": {
@@ -269,6 +269,14 @@
 					"default": []
 				}
 			}
+		},
+		"plugins": {
+			"type": "array",
+			"title": "List of plugins.",
+			"items": {
+				"type": "string"
+			},
+			"default": []
 		}
 	}
 }
