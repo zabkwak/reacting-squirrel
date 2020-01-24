@@ -470,15 +470,7 @@ class Server {
 			throw new Error('The plugin must be instance of Plugin.');
 		}
 		this._plugins.push(plugin);
-		plugin.getEntryInjections().forEach((injection) => this._injectToEntry(injection));
-		plugin.getSocketClasses().forEach((cls) => this.registerSocketClass(cls));
-		plugin.getSocketEvents().forEach(({ event, listener }) => this.registerSocketEvent(event, listener));
-		plugin.getRouteCallbacks().forEach(({ route, callback }) => this.registerRouteCallback(route, callback));
-		plugin.getBeforeExecutions().forEach(({ spec, callback }) => this.registerBeforeExecution(spec, callback));
-		plugin.getMiddlewares().forEach(({ afterRoutes, callback }) => this.registerMiddleware(callback, afterRoutes));
-		plugin.getScripts().forEach((script) => this._config.scripts.push(script));
-		plugin.getStyles().forEach((style) => this._config.styles.push(style));
-		plugin.getMergeStyles().forEach((style) => this._config.mergeStyles.push(style));
+		plugin.register(this);
 		return this;
 	}
 
@@ -491,6 +483,18 @@ class Server {
 	}
 
 	// #endregion
+
+	/**
+	 * Injects the code to the generated entry file.
+	 *
+	 * @param {string} code
+	 */
+	injectToEntry(code) {
+		if (code) {
+			this._entryInjections.push(code);
+		}
+		return this;
+	}
 
 	/**
 	 * Starts the express server. In that process it creates all necessary files.
@@ -936,18 +940,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				});
 			});
 		});
-	}
-
-	/**
-	 * Injects the code to the generated entry file.
-	 *
-	 * @param {string} code
-	 */
-	_injectToEntry(code) {
-		if (code) {
-			this._entryInjections.push(code);
-		}
-		return this;
 	}
 
 	/**

@@ -549,49 +549,56 @@ export class SocketClass<S extends Session = Session> {
 export abstract class Plugin {
 
 	/**
+	 * Registers the plugin to the server instance.
+	 *
+	 * @param server The server instance.
+	 */
+	public register(server: Server): void;
+
+	/**
 	 * Gets the list of javascript code to inject in the generated entry file.
 	 */
-	public getEntryInjections(): Array<string>;
+	protected getEntryInjections(): Array<string>;
 
 	/**
 	 * Gets the list of socket classes to register.
 	 */
-	public getSocketClasses(): Array<typeof SocketClass>;
+	protected getSocketClasses(): Array<typeof SocketClass>;
 
 	/**
 	 * Gets the list of socket events to register.
 	 */
-	public getSocketEvents(): Array<ISocketEvent>;
+	protected getSocketEvents(): Array<ISocketEvent>;
 
 	/**
 	 * Gets the list of route callbacks.
 	 */
-	public getRouteCallbacks(): Array<{ route: string, callback: RouteCallback }>;
+	protected getRouteCallbacks(): Array<{ route: string, callback: RouteCallback }>;
 
 	/**
 	 * Gets the list of callbacks called before the route execution.
 	 */
-	public getBeforeExecutions(): Array<{spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
+	protected getBeforeExecutions(): Array<{spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
 
 	/**
 	 * Gets the list of scripts to require in the html header.
 	 */
-	public getScripts(): Array<string>;
+	protected getScripts(): Array<string>;
 
 	/**
 	 * Gets the list of styles to require in the html header.
 	 */
-	public getStyles(): Array<string>;
+	protected getStyles(): Array<string>;
 
 	/**
 	 * Gets the list of styles to merge in the rs app css.
 	 */
-	public getMergeStyles(): Array<string>;
+	protected getMergeStyles(): Array<string>;
 
 	/**
 	 * Gets the list of middlewares.
 	 */
-	public getMiddlewares(): Array<IMiddleware>;
+	protected getMiddlewares(): Array<IMiddleware>;
 }
 
 export { HttpSmartError as HttpError };
@@ -875,6 +882,13 @@ export default class Server {
 	 * @param afterRoutes Indicates if the middleware should be executed after the routes register.
 	 */
 	registerMiddleware(middleware: IMiddleware['callback'], afterRoutes: boolean): this;
+
+	/**
+	 * Injects the code to the generated entry file.
+	 *
+	 * @param code Javascript code to inject.
+	 */
+	injectToEntry(code: string): this;
 
     /**
      * Starts the application.
