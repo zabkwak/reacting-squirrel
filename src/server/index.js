@@ -466,11 +466,7 @@ class Server {
 	}
 
 	registerPlugin(plugin) {
-		if (!(plugin instanceof Plugin)) {
-			throw new Error('The plugin must be instance of Plugin.');
-		}
 		this._plugins.push(plugin);
-		plugin.register(this);
 		return this;
 	}
 
@@ -504,6 +500,7 @@ class Server {
 	async start(cb = () => { }) {
 		const { dev } = this._config;
 		this._log(`App starting DEV: ${dev}`);
+		this._registerPlugins();
 		this._setMiddlewares();
 		this._registerRsConfig();
 		try {
@@ -530,6 +527,17 @@ class Server {
 			this._log('The server is stopped.');
 			if (typeof cb === 'function') {
 				cb();
+			}
+		});
+	}
+
+	_registerPlugins() {
+		this._plugins.forEach((plugin) => {
+			try {
+				plugin.register(this);
+				this._log(`Plugin ${plugin.getName()} registered.`);
+			} catch (e) {
+				this._error(`Plugin ${plugin.getName ? plugin.getName() : 'Unnamed plugin'} register failed.`, e);
 			}
 		});
 	}
@@ -1305,9 +1313,9 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		console.warn(new Date(), '[WARN]', message, ...args);
 	}
 
-	_error(message) {
+	_error(message, ...args) {
 		// eslint-disable-next-line no-console
-		console.error(new Date(), '[ERROR]', message);
+		console.error(new Date(), '[ERROR]', message, ...args);
 	}
 }
 

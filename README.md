@@ -287,6 +287,19 @@ The method is not registered as socket method and cannot be called from the clie
 #### castResponse
 The response is casted to defined types using [runtime-type](https://www.npmjs.com/package/runtime-type) module.
 
+## Plugins (experimental)
+The plugins can be registered with `Server.registerPlugin` method. The plugin should extent `Plugin` class in the module.
+Plugin can:
+- Inject script to the entry file.
+- Add socket events.
+- Add socket classes.
+- Register route callbacks.
+- Register before execution functions.
+- Register scripts.
+- Register styles.
+- Register styles to merge.
+- Add middleware.
+
 ## Docs
 Checkout the documentation [here](https://zabkwak.github.io/reacting-squirrel/).
 

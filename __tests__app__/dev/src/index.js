@@ -73,8 +73,20 @@ app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 
 class CustomPlugin extends Plugin {
 
+	getName() {
+		return 'custom-plugin';
+	}
+
+	getVersion() {
+		return '1.0.1';
+	}
+
 	getEntryInjections() {
 		return ['console.log(\'custom plugin\');'];
+	}
+
+	getStyles() {
+		return ['/css/plugin.css'];
 	}
 
 	getMiddlewares() {

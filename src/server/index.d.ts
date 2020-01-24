@@ -556,6 +556,11 @@ export abstract class Plugin {
 	public register(server: Server): void;
 
 	/**
+	 * Gets the name of the plugin.
+	 */
+	public abstract getName(): string;
+
+	/**
 	 * Gets the list of javascript code to inject in the generated entry file.
 	 */
 	protected getEntryInjections(): Array<string>;
