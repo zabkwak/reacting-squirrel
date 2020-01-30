@@ -895,6 +895,33 @@ export default class Server {
 	 */
 	injectToEntry(code: string): this;
 
+	/**
+	 * Logs the info in the stdout.
+	 * 
+	 * @param tag Tag of the message.
+	 * @param message Message.
+	 * @param args Another arguments to log.
+	 */
+	logInfo(tag: string, message: string, ...args: Array<any>): void;
+
+	/**
+	 * Logs the warning in the stdout.
+	 * 
+	 * @param tag Tag of the message.
+	 * @param message Message.
+	 * @param args Another arguments to log.
+	 */
+	logWarning(tag: string, message: string, ...args: Array<any>): void;
+
+	/**
+	 * Logs the error in the stderr.
+	 * 
+	 * @param tag Tag of the message.
+	 * @param message Message.
+	 * @param args Another arguments to log.
+	 */
+	logError(tag: string, message: string, ...args: Array<any>): void;
+
     /**
      * Starts the application.
      *

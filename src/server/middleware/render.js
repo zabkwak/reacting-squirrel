@@ -12,8 +12,12 @@ export default (server) => (req, res, next) => {
 		const LayoutComponent = layout || layoutComponent;
 		res.setHeader('Content-Type', 'text/html; charset=utf-8');
 		res.end(`<!DOCTYPE html>${ReactDOMServer.renderToString(<LayoutComponent
-			scripts={server.getConfig().scripts.concat(scripts || [])}
-			styles={server.getConfig().styles.concat(styles || [`/${cssDir}/rs-app.css`])}
+			scripts={[...server.getConfig('scripts'), ...(scripts || [])]}
+			styles={[
+				...server.getConfig('styles'),
+				...(styles || []),
+				`/${cssDir}/rs-app.css`,
+			]}
 			initialData={data || {}}
 			title={title.indexOf(':') === 0 ? server.getLocaleText(req.locale, title.substr(1)) : title}
 			user={req.user}
@@ -29,7 +33,7 @@ export default (server) => (req, res, next) => {
 		/>)}`);
 	};
 	res.render = (data) => {
-		server._warn('res.render is deprecated and will be removed in future major release.');
+		server.logWarning('RS', 'res.render is deprecated and will be removed in future major release.');
 		res.renderLayout(data);
 	};
 	next();

@@ -6,5 +6,6 @@
 - Serverless production.
 - Common code.
 - Recognition of the default language.
-
+- Register plugins with options using rsconfig.
+## v2
 - Remove `res.render`

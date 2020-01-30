@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.4
+### Features
+- Server has `log[Info|Warning|Error]` methods to prevent using console.
+
 ## 0.16.3
 ### Features
 - Plugins defined in rsconfig.

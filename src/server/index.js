@@ -492,6 +492,18 @@ class Server {
 		return this;
 	}
 
+	logInfo(tag, message, ...args) {
+		this._log(`[${tag}]`, message, ...args);
+	}
+
+	logWarning(tag, message, ...args) {
+		this._warn(`[${tag}]`, message, ...args);
+	}
+
+	logError(tag, message, ...args) {
+		this._error(`[${tag}]`, message, ...args);
+	}
+
 	/**
 	 * Starts the express server. In that process it creates all necessary files.
 	 *
