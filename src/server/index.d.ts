@@ -16,6 +16,7 @@ export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 export interface IRequest<S extends Session = Session> extends express.Request {
 	session: S;
 	locale: string;
+	getCookie<T = any>(name: string): T;
 }
 
 export interface IRenderLayoutData {
@@ -31,6 +32,7 @@ export interface IRenderLayoutData {
  */
 export interface IResponse extends express.Response {
 	renderLayout: (data: IRenderLayoutData) => void;
+	setCookie: (name: string, value: any, options?: express.CookieOptions) => void;
 }
 
 export type RouteCallback = (req: IRequest, res: IResponse, next: (err?: Error, data?: {
@@ -111,12 +113,14 @@ export interface IAppConfig {
 		secret?: string;
 		/**
 		 * Secure flag for the cookies. 
-		 * @default true
+		 * @deprecated The flag is automatically set based on the request protocol.
+		 * @default null
 		 */
 		secure?: boolean;
 		/**
 		 * HttpOnly flag for the cookies.
-		 * @default true
+		 * @deprecated The flag should be always true.
+		 * @default null
 		 */
 		httpOnly?: boolean;
 	};

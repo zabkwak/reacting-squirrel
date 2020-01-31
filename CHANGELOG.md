@@ -4,6 +4,10 @@
 ### Features
 - Server has `log[Info|Warning|Error]` methods to prevent using console.
 - RSConfig accepts options in the plugins.
+- Request has `getCookie` method.
+- Response has `setCookie` method.
+### Deprecations
+- Cookies options `secure` and `httpOnly`. They are handled automatically.
 
 ## 0.16.3
 ### Features

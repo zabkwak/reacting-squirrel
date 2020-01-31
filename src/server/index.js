@@ -18,7 +18,6 @@ import autoprefixer from 'autoprefixer';
 import RouteParser from 'route-parser';
 import uniqid from 'uniqid';
 import Text from 'texting-squirrel';
-import cookieSignature from 'cookie-signature';
 
 import Layout from './layout';
 import Session from './session';
@@ -30,7 +29,13 @@ import StylesCompiler from './styles-compiler';
 import { TSConfig, RS_DIR } from './constants';
 import Plugin from './plugin';
 import {
-	LocaleMiddleware, SessionMiddleware, RenderMiddleware, PageNotFoundMiddleware, ErrorMiddleware, AuthMiddleware,
+	LocaleMiddleware,
+	SessionMiddleware,
+	RenderMiddleware,
+	PageNotFoundMiddleware,
+	ErrorMiddleware,
+	AuthMiddleware,
+	CookiesMiddleware,
 } from './middleware';
 import {
 	WebpackConfig,
@@ -85,8 +90,8 @@ class Server {
 		cookieSecret: null,
 		cookies: {
 			secret: Math.random().toString(36).substring(7),
-			secure: true,
-			httpOnly: true,
+			secure: null,
+			httpOnly: null,
 		},
 		scripts: [],
 		styles: [],
@@ -263,7 +268,7 @@ class Server {
 				// eslint-disable-next-line no-param-reassign
 				config.cookies = { secret: config.cookieSecret };
 			} else {
-				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.\n');
+				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.');
 			}
 		}
 		try {
@@ -291,6 +296,12 @@ class Server {
 			this._config.sourceStylesDir = !path.isAbsolute(this._config.sourceStylesDir)
 				? path.resolve(this._config.sourceStylesDir)
 				: this._config.sourceStylesDir;
+		}
+		if (typeof this._config.cookies.secure === 'boolean') {
+			this._warn('Using secure option of the cookies is deprecated. By default the option is set based on request protocol.');
+		}
+		if (typeof this._config.cookies.httpOnly === 'boolean') {
+			this._warn('Using httpOnly option of the cookies is deprecated. By default the option is always true.');
 		}
 		if (!(new this.Session() instanceof Session)) {
 			throw new Error('Cannot create instance of Session.');
@@ -1128,6 +1139,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			this._app.use(express.static(staticDir));
 			this._app.use(cookieParser(secret));
 			this._app.use(compression());
+			this._app.use(CookiesMiddleware(this));
 			this._app.use(SessionMiddleware(this));
 			this._app.use(LocaleMiddleware(this));
 			this._app.use(RenderMiddleware(this));

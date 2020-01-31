@@ -4,6 +4,7 @@ import RenderMiddleware from './render';
 import PageNotFoundMiddleware from './page-not-found';
 import ErrorMiddleware from './error';
 import AuthMiddleware from './auth';
+import CookiesMiddleware from './cookies';
 
 export {
 	// eslint-disable-next-line import/prefer-default-export
@@ -13,4 +14,5 @@ export {
 	PageNotFoundMiddleware,
 	ErrorMiddleware,
 	AuthMiddleware,
+	CookiesMiddleware,
 };
