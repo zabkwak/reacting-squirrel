@@ -1,4 +1,5 @@
 {
+    "$schema": "../../schemas/rsconfig.schema.json",
     "routes": [
         {
             "route": "/",
@@ -14,13 +15,13 @@
             "route": "/socket",
             "component": "socket",
             "title": "Socket"
-		},
-		{
+        },
+        {
             "route": "/decorators",
             "component": "decorators",
             "title": "Decorators"
-		},
-		{
+        },
+        {
             "route": "/models",
             "component": "models",
             "title": "Models"
@@ -30,11 +31,11 @@
             "component": "home",
             "title": "Layout test",
             "layout": "__tests__app__/dev/dist/layout"
-		},
-		{
-			"route": "/generated-page",
-			"component": "generated",
-			"title": "Generated page"
+        },
+        {
+            "route": "/generated-page",
+            "component": "generated",
+            "title": "Generated page"
         },
         {
             "route": "/ui",
@@ -50,21 +51,27 @@
         {
             "id": "socket-status",
             "component": "socket-status"
-		},
-		{
-			"id": "generated",
-			"component": "generated-component"
-		}
+        },
+        {
+            "id": "generated",
+            "component": "generated-component"
+        }
     ],
-	"socketClassDir": "__tests__app__/dev/dist",
-	"errorPage": "page.error",
-	"createMissingComponents": true,
-	"mergeStyles": [
-		"./node_modules/bootstrap/dist/css/bootstrap.css"
-	],
-	"layoutComponent": "./__tests__app__/dev/dist/layout",
+    "socketClassDir": "__tests__app__/dev/dist",
+    "errorPage": "page.error",
+    "createMissingComponents": true,
+    "mergeStyles": [
+        "./node_modules/bootstrap/dist/css/bootstrap.css"
+    ],
+    "layoutComponent": "./__tests__app__/dev/dist/layout",
     "sourceStylesDir": "./__tests__app__/dev/src/styles",
     "plugins": [
-        "./__testS__app__/dev/dist/plugin"
+        [
+            "./__tests__app__/dev/dist/plugin",
+            {
+                "test": "test"
+            }
+        ],
+        "test"
     ]
 }

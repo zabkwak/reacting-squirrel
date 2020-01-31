@@ -18,6 +18,7 @@ import autoprefixer from 'autoprefixer';
 import RouteParser from 'route-parser';
 import uniqid from 'uniqid';
 import Text from 'texting-squirrel';
+import cookieSignature from 'cookie-signature';
 
 import Layout from './layout';
 import Session from './session';
@@ -357,6 +358,10 @@ class Server {
 
 	// #endregion
 
+	// #region Setters
+
+	// #endregion
+
 	isLocaleDefault(locale) {
 		return locale === this._config.locale.default;
 	}
@@ -548,12 +553,25 @@ class Server {
 			const { plugins } = this._rsConfig;
 			if (plugins) {
 				plugins.forEach((plugin) => {
-					const PluginModule = this._tryRequireModule(plugin) || this._tryRequireModule(plugin, true);
-					if (!PluginModule) {
-						this._error(`Couldn't import plugin module ${plugin}.`);
+					let name = plugin;
+					let options;
+					if (plugin instanceof Array) {
+						if (!plugin.length) {
+							this._error('Plugin specified as array must contain at least first element.');
+							return;
+						}
+						[name, options] = plugin;
+					}
+					if (typeof name !== 'string') {
+						this._error('Plugin module must be a string.', name);
 						return;
 					}
-					this.registerPlugin(new PluginModule());
+					const PluginModule = this._tryRequireModule(name) || this._tryRequireModule(name, true);
+					if (!PluginModule) {
+						this._error(`Couldn't import plugin module ${name}.`);
+						return;
+					}
+					this.registerPlugin(new PluginModule(options));
 				});
 			}
 		}

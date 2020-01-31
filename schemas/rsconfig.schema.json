@@ -274,7 +274,28 @@
 			"type": "array",
 			"title": "List of plugins.",
 			"items": {
-				"type": "string"
+				"anyOf": [
+					{
+						"type": "string",
+						"title": "Path to the module or its name to require from node_modules."
+					},
+					{
+						"type": "array",
+						"title": "Specification of plugin with options",
+						"minItems": 1,
+						"maxItems": 2,
+						"items": [
+							{
+								"type": "string",
+								"title": "Path to the module or its name to require from node_modules."
+							},
+							{
+								"type": "object",
+								"title": "Options of the plugin."
+							}
+						]
+					}
+				]
 			},
 			"default": []
 		}

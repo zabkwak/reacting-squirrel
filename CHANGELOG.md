@@ -3,6 +3,7 @@
 ## 0.16.4
 ### Features
 - Server has `log[Info|Warning|Error]` methods to prevent using console.
+- RSConfig accepts options in the plugins.
 
 ## 0.16.3
 ### Features
