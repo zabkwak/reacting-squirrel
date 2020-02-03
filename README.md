@@ -299,6 +299,12 @@ Plugin can:
 - Register styles.
 - Register styles to merge.
 - Add middleware.
+- Register pages.
+- Register components.
+### Pages
+The pages can be register using `getPages` method. The path to the component can be absolute so it must not be in the `app` directory. 
+### Components
+The components can be register using `getComponents` method. The path to the component can be also absolute. 
 
 ## Docs
 Checkout the documentation [here](https://zabkwak.github.io/reacting-squirrel/).

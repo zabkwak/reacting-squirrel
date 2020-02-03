@@ -19,6 +19,10 @@ export default class CallbackEmitter {
 		if (!this._hasEventRegistered(event)) {
 			this._listeners[event] = [];
 		}
+		const index = this._listeners[event].indexOf(listener);
+		if (index >= 0) {
+			return this;
+		}
 		this._listeners[event].push(listener);
 		return this;
 	}
@@ -40,6 +44,10 @@ export default class CallbackEmitter {
 		}
 		this._listeners[event].splice(index, 1);
 		return this;
+	}
+
+	clear(event) {
+		delete this._listeners[event];
 	}
 
 	/**

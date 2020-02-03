@@ -697,6 +697,12 @@ export class CallbackEmitter<T = EventMap> {
 	public removeListener<K extends keyof T>(event: K, listener: (self: this, args: T[K]) => void): this;
 
 	/**
+	 * Clears all listeners on the event.
+	 *
+	 * @param event Name of the event.
+	 */
+	public clear<K extends keyof T>(event: K): void;
+	/**
 	 * Calls all listeners registered in the event.
 	 *
 	 * @param event Name of the event.
