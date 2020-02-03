@@ -16,17 +16,6 @@ export default class Home extends Page {
 	async componentDidMount() {
 		super.componentDidMount();
 		await this.loadState('homepage');
-		const { user } = this.state;
-		if (!user) {
-			this.emit('user.get');
-			this.on('user.get', (err, user) => {
-				if (err) {
-					console.error(err);
-					return;
-				}
-				this.setState({ user });
-			});
-		}
 		this.request('user.getPromise', { test: undefined }, (err, user) => {
 			if (err) {
 				console.error(err);
@@ -136,5 +125,15 @@ export default class Home extends Page {
 				</div>
 			</div>
 		);
+	}
+
+	getEvents() {
+		return [
+			{
+				name: 'user.getPromise',
+				state: 'user',
+				emit: true,
+			},
+		];
 	}
 }

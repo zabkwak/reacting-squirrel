@@ -551,10 +551,10 @@ class Server {
 			this._warn('Server cannot be stopped beceause it was not started.');
 			return;
 		}
-		this._server.close(() => {
+		this._server.close((err) => {
 			this._log('The server is stopped.');
 			if (typeof cb === 'function') {
-				cb();
+				cb(err);
 			}
 		});
 	}

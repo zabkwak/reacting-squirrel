@@ -6,5 +6,6 @@
 - Serverless production.
 - Common code.
 - Recognition of the default language.
+- sameSite cookie flag.
 ## v1
 - Remove `res.render`

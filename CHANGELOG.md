@@ -6,6 +6,7 @@
 - RSConfig accepts options in the plugins.
 - Request has `getCookie` method.
 - Response has `setCookie` method.
+- `SocketComponent` can register event listeners and pass the data to the component state using `getEvents` method.
 ### Deprecations
 - Cookies options `secure` and `httpOnly`. They are handled automatically.
 

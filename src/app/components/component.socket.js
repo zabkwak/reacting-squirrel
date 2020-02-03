@@ -1,3 +1,5 @@
+import uniqid from 'uniqid';
+
 import Component from './component';
 import SocketRequest from '../socket/request';
 
@@ -25,6 +27,20 @@ export default class SocketComponent extends Component {
 		this._socketRequest
 			.addListener('state', this.__state__)
 			.addListener('error', this.__error__);
+		this.getEvents().forEach(({
+			name, emit, data, state,
+		}) => {
+			// eslint-disable-next-line no-shadow
+			this.on(name, (err, data) => {
+				if (err) {
+					return;
+				}
+				this.setState({ [state]: data });
+			});
+			if (emit) {
+				this.emit(name, uniqid(), data);
+			}
+		});
 	}
 
 	componentWillUnmount() {
@@ -104,5 +120,9 @@ export default class SocketComponent extends Component {
 	emit(event, key, data = {}, onProgress = null) {
 		this._socketRequest.emit(event, key, data, onProgress);
 		return this;
+	}
+
+	getEvents() {
+		return [];
 	}
 }

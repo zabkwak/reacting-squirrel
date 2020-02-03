@@ -931,7 +931,7 @@ export default class Server {
      *
      * @param cb Callback called after the application is started.
      */
-	start(cb?: (err?: any) => void): void;
+	start(cb?: (err?: any) => void): Promise<void>;
 
 	/**
      * Stops the application.
@@ -942,5 +942,5 @@ export default class Server {
 	 * 
 	 * @param cb Callback called after the server stopped.
 	 */
-	stop(cb?: () => void): void;
+	stop(cb?: (err?: Error) => void): void;
 }
