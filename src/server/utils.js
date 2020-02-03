@@ -39,6 +39,9 @@ export default {
 			if (file.indexOf('.js.map') >= 0) {
 				return;
 			}
+			if (file.indexOf('.tsx') >= 0) {
+				return;
+			}
 			const m = require(path);
 			const Class = m.default || m;
 			if (this._isConstructor(Class) && new Class() instanceof SocketClass) {
