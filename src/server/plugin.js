@@ -1,5 +1,9 @@
 export default class Plugin {
 
+	/**
+	 *
+	 * @param {import('./').default} server
+	 */
 	register(server) {
 		this.getEntryInjections().forEach((injection) => server.injectToEntry(injection));
 		this.getSocketClasses().forEach((cls) => server.registerSocketClass(cls));
@@ -7,6 +11,10 @@ export default class Plugin {
 		this.getRouteCallbacks().forEach(({ route, callback }) => server.registerRouteCallback(route, callback));
 		this.getBeforeExecutions().forEach(({ spec, callback }) => server.registerBeforeExecution(spec, callback));
 		this.getMiddlewares().forEach(({ afterRoutes, callback }) => server.registerMiddleware(callback, afterRoutes));
+		this.getPages().forEach(({
+			method, route, component, title, requireAuth, layout,
+		}) => server.registerRoute(method || 'get', route, component, title, requireAuth, layout, undefined));
+		this.getComponents().forEach(({ id, component }) => server.registerComponent(component, id));
 		this.getScripts().forEach((script) => server.getConfig().scripts.push(script));
 		this.getStyles().forEach((style) => server.getConfig().styles.push(style));
 		this.getMergeStyles().forEach((style) => server.getConfig().mergeStyles.push(style));
@@ -48,6 +56,11 @@ export default class Plugin {
 		return [];
 	}
 
-	// TODO register routes -> pages on client side
-	// TODO register components -> components on client side
+	getPages() {
+		return [];
+	}
+
+	getComponents() {
+		return [];
+	}
 }

@@ -410,7 +410,7 @@ class Server {
 	 *
 	 * @param {'get'|'post'|'put'|'delete'} method HTTP method of the route.
 	 * @param {string} route Route spec.
-	 * @param {string} contentComponent Relative path from the {config.appDir} to the component.
+	 * @param {string} contentComponent Absolute path or relative path from the {config.appDir} to the component.
 	 * @param {string} title Title of the page.
 	 * @param {boolean=} requireAuth If true the route requires authorized user.
 	 * @param {any} layout Alternative layout.
@@ -455,12 +455,17 @@ class Server {
 	/**
 	 * Registers react components which are rendered into DOM elements.
 	 *
-	 * @param {string} componentPath Relative path from the {config.appDir} to the component.
+	 * @param {string} componentPath Absolute path or relative path from the {config.appDir} to the component.
 	 * @param {string} elementId Identificator of the DOM element where the component should render.
 	 */
 	registerComponent(componentPath, elementId) {
 		const { appDir } = this._config;
-		this._components.push({ path: path.resolve(`${appDir}/${componentPath}`), elementId });
+		this._components.push({
+			path: !path.isAbsolute(componentPath)
+				? path.resolve(`${appDir}/${componentPath}`)
+				: componentPath,
+			elementId,
+		});
 		return this;
 	}
 
@@ -670,7 +675,9 @@ class Server {
 				return;
 			}
 			const key = `__${md5(`${route.type}${route.spec}`)}__`;
-			const modulePath = path.resolve(`${appDir}/${route.contentComponent}`);
+			const modulePath = !path.isAbsolute(route.contentComponent)
+				? path.resolve(`${appDir}/${route.contentComponent}`)
+				: route.contentComponent;
 			componentsMap[key] = {
 				title: route.title,
 				spec: route.spec,

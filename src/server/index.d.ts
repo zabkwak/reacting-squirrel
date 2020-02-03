@@ -849,7 +849,7 @@ export default class Server {
     /**
      * Registers component.
      *
-     * @param componentPath Relative path to the component from the app directory.
+     * @param componentPath Absolute path or relative path to the component from the app directory.
      * @param elementId Id of the element in the layout where the component should be rendered.
      */
 	registerComponent(componentPath: string, elementId: string): this;

@@ -58,6 +58,11 @@ app.registerBeforeExecution('*', async (req, res) => {
 app.get('/error', null, 'Error', false, (req, res, next) => {
 	next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
+
+app
+	.registerRoute('get', '/absolute-test', path.resolve(__dirname, '../../app/absolute-test/page'), 'Absolute page test')
+	.registerComponent(path.resolve(__dirname, '../../app/absolute-test/component'), 'absolute-component');
+
 /*
 app.registerRouteCallback('/', (req, res, next) => {
 	next(null, { title: 'Dynamic title', data: { test: 'test' } });

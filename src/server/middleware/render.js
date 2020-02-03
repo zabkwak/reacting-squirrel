@@ -19,7 +19,7 @@ export default (server) => (req, res, next) => {
 				`/${cssDir}/rs-app.css`,
 			]}
 			initialData={data || {}}
-			title={title.indexOf(':') === 0 ? server.getLocaleText(req.locale, title.substr(1)) : title}
+			title={title && title.indexOf(':') === 0 ? server.getLocaleText(req.locale, title.substr(1)) : title}
 			user={req.user}
 			version={server.version}
 			bundle={server.bundlePath}
