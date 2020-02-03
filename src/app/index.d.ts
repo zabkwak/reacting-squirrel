@@ -702,6 +702,7 @@ export class CallbackEmitter<T = EventMap> {
 	 * @param event Name of the event.
 	 */
 	public clear<K extends keyof T>(event: K): void;
+	
 	/**
 	 * Calls all listeners registered in the event.
 	 *

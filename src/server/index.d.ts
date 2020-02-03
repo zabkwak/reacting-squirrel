@@ -225,6 +225,11 @@ export interface IAppConfig {
 		 */
 		accepted?: Array<string>;
 	};
+	/**
+	 * Indicates if the server logs to the console.
+	 * @default true
+	 */
+	logging?: boolean;
 }
 
 export interface ISocketEvent<S extends Session = Session> {

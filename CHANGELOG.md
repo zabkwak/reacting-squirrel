@@ -8,6 +8,7 @@
 - Response has `setCookie` method.
 - `SocketComponent` can register event listeners and pass the data to the component state using `getEvents` method.
 - Plugins can register pages and components.
+- Option to disable logging.
 ### Deprecations
 - Cookies options `secure` and `httpOnly`. They are handled automatically.
 

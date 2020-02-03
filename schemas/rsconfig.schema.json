@@ -298,6 +298,11 @@
 				]
 			},
 			"default": []
+		},
+		"logging": {
+			"type": "boolean",
+			"title": "Indicates if the server logs to the console.",
+			"default": true
 		}
 	}
 }

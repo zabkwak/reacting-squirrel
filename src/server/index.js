@@ -115,6 +115,7 @@ class Server {
 			default: 'en-US',
 			accepted: [],
 		},
+		logging: true,
 	};
 
 	/**
@@ -263,19 +264,19 @@ class Server {
 	 * @param {AppConfig} config
 	 */
 	constructor(config = {}) {
-		if (!config.cookies || !config.cookies.secret) {
-			if (config.cookieSecret) {
-				// eslint-disable-next-line no-param-reassign
-				config.cookies = { secret: config.cookieSecret };
-			} else {
-				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.');
-			}
-		}
 		try {
 			this._rsConfig = require(config.rsConfig || path.resolve('./rsconfig.json'));
 		} catch (e) {
 			if (config.rsConfig) {
 				throw e;
+			}
+		}
+		if (!config.cookies || !config.cookies.secret) {
+			if (config.cookieSecret) {
+				// eslint-disable-next-line no-param-reassign
+				config.cookies = { secret: config.cookieSecret };
+			} else if (config.logging !== false) {
+				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.');
 			}
 		}
 		this._config = _.merge(
@@ -1357,8 +1358,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {string} message Message to log.
 	 */
 	_log(message, ...args) {
-		const { dev } = this._config;
-		if (!dev) {
+		const { dev, logging } = this._config;
+		if (!dev || !logging) {
 			return;
 		}
 		// eslint-disable-next-line no-console
@@ -1371,11 +1372,19 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {string} message Message to log.
 	 */
 	_warn(message, ...args) {
+		const { logging } = this._config;
+		if (!logging) {
+			return;
+		}
 		// eslint-disable-next-line no-console
 		console.warn(new Date(), '[WARN]', message, ...args);
 	}
 
 	_error(message, ...args) {
+		const { logging } = this._config;
+		if (!logging) {
+			return;
+		}
 		// eslint-disable-next-line no-console
 		console.error(new Date(), '[ERROR]', message, ...args);
 	}

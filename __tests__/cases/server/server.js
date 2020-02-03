@@ -43,12 +43,13 @@ const CONFIG_FIELDS = [
 	'sourceStylesDir',
 	'connectSocketAutomatically',
 	'locale',
+	'logging',
 ];
 
 describe('Server instance', () => {
 
 	it('checks default config fields of the server', () => {
-		const server = new Server();
+		const server = new Server({ logging: false });
 		expect(server.getConfig()).to.have.all.keys(CONFIG_FIELDS);
 		const {
 			port,
@@ -123,6 +124,7 @@ describe('Server instance', () => {
 				default: 'cs-CZ',
 				accepted: ['en-US'],
 			},
+			logging: false,
 		});
 		expect(server._config).to.have.all.keys(CONFIG_FIELDS);
 		const {
@@ -142,6 +144,7 @@ describe('Server instance', () => {
 			errorHandler,
 			webpack,
 			locale,
+			logging,
 		} = server._config;
 		expect(port).to.be.equal(9000);
 		expect(staticDir).to.be.equal('./__static__');
@@ -167,6 +170,7 @@ describe('Server instance', () => {
 		expect(locale).to.have.all.keys(['default', 'accepted']);
 		expect(locale.default).to.be.equal('cs-CZ');
 		expect(locale.accepted).to.be.deep.equal(['cs-CZ', 'en-US']);
+		expect(logging).to.be.false;
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
@@ -182,15 +186,15 @@ describe('Server instance', () => {
 	});
 
 	it('tries to set not Layout child as a layoutComponent', () => {
-		expect(() => new Server({ layoutComponent: class { } })).to.throw(Error, 'Cannot create instance of Layout.');
+		expect(() => new Server({ layoutComponent: class { }, logging: false })).to.throw(Error, 'Cannot create instance of Layout.');
 	});
 
 	it('tries to set not Session child as a session', () => {
-		expect(() => new Server({ session: class { } })).to.throw(Error, 'Cannot create instance of Session.');
+		expect(() => new Server({ session: class { }, logging: false })).to.throw(Error, 'Cannot create instance of Session.');
 	});
 
 	it('checks if the auth method is called', (done) => {
-		const server = new Server({ auth: (session, next) => done() });
+		const server = new Server({ auth: (session, next) => done(), logging: false });
 		server.auth();
 	});
 });
@@ -212,6 +216,7 @@ describe('Start of the server', () => {
 				next();
 			},
 			createMissingComponents: true,
+			logging: false,
 		});
 
 		const RS_DIR = server._getRSDirPathAbsolute();
