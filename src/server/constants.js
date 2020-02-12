@@ -22,5 +22,5 @@ export const TSConfig = {
 		'node_modules',
 	],
 };
-export const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid'];
+export const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid', 'texting-squirrel'];
 export const RS_DIR = '~rs';

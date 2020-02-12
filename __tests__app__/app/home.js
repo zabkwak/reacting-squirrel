@@ -6,10 +6,31 @@ import {
 import './home.css';
 import './home.scss';
 
+/*
+function test(c, eventName, emit, data) {
+	// eslint-disable-next-line func-names
+	return function (target, name, descriptor) {
+		const events = c.getEvents();
+		c.getEvents = function() {
+			return [
+				...events,
+				{
+					state: name,
+					name: eventName,
+					emit,
+					data,
+				}
+			];
+		};
+		return descriptor;
+	};
+}
+*/
 
 export default class Home extends Page {
 
 	state = {
+		// @test(this, 'user.getPromise', true)
 		user: null,
 	};
 
@@ -77,6 +98,7 @@ export default class Home extends Page {
 						key: 'user',
 					}]}
 					renderData={({ user }) => <h2>{user.name}</h2>}
+					// eslint-disable-next-line react/jsx-one-expression-per-line
 					renderError={({ message, code }) => <h2>Error: {code} - {message}</h2>}
 					loaderBlock={false}
 					loaderSize="small"
@@ -87,6 +109,7 @@ export default class Home extends Page {
 						key: 'user',
 					}]}
 					renderData={({ user }) => <h2>{user.name}</h2>}
+					// eslint-disable-next-line react/jsx-one-expression-per-line
 					renderError={({ message, code }) => <h2>Error: {code} - {message}</h2>}
 					loaderBlock={false}
 					loaderSize="small"
@@ -104,6 +127,7 @@ export default class Home extends Page {
 						name: 'user.getPayloadedError',
 					}]}
 					renderData={() => <h2>Something</h2>}
+					// eslint-disable-next-line react/jsx-one-expression-per-line
 					renderError={({ message, code, statusCode }) => <h2>Error: {statusCode} {code} - {message}</h2>}
 					loaderBlock={false}
 					loaderSize="small"
@@ -127,7 +151,7 @@ export default class Home extends Page {
 		);
 	}
 
-	getEvents() {
+	__getEvents() {
 		return [
 			{
 				name: 'user.getPromise',

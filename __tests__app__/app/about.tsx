@@ -4,7 +4,15 @@ import { Page } from '../../src/app';
 
 import TSComponent from './ts-component';
 
+interface IState {
+    test: string;
+}
+
 export default class About extends Page {
+
+    state: IState = {
+        test: null,
+    };
 
     async componentDidMount() {
         super.componentDidMount();
