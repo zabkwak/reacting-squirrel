@@ -61,7 +61,8 @@ app.get('/error', null, 'Error', false, (req, res, next) => {
 
 app
 	.registerRoute('get', '/absolute-test', path.resolve(__dirname, '../../app/absolute-test/page'), 'Absolute page test')
-	.registerComponent(path.resolve(__dirname, '../../app/absolute-test/component'), 'absolute-component');
+	.registerComponent(path.resolve(__dirname, '../../app/absolute-test/component'), 'absolute-component')
+	.registerRouteCallback('/no-component', (req, res) => res.end('OVERRIDE SEND'));
 
 /*
 app.registerRouteCallback('/', (req, res, next) => {

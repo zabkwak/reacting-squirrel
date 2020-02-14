@@ -667,11 +667,19 @@ class Server {
 	_setRoutes(cb) {
 		this._log('Setting routes');
 		const {
-			dev, appDir, layoutComponent, createMissingComponents,
+			appDir, createMissingComponents,
 		} = this._config;
 		const componentsMap = {};
 		this._routes.forEach((route) => {
 			if (!route.contentComponent) {
+				if (typeof route.callback === 'function') {
+					this._setRoute(route);
+					return;
+				}
+				if (typeof this._routeCallbacks[route.spec] === 'function') {
+					this._setRoute({ ...route, callback: this._routeCallbacks[route.spec] });
+					return;
+				}
 				this._warn(`Content component for ${route.spec} no set.`);
 				return;
 			}
@@ -689,51 +697,7 @@ class Server {
 				this._warn(`Content component for ${route.spec} doesn't exist.`);
 				return;
 			}
-			this._app[route.method](route.spec, async (req, res, next) => {
-				if (route.requireAuth && req.session.getUser() === null) {
-					next(HttpError.create(401));
-					return;
-				}
-				try {
-					await this._beforeCallback(req, res);
-				} catch (e) {
-					next(e);
-					return;
-				}
-				let layout = layoutComponent;
-				if (route.layout) {
-					if (typeof route.layout === 'string') {
-						layout = require(path.resolve(route.layout));
-						if (layout.default) {
-							layout = layout.default;
-						}
-					} else {
-						// eslint-disable-next-line prefer-destructuring
-						layout = route.layout;
-					}
-				}
-				const data = {
-					title: route.title,
-					data: {
-						user: req.session.getUser(),
-						dev,
-						timestamp: Date.now(),
-						version: this._version,
-					},
-					layout,
-				};
-				if (typeof route.callback !== 'function') {
-					res.renderLayout(data);
-					return;
-				}
-				route.callback(req, res, (err, d = {}) => {
-					if (err) {
-						next(err);
-						return;
-					}
-					res.renderLayout(_.merge(data, d));
-				});
-			});
+			this._setRoute(route);
 		});
 		this._createRoutingFile(componentsMap, cb);
 	}
@@ -955,6 +919,57 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	}
 
 	// #endregion
+
+	_setRoute(route) {
+		const {
+			dev, layoutComponent,
+		} = this._config;
+		this._app[route.method](route.spec, async (req, res, next) => {
+			if (route.requireAuth && req.session.getUser() === null) {
+				next(HttpError.create(401));
+				return;
+			}
+			try {
+				await this._beforeCallback(req, res);
+			} catch (e) {
+				next(e);
+				return;
+			}
+			let layout = layoutComponent;
+			if (route.layout) {
+				if (typeof route.layout === 'string') {
+					layout = require(path.resolve(route.layout));
+					if (layout.default) {
+						layout = layout.default;
+					}
+				} else {
+					// eslint-disable-next-line prefer-destructuring
+					layout = route.layout;
+				}
+			}
+			const data = {
+				title: route.title,
+				data: {
+					user: req.session.getUser(),
+					dev,
+					timestamp: Date.now(),
+					version: this._version,
+				},
+				layout,
+			};
+			if (typeof route.callback !== 'function') {
+				res.renderLayout(data);
+				return;
+			}
+			route.callback(req, res, (err, d = {}) => {
+				if (err) {
+					next(err);
+					return;
+				}
+				res.renderLayout(_.merge(data, d));
+			});
+		});
+	}
 
 	/**
 	 * Compiles and merges all css and scss files in the module and app directories into one minified css file.

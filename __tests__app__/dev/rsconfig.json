@@ -41,6 +41,10 @@
             "route": "/ui",
             "component": "ui",
             "title": "UI"
+        },
+        {
+            "route": "/no-component",
+            "title": "No component"
         }
     ],
     "components": [

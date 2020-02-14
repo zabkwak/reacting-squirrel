@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.16.5
+### Updates
+- Component in route definition is not required.
+### Fixes
+- Registering callbacks to routes without component.
+
 ## 0.16.4
 ### Features
 - Server has `log[Info|Warning|Error]` methods to prevent using console.
