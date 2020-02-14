@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IResponse | reacting-squirrel - v0.16.1</title>
+	<title>IResponse | reacting-squirrel - v0.16.5</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">reacting-squirrel - v0.16.1</a>
+					<a href="../index.html" class="title">reacting-squirrel - v0.16.5</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -127,6 +127,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.iresponse.html#req" class="tsd-kind-icon">req</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.iresponse.html#send" class="tsd-kind-icon">send</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.iresponse.html#senddate" class="tsd-kind-icon">send<wbr>Date</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_server_index_d_.iresponse.html#setcookie" class="tsd-kind-icon">set<wbr>Cookie</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.iresponse.html#shouldkeepalive" class="tsd-kind-icon">should<wbr>Keep<wbr>Alive</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.iresponse.html#statuscode" class="tsd-kind-icon">status<wbr>Code</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.iresponse.html#statusmessage" class="tsd-kind-icon">status<wbr>Message</a></li>
@@ -362,7 +363,7 @@
 					<div class="tsd-signature tsd-kind-icon">render<wbr>Layout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/04b776c/src/server/index.d.ts#L33">src/server/index.d.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d53269f/src/server/index.d.ts#L34">src/server/index.d.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -435,6 +436,43 @@
 							<li>Defined in node_modules/@types/node/http.d.ts:126</li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="setcookie" class="tsd-anchor"></a>
+					<h3>set<wbr>Cookie</h3>
+					<div class="tsd-signature tsd-kind-icon">set<wbr>Cookie<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d53269f/src/server/index.d.ts#L35">src/server/index.d.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">express.CookieOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>name: <span class="tsd-signature-type">string</span></h5>
+											</li>
+											<li>
+												<h5>value: <span class="tsd-signature-type">any</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">express.CookieOptions</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="shouldkeepalive" class="tsd-anchor"></a>
@@ -4511,6 +4549,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_server_index_d_.iresponse.html#senddate" class="tsd-kind-icon">send<wbr>Date</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_server_index_d_.iresponse.html#setcookie" class="tsd-kind-icon">set<wbr>Cookie</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_server_index_d_.iresponse.html#shouldkeepalive" class="tsd-kind-icon">should<wbr>Keep<wbr>Alive</a>
