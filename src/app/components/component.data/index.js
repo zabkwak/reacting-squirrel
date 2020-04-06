@@ -15,6 +15,7 @@ export default class Data extends SocketComponent {
 			name: PropTypes.string.isRequired,
 			params: PropTypes.any,
 			key: PropTypes.string,
+			update: PropTypes.string,
 		})).isRequired,
 		renderData: PropTypes.func.isRequired,
 		renderError: PropTypes.func,
@@ -23,6 +24,7 @@ export default class Data extends SocketComponent {
 		onStart: PropTypes.func,
 		loaderBlock: Loader.propTypes.block,
 		loaderSize: Loader.propTypes.size,
+		tookDisabled: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -31,6 +33,7 @@ export default class Data extends SocketComponent {
 		onData: null,
 		onStart: null,
 		loaderBlock: true,
+		tookDisabled: false,
 	};
 
 	state = {
@@ -42,8 +45,27 @@ export default class Data extends SocketComponent {
 	_tookTimeout = null;
 
 	componentDidMount() {
+		const { events, onData } = this.props;
 		super.componentDidMount();
 		this._loadData();
+		events.forEach(({ update, key, name }) => {
+			if (!update) {
+				return;
+			}
+			this.on(update, (err, r) => {
+				if (err) {
+					return;
+				}
+				const { data } = this.state;
+				if (!data) {
+					return;
+				}
+				data[key || name] = r;
+				this.setState({
+					data: typeof onData === 'function' ? onData(data) || data : data,
+				});
+			});
+		});
 	}
 
 	componentWillUnmount() {
@@ -78,11 +100,15 @@ export default class Data extends SocketComponent {
 	}
 
 	renderTook() {
+		const { tookDisabled } = this.props;
 		const { took } = this.state;
 		if (!this.getContext().DEV) {
 			return null;
 		}
 		if (took === null) {
+			return null;
+		}
+		if (tookDisabled) {
 			return null;
 		}
 		return (

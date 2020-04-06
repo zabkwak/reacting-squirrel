@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.6
+### Features
+- `DataComponent` can register update event.
+
 ## 0.16.5
 ### Updates
 - Component in route definition is not required.

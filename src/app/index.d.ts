@@ -1090,6 +1090,8 @@ interface IDataComponentProps extends React.HTMLProps<DataComponent> {
 		params?: any,
 		/** The key where the response data are stored in the `renderData` function. */
 		key?: string,
+		/** Update event. On this event is registered listener for updating the component. */
+		update?: string,
 	}>;
 	/**
 	 * Function called for data rendering.
@@ -1128,6 +1130,10 @@ interface IDataComponentProps extends React.HTMLProps<DataComponent> {
 	 * Loader size.
 	 */
 	loaderSize?: 'large' | 'normal' | 'small' | 'xsmall';
+	/**
+	 * Indicates if the took info is disabled in dev mode.
+	 */
+	tookDisabled?: boolean;
 }
 
 /**
