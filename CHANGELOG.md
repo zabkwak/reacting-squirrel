@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.8
+### Fixes
+- Unhandled promise if locale file doesn't exist.
+
 ## 0.16.7
 ### Fixes
 - Loading of plugin modules.

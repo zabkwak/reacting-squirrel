@@ -1345,7 +1345,9 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		if (this.isLocaleDefault(locale)) {
 			return Text.getFromDictionary('default', key, ...args);
 		}
-		return Text.getFromDictionary(locale, key, ...args) || Text.getFromDictionary('default', key, ...args);
+		return Text.getDictionary(locale)
+			? Text.getFromDictionary(locale, key, ...args)
+			: Text.getFromDictionary('default', key, ...args);
 	}
 
 	/**
