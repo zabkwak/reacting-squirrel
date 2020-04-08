@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.7
+### Fixes
+- Loading of plugin modules.
+
 ## 0.16.6
 ### Features
 - `DataComponent` can register update event.

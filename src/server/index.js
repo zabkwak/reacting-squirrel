@@ -583,7 +583,7 @@ class Server {
 						this._error('Plugin module must be a string.', name);
 						return;
 					}
-					const PluginModule = this._tryRequireModule(name) || this._tryRequireModule(name, true);
+					const PluginModule = this._tryRequireModule(name, false) || this._tryRequireModule(name, true);
 					if (!PluginModule) {
 						this._error(`Couldn't import plugin module ${name}.`);
 						return;
