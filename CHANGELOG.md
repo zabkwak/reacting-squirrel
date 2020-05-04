@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.9
+### Updates
+- Tsconfig updated.
+
 ## 0.16.8
 ### Fixes
 - Unhandled promise if locale file doesn't exist.
