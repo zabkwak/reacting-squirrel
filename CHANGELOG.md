@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.16.10
+### Fixes
+- Missing static dir in the style compiler.
+
 ## 0.16.9
 ### Updates
 - Tsconfig updated.

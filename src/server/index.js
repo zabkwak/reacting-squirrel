@@ -1200,6 +1200,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			path.resolve(__dirname, './assets/loader.scss'),
 			...mergeStyles,
 			sourceStylesDir,
+			dir,
 		], dir, 'rs-app.css');
 		compiler.compile((err) => {
 			if (err) {
