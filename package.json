@@ -56,7 +56,6 @@
 		"postcss": "^7.0.32",
 		"postcss-loader": "^3.0.0",
 		"prop-types": "^15.7.2",
-		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"route-parser": "0.0.5",
 		"runtime-type": "^3.7.3",
@@ -93,12 +92,16 @@
 		"ignore-styles": "^5.0.1",
 		"jsdom": "^15.2.1",
 		"mocha": "^6.2.3",
+		"react": "^16.13.1",
 		"react-bootstrap": "^1.2.2",
 		"react-gtm-module": "^2.0.10",
 		"request": "^2.88.2",
 		"run-script-os-fix": "^1.0.4",
 		"source-map-support": "^0.5.19",
 		"typedoc": "^0.15.8"
+	},
+	"peerDependencies": {		
+		"react": "^16.13.1"
 	},
 	"engines": {
 		"node": ">=8.9"

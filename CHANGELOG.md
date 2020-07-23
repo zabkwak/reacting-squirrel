@@ -3,6 +3,8 @@
 ## 0.17.0
 ### Features
 - Supporting providers for components rendering.
+### Breaking changes
+- `react` as peerDependency.
 
 ## 0.16.10
 ### Fixes
