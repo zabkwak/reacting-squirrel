@@ -583,7 +583,7 @@ class Server {
 						this._error('Plugin module must be a string.', name);
 						return;
 					}
-					const PluginModule = this._tryRequireModule(name) || this._tryRequireModule(name, true);
+					const PluginModule = this._tryRequireModule(name, false) || this._tryRequireModule(name, true);
 					if (!PluginModule) {
 						this._error(`Couldn't import plugin module ${name}.`);
 						return;
@@ -1200,6 +1200,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			path.resolve(__dirname, './assets/loader.scss'),
 			...mergeStyles,
 			sourceStylesDir,
+			dir,
 		], dir, 'rs-app.css');
 		compiler.compile((err) => {
 			if (err) {
@@ -1345,7 +1346,9 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		if (this.isLocaleDefault(locale)) {
 			return Text.getFromDictionary('default', key, ...args);
 		}
-		return Text.getFromDictionary(locale, key, ...args) || Text.getFromDictionary('default', key, ...args);
+		return Text.getDictionary(locale)
+			? Text.getFromDictionary(locale, key, ...args)
+			: Text.getFromDictionary('default', key, ...args);
 	}
 
 	/**

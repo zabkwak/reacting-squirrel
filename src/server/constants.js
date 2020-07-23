@@ -14,6 +14,8 @@ export const TSConfig = {
 		],
 		resolveJsonModule: true,
 		experimentalDecorators: true,
+		esModuleInterop: true,
+		allowSyntheticDefaultImports: true,
 	},
 	include: [
 		'../**/*',
