@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.17.0
+### Features
+- Supporting providers for components rendering.
+
 ## 0.16.10
 ### Fixes
 - Missing static dir in the style compiler.

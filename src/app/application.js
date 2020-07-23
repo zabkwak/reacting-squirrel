@@ -31,6 +31,8 @@ class Application extends CallbackEmitter {
 
 	_cookies = new Cookies();
 
+	_provider = null;
+
 	/**
 	 * @returns {boolean}
 	 */
@@ -112,6 +114,12 @@ class Application extends CallbackEmitter {
 		return this;
 	}
 
+	registerComponentProvider(provider) {
+		this._checkStartedState();
+		this._provider = provider;
+		return this;
+	}
+
 	/**
 	 * Starts the application. The application can be started only once.
 	 */
@@ -184,7 +192,8 @@ class Application extends CallbackEmitter {
 	 * @param {function} callback
 	 */
 	renderComponent(component, target, callback = () => { }) {
-		ReactDOM.render(component, target, callback);
+		const Provider = this._provider || React.Fragment;
+		ReactDOM.render(<Provider>{component}</Provider>, target, callback);
 	}
 
 	/**

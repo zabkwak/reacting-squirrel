@@ -62,7 +62,7 @@
         }
     ],
     "socketClassDir": "__tests__app__/dev/dist",
-    "errorPage": "page.error",
+	"errorPage": "page.error",
     "createMissingComponents": true,
     "mergeStyles": [
         "./node_modules/bootstrap/dist/css/bootstrap.css"

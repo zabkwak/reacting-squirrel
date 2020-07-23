@@ -860,6 +860,13 @@ export default class Server {
 	registerComponent(componentPath: string, elementId: string): this;
 
 	/**
+	 * Registers the component provider. All components rendered with the application are wrapped with this provider.
+	 *
+	 * @param path Absolute path or relative path to the component provider.
+	 */
+	registerComponentProvider(path: string): this;
+
+	/**
 	 * Registers the error page.
 	 * 
 	 * @param componentPath Relative path to the component from the app directory.

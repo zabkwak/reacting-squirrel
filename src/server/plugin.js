@@ -18,6 +18,9 @@ export default class Plugin {
 		this.getScripts().forEach((script) => server.getConfig().scripts.push(script));
 		this.getStyles().forEach((style) => server.getConfig().styles.push(style));
 		this.getMergeStyles().forEach((style) => server.getConfig().mergeStyles.push(style));
+		if (this.getComponentProvider()) {
+			server.registerComponentProvider(this.getComponentProvider());
+		}
 	}
 
 	getEntryInjections() {
@@ -62,5 +65,9 @@ export default class Plugin {
 
 	getComponents() {
 		return [];
+	}
+
+	getComponentProvider() {
+		return null;
 	}
 }

@@ -22,4 +22,8 @@ export default class ImportedPlugin extends Plugin {
 			component: path.resolve(__dirname, './component'),
 		}];
 	}
+
+	getComponentProvider() {
+		return path.resolve(__dirname, './provider');
+	}
 }

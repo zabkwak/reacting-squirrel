@@ -116,6 +116,9 @@ This code will start simple app on the default port. After the page load the `us
 ### CLI
 The simple server can be started over the CLI using `./node_modules/.bin/rs-start-server` and creating `rsconfig.json` in application root.
 
+### Providers
+All components rendered by the application can be wrapped with `Provider` such as `Context.Provider` or `ThemeProvider`. Only thing needed is to register the provider with server method, rsconfig or plugin.
+
 ## Core functions
 ### Routes register
 The routes are registered on the server-side. The module is using express based routes registering.

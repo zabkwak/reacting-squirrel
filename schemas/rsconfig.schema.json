@@ -84,6 +84,11 @@
 			"title": "Relative path to the Error page from the app directory.",
 			"default": null
 		},
+		"componentProvider": {
+			"type": "string",
+			"title": "Relative path to the ContentProvider from the app directory.",
+			"default": null
+		},
 		"port": {
 			"type": "integer",
 			"title": "Port on which the app listens.",
