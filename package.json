@@ -1,6 +1,6 @@
 {
 	"name": "reacting-squirrel",
-	"version": "0.17.0",
+	"version": "0.17.1",
 	"description": "React and Express framework for creating web apps.",
 	"main": "./app/index.js",
 	"types": "./app/index.d.ts",
@@ -100,7 +100,7 @@
 		"source-map-support": "^0.5.19",
 		"typedoc": "^0.15.8"
 	},
-	"peerDependencies": {		
+	"peerDependencies": {
 		"react": "^16.13.1"
 	},
 	"engines": {
