@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.17.2
+### Updates
+- Updated types.
+
 ## 0.17.1
 ### Updates
 - Updated dependencies.

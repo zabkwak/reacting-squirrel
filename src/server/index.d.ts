@@ -612,6 +612,11 @@ export abstract class Plugin {
 	 * Gets the list of middlewares.
 	 */
 	protected getMiddlewares(): Array<IMiddleware>;
+
+	/**
+	 * Gets the path to component provider.
+	 */
+	protected getComponentProvider(): string;
 }
 
 export { HttpSmartError as HttpError };
