@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.17.1
+### Updates
+- Updated dependencies.
+
 ## 0.17.0
 ### Features
 - Supporting providers for components rendering.
