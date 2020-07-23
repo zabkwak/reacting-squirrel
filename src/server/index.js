@@ -300,9 +300,6 @@ class Server {
 				? path.resolve(this._config.sourceStylesDir)
 				: this._config.sourceStylesDir;
 		}
-		if (typeof this._config.cookies.secure === 'boolean') {
-			this._warn('Using secure option of the cookies is deprecated. By default the option is set based on request protocol.');
-		}
 		if (typeof this._config.cookies.httpOnly === 'boolean') {
 			this._warn('Using httpOnly option of the cookies is deprecated. By default the option is always true.');
 		}

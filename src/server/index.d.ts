@@ -113,7 +113,6 @@ export interface IAppConfig {
 		secret?: string;
 		/**
 		 * Secure flag for the cookies. 
-		 * @deprecated The flag is automatically set based on the request protocol.
 		 * @default null
 		 */
 		secure?: boolean;
