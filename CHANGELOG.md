@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.17.3
+### Updates
+- Creating app & rs dirs before all registrations.
+
 ## 0.17.2
 ### Updates
 - Updated types.

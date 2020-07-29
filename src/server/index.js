@@ -539,12 +539,14 @@ class Server {
 	 * @param {function=} cb Callback to call after the server start.
 	 */
 	async start(cb = () => { }) {
-		const { dev } = this._config;
+		const { dev, appDir } = this._config;
 		this._log(`App starting DEV: ${dev}`);
-		this._registerPlugins();
-		this._setMiddlewares();
-		this._registerRsConfig();
 		try {
+			await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
+			await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
+			this._registerPlugins();
+			this._setMiddlewares();
+			this._registerRsConfig();
 			await this._createRSFiles();
 		} catch (e) {
 			process.nextTick(() => cb(e));
@@ -645,8 +647,8 @@ class Server {
 	async _createRSFiles() {
 		this._log('Creating RS files');
 		const { appDir, staticDir, cssDir } = this._config;
-		await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
-		await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
+		// await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
+		// await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
 		await this._validateDir(path.resolve(`${staticDir}/${cssDir}`), 'Creating CSS directory.');
 		return new Promise((resolve, reject) => {
 			async.each([
