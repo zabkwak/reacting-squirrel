@@ -9,4 +9,3 @@
 
 ## v1
 - Remove `res.render`.
-- Remove `Button` component.

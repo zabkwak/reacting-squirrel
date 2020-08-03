@@ -5,7 +5,6 @@ import Component from './components/component';
 import SocketComponent from './components/component.socket';
 import DataComponent from './components/component.data';
 import Page from './components/component.page';
-import Button from './components/button';
 import Text from './components/text';
 import Loader from './components/loader';
 import CallbackEmitter from './callback-emitter';
@@ -28,7 +27,6 @@ export {
 	SocketComponent,
 	DataComponent,
 	Page,
-	Button,
 	Text,
 	Loader,
 	Socket,

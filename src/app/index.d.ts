@@ -1149,21 +1149,6 @@ export class DataComponent extends SocketComponent<IDataComponentProps> {
 
 //#endregion
 
-//#region Button
-
-interface IButtonProps {
-	href?: string;
-	refreshContent?: boolean;
-}
-
-/**
- * Component for navigation throught the application. The click event calls {Application.navigate} method.
- * @deprecated
- */
-export class Button extends BaseComponent<IButtonProps & React.ButtonHTMLAttributes<Button>> { }
-
-//#endregion
-
 //#region Text
 
 /**
