@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import Text from 'texting-squirrel';
 import Cookies from 'universal-cookie';
+import qs from 'querystring';
 
 import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';
@@ -214,8 +215,15 @@ class Application extends CallbackEmitter {
 	 * @param {boolean} refresh
 	 */
 	navigate(path, q, refresh = false) {
-		this.pushState(path, q);
-		this.render(Router.getRoute(), refresh);
+		const r = Router.getRoute();
+		const route = Router.findRoute(path);
+		if (route && r.layout === route.layout) {
+			this.pushState(path, q);
+			this.render(Router.getRoute(), refresh);
+			return;
+		}
+		const s = Router.stringifyQuery(q);
+		location.href = s ? `${path}${s}` : path;
 	}
 
 	/**

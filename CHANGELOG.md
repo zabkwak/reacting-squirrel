@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.0.0
+### Updates
+- Refreshing the page if the layouts are changed during navigation.
+### Breaking changes
+- Removed `Button` component.
+
 ## 0.17.3
 ### Updates
 - Creating app & rs dirs before all registrations.

@@ -239,6 +239,8 @@ interface IRouteDefinition {
 	title: string;
 	/** Initital data of the page. */
 	initialData?: any;
+	/** Hash of the layout. */
+	layout?: string;
 }
 
 declare class Route {
@@ -251,6 +253,8 @@ declare class Route {
 	public title: string;
 	/** Initital data of the page. */
 	public initialData: any;
+	/** Hash of the layout. */
+	public layout: string;
 
 	/**
 	 * Creates new route instance from definition.
@@ -306,6 +310,13 @@ declare class Router {
 	public getRoute(): Route;
 
 	/**
+	 * Finds the route based on the path.
+	 *
+	 * @param path The path of the route.
+	 */
+	public findRoute(path: string): Route;
+
+	/**
 	 * Pushes the state to the history.
 	 */
 	public pushState(): void;
@@ -338,6 +349,17 @@ declare class Router {
 	 * Gets current route params.
 	 */
 	public getParams(): { [key: string]: string };
+
+	/**
+	 * Stringifies actual query with additional params.
+	 */
+	public stringifyQuery(): string;
+	/**
+	 * Stringifies actual query with additional params.
+	 *
+	 * @param q Params to stringify.
+	 */
+	public stringifyQuery(q: {[key: string]: string}): string;
 }
 
 /**

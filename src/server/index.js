@@ -703,6 +703,7 @@ class Server {
 				title: route.title,
 				spec: route.spec,
 				path: modulePath,
+				layout: route.layout || null,
 			};
 			// If the page component doesn't exist and the server shouldn't generate page components don't register the route.
 			if (!this._componentExists(modulePath) && !createMissingComponents) {
@@ -863,7 +864,7 @@ export default class ${this._createClassName(fileName, 'Page')} extends Page {}
 			}
 			const p = path.relative(path.resolve(this._getRSDirPath()), route.path).replace(/\\/g, '/');
 			a.push(`import ${key} from '${p}';`);
-			b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}'}`);
+			b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}', layout: ${route.layout ? `'${md5(route.layout)}'` : null}}`);
 		});
 		const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
 		fs.writeFile(`${this._getRSDirPath()}/router.map.js`, s, cb);
