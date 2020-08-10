@@ -552,7 +552,7 @@ class Server {
 		try {
 			await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
 			await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
-			this._registerPlugins();
+			await this._registerPlugins();
 			this._setMiddlewares();
 			this._registerRsConfig();
 			await this._createRSFiles();
@@ -582,7 +582,7 @@ class Server {
 		});
 	}
 
-	_registerPlugins() {
+	async _registerPlugins() {
 		if (this._rsConfig) {
 			const { plugins } = this._rsConfig;
 			if (plugins) {
@@ -609,14 +609,15 @@ class Server {
 				});
 			}
 		}
-		this._plugins.forEach((plugin) => {
+		for (let i = 0; i < this._plugins.length; i++) {
+			const plugin = this._plugins[i];
 			try {
-				plugin.register(this);
+				await plugin.register(this);
 				this._log(`Plugin ${plugin.getName()} registered.`);
 			} catch (e) {
 				this._error(`Plugin ${plugin.getName ? plugin.getName() : 'Unnamed plugin'} register failed.`, e);
 			}
-		});
+		}
 	}
 
 	_registerRsConfig() {

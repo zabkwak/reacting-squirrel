@@ -1,9 +1,10 @@
 # CHANGELOG
 
 ## 1.0.0
-### Updates
+### Features
 - Redirecting the page if the layouts are changed during navigation.
 - Registering layout for rendering errors.
+- `Plugin.register` is async.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

@@ -574,7 +574,7 @@ export abstract class Plugin {
 	 *
 	 * @param server The server instance.
 	 */
-	public register(server: Server): void;
+	public register(server: Server): Promise<void>;
 
 	/**
 	 * Gets the name of the plugin.

@@ -4,7 +4,7 @@ export default class Plugin {
 	 *
 	 * @param {import('./').default} server
 	 */
-	register(server) {
+	async register(server) {
 		this.getEntryInjections().forEach((injection) => server.injectToEntry(injection));
 		this.getSocketClasses().forEach((cls) => server.registerSocketClass(cls));
 		this.getSocketEvents().forEach(({ event, listener }) => server.registerSocketEvent(event, listener));
