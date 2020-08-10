@@ -32,9 +32,5 @@ export default (server) => (req, res, next) => {
 			nonce={server.nonce}
 		/>)}`);
 	};
-	res.render = (data) => {
-		server.logWarning('RS', 'res.render is deprecated and will be removed in future major release.');
-		res.renderLayout(data);
-	};
 	next();
 };

@@ -154,9 +154,22 @@ export interface IAppConfig {
      * @default (session, next) => next()
      */
 	auth?: (session: Session, next: (err?: any) => void) => void;
+	/** Definition of error handling */
+	error?: {
+		/**
+		 * Function to handle errors in the route execution.
+		 * @default (err, req, res, next) => next()
+		 */
+		handler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
+		/** Error page. */
+		page?: any; // TODO
+		/** Error layout. */
+		layout?: typeof Layout;
+	};
     /**
      * Function to handle errors in the route execution.
      * @default (err, req, res, next) => next()
+	 * @deprecated
      */
 	errorHandler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
     /**
@@ -874,6 +887,7 @@ export default class Server {
 	 * Registers the error page.
 	 * 
 	 * @param componentPath Relative path to the component from the app directory.
+	 * @deprecated
 	 */
 	registerErrorPage(componentPath: string): this;
 

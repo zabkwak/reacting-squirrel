@@ -1,11 +1,10 @@
 # TODO
+- sameSite cookie flag.
+- async plugin register
+- automatically render components to the root
+
+## Backlog
+- Serverless production.
 - Text component as separate module.
 - res directory out of app directory to use texts in the server side.
-- Redirect on layout change.
-- Serverless production.
 - Common code.
-- sameSite cookie flag.
-- error layout -> merge page, handler to one object
-
-## v1
-- Remove `res.render`.

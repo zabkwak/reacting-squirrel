@@ -99,7 +99,10 @@ class Server {
 		session: Session,
 		socketMessageMaxSize: (2 ** 20) * 100,
 		auth: (session, next) => next(),
-		errorHandler: (err, req, res, next) => next(),
+		error: {
+			handler: (err, req, res, next) => next(),
+		},
+		// errorHandler: (err, req, res, next) => next(),
 		bundlePathRelative: false,
 		onWebpackProgress: null,
 		webpack: {},
@@ -286,6 +289,11 @@ class Server {
 			this._getConfigFromRSConfig(),
 			config,
 		);
+		if (this._config.errorHandler && this._config.error.handler) {
+			this._warn('Specified deprecated errorHandler with error.handler. Deprecated handler will be ignored.')
+		} else if (this._config.errorHandler) {
+			this._config.error.handler = this._config.errorHandler;
+		}
 		if (!(this._config.locale.accepted instanceof Array)) {
 			this._config.locale.accepted = [];
 		}
@@ -614,7 +622,7 @@ class Server {
 	_registerRsConfig() {
 		if (this._rsConfig) {
 			const {
-				routes, components, socketClassDir, errorPage, componentProvider,
+				routes, components, socketClassDir, errorPage, componentProvider, error,
 			} = this._rsConfig;
 			if (routes) {
 				Utils.registerRoutes(this, routes.map((route) => (
@@ -632,6 +640,9 @@ class Server {
 			}
 			if (errorPage) {
 				this.registerErrorPage(errorPage);
+			}
+			if (error && error.page) {
+				this.registerErrorPage(error.page);
 			}
 			if (componentProvider) {
 				this.registerComponentProvider(componentProvider);
@@ -1345,7 +1356,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			routes, components, socketClassDir, errorPage, ...config
 		} = this._rsConfig;
 		const {
-			layoutComponent, session, auth, errorHandler, onWebpackProgress, webpack, mergeStyles, ...restConfig
+			layoutComponent, session, auth, errorHandler, error, onWebpackProgress, webpack, mergeStyles, ...restConfig
 		} = config;
 		return {
 			...restConfig,
@@ -1353,6 +1364,14 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			session: session ? this._tryRequireModule(session) : undefined,
 			auth: auth ? this._tryRequireModule(auth) : undefined,
 			errorHandler: errorHandler ? this._tryRequireModule(errorHandler) : undefined,
+			error: error ? {
+				handler: error.handler ? this._tryRequireModule(error.handler) : undefined,
+				layout: error.layout
+					? typeof error.layout === 'string'
+						? this._tryRequireModule(error.layout)
+						: error.layout
+					: undefined,
+			} : undefined,
 			onWebpackProgress: onWebpackProgress ? this._tryRequireModule(onWebpackProgress) : undefined,
 			// eslint-disable-next-line no-nested-ternary
 			webpack: webpack

@@ -307,6 +307,27 @@
 			"type": "boolean",
 			"title": "Indicates if the server logs to the console.",
 			"default": true
+		},
+		"error": {
+			"type": "object",
+			"title": "Configuration for error handling.",
+			"properties": {
+				"handler": {
+					"type": "string",
+					"title": "Relative path to the file with exported error handler function.",
+					"default": null
+				},
+				"page": {
+					"type": "string",
+					"title": "Relative path to the error page from the app directory.",
+					"default": null
+				},
+				"layout": {
+					"type": "string",
+					"title": "Relative path to the layout file.",
+					"default": null
+				}
+			}
 		}
 	}
 }

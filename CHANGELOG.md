@@ -2,9 +2,11 @@
 
 ## 1.0.0
 ### Updates
-- Refreshing the page if the layouts are changed during navigation.
+- Redirecting the page if the layouts are changed during navigation.
+- Registering layout for rendering errors.
 ### Breaking changes
 - Removed `Button` component.
+- Removed `res.render` function.
 
 ## 0.17.3
 ### Updates
