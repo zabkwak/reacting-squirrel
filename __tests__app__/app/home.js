@@ -149,6 +149,7 @@ export default class Home extends Page {
 				<button onClick={() => this.getContext().refreshContent()} id="refresh-button" type="button">Refresh content</button>
 				<button onClick={() => this.getContext().navigate('/test')} id="test-button" type="button">Invalid page</button>
 				<button onClick={() => this.getContext().navigate('/layout-test')} id="layout-button" type="button">Different layout</button>
+				<button onClick={() => this.getContext().navigate('/large-data')} id="layout-button" type="button">Large data</button>
 				<button
 					id="state-button"
 					onClick={() => this.getContext().pushState(null, { test: 1 })}

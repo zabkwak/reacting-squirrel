@@ -5,6 +5,7 @@
 - Redirecting the page if the layouts are changed during navigation.
 - Registering layout for rendering errors.
 - `Plugin.register` is async.
+- Bundle loaded with javascript for loading progress.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

@@ -45,7 +45,12 @@
         {
             "route": "/no-component",
             "title": "No component"
-        }
+		},
+		{
+			"route": "/large-data",
+			"component": "large-data",
+			"title": "Large data"
+		}
     ],
     "components": [
         {
