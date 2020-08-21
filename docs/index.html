@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>reacting-squirrel - v0.16.6</title>
-	<meta name="description" content="">
+	<title>reacting-squirrel</title>
+	<meta name="description" content="Documentation for reacting-squirrel">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">reacting-squirrel - v0.16.6</a>
+					<a href="index.html" class="title">reacting-squirrel</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> reacting-squirrel - v0.16.6</h1>
+			<h1>reacting-squirrel</h1>
 		</div>
 	</div>
 </header>
@@ -86,17 +86,17 @@
 					<h3>Simple app</h3>
 				</a>
 				<pre><code class="language-javascript"><span class="hljs-comment">// ./index.js</span>
-<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
 
-app.get(<span class="hljs-string">'/'</span>, <span class="hljs-string">'home'</span>, <span class="hljs-string">'Home'</span>);
+app.get(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
 
 app.start();
 
 <span class="hljs-comment">// ./app/home.js</span>
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> { Page } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { Page } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Page</span> </span>{
 
@@ -113,15 +113,15 @@ app.start();
 					<h3>App using websockets for load the user</h3>
 				</a>
 				<pre><code class="language-javascript"><span class="hljs-comment">// ./index.js</span>
-<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
-<span class="hljs-keyword">import</span> UserSocket <span class="hljs-keyword">from</span> <span class="hljs-string">'./socket.user'</span>;
+<span class="hljs-keyword">import</span> UserSocket <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./socket.user&#x27;</span>;
 
-<span class="hljs-keyword">import</span> UserStore <span class="hljs-keyword">from</span> <span class="hljs-string">'./user-store'</span>;
+<span class="hljs-keyword">import</span> UserStore <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./user-store&#x27;</span>;
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server({
     <span class="hljs-attr">auth</span>: <span class="hljs-function">(<span class="hljs-params">session, next</span>) =&gt;</span> {
-        UserStore.load(session.id, (err, user) =&gt; {
+        UserStore.load(session.id, <span class="hljs-function">(<span class="hljs-params">err, user</span>) =&gt;</span> {
             <span class="hljs-keyword">if</span> (err) {
                 next(err);
                 <span class="hljs-keyword">return</span>;
@@ -132,25 +132,25 @@ app.start();
     }
 });
 
-app.get(<span class="hljs-string">'/'</span>, <span class="hljs-string">'home'</span>, <span class="hljs-string">'Home'</span>);
+app.get(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
 
 app.registerSocketClass(UserSocket);
 
 app.start();
 
 <span class="hljs-comment">// ./socket.user.js</span>
-<span class="hljs-keyword">import</span> { SocketClass } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+<span class="hljs-keyword">import</span> { SocketClass } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SocketClass</span> </span>{
 
     load(socket, data, next) {
-        next(<span class="hljs-literal">null</span>, <span class="hljs-keyword">this</span>.getUser());
+        next(<span class="hljs-literal">null</span>, <span class="hljs-built_in">this</span>.getUser());
     }
 }
 
 <span class="hljs-comment">// ./app/home.js</span>
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;
-<span class="hljs-keyword">import</span> { Page } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel'</span>;
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
+<span class="hljs-keyword">import</span> { Page } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Page</span> </span>{
 
@@ -159,22 +159,22 @@ app.start();
     };
 
     componentDidMount() {
-        <span class="hljs-keyword">super</span>.componentDidMount();
-        <span class="hljs-keyword">this</span>.request(<span class="hljs-string">'user.load'</span>, (err, user) =&gt; {
+        <span class="hljs-built_in">super</span>.componentDidMount();
+        <span class="hljs-built_in">this</span>.request(<span class="hljs-string">&#x27;user.load&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">err, user</span>) =&gt;</span> {
             <span class="hljs-keyword">if</span> (err) {
                 alert(err.message);
                 <span class="hljs-keyword">return</span>;
             }
-            <span class="hljs-keyword">this</span>.setState({ user });
+            <span class="hljs-built_in">this</span>.setState({ user });
         });
     }
 
     render() {
-        <span class="hljs-keyword">const</span> { user } = <span class="hljs-keyword">this</span>.state;
+        <span class="hljs-keyword">const</span> { user } = <span class="hljs-built_in">this</span>.state;
         <span class="hljs-keyword">return</span> (
             <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{user ? user.name : 'Loading...'}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{user ? user.name : &#x27;Loading...&#x27;}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
         );
     }
@@ -184,6 +184,10 @@ app.start();
 					<h3>CLI</h3>
 				</a>
 				<p>The simple server can be started over the CLI using <code>./node_modules/.bin/rs-start-server</code> and creating <code>rsconfig.json</code> in application root.</p>
+				<a href="#providers" id="providers" style="color: inherit; text-decoration: none;">
+					<h3>Providers</h3>
+				</a>
+				<p>All components rendered by the application can be wrapped with <code>Provider</code> such as <code>Context.Provider</code> or <code>ThemeProvider</code>. Only thing needed is to register the provider with server method, rsconfig or plugin.</p>
 				<a href="#core-functions" id="core-functions" style="color: inherit; text-decoration: none;">
 					<h2>Core functions</h2>
 				</a>
@@ -191,24 +195,24 @@ app.start();
 					<h3>Routes register</h3>
 				</a>
 				<p>The routes are registered on the server-side. The module is using express based routes registering.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
 
-<span class="hljs-comment">// On the route '/' will be rendered the content copmponent located in {config.appDir}/home with Home title.</span>
-app.get(<span class="hljs-string">'/'</span>, <span class="hljs-string">'home'</span>, <span class="hljs-string">'Home'</span>);
+<span class="hljs-comment">// On the route &#x27;/&#x27; will be rendered the content copmponent located in {config.appDir}/home with Home title.</span>
+app.get(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
 
 app.start();</code></pre>
 				<a href="#socket-events-register" id="socket-events-register" style="color: inherit; text-decoration: none;">
 					<h3>Socket events register</h3>
 				</a>
 				<p>The socket events can be directly registered. It should be used for simple socket events which don&#39;t need authorization.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
 
-<span class="hljs-comment">// Frontend app can emit 'test' with some data. The event's listener emits the data back.</span>
-app.registerSocketEvent(<span class="hljs-string">'test'</span>, (socket, data, next) =&gt; next(<span class="hljs-literal">null</span>, data));
+<span class="hljs-comment">// Frontend app can emit &#x27;test&#x27; with some data. The event&#x27;s listener emits the data back.</span>
+app.registerSocketEvent(<span class="hljs-string">&#x27;test&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">socket, data, next</span>) =&gt;</span> next(<span class="hljs-literal">null</span>, data));
 
 app.start();</code></pre>
 				<a href="#socket-classes-register" id="socket-classes-register" style="color: inherit; text-decoration: none;">
@@ -216,26 +220,26 @@ app.start();</code></pre>
 				</a>
 				<p>The socket classes can handle multiple socket events prefixed by the class name. After the registration of the socket class socket events are automatically registered to the server app.</p>
 				<pre><code class="language-javascript"><span class="hljs-comment">// ./socket.user.js</span>
-<span class="hljs-keyword">import</span> { SocketClass } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+<span class="hljs-keyword">import</span> { SocketClass } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SocketClass</span> </span>{
 
     load(socket, data, next) {
-        <span class="hljs-comment">// sends the authorized user data after the 'user.load' socket request</span>
-        next(<span class="hljs-literal">null</span>, <span class="hljs-keyword">this</span>.getUser());
+        <span class="hljs-comment">// sends the authorized user data after the &#x27;user.load&#x27; socket request</span>
+        next(<span class="hljs-literal">null</span>, <span class="hljs-built_in">this</span>.getUser());
     }
 }
 
 <span class="hljs-comment">// ./index.js</span>
-<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
-<span class="hljs-keyword">import</span> UserSocket <span class="hljs-keyword">from</span> <span class="hljs-string">'./socket.user'</span>;
+<span class="hljs-keyword">import</span> UserSocket <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./socket.user&#x27;</span>;
 
-<span class="hljs-keyword">import</span> UserStore <span class="hljs-keyword">from</span> <span class="hljs-string">'./user-store'</span>;
+<span class="hljs-keyword">import</span> UserStore <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./user-store&#x27;</span>;
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server({
     <span class="hljs-attr">auth</span>: <span class="hljs-function">(<span class="hljs-params">session, next</span>) =&gt;</span> {
-        UserStore.load(session.id, (err, user) =&gt; {
+        UserStore.load(session.id, <span class="hljs-function">(<span class="hljs-params">err, user</span>) =&gt;</span> {
             <span class="hljs-keyword">if</span> (err) {
                 next(err);
                 <span class="hljs-keyword">return</span>;
@@ -254,12 +258,12 @@ app.start();</code></pre>
 					<h3>Components register</h3>
 				</a>
 				<p>The module can register custom components which are rendered in custom DOM element in the layout. </p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel/server'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
 
-<span class="hljs-comment">// Frontend app tries to render component located at {config.appDir}/test to the DOM element with id 'test'</span>
-app.registerComponent(<span class="hljs-string">'test'</span>, <span class="hljs-string">'test'</span>);
+<span class="hljs-comment">// Frontend app tries to render component located at {config.appDir}/test to the DOM element with id &#x27;test&#x27;</span>
+app.registerComponent(<span class="hljs-string">&#x27;test&#x27;</span>, <span class="hljs-string">&#x27;test&#x27;</span>);
 
 app.start();</code></pre>
 				<a href="#rsconfig" id="rsconfig" style="color: inherit; text-decoration: none;">
@@ -269,23 +273,23 @@ app.start();</code></pre>
 				<p>The schema for the file is located in <code>[pathToModule]/schemas/rsconfig.schema.json</code>.</p>
 				<pre><code class="language-json"><span class="hljs-comment">// rsconfig.json</span>
 {
-    <span class="hljs-attr">"routes"</span>: [
+    <span class="hljs-attr">&quot;routes&quot;</span>: [
         {
-            <span class="hljs-attr">"route"</span>: <span class="hljs-string">"/"</span>,
-            <span class="hljs-attr">"component"</span>: <span class="hljs-string">"home"</span>,
-            <span class="hljs-attr">"title"</span>: <span class="hljs-string">"Home"</span>,
-            <span class="hljs-attr">"requiredAuth"</span>: <span class="hljs-literal">false</span>,
-            <span class="hljs-attr">"method"</span>: <span class="hljs-string">"GET"</span>
+            <span class="hljs-attr">&quot;route&quot;</span>: <span class="hljs-string">&quot;/&quot;</span>,
+            <span class="hljs-attr">&quot;component&quot;</span>: <span class="hljs-string">&quot;home&quot;</span>,
+            <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;Home&quot;</span>,
+            <span class="hljs-attr">&quot;requiredAuth&quot;</span>: <span class="hljs-literal">false</span>,
+            <span class="hljs-attr">&quot;method&quot;</span>: <span class="hljs-string">&quot;GET&quot;</span>
         }
     ],
-    <span class="hljs-attr">"components"</span>: [
+    <span class="hljs-attr">&quot;components&quot;</span>: [
         {
-            <span class="hljs-attr">"id"</span>: <span class="hljs-string">"test"</span>,
-            <span class="hljs-attr">"component"</span>: <span class="hljs-string">"test"</span>
+            <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;test&quot;</span>,
+            <span class="hljs-attr">&quot;component&quot;</span>: <span class="hljs-string">&quot;test&quot;</span>
         }
     ],
-    <span class="hljs-attr">"socketClassDir"</span>: <span class="hljs-string">"./dist/network/socket"</span>,
-    <span class="hljs-attr">"errorPage"</span>: <span class="hljs-string">"error-page"</span>
+    <span class="hljs-attr">&quot;socketClassDir&quot;</span>: <span class="hljs-string">&quot;./dist/network/socket&quot;</span>,
+    <span class="hljs-attr">&quot;errorPage&quot;</span>: <span class="hljs-string">&quot;error-page&quot;</span>
 }</code></pre>
 				<p>App config can be also be defined in the rsconfig.</p>
 				<a href="#texts" id="texts" style="color: inherit; text-decoration: none;">
@@ -296,12 +300,12 @@ app.start();</code></pre>
 					<h4>Accessing text from the component</h4>
 				</a>
 				<p>All components have <code>getText</code> method to access the text from the dictionary.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
 
     render() {
-        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{this.getText('title')}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{this.getText(&#x27;title&#x27;)}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
     }
 }
 </code></pre>
@@ -309,15 +313,15 @@ app.start();</code></pre>
 					<h4>Using Text component</h4>
 				</a>
 				<p>The module contains a text component to handle dictionary directly from the JSX code.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component, Text } <span class="hljs-keyword">from</span> <span class="hljs-string">'reacting-squirrel'</span>;
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component, Text } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
 
     render() {
-        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Text</span> <span class="hljs-attr">dictionaryKey</span>=<span class="hljs-string">"title"</span> <span class="hljs-attr">tag</span>=<span class="hljs-string">"h1"</span> /&gt;</span>
+        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Text</span> <span class="hljs-attr">dictionaryKey</span>=<span class="hljs-string">&quot;title&quot;</span> <span class="hljs-attr">tag</span>=<span class="hljs-string">&quot;h1&quot;</span> /&gt;</span></span>
     }
 }
-</span></code></pre>
+</code></pre>
 				<a href="#using-texts-on-the-server-side-experimental" id="using-texts-on-the-server-side-experimental" style="color: inherit; text-decoration: none;">
 					<h4>Using texts on the server side (experimental)</h4>
 				</a>
@@ -343,8 +347,8 @@ app.start();</code></pre>
 					<h3>Uploading files (experimental)</h3>
 				</a>
 				<p>File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the <code>pingTimeout</code>. The file is sent to the server in chunks and converted to buffer on the server side.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> file = <span class="hljs-string">'get somehow a File instance'</span>;
-Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-literal">undefined</span>, { file }, (progress) =&gt; <span class="hljs-built_in">console</span>.log(progress));</code></pre>
+				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> file = <span class="hljs-string">&#x27;get somehow a File instance&#x27;</span>;
+Socket.emit(<span class="hljs-string">&#x27;file.upload&#x27;</span>, <span class="hljs-literal">undefined</span>, { file }, <span class="hljs-function">(<span class="hljs-params">progress</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(progress));</code></pre>
 				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
 					<h4>Limitations</h4>
 				</a>
@@ -417,10 +421,10 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="modules/_app_index_d_.html">&quot;app/index.d&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="modules/_server_index_d_.html">&quot;server/index.d&quot;</a>
 					</li>
 				</ul>
@@ -437,57 +441,17 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>
@@ -497,6 +461,5 @@ Socket.emit(<span class="hljs-string">'file.upload'</span>, <span class="hljs-li
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

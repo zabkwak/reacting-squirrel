@@ -1058,7 +1058,20 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {function} cb Callback to call after the server start.
 	 */
 	_start(cb) {
-		const { dev, port } = this._config;
+		this._bundle(true, cb);
+		/*
+		this._startServer((err) => {
+			if (err) {
+				cb(err);
+				return;
+			}
+			this._bundle(false, cb);
+		});
+		*/
+	}
+
+	_bundle(startServer, cb) {
+		const { dev } = this._config;
 		if (dev) {
 			this._compileStyles((err) => {
 				if (err) {
@@ -1085,10 +1098,9 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					Socket.broadcast('webpack.stats', stats.toJson('minimal'));
 					if (!listening) {
 						listening = true;
-						this._server.listen(port, () => {
-							this._log(`App listening on ${port}`);
-							cb();
-						});
+						if (startServer) {
+							this._startServer(cb);
+						}
 					}
 				});
 			});
@@ -1113,11 +1125,18 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					cb(err);
 					return;
 				}
-				this._server.listen(port, () => {
-					this._log(`App listening on ${port}`);
-					cb();
-				});
+				if (startServer) {
+					this._startServer(cb);
+				}
 			});
+		});
+	}
+
+	_startServer(cb) {
+		const { port } = this._config;
+		this._server.listen(port, () => {
+			this._log(`App listening on ${port}`);
+			cb();
 		});
 	}
 
