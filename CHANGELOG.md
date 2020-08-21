@@ -9,6 +9,7 @@
 - Removed `Button` component.
 - Removed `res.render` function.
 - `Session` is a singleton.
+- Updated major dependencies.
 
 ## 0.17.3
 ### Updates

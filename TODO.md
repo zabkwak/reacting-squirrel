@@ -1,7 +1,6 @@
 # TODO
 - sameSite cookie flag.
-- automatically render components to the root
-- Session as a singleton
+- automatically render components to the rootW
 
 ## Backlog
 - Serverless production.

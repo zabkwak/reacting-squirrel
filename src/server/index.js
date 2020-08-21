@@ -1037,30 +1037,19 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {'log'|'warn'} level Log level of the message.
 	 * @returns {Promise<void>}
 	 */
-	_validateDir(dir, message = null, level = 'log') {
-		return new Promise((resolve, reject) => {
-			fs.exists(dir, (exists) => {
-				if (exists) {
-					resolve();
-					return;
-				}
-				const msg = message || `Directory ${dir} doesn't exist. Creating.`;
-				switch (level) {
-					case 'warn':
-						this._warn(msg);
-						break;
-					default:
-						this._log(msg);
-				}
-				mkdirp(dir, (err) => {
-					if (err) {
-						reject(err);
-						return;
-					}
-					resolve();
-				});
-			});
-		});
+	async _validateDir(dir, message = null, level = 'log') {
+		if (fs.existsSync(dir)) {
+			return;
+		}
+		const msg = message || `Directory ${dir} doesn't exist. Creating.`;
+		switch (level) {
+			case 'warn':
+				this._warn(msg);
+				break;
+			default:
+				this._log(msg);
+		}
+		await mkdirp(dir);
 	}
 
 	/**
