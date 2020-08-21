@@ -10,6 +10,7 @@
 - Removed `res.render` function.
 - `Session` is a singleton.
 - Updated major dependencies.
+- Minimal node.js version is 10.
 
 ## 0.17.3
 ### Updates

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SocketComponent, Text, Button } from '../../src/app';
+import { SocketComponent, Text } from '../../src/app';
 
 export default class SocketStatus extends SocketComponent {
 
@@ -23,7 +23,7 @@ export default class SocketStatus extends SocketComponent {
 			return (
 				<div className="status-wrapper">
 					<Text dictionaryKey="socket_error" args={[error]} />
-					<Button onClick={() => location.reload(true)}>{this.getText('reload')}</Button>
+					<button onClick={() => location.reload(true)}>{this.getText('reload')}</button>
 				</div>
 			);
 		}
