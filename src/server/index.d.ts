@@ -408,6 +408,8 @@ export class Session<T = any> {
 	 */
 	public static generateId(): string;
 
+	public static getInstance<T = any>(id: string): Session<T>;
+
 	/**
 	 * ID of the session.
 	 */
@@ -418,7 +420,7 @@ export class Session<T = any> {
 	 *
 	 * @param id ID of the session.
 	 */
-	public constructor(id: string);
+	private constructor(id: string);
 
 	/**
 	 * Sets the user's data to the session.

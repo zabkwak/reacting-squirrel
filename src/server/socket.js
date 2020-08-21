@@ -248,7 +248,7 @@ const func = (server, options = {}) => {
 			return;
 		}
 		// eslint-disable-next-line no-param-reassign
-		socket.session = new server.Session(sessionId);
+		socket.session = server.Session.getInstance(sessionId);
 		server.auth(socket.session, next);
 	});
 

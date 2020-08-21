@@ -1,7 +1,7 @@
 # TODO
 - sameSite cookie flag.
-- async plugin register
 - automatically render components to the root
+- Session as a singleton
 
 ## Backlog
 - Serverless production.

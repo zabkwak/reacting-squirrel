@@ -82,7 +82,16 @@ export default class Data extends SocketComponent {
 
 	render() {
 		const {
-			events, renderData, renderError, onError, onData, onStart, loaderBlock, loaderSize, ...divProps
+			events,
+			renderData,
+			renderError,
+			onError,
+			onData,
+			onStart,
+			loaderBlock,
+			loaderSize,
+			tookDisabled,
+			...divProps
 		} = this.props;
 		const { data, error } = this.state;
 		const loaded = Boolean(data);

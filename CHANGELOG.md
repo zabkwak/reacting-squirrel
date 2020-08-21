@@ -8,6 +8,7 @@
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.
+- `Session` is a singleton.
 
 ## 0.17.3
 ### Updates
