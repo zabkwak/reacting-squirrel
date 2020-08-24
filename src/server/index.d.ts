@@ -242,6 +242,11 @@ export interface IAppConfig {
 	 * @default true
 	 */
 	logging?: boolean;
+	/**
+	 * Indicates if the server should be started before the webpack bundle. In that case bundling info page is rendered.
+	 * @default: false
+	 */
+	bundleAfterServerStart?: boolean;
 }
 
 export interface ISocketEvent<S extends Session = Session> {
@@ -735,6 +740,10 @@ export default class Server {
 	 * App version.
 	 */
 	version: string;
+	/**
+	 * Indicates if the webpack is bundling.
+	 */
+	bundling: boolean;
 
 	constructor(config?: IAppConfig);
 

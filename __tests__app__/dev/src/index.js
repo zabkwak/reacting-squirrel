@@ -49,6 +49,7 @@ const app = new Server({
 		default: 'en-US',
 		accepted: ['cs-CZ'],
 	},
+	bundleAfterServerStart: true,
 });
 
 app.registerBeforeExecution('*', async (req, res) => {

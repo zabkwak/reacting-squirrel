@@ -5,6 +5,7 @@ import PageNotFoundMiddleware from './page-not-found';
 import ErrorMiddleware from './error';
 import AuthMiddleware from './auth';
 import CookiesMiddleware from './cookies';
+import BundlingMiddleware from './bundling-check';
 
 export {
 	// eslint-disable-next-line import/prefer-default-export
@@ -15,4 +16,5 @@ export {
 	ErrorMiddleware,
 	AuthMiddleware,
 	CookiesMiddleware,
+	BundlingMiddleware,
 };

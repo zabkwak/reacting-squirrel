@@ -6,6 +6,7 @@
 - Registering layout for rendering errors.
 - `Plugin.register` is async.
 - Bundle loaded with javascript for loading progress.
+- Bundle can be created after the server start and bundling info page is rendered (instead of webserver error).
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

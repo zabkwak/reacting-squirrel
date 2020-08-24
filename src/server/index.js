@@ -36,6 +36,7 @@ import {
 	ErrorMiddleware,
 	AuthMiddleware,
 	CookiesMiddleware,
+	BundlingMiddleware,
 } from './middleware';
 import {
 	WebpackConfig,
@@ -57,6 +58,8 @@ class Server {
 	 * @typedef {import('./').ISocketEvent} SocketEvent
 	 * @typedef {import('./').IMiddleware} IMiddleware
 	 */
+
+	// #region Private properties
 
 	/**
 	 * Express app instance.
@@ -121,6 +124,7 @@ class Server {
 			accepted: [],
 		},
 		logging: true,
+		bundleAfterServerStart: false,
 	};
 
 	/**
@@ -159,6 +163,10 @@ class Server {
 
 	/** @type {IMiddleware[]} */
 	_middlewares = [];
+
+	_bundling = true;
+
+	// #endregion
 
 	// #region Property getters
 
@@ -261,6 +269,10 @@ class Server {
 
 	get version() {
 		return this._version;
+	}
+
+	get bundling() {
+		return this._bundling;
 	}
 
 	// #endregion
@@ -575,7 +587,7 @@ class Server {
      */
 	stop(cb = () => { }) {
 		if (!this._server) {
-			this._warn('Server cannot be stopped beceause it was not started.');
+			this._warn('Server cannot be stopped because it was not started.');
 			return;
 		}
 		this._server.close((err) => {
@@ -1001,28 +1013,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	}
 
 	/**
-	 * Compiles and merges all css and scss files in the module and app directories into one minified css file.
-	 * Available only in production mode.
-	 *
-	 * @param {function(Error):void} cb Callback after the styles are compiled.
-	 */
-	_compileProductionStyles(cb) {
-		const {
-			dev, appDir, staticDir, cssDir,
-		} = this._config;
-		this._log('Compiling production styles', dev ? 'skipping' : undefined);
-		if (dev) {
-			cb();
-			return;
-		}
-		const compiler = new StylesCompiler([
-			path.resolve(__dirname, '../app'),
-			path.resolve(appDir),
-		], path.resolve(`${staticDir}/${cssDir}`));
-		compiler.compile(cb);
-	}
-
-	/**
 	 * Checks if the directory exists. If doesn't the directory is created.
 	 *
 	 * @param {string} dir Directory to check.
@@ -1051,8 +1041,11 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {function} cb Callback to call after the server start.
 	 */
 	_start(cb) {
-		this._bundle(true, cb);
-		/*
+		const { bundleAfterServerStart } = this._config;
+		if (!bundleAfterServerStart) {
+			this._bundle(true, cb);
+			return;
+		}
 		this._startServer((err) => {
 			if (err) {
 				cb(err);
@@ -1060,11 +1053,11 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			}
 			this._bundle(false, cb);
 		});
-		*/
 	}
 
 	_bundle(startServer, cb) {
 		const { dev } = this._config;
+		this._bundling = true;
 		if (dev) {
 			this._compileStyles((err) => {
 				if (err) {
@@ -1091,6 +1084,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					Socket.broadcast('webpack.stats', stats.toJson('minimal'));
 					if (!listening) {
 						listening = true;
+						this._bundling = false;
 						if (startServer) {
 							this._startServer(cb);
 						}
@@ -1118,6 +1112,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					cb(err);
 					return;
 				}
+				this._bundling = false;
 				if (startServer) {
 					this._startServer(cb);
 				}
@@ -1204,6 +1199,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			this._app.use(LocaleMiddleware(this));
 			this._app.use(RenderMiddleware(this));
 			this._app.use(AuthMiddleware(this));
+			this._app.use(BundlingMiddleware(this));
 			this._middlewares
 				// eslint-disable-next-line no-shadow
 				.filter(({ afterRoutes }) => !afterRoutes)

@@ -328,6 +328,11 @@
 					"default": null
 				}
 			}
+		},
+		"bundleAfterServerStart": {
+			"type": "boolean",
+			"title": "Indicates if the server should be started before the webpack bundle. In that case bundling info page is rendered.",
+			"default": false
 		}
 	}
 }

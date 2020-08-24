@@ -45,6 +45,7 @@ const CONFIG_FIELDS = [
 	'connectSocketAutomatically',
 	'locale',
 	'logging',
+	'bundleAfterServerStart',
 ];
 
 describe('Server instance', () => {
@@ -68,6 +69,7 @@ describe('Server instance', () => {
 			error,
 			webpack,
 			locale,
+			bundleAfterServerStart,
 		} = server.getConfig();
 		expect(port).to.be.equal(8080);
 		expect(staticDir).to.be.equal('./public');
@@ -91,6 +93,7 @@ describe('Server instance', () => {
 		expect(locale).to.have.all.keys(['default', 'accepted']);
 		expect(locale.default).to.be.equal('en-US');
 		expect(locale.accepted).to.be.deep.equal(['en-US']);
+		expect(bundleAfterServerStart).to.be.false;
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
@@ -129,6 +132,7 @@ describe('Server instance', () => {
 			error: {
 				layout: Layout,
 			},
+			bundleAfterServerStart: true,
 		});
 		expect(server._config).to.have.all.keys(CONFIG_FIELDS);
 		const {
@@ -149,6 +153,7 @@ describe('Server instance', () => {
 			webpack,
 			locale,
 			logging,
+			bundleAfterServerStart,
 		} = server._config;
 		expect(port).to.be.equal(9000);
 		expect(staticDir).to.be.equal('./__static__');
@@ -177,6 +182,7 @@ describe('Server instance', () => {
 		expect(locale.default).to.be.equal('cs-CZ');
 		expect(locale.accepted).to.be.deep.equal(['cs-CZ', 'en-US']);
 		expect(logging).to.be.false;
+		expect(bundleAfterServerStart).to.be.true;
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
