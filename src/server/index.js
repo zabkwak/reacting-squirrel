@@ -41,6 +41,8 @@ import {
 	WebpackConfig,
 } from './config';
 
+const fsAsync = fs.promises;
+
 /**
  * Server part of the application.
  */
@@ -547,11 +549,13 @@ class Server {
 	 * @param {function=} cb Callback to call after the server start.
 	 */
 	async start(cb = () => { }) {
-		const { dev, appDir } = this._config;
+		const { dev, appDir, staticDir, cssDir } = this._config;
 		this._log(`App starting DEV: ${dev}`);
 		try {
+			this._log('Validating directories');
 			await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
 			await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
+			await this._validateDir(path.resolve(`${staticDir}/${cssDir}`), 'Creating CSS directory.');
 			await this._registerPlugins();
 			this._setMiddlewares();
 			this._registerRsConfig();
@@ -582,7 +586,13 @@ class Server {
 		});
 	}
 
+	// #region Private methods
+
+	/**
+	 * Registers the plugins calling `Plugin.register` on all registered plugins.
+	 */
 	async _registerPlugins() {
+		// Register plugins from RS config
 		if (this._rsConfig) {
 			const { plugins } = this._rsConfig;
 			if (plugins) {
@@ -609,6 +619,7 @@ class Server {
 				});
 			}
 		}
+		// Register the plugin
 		for (let i = 0; i < this._plugins.length; i++) {
 			const plugin = this._plugins[i];
 			try {
@@ -620,6 +631,9 @@ class Server {
 		}
 	}
 
+	/**
+	 * Registers the RS config.
+	 */
 	_registerRsConfig() {
 		if (this._rsConfig) {
 			const {
@@ -659,36 +673,20 @@ class Server {
 	async _createRSFiles() {
 		this._log('Creating RS files');
 		const { appDir, staticDir, cssDir } = this._config;
-		// await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
-		// await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
-		await this._validateDir(path.resolve(`${staticDir}/${cssDir}`), 'Creating CSS directory.');
-		return new Promise((resolve, reject) => {
-			async.each([
-				'_createResDir',
-				'_createNonceFile',
-				'_createEntryFile',
-				'_setRoutes',
-				'_createComponentsFile',
-				'_createSocketMap',
-				'_createPostCSSConfig',
-				'_createTSConfig',
-				// '_compileProductionStyles',
-			], (f, callback) => this[f].call(this, callback), (err) => {
-				if (err) {
-					reject(err);
-					return;
-				}
-				resolve();
-			});
-		});
+		await this._createResDir();
+		await this._createNonceFile();
+		await this._createEntryFile();
+		await this._setRoutes();
+		await this._createComponentsFile();
+		await this._createSocketMap();
+		await this._createPostCSSConfig();
+		await this._createTSConfig();
 	}
 
 	/**
 	 * Registers the routes to the express app and creates the routing map for the front-end.
-	 *
-	 * @param {function(Error):void} cb Callback called after the registration of the routes and creation of the routing map.
 	 */
-	_setRoutes(cb) {
+	async _setRoutes() {
 		this._log('Setting routes');
 		const {
 			appDir, createMissingComponents,
@@ -724,61 +722,52 @@ class Server {
 			}
 			this._setRoute(route);
 		});
-		this._createRoutingFile(componentsMap, cb);
+		await this._createRoutingFile(componentsMap);
 	}
 
 	/**
 	 * Creates resources directory if doesn't exists.
 	 * If the res directory doesn't contain text.json the file is created as well.
-	 * @param {function(Error):void} cb Callback called after the directory is created.
 	 */
-	async _createResDir(cb) {
+	async _createResDir() {
 		const { appDir } = this._config;
-		try {
-			await this._validateDir(`${appDir}/res`, 'Creating RES directory.');
-		} catch (e) {
-			process.nextTick(() => cb(e));
-			return;
-		}
-		this._createTextFiles(cb);
+		await this._validateDir(`${appDir}/res`, 'Creating RES directory.');
+		await this._createTextFiles();
 	}
 
 	/**
 	 * Creates all text files in the resources directory if don't exist.
-	 *
-	 * @param {function(Error): void} cb Callback after the file creation.
 	 */
-	_createTextFiles(cb) {
+	async _createTextFiles() {
 		const { appDir, locale } = this._config;
-		async.eachSeries(locale.accepted, (acceptedLocale, callback) => {
+		if (!locale.accepted || !locale.accepted.length) {
+			return
+		}
+		for (let i = 0; i < locale.accepted?.length; i++) {
+			const acceptedLocale = locale.accepted[i];
 			const fileName = this.getLocaleFileName(acceptedLocale);
 			const filePath = `${appDir}/res/${fileName}`;
-			fs.exists(filePath, (exists) => {
-				if (exists) {
-					callback();
-					return;
-				}
+			try {
+				await fsAsync.access(filePath);
+			} catch (e) {
 				this._log(`Creating text file ${fileName}`);
-				fs.writeFile(filePath, '{}', callback);
-			});
-		}, cb);
+				await fsAsync.writeFile(filePath, '{}');
+			}
+		}
 	}
 
-	_createNonceFile(cb) {
+	async _createNonceFile() {
 		this._log('Creating nonce file');
-		fs.writeFile(
+		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/nonce.js`,
 			`__webpack_nonce__ = '${this._nonce}'`,
-			cb,
 		);
 	}
 
 	/**
 	 * Creates the entry file required for the webpack.
-	 *
-	 * @param {function(Error):void} cb Callback to call after the creation process.
 	 */
-	_createEntryFile(cb) {
+	async _createEntryFile() {
 		this._log('Creating entry file');
 		const {
 			entryFile, appDir, connectSocketAutomatically, locale,
@@ -801,7 +790,7 @@ class Server {
 				componentProviderImport = `import ComponentProvider from '${p}'`;
 			}
 		}
-		fs.writeFile(
+		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/entry.js`,
 			`import './nonce';
 import Application, { Socket, Text } from '${pathToTheModule}';
@@ -837,8 +826,7 @@ Socket.registerEvents(socketEvents);
 ${connectSocketAutomatically ? 'Socket.connect();' : ''}
 // Injected code
 ${this._entryInjections.join('\n')}
-`, cb,
-		);
+`);
 	}
 
 	/**
@@ -851,25 +839,26 @@ ${this._entryInjections.join('\n')}
 	 * Creates the routing file for the front-end application.
 	 *
 	 * @param {Object.<string, RouteMappings>} map Map of the routes.
-	 * @param {function(Error):void} cb Callback to call after the creation process.
 	 */
-	_createRoutingFile(map, cb) {
+	async _createRoutingFile(map) {
 		const { createMissingComponents, generatedComponentsExtension } = this._config;
 		this._log('Creating routing file');
 		const a = [];
 		const b = [];
-		Object.keys(map).forEach((key) => {
+		const keys = Object.keys(map);
+		for (let i = 0; i < keys.length; i++) {
+			const key = keys[i];
 			const route = map[key];
 			if (!this._componentExists(route.path)) {
 				this._warn(`Page ${route.path} doesn't exist.`, createMissingComponents ? 'GENERATING' : 'SKIPPING');
 				if (!createMissingComponents) {
-					return;
+					continue;
 				}
 				const dirName = path.dirname(route.path);
-				mkdirp.sync(dirName);
+				await mkdirp(dirName)
 				const fileName = path.basename(route.path);
 				const filePath = `${route.path}.${generatedComponentsExtension}`;
-				fs.writeFileSync(filePath, `import { Page } from '${this._getPathToModule(dirName)}';
+				await fsAsync.writeFile(filePath, `import { Page } from '${this._getPathToModule(dirName)}';
 
 export default class ${this._createClassName(fileName, 'Page')} extends Page {}
 `);
@@ -877,32 +866,33 @@ export default class ${this._createClassName(fileName, 'Page')} extends Page {}
 			const p = path.relative(path.resolve(this._getRSDirPath()), route.path).replace(/\\/g, '/');
 			a.push(`import ${key} from '${p}';`);
 			b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}', layout: ${route.layout ? `'${md5(route.layout)}'` : null}}`);
-		});
-		const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
-		fs.writeFile(`${this._getRSDirPath()}/router.map.js`, s, cb);
+		}
+		await fsAsync.writeFile(
+			`${this._getRSDirPath()}/router.map.js`,
+			`${a.join('\n')}${'\n'}export default [${b.join(',')}];`,
+		);
 	}
 
 	/**
 	 * Creates the file with custom components.
-	 *
-	 * @param {function(Error):void} cb Callback to call after the creation process.
 	 */
-	_createComponentsFile(cb) {
+	async _createComponentsFile() {
 		const { createMissingComponents, generatedComponentsExtension } = this._config;
 		this._log('Creating components file');
 		const a = [];
 		const b = [];
-		this._components.forEach((component) => {
+		for (let i = 0; i < this._components.length; i++) {
+			const component = this._components[i];
 			if (!this._componentExists(component.path)) {
 				this._warn(`Component ${component.path} doesn't exist.`, createMissingComponents ? 'GENERATING' : 'SKIPPING');
 				if (!createMissingComponents) {
-					return;
+					continue;
 				}
 				const dirName = path.dirname(component.path);
-				mkdirp.sync(dirName);
+				await mkdirp(dirName);
 				const fileName = path.basename(component.path);
 				const filePath = `${component.path}.${generatedComponentsExtension}`;
-				fs.writeFileSync(filePath, `import { Component } from '${this._getPathToModule(dirName)}';
+				await fsAsync.writeFile(filePath, `import { Component } from '${this._getPathToModule(dirName)}';
 
 export default class ${this._createClassName(fileName, 'Component')} extends Component {}
 `);
@@ -911,51 +901,53 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			const p = path.relative(path.resolve(this._getRSDirPath()), component.path).replace(/\\/g, '/');
 			a.push(`import ${key} from '${p}'`);
 			b.push(`{elementId: '${component.elementId}', component: ${key}}`);
-		});
-		const s = `${a.join('\n')}${'\n'}export default [${b.join(',')}];`;
-		fs.writeFile(`${this._getRSDirPath()}/component.map.js`, s, cb);
+		}
+		await fsAsync.writeFile(
+			`${this._getRSDirPath()}/component.map.js`,
+			`${a.join('\n')}${'\n'}export default [${b.join(',')}];`,
+		);
 	}
 
 	/**
 	 * Creates the socket map for the front-end application.
-	 *
-	 * @param {function(Error):void} cb Callback to call after the creation process.
 	 */
-	_createSocketMap(cb) {
+	async _createSocketMap() {
 		this._log('Creating socket map');
-		fs.writeFile(`${this._getRSDirPath()}/socket.map.js`, `export default [${this._socketEvents.map((e) => `'${e.event}'`).join(',')}];`, cb);
+		await fsAsync.writeFile(
+			`${this._getRSDirPath()}/socket.map.js`,
+			`export default [${this._socketEvents.map((e) => `'${e.event}'`).join(',')}];`,
+		);
 	}
 
 	/**
 	 * Creates the postcss config for the front-end application.
-	 *
-	 * @param {function(Error):void} cb Callback to call after the creation process.
 	 */
-	_createPostCSSConfig(cb) {
+	async _createPostCSSConfig() {
 		this._log('Creating postcss config');
-		fs.writeFile(
+		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/postcss.config.js`,
 			`module.exports={plugins:{autoprefixer:${JSON.stringify(this._config.autoprefixer)}}};`,
-			cb,
 		);
 	}
 
 	/**
 	 * Creates tsconfig.json in the RS directory.
-	 *
-	 * @param {function(Error):void} cb Callback after the file is created in RS directory.
 	 */
-	_createTSConfig(cb) {
+	async _createTSConfig() {
 		this._log('Creating TS config');
-		fs.writeFile(
+		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/tsconfig.json`,
 			JSON.stringify(TSConfig, null, 4),
-			cb,
 		);
 	}
 
 	// #endregion
 
+	/**
+	 * Registers the route to express.
+	 *
+	 * @param {*} route 
+	 */
 	_setRoute(route) {
 		const {
 			dev, layoutComponent,
@@ -997,6 +989,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				res.renderLayout(data);
 				return;
 			}
+			// TODO the callback returning a Promise
 			route.callback(req, res, (err, d = {}) => {
 				if (err) {
 					next(err);
@@ -1280,6 +1273,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		});
 	}
 
+	// #region FS helpers
+
 	/**
 	 * Gets the relative path to the RS directory.
 	 *
@@ -1332,6 +1327,10 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			: 'reacting-squirrel';
 	}
 
+	// #endregion
+
+	// #region Class loaders helpers
+
 	/**
 	 * Creates class name from the string.
 	 *
@@ -1353,6 +1352,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		}
 		return s.charAt(0).toUpperCase() + s.slice(1);
 	}
+
+	// #endregion
 
 	/**
 	 * Gets the config from rsconfig file.
@@ -1422,6 +1423,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		}
 	}
 
+	// #region Loggers
+
 	/**
 	 * Logs the message to the console if the app is in the dev mode.
 	 *
@@ -1458,6 +1461,10 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		// eslint-disable-next-line no-console
 		console.error(new Date(), '[ERROR]', message, ...args);
 	}
+
+	// #endregion
+
+	// #endregion
 }
 
 export {

@@ -9,3 +9,4 @@
 - Common code.
 - Large data navigation issue.
 - bundle webpack after the server start + add bundling info page
+- nested routes in rsconfig

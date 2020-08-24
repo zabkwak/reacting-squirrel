@@ -10,7 +10,11 @@ export default class StylesCompiler {
 	}
 
 	compile(cb) {
-		this._processor.process().then(cb).catch(cb);
+		if (typeof cb === 'function') {
+			this.compile().then(cb).catch(cb);
+			return
+		}
+		return this._processor.process();
 	}
 
 }
