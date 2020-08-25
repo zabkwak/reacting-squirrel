@@ -70,7 +70,7 @@
 	"socketClassDir": "__tests__app__/dev/dist",
 	"error": {
 		"page": "page.error",
-		"layout": "./__tests__app__/dev/dist/layout"
+		"layout": "./__tests__app__/dev/dist/layout.error"
 	},
     "createMissingComponents": true,
     "mergeStyles": [
