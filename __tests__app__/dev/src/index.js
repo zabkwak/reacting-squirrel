@@ -75,6 +75,15 @@ app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 	fs.writeFileSync(`./tmp/${name}`, file);
 });
 
+app
+	.createRSFile('custom-file.ts', 'console.log(\'custom-file\', new Date());')
+	.injectToEntry('import \'./custom-file\';')
+	// eslint-disable-next-line arrow-body-style
+	.createRSFile('custom-file.fn.ts', async () => {
+		return 'console.log(\'custom-file.fn\', new Date());';
+	})
+	.injectToEntry('import \'./custom-file.fn\';');
+
 class CustomPlugin extends Plugin {
 
 	getName() {

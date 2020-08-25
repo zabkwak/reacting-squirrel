@@ -167,6 +167,8 @@ class Server {
 
 	_bundling = true;
 
+	_rsFiles = [];
+
 	// #endregion
 
 	// #region Property getters
@@ -478,7 +480,7 @@ class Server {
 		this._socketEvents.push({ event, listener });
 		return this;
 	}
-	
+
 	registerComponent(componentPath, elementId, auto = false) {
 		const { appDir } = this._config;
 		this._components.push({
@@ -540,6 +542,11 @@ class Server {
 		if (code) {
 			this._entryInjections.push(code);
 		}
+		return this;
+	}
+
+	createRSFile(filename, content) {
+		this._rsFiles.push({ filename, content });
 		return this;
 	}
 
@@ -684,7 +691,6 @@ class Server {
 	 */
 	async _createRSFiles() {
 		this._log('Creating RS files');
-		const { appDir, staticDir, cssDir } = this._config;
 		await this._createResDir();
 		await this._createNonceFile();
 		await this._createEntryFile();
@@ -693,6 +699,13 @@ class Server {
 		await this._createSocketMap();
 		await this._createPostCSSConfig();
 		await this._createTSConfig();
+		for (let i = 0; i < this._rsFiles.length; i++) {
+			const { filename, content } = this._rsFiles[i];
+			await fsAsync.writeFile(
+				path.resolve(this._getRSDirPathAbsolute(), filename),
+				typeof content === 'function' ? await content() : content,
+			);
+		}
 	}
 
 	/**

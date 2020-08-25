@@ -962,6 +962,14 @@ export default class Server {
 	injectToEntry(code: string): this;
 
 	/**
+	 * Creates a file in RS directory.
+	 *
+	 * @param filename Name of the file.
+	 * @param data File content of async function to get the content.
+	 */
+	createRSFile(filename: string, data: string | Buffer | (() => Promise<string | Buffer>)): this;
+
+	/**
 	 * Logs the info in the stdout.
 	 * 
 	 * @param tag Tag of the message.
