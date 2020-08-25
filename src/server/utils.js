@@ -15,6 +15,7 @@ import SocketClass from './socket-class';
  * @typedef Component
  * @property {string} id Element id in the rendered html.
  * @property {string} component Relative path to the component from the application directory.
+ * @property {boolean} auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
  */
 
 export default {
@@ -69,8 +70,8 @@ export default {
 	 * @param {Array<Component>} components List of components to register.
 	 */
 	registerComponents(app, components) {
-		components.forEach(({ id, component }) => {
-			app.registerComponent(component, id);
+		components.forEach(({ id, component, auto }) => {
+			app.registerComponent(component, id, auto);
 		});
 	},
 	_isConstructor(Class) {

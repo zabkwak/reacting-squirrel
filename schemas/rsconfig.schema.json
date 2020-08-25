@@ -70,6 +70,11 @@
 					"component": {
 						"type": "string",
 						"title": "Relative path to the component from app directory."
+					},
+					"auto": {
+						"type": "boolean",
+						"title": "Indicates if the component's wrapper should be automatically rendered in the layout's body.",
+						"default": false
 					}
 				}
 			}

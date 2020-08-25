@@ -1,7 +1,5 @@
 # TODO
-- sameSite cookie flag.
-- automatically render components to the root
-	- Option in the components to render them in automatically generated wrapper in the layout.
+- sameSite cookie flag
 - progress in bundling page
 
 ## Backlog

@@ -52,6 +52,7 @@ class Server {
 	 * @typedef CustomComponent
 	 * @property {string} path Absolute path to the component.
 	 * @property {string} elementId Identificator of the DOM element where the component should render.
+	 * @property {boolean} auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
 	 */
 	/**
 	 * @typedef {import('./').IAppConfig} AppConfig
@@ -371,6 +372,10 @@ class Server {
 		return this._getLocaleText(locale, key, ...args);
 	}
 
+	getRegisteredComponents() {
+		return this._components;
+	}
+
 	/**
 	 * Gets the list of registered socket events.
 	 *
@@ -473,20 +478,15 @@ class Server {
 		this._socketEvents.push({ event, listener });
 		return this;
 	}
-
-	/**
-	 * Registers react components which are rendered into DOM elements.
-	 *
-	 * @param {string} componentPath Absolute path or relative path from the {config.appDir} to the component.
-	 * @param {string} elementId Identificator of the DOM element where the component should render.
-	 */
-	registerComponent(componentPath, elementId) {
+	
+	registerComponent(componentPath, elementId, auto = false) {
 		const { appDir } = this._config;
 		this._components.push({
 			path: !path.isAbsolute(componentPath)
 				? path.resolve(`${appDir}/${componentPath}`)
 				: componentPath,
 			elementId,
+			auto,
 		});
 		return this;
 	}

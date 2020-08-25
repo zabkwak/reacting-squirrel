@@ -285,6 +285,8 @@ export interface ILayoutProps<T = {}, U = any> {
 	bundle: string;
 	charSet?: string;
 	lang?: string;
+	/** List of ids of the wrappers for rendering components. */
+	componentWrappers?: Array<string>;
 }
 
 export interface IMiddleware {
@@ -477,6 +479,11 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 	public renderMeta(): JSX.Element;
 
 	/**
+	 * Renders the wrappers for the components in the HTML body.
+	 */
+	public renderComponentWrappers(): JSX.Element;
+
+	/**
      * Gets the text from the dictionary.
      *
      * @param key Key of the text in the dictionary.
@@ -611,7 +618,7 @@ export abstract class Plugin {
 	/**
 	 * Gets the list of callbacks called before the route execution.
 	 */
-	protected getBeforeExecutions(): Array<{spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
+	protected getBeforeExecutions(): Array<{ spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
 
 	/**
 	 * Gets the list of scripts to require in the html header.
@@ -676,7 +683,7 @@ export namespace Utils {
      * @param app Server instance.
      * @param components List of components to register.
      */
-	export function registerComponents(app: Server, components: Array<{ id: string, component: string }>): void;
+	export function registerComponents(app: Server, components: Array<{ id: string, component: string, auto?: boolean }>): void;
 }
 
 /**
@@ -800,6 +807,11 @@ export default class Server {
      */
 	getSocketClasses(): Array<SocketClass>;
 
+	/**
+	 * Gets the list of registered components.
+	 */
+	getRegisteredComponents(): Array<{ elementId: string, path: string, auto: boolean }>;
+
     /**
      * Authorizes the user.
      *
@@ -886,6 +898,15 @@ export default class Server {
      * @param elementId Id of the element in the layout where the component should be rendered.
      */
 	registerComponent(componentPath: string, elementId: string): this;
+
+	 /**
+     * Registers component.
+     *
+     * @param componentPath Absolute path or relative path to the component from the app directory.
+     * @param elementId Id of the element in the layout where the component should be rendered.
+	 * @param auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
+     */
+	registerComponent(componentPath: string, elementId: string, auto: boolean): this;
 
 	/**
 	 * Registers the component provider. All components rendered with the application are wrapped with this provider.

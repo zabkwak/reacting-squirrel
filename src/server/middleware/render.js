@@ -30,6 +30,9 @@ export default (server) => (req, res, next) => {
 			}}
 			getText={(key, ...args) => server.getLocaleText(req.locale, key, ...args)}
 			nonce={server.nonce}
+			componentWrappers={
+				server.getRegisteredComponents().filter(({ auto }) => auto).map(({ elementId }) => elementId)
+			}
 		/>)}`);
 	};
 	next();

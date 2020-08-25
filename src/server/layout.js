@@ -1,7 +1,35 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+/*
+const code = () => {
+	var req = new XMLHttpRequest();
+	req.addEventListener(
+		'progress',
+		function (e) {
+			if (e.lengthComputable) {
+				var t = e.loaded / e.total;
+				document.getElementById('rs-bundle-progress').textContent = Math.round(100 * t) + '%';
+			}
+		},
+		false
+	);
+	req.addEventListener(
+		'load',
+		function (e) {
+			var t = e.target,
+				n = document.createElement('script');
+			n.id = 'bundle';
+			// n.innerHTML = t.responseText;
+			n.src = '${this._createPath(bundle, version)}';
+			document.getElementsByTagName('head')[0].appendChild(n);
+		},
+		false
+	),
+		req.open('GET', '${this._createPath(bundle, version)}'),
+		req.send();
+};
+*/
 /**
  * Base layout component for default html code rendered on the server-side.
  */
@@ -25,6 +53,7 @@ export default class Layout extends Component {
 		lang: PropTypes.string,
 		getText: PropTypes.func.isRequired,
 		nonce: PropTypes.string.isRequired,
+		componentWrappers: PropTypes.arrayOf(PropTypes.string),
 	};
 
 	static defaultProps = {
@@ -33,6 +62,7 @@ export default class Layout extends Component {
 		styles: [],
 		charSet: 'UTF-8',
 		lang: 'en',
+		componentWrappers: [],
 	};
 
 	/**
@@ -61,7 +91,7 @@ export default class Layout extends Component {
 				<script
 					type="text/javascript"
 					dangerouslySetInnerHTML={{
-						__html: `var req=new XMLHttpRequest;req.addEventListener("progress",function(e){if(e.lengthComputable){var t=e.loaded/e.total;document.getElementById("rs-bundle-progress").textContent=Math.round(100*t)+"%"}},!1),req.addEventListener("load",function(e){var t=e.target,n=document.createElement("script");n.id="bundle",n.innerHTML=t.responseText,document.getElementsByTagName("head")[0].appendChild(n)},!1),req.open("GET","${this._createPath(bundle, version)}"),req.send();`,
+						__html: `var req=new XMLHttpRequest;req.addEventListener("progress",function(e){if(e.lengthComputable){var t=e.loaded/e.total;document.getElementById("rs-bundle-progress").textContent=Math.round(100*t)+"%"}},!1),req.addEventListener("load",function(e){e.target;var t=document.createElement("script");t.id="bundle",t.src="${this._createPath(bundle, version)}",document.getElementsByTagName("head")[0].appendChild(t)},!1),req.open("GET","${this._createPath(bundle, version)}"),req.send();`,
 					}}
 				/>
 				{styles.map((s) => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
@@ -73,6 +103,7 @@ export default class Layout extends Component {
 		return (
 			<body>
 				{this.renderContainer()}
+				{this.renderComponentWrappers()}
 				{this.renderBundleData()}
 			</body>
 		);
@@ -101,6 +132,17 @@ export default class Layout extends Component {
 				</div>
 			</div>
 		);
+	}
+
+	renderComponentWrappers() {
+		const { componentWrappers } = this.props;
+		return (
+			<>
+				{
+					componentWrappers.map((id) => <div id={id} key={id} />)
+				}
+			</>
+		)
 	}
 
 	renderLoader() {

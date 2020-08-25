@@ -63,7 +63,8 @@
         },
         {
             "id": "generated",
-            "component": "generated-component"
+			"component": "generated-component",
+			"auto": true
         }
     ],
 	"socketClassDir": "__tests__app__/dev/dist",

@@ -7,6 +7,7 @@
 - `Plugin.register` is async.
 - Bundle loaded with javascript for loading progress.
 - Bundle can be created after the server start and bundling info page is rendered (instead of webserver error).
+- Option to auto-generate component wrappers in the layout.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.
