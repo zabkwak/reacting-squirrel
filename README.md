@@ -20,7 +20,7 @@ import Server from 'reacting-squirrel/server';
 
 const app = new Server();
 
-app.get('/', 'home', 'Home');
+app.registerRoute('get', '/', 'home', 'Home');
 
 app.start();
 
@@ -63,7 +63,7 @@ const app = new Server({
     }
 });
 
-app.get('/', 'home', 'Home');
+app.registerRoute('get', '/', 'home', 'Home');
 
 app.registerSocketClass(UserSocket);
 
@@ -127,8 +127,8 @@ import Server from 'reacting-squirrel/server';
 
 const app = new Server();
 
-// On the route '/' will be rendered the content copmponent located in {config.appDir}/home with Home title.
-app.get('/', 'home', 'Home');
+// On the route '/' will be rendered the content component located in {config.appDir}/home with Home title.
+app.registerRoute('get', '/', 'home', 'Home');
 
 app.start();
 ```

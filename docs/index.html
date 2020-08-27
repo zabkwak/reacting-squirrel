@@ -90,7 +90,7 @@
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
 
-app.get(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
+app.registerRoute(<span class="hljs-string">&#x27;get&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
 
 app.start();
 
@@ -132,7 +132,7 @@ app.start();
     }
 });
 
-app.get(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
+app.registerRoute(<span class="hljs-string">&#x27;get&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
 
 app.registerSocketClass(UserSocket);
 
@@ -199,8 +199,8 @@ app.start();
 
 <span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
 
-<span class="hljs-comment">// On the route &#x27;/&#x27; will be rendered the content copmponent located in {config.appDir}/home with Home title.</span>
-app.get(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
+<span class="hljs-comment">// On the route &#x27;/&#x27; will be rendered the content component located in {config.appDir}/home with Home title.</span>
+app.registerRoute(<span class="hljs-string">&#x27;get&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
 
 app.start();</code></pre>
 				<a href="#socket-events-register" id="socket-events-register" style="color: inherit; text-decoration: none;">
