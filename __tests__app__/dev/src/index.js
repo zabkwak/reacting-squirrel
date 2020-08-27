@@ -56,7 +56,7 @@ app.registerBeforeExecution('*', async (req, res) => {
 	res.header('Content-Security-Policy', `style-src 'self' 'nonce-${app.nonce}'`);
 });
 
-app.get('/error', null, 'Error', false, (req, res, next) => {
+app.registerRoute('get', '/error', null, 'Error', false, (req, res, next) => {
 	next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
 

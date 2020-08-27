@@ -422,19 +422,6 @@ class Server {
 	// #region Registers
 
 	/**
-	 * Registers the GET route.
-	 *
-	 * @param {string} route Route spec.
-	 * @param {string} contentComponent Relative path from the {config.appDir} to the component.
-	 * @param {string} title Title of the page.
-	 * @param {boolean=} requireAuth If true the route requires authorized user.
-	 * @param {function=} callback Callback to call when the route is called.
-	 */
-	get(route, contentComponent, title, requireAuth, callback) {
-		return this.registerRoute('get', route, contentComponent, title, requireAuth, null, callback);
-	}
-
-	/**
 	 * Registers the route.
 	 *
 	 * @param {'get'|'post'|'put'|'delete'} method HTTP method of the route.
@@ -446,6 +433,22 @@ class Server {
 	 * @param {function=} callback Callback to call when the route is called.
 	 */
 	registerRoute(method, route, contentComponent, title, requireAuth, layout, callback) {
+		if (typeof requireAuth === 'function') {
+			callback = requireAuth;
+			requireAuth = false;
+			layout = null;
+		}
+		if (typeof layout === 'function') {
+			try {
+				if (!(new layout()) instanceof Layout) {
+					callback = layout;
+					layout = null;
+				}
+			} catch (e) {
+				callback = layout;
+				layout = null;
+			}
+		}
 		this._routes.push(new Route(method, route, contentComponent, title, requireAuth, layout, callback));
 		return this;
 	}

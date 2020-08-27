@@ -234,8 +234,8 @@ describe('Start of the server', () => {
 		const RS_DIR = server._getRSDirPathAbsolute();
 
 		server
-			.get('/', 'pages/home', 'Home')
-			.get('/user', 'pages/user', 'User', true)
+			.registerRoute('get', '/', 'pages/home', 'Home')
+			.registerRoute('get', '/user', 'pages/user', 'User', true)
 			.registerComponent('components/test', 'test')
 			.registerSocketEvent('test', async () => {
 				return 'test';

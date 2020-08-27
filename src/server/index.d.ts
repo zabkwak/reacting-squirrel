@@ -820,19 +820,6 @@ export default class Server {
      */
 	auth(session: Session, next: (err?: any) => void): void;
 
-	get(route: string, contentComponent: string, title: string): this;
-	get(route: string, contentComponent: string, title: string, requireAuth: boolean): this;
-    /**
-     * Registers the GET route.
-     * @param route
-     * @param contentComponent 
-     * @param title 
-     * @param requireAuth 
-     * @param callback 
-     * @deprecated
-     */
-	get(route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
-
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
     /**
