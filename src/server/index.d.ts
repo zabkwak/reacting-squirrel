@@ -262,6 +262,7 @@ interface ILayoutPropsInitialData<U = any> {
 	dev: boolean;
 	timestamp: number;
 	version: string;
+	locale: string;
 }
 
 /**

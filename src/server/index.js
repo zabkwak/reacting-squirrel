@@ -849,6 +849,7 @@ Application
 	.registerRoutingMap(routingMap)
 	.registerComponents(components)
 	.registerErrorPage(ErrorPage)
+	.registerLocales('${locale.default}', [${locale.accepted.map((l) => `'${l}'`).join(', ')}])
 	.start();
 Socket.registerEvents(socketEvents);
 ${connectSocketAutomatically ? 'Socket.connect();' : ''}
@@ -1010,6 +1011,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					dev,
 					timestamp: Date.now(),
 					version: this._version,
+					locale: req.locale,
 				},
 				layout,
 			};

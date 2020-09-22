@@ -39,6 +39,21 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	getInitialData<T = any>(key: string): T;
 
 	/**
+	 * Gets the current set locale.
+	 */
+	getLocale(): string;
+
+	/**
+	 * Gets the code of the default locale.
+	 */
+	getDefaultLocale(): string;
+
+	/**
+	 * Gets the list of all accepted locales.
+	 */
+	getLocales(): string[];
+
+	/**
 	 * Registers the routing map.
 	 * 
 	 * This method is called automatically in after the bundle load.
@@ -73,6 +88,14 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param errorPage ErrorPage component to register.
 	 */
 	registerErrorPage(errorPage: typeof ErrorPage): this;
+
+	/**
+	 * Registers the configuration of locale.
+	 *
+	 * @param defaultLocale The code of the default locale.
+	 * @param accepted List of all accepted locale codes.
+	 */
+	registerLocales(defaultLocale: string, accepted: string[]): this;
 
 	/**
 	 * Starts the application.

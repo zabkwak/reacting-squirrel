@@ -1,6 +1,7 @@
 # TODO
 - sameSite cookie flag
 - progress in bundling page
+- access log
 
 ## Backlog
 - Serverless production.

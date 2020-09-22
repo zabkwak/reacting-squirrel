@@ -34,6 +34,12 @@ class Application extends CallbackEmitter {
 
 	_provider = null;
 
+	_locale = 'default';
+
+	_locales = [];
+
+	_defaultLocale = null;
+
 	/**
 	 * @returns {boolean}
 	 */
@@ -85,6 +91,33 @@ class Application extends CallbackEmitter {
 		return this._initialData;
 	}
 
+	getLocale() {
+		return this._locale;
+	}
+
+	getDefaultLocale() {
+		return this._defaultLocale;
+	}
+
+	getLocales() {
+		return this._locales;
+	}
+
+	/**
+	 * Gets the reference of the component in the application context.
+	 *
+	 * @param {string} key Key of the reference in the application context.
+	 */
+	getRef(key) {
+		return this._refs[key];
+	}
+
+	getCookie(name) {
+		return this._cookies.get(name);
+	}
+
+	// #region Registers
+
 	/**
 	 * Registers the map of routes to the Router.
 	 *
@@ -121,6 +154,14 @@ class Application extends CallbackEmitter {
 		return this;
 	}
 
+	registerLocales(defaultLocale, accepted) {
+		this._defaultLocale = defaultLocale;
+		this._locales = accepted;
+		return this;
+	}
+
+	// #endregion
+
 	/**
 	 * Starts the application. The application can be started only once.
 	 */
@@ -134,6 +175,8 @@ class Application extends CallbackEmitter {
 		this._renderRegisteredComponents();
 		this.render(Router.getRoute());
 	}
+
+	// #region Renderers
 
 	/**
 	 * Refreshes the content. Content DOM is cleared and the current Page is rendered.
@@ -197,6 +240,10 @@ class Application extends CallbackEmitter {
 		ReactDOM.render(<Provider>{component}</Provider>, target, callback);
 	}
 
+	// #endregion
+
+	// #region Navigators
+
 	/**
 	 * Pushes the state to the history and forces to render the content.
 	 *
@@ -236,6 +283,10 @@ class Application extends CallbackEmitter {
 		Router.pushState(path, q);
 	}
 
+	// #endregion
+
+	// #region Setters
+
 	/**
 	 * Updates the page title in the HTML header.
 	 *
@@ -246,6 +297,9 @@ class Application extends CallbackEmitter {
 	}
 
 	setLocale(locale) {
+		if (locale === this._defaultLocale) {
+			locale = 'default';
+		}
 		if (Text.getDictionary(locale)) {
 			Text.setDictionary(locale);
 			const expires = new Date();
@@ -256,6 +310,7 @@ class Application extends CallbackEmitter {
 				secure: location.protocol === 'https:',
 				expires,
 			});
+			this._locale = locale;
 			this._callListener('locale.set', locale);
 		} else {
 			this.logWarning(`Locale ${locale} dictionary not registered.`);
@@ -272,18 +327,7 @@ class Application extends CallbackEmitter {
 		this._refs[key] = ref;
 	}
 
-	/**
-	 * Gets the reference of the component in the application context.
-	 *
-	 * @param {string} key Key of the reference in the application context.
-	 */
-	getRef(key) {
-		return this._refs[key];
-	}
-
-	getCookie(name) {
-		return this._cookies.get(name);
-	}
+	// #endregion
 
 	logInfo(message, ...optionalParams) {
 		if (this.DEV) {

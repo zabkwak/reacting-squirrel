@@ -167,6 +167,24 @@ export default class Home extends Page {
 				</button>
 				<a href="/about" onClick={Utils.anchorNavigation}>About page anchor</a>
 				<div>
+					<label htmlFor="locale">Locale: </label>
+					<select
+						id="locale"
+						value={this.getContext().getLocale()}
+						onChange={({ target }) => {
+							this.getContext().setLocale(target.value);
+							this.getContext().refreshComponents();
+							this.getContext().refreshContent();
+						}}
+					>
+						{
+							this.getContext().getLocales().map((locale) => (
+								<option value={locale} key={locale}>{locale}</option>
+							))
+						}
+					</select>
+				</div>
+				<div>
 					<Text tag="p" dictionaryKey="args" args={['one', 'two', 'three']} />
 				</div>
 			</div>

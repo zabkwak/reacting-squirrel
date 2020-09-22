@@ -9,6 +9,7 @@
 - Bundle can be created after the server start and bundling info page is rendered (instead of webserver error).
 - Option to auto-generate component wrappers in the layout.
 - Custom files can be saved in RS directory.
+- `Application` has setters and getters for working with locales.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.
