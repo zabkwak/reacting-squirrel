@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 export default class BundleLayout extends Component {
 
 	render() {
+		// eslint-disable-next-line react/prop-types
 		const { lang } = this.props;
 		return (
 			<html lang={lang}>

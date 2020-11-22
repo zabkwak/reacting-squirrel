@@ -34,7 +34,6 @@ export default class SocketClass {
 	 * @property {function} listener
 	 */
 
-
 	/** @type {Socket} */
 	_socket = null;
 

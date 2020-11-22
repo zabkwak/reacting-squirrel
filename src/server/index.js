@@ -7,7 +7,6 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import md5 from 'md5';
 import fs from 'fs';
-import async from 'async';
 import Error from 'smart-error';
 import HttpError from 'http-smart-error';
 import compression from 'compression';
@@ -307,7 +306,7 @@ class Server {
 			config,
 		);
 		if (this._config.errorHandler && this._config.error.handler) {
-			this._warn('Specified deprecated errorHandler with error.handler. Deprecated handler will be ignored.')
+			this._warn('Specified deprecated errorHandler with error.handler. Deprecated handler will be ignored.');
 		} else if (this._config.errorHandler) {
 			this._config.error.handler = this._config.errorHandler;
 		}
@@ -440,7 +439,8 @@ class Server {
 		}
 		if (typeof layout === 'function') {
 			try {
-				if (!(new layout()) instanceof Layout) {
+				// eslint-disable-next-line new-cap
+				if (!(new layout() instanceof Layout)) {
 					callback = layout;
 					layout = null;
 				}
@@ -571,17 +571,8 @@ class Server {
 	 * @param {function=} cb Callback to call after the server start.
 	 */
 	async start(cb = () => { }) {
-		const { dev, appDir, staticDir, cssDir } = this._config;
-		this._log(`App starting DEV: ${dev}`);
 		try {
-			this._log('Validating directories');
-			await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
-			await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
-			await this._validateDir(path.resolve(`${staticDir}/${cssDir}`), 'Creating CSS directory.');
-			await this._registerPlugins();
-			this._setMiddlewares();
-			this._registerRsConfig();
-			await this._createRSFiles();
+			await this._prepare();
 		} catch (e) {
 			process.nextTick(() => cb(e));
 			return;
@@ -592,9 +583,9 @@ class Server {
 	}
 
 	/**
-     * Stops the application.
-     * @param {function} cb
-     */
+	 * Stops the application.
+	 * @param {function} cb
+	 */
 	stop(cb = () => { }) {
 		if (!this._server) {
 			this._warn('Server cannot be stopped because it was not started.');
@@ -609,6 +600,23 @@ class Server {
 	}
 
 	// #region Private methods
+
+	async _prepare() {
+		const {
+			dev, appDir, staticDir, cssDir,
+		} = this._config;
+		this._log(`App starting DEV: ${dev}`);
+		this._log('Validating directories');
+		await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
+		await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
+		await this._validateDir(path.resolve(`${staticDir}/${cssDir}`), 'Creating CSS directory.');
+		await this._registerPlugins();
+		this._setMiddlewares();
+		this._registerRsConfig();
+		await this._createRSFiles();
+		this._webpack = WebpackConfig(this);
+		this._setMiddlewares(true);
+	}
 
 	/**
 	 * Registers the plugins calling `Plugin.register` on all registered plugins.
@@ -769,7 +777,7 @@ class Server {
 	async _createTextFiles() {
 		const { appDir, locale } = this._config;
 		if (!locale.accepted || !locale.accepted.length) {
-			return
+			return;
 		}
 		for (let i = 0; i < locale.accepted?.length; i++) {
 			const acceptedLocale = locale.accepted[i];
@@ -855,7 +863,8 @@ Socket.registerEvents(socketEvents);
 ${connectSocketAutomatically ? 'Socket.connect();' : ''}
 // Injected code
 ${this._entryInjections.join('\n')}
-`);
+`,
+		);
 	}
 
 	/**
@@ -884,7 +893,7 @@ ${this._entryInjections.join('\n')}
 					continue;
 				}
 				const dirName = path.dirname(route.path);
-				await mkdirp(dirName)
+				await mkdirp(dirName);
 				const fileName = path.basename(route.path);
 				const filePath = `${route.path}.${generatedComponentsExtension}`;
 				await fsAsync.writeFile(filePath, `import { Page } from '${this._getPathToModule(dirName)}';
@@ -894,6 +903,7 @@ export default class ${this._createClassName(fileName, 'Page')} extends Page {}
 			}
 			const p = path.relative(path.resolve(this._getRSDirPath()), route.path).replace(/\\/g, '/');
 			a.push(`import ${key} from '${p}';`);
+			// eslint-disable-next-line max-len
 			b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}', layout: ${route.layout ? `'${md5(route.layout)}'` : null}}`);
 		}
 		await fsAsync.writeFile(
@@ -975,7 +985,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	/**
 	 * Registers the route to express.
 	 *
-	 * @param {*} route 
+	 * @param {*} route
 	 */
 	_setRoute(route) {
 		const {
@@ -1390,6 +1400,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			errorHandler: errorHandler ? this._tryRequireModule(errorHandler) : undefined,
 			error: error ? {
 				handler: error.handler ? this._tryRequireModule(error.handler) : undefined,
+				// eslint-disable-next-line no-nested-ternary
 				layout: error.layout
 					? typeof error.layout === 'string'
 						? this._tryRequireModule(error.layout)

@@ -100,7 +100,9 @@
 			2,
 			"event"
 		],
-		"no-tabs": 0
+		"no-tabs": 0,
+		"no-await-in-loop": 0,
+		"no-continue": 0
 	},
 	"plugins": [
 		"react",

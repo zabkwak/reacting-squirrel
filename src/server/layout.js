@@ -91,6 +91,7 @@ export default class Layout extends Component {
 				<script
 					type="text/javascript"
 					dangerouslySetInnerHTML={{
+						// eslint-disable-next-line max-len
 						__html: `var req=new XMLHttpRequest;req.addEventListener("progress",function(e){if(e.lengthComputable){var t=e.loaded/e.total;document.getElementById("rs-bundle-progress").textContent=Math.round(100*t)+"%"}},!1),req.addEventListener("load",function(e){e.target;var t=document.createElement("script");t.id="bundle",t.src="${this._createPath(bundle, version)}",document.getElementsByTagName("head")[0].appendChild(t)},!1),req.open("GET","${this._createPath(bundle, version)}"),req.send();`,
 					}}
 				/>
@@ -111,12 +112,12 @@ export default class Layout extends Component {
 
 	renderBundleData() {
 		const {
-			version, initialData, bundle,
+			initialData,
 		} = this.props;
 		return (
 			<>
 				<script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
-				{/*<script type="text/javascript" src={this._createPath(bundle, version)} />*/}
+				{/* <script type="text/javascript" src={this._createPath(bundle, version)} /> */}
 			</>
 		);
 	}
@@ -142,7 +143,7 @@ export default class Layout extends Component {
 					componentWrappers.map((id) => <div id={id} key={id} />)
 				}
 			</>
-		)
+		);
 	}
 
 	renderLoader() {

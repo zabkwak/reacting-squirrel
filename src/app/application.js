@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import Text from 'texting-squirrel';
 import Cookies from 'universal-cookie';
-import qs from 'querystring';
 
 import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';

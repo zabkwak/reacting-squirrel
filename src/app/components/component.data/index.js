@@ -13,6 +13,7 @@ export default class Data extends SocketComponent {
 	static propTypes = {
 		events: PropTypes.arrayOf(PropTypes.shape({
 			name: PropTypes.string.isRequired,
+			// eslint-disable-next-line react/forbid-prop-types
 			params: PropTypes.any,
 			key: PropTypes.string,
 			update: PropTypes.string,

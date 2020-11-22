@@ -12,8 +12,9 @@ export default class StylesCompiler {
 	compile(cb) {
 		if (typeof cb === 'function') {
 			this.compile().then(cb).catch(cb);
-			return
+			return;
 		}
+		// eslint-disable-next-line consistent-return
 		return this._processor.process();
 	}
 
