@@ -565,13 +565,39 @@ class Server {
 		this._error(`[${tag}]`, message, ...args);
 	}
 
+	async bundle() {
+		const { dev } = this._config;
+		if (dev) {
+			this._warn('Bundling in DEV mode is not permitted. Switching to production.');
+			this._config.dev = false;
+		}
+		await this._prepare();
+		this._webpack = WebpackConfig(this);
+		this._setMiddlewares(true);
+		return new Promise((resolve, reject) => {
+			this._bundle(false, (err) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+				resolve();
+			});
+		});
+	}
+
 	/**
 	 * Starts the express server. In that process it creates all necessary files.
 	 *
 	 * @param {function=} cb Callback to call after the server start.
 	 */
-	async start(cb = () => { }) {
+	async start(skipBundle, cb = () => { }) {
+		const { dev } = this._config;
+		if (typeof skipBundle === 'function') {
+			cb = skipBundle;
+			skipBundle = false;
+		}
 		try {
+			this._log(`App starting DEV: ${dev}`);
 			await this._prepare();
 		} catch (e) {
 			process.nextTick(() => cb(e));
@@ -579,7 +605,11 @@ class Server {
 		}
 		this._webpack = WebpackConfig(this);
 		this._setMiddlewares(true);
-		this._start(cb);
+		if (!skipBundle) {
+			this._bundleAndStart(cb);
+			return;
+		}
+		this._startServer(cb);
 	}
 
 	/**
@@ -603,9 +633,8 @@ class Server {
 
 	async _prepare() {
 		const {
-			dev, appDir, staticDir, cssDir,
+			appDir, staticDir, cssDir,
 		} = this._config;
-		this._log(`App starting DEV: ${dev}`);
 		this._log('Validating directories');
 		await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
 		await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
@@ -1068,7 +1097,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 *
 	 * @param {function} cb Callback to call after the server start.
 	 */
-	_start(cb) {
+	_bundleAndStart(cb) {
 		const { bundleAfterServerStart } = this._config;
 		if (!bundleAfterServerStart) {
 			this._bundle(true, cb);
@@ -1115,6 +1144,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 						this._bundling = false;
 						if (startServer) {
 							this._startServer(cb);
+						} else {
+							cb();
 						}
 					}
 				});
@@ -1143,6 +1174,9 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				this._bundling = false;
 				if (startServer) {
 					this._startServer(cb);
+				} else {
+					console.log('BUNDLE DONE');
+					cb();
 				}
 			});
 		});

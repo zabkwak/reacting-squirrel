@@ -10,6 +10,7 @@
 - Option to auto-generate component wrappers in the layout.
 - Custom files can be saved in RS directory.
 - `Application` has setters and getters for working with locales.
+- Option to bundle the app without the server start and start the server without bundle.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

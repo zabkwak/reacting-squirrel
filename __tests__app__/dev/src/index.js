@@ -3,6 +3,7 @@ import React from 'react';
 import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
+import CliProgress from 'cli-progress';
 
 import Server, { Layout, Socket, Plugin } from '../../../server';
 
@@ -21,11 +22,15 @@ class CustomLayout extends Layout {
 	}
 }
 
+const dev = true;
+
+let bar;
+
 const app = new Server({
 	appDir: './__tests__app__/app',
 	staticDir: './__tests__app__/public',
 	moduleDev: true,
-	dev: true,
+	dev,
 	layoutComponent: CustomLayout,
 	entryFile: 'entry.js',
 	styles: ['/css/main.css'],
@@ -37,11 +42,6 @@ const app = new Server({
 	// createMissingComponents: true,
 	// autoprefixer: { grid: 'autoplace' },
 	// cookieSecret: 'dev-secret',
-	/*
-    onWebpackProgress: (percents, message) => {
-        console.log(`${percents * 100}%`, message);
-    },
-    */
 	// socketMessageMaxSize: 1,
 	// babelTranspileModules: ['react'],
 	// connectSocketAutomatically: false,
@@ -50,6 +50,16 @@ const app = new Server({
 		accepted: ['cs-CZ'],
 	},
 	bundleAfterServerStart: true,
+	onWebpackProgress: dev ? undefined : (p) => {
+		if (!bar) {
+			bar = new CliProgress.SingleBar({ clearOnComplete: true }, CliProgress.Presets.shades_classic);
+			bar.start(100);
+		}
+		bar.update(Math.round(p * 100));
+		if (p === 1) {
+			bar.stop();
+		}
+	},
 });
 
 app.registerBeforeExecution('*', async (req, res) => {
@@ -120,12 +130,22 @@ app.registerPlugin(new CustomPlugin());
 
 // app.Text.addDictionary('cs-CZ', require(path.resolve(app.appDirAbsolute, 'res', 'text_cs-CZ.json')));
 
-app.start((err) => {
-	if (err) {
-		console.error(err);
+(async () => {
+	/*
+	try {
+		await app.bundle();
+	} catch (e) {
+		console.error(e);
 		return;
 	}
-	console.log('App started');
-});
+	*/
+	app.start((err) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		console.log('App started');
+	});
 
-Socket.on('connection', (socket) => console.log('SOCKET CONNECTED'));
+	Socket.on('connection', (socket) => console.log('SOCKET CONNECTED'));
+})();

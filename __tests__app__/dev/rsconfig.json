@@ -67,7 +67,7 @@
 			"auto": true
         }
     ],
-	"socketClassDir": "__tests__app__/dev/dist",
+	"socketClassDir": "__tests__app__/dev/dist/socket",
 	"error": {
 		"page": "page.error",
 		"layout": "./__tests__app__/dev/dist/layout.error"

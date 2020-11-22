@@ -6,8 +6,10 @@
 	"types": "./app/index.d.ts",
 	"scripts": {
 		"test": "./node_modules/.bin/mocha __tests__/cases/server __tests__/cases/app --recursive --require @babel/register --require ignore-styles --exit",
-		"test:app:compile": "./node_modules/.bin/babel ./__tests__app__/dev/src --out-dir ./__tests__app__/dev/dist && node -r source-map-support/register ./__tests__app__/dev/dist/index.js",
-		"test:app": "npm run build_es6 && npm run test:app:compile",
+		"test:app:compile": "./node_modules/.bin/babel ./__tests__app__/dev/src --out-dir ./__tests__app__/dev/dist",
+		"test:app:start": "node -r source-map-support/register ./__tests__app__/dev/dist/index.js",
+		"test:app": "npm run build_es6 && npm run test:app:compile && npm run test:app:start",
+		"test:bundle": "npm run build_es6 && npm run test:app:compile && node -r source-map-support/register ./cli/bundle.js --rsConfig=./__tests__app__/dev/rsconfig.json",
 		"posttest": "rm -rf ./__tests__/app/~rs && rm -rf ./__tests__/app/pages && rm -rf ./__tests__/app/components && rm -rf ./__tests__/public",
 		"build_es6": "./node_modules/.bin/babel ./src --out-dir ./ --copy-files",
 		"clear": "rm -rf ./app && rm -rf ./server && rm -rf ./cli",
@@ -37,6 +39,7 @@
 		"async": "^3.2.0",
 		"autoprefixer": "^9.8.6",
 		"babel-loader": "^8.1.0",
+		"cli-progress": "^3.8.2",
 		"combine-styles-processor": "^1.3.2",
 		"compression": "^1.7.4",
 		"cookie": "^0.4.1",
@@ -122,6 +125,7 @@
 	],
 	"readme": "README.md",
 	"bin": {
-		"rs-start-server": "./cli/server.js"
+		"rs-start-server": "./cli/server.js",
+		"rs-bundle": "./cli/bundle.js"
 	}
 }

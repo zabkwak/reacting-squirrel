@@ -984,21 +984,37 @@ export default class Server {
 	 */
 	logError(tag: string, message: string, ...args: Array<any>): void;
 
+	/**
+	 * Prepares and bundles the app.
+	 */
+	public bundle(): Promise<void>;
+
+	/**
+	 * Starts the application. It creates bundle in the process.
+	 */
+	public start(): Promise<void>;
     /**
-     * Starts the application.
+     * Starts the application. It creates bundle in the process.
      *
      * @param cb Callback called after the application is started.
      */
-	start(cb?: (err?: any) => void): Promise<void>;
+	public start(cb: (err?: any) => void): Promise<void>;
+	/**
+	 * Starts the application. Bundle creation depends on the `skipBundle` parameter.
+	 *
+	 * @param skipBundle Indicates if the bundle creation should be skipped in the start process. It means bundle is already created with `bundle` method.
+	 * @param cb Callback called after the application is started.
+	 */
+	public start(skipBundle: boolean, cb: (err?: any) => void): Promise<void>;
 
 	/**
      * Stops the application.
      */
-	stop(): void;
+	public stop(): void;
 	/**
 	 * Stops the application.
 	 * 
 	 * @param cb Callback called after the server stopped.
 	 */
-	stop(cb?: (err?: Error) => void): void;
+	public stop(cb?: (err?: Error) => void): void;
 }
