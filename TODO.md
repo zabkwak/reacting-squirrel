@@ -2,6 +2,7 @@
 - sameSite cookie flag
 - progress in bundling page
 - access log
+- register of Page provider
 
 ## Backlog
 - Serverless production.

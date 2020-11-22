@@ -178,6 +178,11 @@ class Application extends CallbackEmitter {
 
 	// #region Renderers
 
+	refresh() {
+		this.refreshContent();
+		this.refreshComponents();
+	}
+
 	/**
 	 * Refreshes the content. Content DOM is cleared and the current Page is rendered.
 	 */
@@ -224,7 +229,10 @@ class Application extends CallbackEmitter {
 		if (refresh) {
 			ReactDOM.unmountComponentAtNode(this._content);
 		}
-		const page = route.getComponent();
+		this.renderPage(route.getComponent());
+	}
+
+	renderPage(page) {
 		this.renderComponent(page, this._content, () => this._callListener('pagerender', page));
 	}
 

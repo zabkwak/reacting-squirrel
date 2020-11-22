@@ -15,43 +15,43 @@ declare type ApplicationEventMap = {
  */
 declare class Application extends CallbackEmitter<ApplicationEventMap> {
 
-	LOCALE_COOKIE_NAME: string;
+	public LOCALE_COOKIE_NAME: string;
 
 	/**
 	 * Indicates if the application is in dev mode.
 	 */
-	DEV: boolean;
+	public DEV: boolean;
 	/** @deprecated */
-	initialData: any;
+	public initialData: any;
 
 	/**
 	 * Gets the initial data registered to the app.
 	 *
 	 * @typeparam T Definition of the returned data.
 	 */
-	getInitialData<T = any>(): T;
+	public getInitialData<T = any>(): T;
 	/**
 	 * Gets the initial data value by its key.
 	 *
 	 * @typeparam T Definition of the returned data.
 	 * @param key Key in the initial data.
 	 */
-	getInitialData<T = any>(key: string): T;
+	public getInitialData<T = any>(key: string): T;
 
 	/**
 	 * Gets the current set locale.
 	 */
-	getLocale(): string;
+	public getLocale(): string;
 
 	/**
 	 * Gets the code of the default locale.
 	 */
-	getDefaultLocale(): string;
+	public getDefaultLocale(): string;
 
 	/**
 	 * Gets the list of all accepted locales.
 	 */
-	getLocales(): string[];
+	public getLocales(): string[];
 
 	/**
 	 * Registers the routing map.
@@ -60,7 +60,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 *
 	 * @param routingMap Map of routes.
 	 */
-	registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
+	public registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
 
 	/**
 	 * Registers socket events.
@@ -69,7 +69,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 *
 	 * @param events List of socket events.
 	 */
-	registerSocketEvents(events: Array<string>): this;
+	public registerSocketEvents(events: Array<string>): this;
 
 	/**
 	 * Registers custom components.
@@ -78,7 +78,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * 
 	 * @param components List of components.
 	 */
-	registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
+	public registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
 
 	/**
 	 * Registers error page for rendering errors.
@@ -87,7 +87,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * 
 	 * @param errorPage ErrorPage component to register.
 	 */
-	registerErrorPage(errorPage: typeof ErrorPage): this;
+	public registerErrorPage(errorPage: typeof ErrorPage): this;
 
 	/**
 	 * Registers the configuration of locale.
@@ -95,38 +95,50 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param defaultLocale The code of the default locale.
 	 * @param accepted List of all accepted locale codes.
 	 */
-	registerLocales(defaultLocale: string, accepted: string[]): this;
+	public registerLocales(defaultLocale: string, accepted: string[]): this;
 
 	/**
 	 * Starts the application.
 	 *
 	 * This method is called automatically in after the bundle load.
 	 */
-	start(): void;
+	public start(): void;
+
+	/**
+	 * Forces content and components to refresh.
+	 */
+	public refresh(): void;
 
 	/**
 	 * Forces the content refresh.
 	 */
-	refreshContent(): void;
+	public refreshContent(): void;
 
 	/**
 	 * Forces all registered component to refresh.
 	 */
-	refreshComponents(): void;
+	public refreshComponents(): void;
 
 	/**
 	 * Renders the route's component.
 	 * 
 	 * @param route Route to render.
 	 */
-	render(route: Route): void;
+	public render(route: Route): void;
 	/**
 	 * Renders the route's component.
 	 * 
 	 * @param route Route to render.
 	 * @param refresh Indicates if the component of the route should be refreshed if the route is currently rendered.
 	 */
-	render(route: Route, refresh: boolean): void;
+	public render(route: Route, refresh: boolean): void;
+
+	/**
+	 * Renders the page component.
+	 *
+	 * @param page Page component.
+	 */
+	public renderPage(page: Page): void;
 
 	/**
 	 * Renders the component to the target.
@@ -134,7 +146,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param component The component.
 	 * @param target The target DOM element
 	 */
-	renderComponent(component: JSX.Element, target: HTMLElement): void;
+	public renderComponent(component: JSX.Element, target: HTMLElement): void;
 	/**
 	 * Renders the component to the target.
 	 * 
@@ -142,28 +154,28 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param target The target DOM element
 	 * @param callback Function called after the render.
 	 */
-	renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
+	public renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
 
 	/**
 	 * Alias for the `navigate` method with the refreshing the content.
 	 * 
 	 * @param path URL path.
 	 */
-	redirect(path: string): void;
+	public redirect(path: string): void;
 	/**
 	 * Alias for the `navigate` method with the refreshing the content.
 	 * 
 	 * @param path URL path.
 	 * @param q Query string data.
 	 */
-	redirect(path: string, q: { [key: string]: string }): void;
+	public redirect(path: string, q: { [key: string]: string }): void;
 
 	/**
 	 * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
 	 * 
 	 * @param path URL path.
 	 */
-	navigate(path: string): void;
+	public navigate(path: string): void;
 	/**
 	 * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
 	 * 
@@ -171,7 +183,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param q Query string data.
 	 * 
 	 */
-	navigate(path: string, q: { [key: string]: string }): void;
+	public navigate(path: string, q: { [key: string]: string }): void;
 	/**
 	 * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
 	 * 
@@ -179,7 +191,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param q Query string data.
 	 * @param refresh Indicates if the route should be refreshed if the route is currently rendered.
 	 */
-	navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
+	public navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
 
 	/**
 	 * Pushes the state to the history.
@@ -187,21 +199,21 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param path URL path.
 	 * @param q Query string data.
 	 */
-	pushState(path: string, q: { [key: string]: string }): void;
+	public pushState(path: string, q: { [key: string]: string }): void;
 
 	/**
 	 * Sets the page title.
 	 *
 	 * @param title Title of the page.
 	 */
-	setTitle(title: string): void;
+	public setTitle(title: string): void;
 
 	/**
 	 * Sets the locale as a dictionary.
 	 *
 	 * @param locale Locale dictionary to set.
 	 */
-	setLocale(locale: string): void;
+	public setLocale(locale: string): void;
 
 	/**
 	 * Registers the component as the context reference.
@@ -210,7 +222,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param ref Component's reference.
 	 * @param key Key of the reference.
 	 */
-	setRef<T = any>(ref: T, key: string): void;
+	public setRef<T = any>(ref: T, key: string): void;
 
 	/**
 	 * Gets the component registered in the application context.
@@ -218,12 +230,12 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @typparam T Type of the component.
 	 * @param key Key of the reference.
 	 */
-	getRef<T = any>(key: string): T;
+	public getRef<T = any>(key: string): T;
 
 	/**
 	 * Gets the cookie by its name.
 	 */
-	getCookie(name: string): any;
+	public getCookie(name: string): any;
 
 	/**
 	 * Logs the message to the console using `console.log` if the app is in DEV mode.
@@ -231,7 +243,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param message 
 	 * @param optionalParams 
 	 */
-	logInfo(message: string, ...optionalParams: Array<any>): void;
+	public logInfo(message: string, ...optionalParams: Array<any>): void;
 
 	/**
 	 * Logs the message to the console using `console.warn` if the app is in DEV mode.
@@ -239,7 +251,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param message 
 	 * @param optionalParams 
 	 */
-	logWarning(message: string, ...optionalParams: Array<any>): void;
+	public logWarning(message: string, ...optionalParams: Array<any>): void;
 
 	/**
 	 * Logs the message to the console using `console.error` if the app is in DEV mode.
@@ -247,7 +259,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param message 
 	 * @param optionalParams 
 	 */
-	logError(message: string, ...optionalParams: Array<any>): void;
+	public logError(message: string, ...optionalParams: Array<any>): void;
 }
 
 /**
