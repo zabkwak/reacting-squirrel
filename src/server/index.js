@@ -625,7 +625,9 @@ class Server {
 			this._log('The server is stopped.');
 			if (typeof cb === 'function') {
 				cb(err);
+				return;
 			}
+			cb();
 		});
 	}
 
