@@ -150,8 +150,8 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Loader<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.loader.html" class="tsd-signature-type">Loader</a></li>
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Loader<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.loader.html" class="tsd-signature-type">Loader</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Loader<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.loader.html" class="tsd-signature-type">Loader</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Loader<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.loader.html" class="tsd-signature-type">Loader</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -173,7 +173,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>props: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>props: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_app_index_d_.loader.html" class="tsd-signature-type">Loader</a></h4>
@@ -200,7 +200,7 @@
 									<h5>props: <a href="../interfaces/_app_index_d_.iloaderprops.html" class="tsd-signature-type">ILoaderProps</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <span class="tsd-signature-type">any</span></h5>
+									<h5>context: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_app_index_d_.loader.html" class="tsd-signature-type">Loader</a></h4>
@@ -301,14 +301,14 @@ context!: React.ContextType&lt;<span class="hljs-keyword">typeof</span> MyContex
 							<p>If set, <code>this.context</code> will be set at runtime to the current value of the given Context.</p>
 						</div>
 						<p>Usage:</p>
-						<pre><code class="language-ts">type MyContext = number
-const Ctx = React.createContext&lt;MyContext&gt;(0)
+						<pre><code class="language-ts"><span class="hljs-keyword">type</span> MyContext = <span class="hljs-built_in">number</span>
+<span class="hljs-keyword">const</span> Ctx = React.createContext&lt;MyContext&gt;(<span class="hljs-number">0</span>)
 
-class Foo extends React.Component {
-  static contextType = Ctx
-  context!: React.ContextType&lt;typeof Ctx&gt;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">static</span> contextType = Ctx
+  context!: React.ContextType&lt;<span class="hljs-keyword">typeof</span> Ctx&gt;
   render () {
-    return &lt;&gt;My context&#x27;s value: {this.context}&lt;/&gt;;
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;&gt;</span>My context&#x27;s value: {this.context}<span class="hljs-tag">&lt;/&gt;</span></span>;
   }
 }</code></pre>
 						<dl class="tsd-comment-tags">
@@ -332,7 +332,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#unsafe_componentwillmount">UNSAFE_componentWillMount</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:702</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:712</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -370,7 +370,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#unsafe_componentwillreceiveprops">UNSAFE_componentWillReceiveProps</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:734</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:744</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -419,7 +419,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#unsafe_componentwillupdate">UNSAFE_componentWillUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:762</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:772</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -469,7 +469,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentdidcatch">componentDidCatch</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:631</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:641</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -502,7 +502,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.text.html">Text</a>.<a href="_app_index_d_.text.html#componentdidmount">componentDidMount</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:610</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:620</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -525,7 +525,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentdidupdate">componentDidUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:673</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:683</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -561,7 +561,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentwillmount">componentWillMount</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:688</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:698</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -598,7 +598,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentwillreceiveprops">componentWillReceiveProps</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:717</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:727</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -646,7 +646,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.text.html">Text</a>.<a href="_app_index_d_.text.html#componentwillunmount">componentWillUnmount</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:626</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:636</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -670,7 +670,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentwillupdate">componentWillUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:747</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:757</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -755,7 +755,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#getsnapshotbeforeupdate">getSnapshotBeforeUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:667</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:677</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -854,7 +854,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#shouldcomponentupdate">shouldComponentUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:621</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:631</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

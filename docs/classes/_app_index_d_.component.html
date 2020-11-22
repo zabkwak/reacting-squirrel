@@ -165,8 +165,8 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Component<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.component.html" class="tsd-signature-type">Component</a></li>
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Component<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">P</span>, context<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.component.html" class="tsd-signature-type">Component</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Component<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.component.html" class="tsd-signature-type">Component</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Component<span class="tsd-signature-symbol">(</span>props<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">P</span>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_app_index_d_.component.html" class="tsd-signature-type">Component</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -188,7 +188,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>props: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>props: <span class="tsd-signature-type">Readonly</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">P</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_app_index_d_.component.html" class="tsd-signature-type">Component</a></h4>
@@ -215,7 +215,7 @@
 									<h5>props: <span class="tsd-signature-type">P</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> context: <span class="tsd-signature-type">any</span></h5>
+									<h5>context: <span class="tsd-signature-type">any</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_app_index_d_.component.html" class="tsd-signature-type">Component</a></h4>
@@ -231,7 +231,7 @@
 					<div class="tsd-signature tsd-kind-icon">_mounted<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L767">src/app/index.d.ts:767</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L802">src/app/index.d.ts:802</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -322,7 +322,7 @@ context!: React.ContextType&lt;<span class="hljs-keyword">typeof</span> MyContex
 					<div class="tsd-signature tsd-kind-icon">_state<wbr>Storage<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L762">src/app/index.d.ts:762</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L797">src/app/index.d.ts:797</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -354,14 +354,14 @@ context!: React.ContextType&lt;<span class="hljs-keyword">typeof</span> MyContex
 							<p>If set, <code>this.context</code> will be set at runtime to the current value of the given Context.</p>
 						</div>
 						<p>Usage:</p>
-						<pre><code class="language-ts">type MyContext = number
-const Ctx = React.createContext&lt;MyContext&gt;(0)
+						<pre><code class="language-ts"><span class="hljs-keyword">type</span> MyContext = <span class="hljs-built_in">number</span>
+<span class="hljs-keyword">const</span> Ctx = React.createContext&lt;MyContext&gt;(<span class="hljs-number">0</span>)
 
-class Foo extends React.Component {
-  static contextType = Ctx
-  context!: React.ContextType&lt;typeof Ctx&gt;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Foo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  <span class="hljs-keyword">static</span> contextType = Ctx
+  context!: React.ContextType&lt;<span class="hljs-keyword">typeof</span> Ctx&gt;
   render () {
-    return &lt;&gt;My context&#x27;s value: {this.context}&lt;/&gt;;
+    <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;&gt;</span>My context&#x27;s value: {this.context}<span class="hljs-tag">&lt;/&gt;</span></span>;
   }
 }</code></pre>
 						<dl class="tsd-comment-tags">
@@ -385,7 +385,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#unsafe_componentwillmount">UNSAFE_componentWillMount</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:702</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:712</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -423,7 +423,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#unsafe_componentwillreceiveprops">UNSAFE_componentWillReceiveProps</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:734</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:744</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -472,7 +472,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#unsafe_componentwillupdate">UNSAFE_componentWillUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:762</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:772</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -522,7 +522,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentdidcatch">componentDidCatch</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:631</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:641</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -555,7 +555,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_app_index_d_.text.html">Text</a>.<a href="_app_index_d_.text.html#componentdidmount">componentDidMount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L769">src/app/index.d.ts:769</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L804">src/app/index.d.ts:804</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -573,7 +573,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentdidupdate">componentDidUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:673</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:683</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -609,7 +609,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentwillmount">componentWillMount</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:688</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:698</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -646,7 +646,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentwillreceiveprops">componentWillReceiveProps</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:717</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:727</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -694,7 +694,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_app_index_d_.text.html">Text</a>.<a href="_app_index_d_.text.html#componentwillunmount">componentWillUnmount</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L771">src/app/index.d.ts:771</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L806">src/app/index.d.ts:806</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -712,7 +712,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#componentwillupdate">componentWillUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:747</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:757</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -796,7 +796,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L776">src/app/index.d.ts:776</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L811">src/app/index.d.ts:811</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -819,7 +819,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L797">src/app/index.d.ts:797</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L832">src/app/index.d.ts:832</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -841,7 +841,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L804">src/app/index.d.ts:804</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L839">src/app/index.d.ts:839</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -879,7 +879,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#getsnapshotbeforeupdate">getSnapshotBeforeUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:667</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:677</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -914,7 +914,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L831">src/app/index.d.ts:831</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L866">src/app/index.d.ts:866</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -939,7 +939,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L783">src/app/index.d.ts:783</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L818">src/app/index.d.ts:818</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -961,7 +961,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L790">src/app/index.d.ts:790</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L825">src/app/index.d.ts:825</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -998,7 +998,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L824">src/app/index.d.ts:824</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L859">src/app/index.d.ts:859</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1029,7 +1029,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L810">src/app/index.d.ts:810</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L845">src/app/index.d.ts:845</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1077,7 +1077,7 @@ class Foo extends React.Component {
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/app/index.d.ts#L817">src/app/index.d.ts:817</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/app/index.d.ts#L852">src/app/index.d.ts:852</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1154,7 +1154,7 @@ class Foo extends React.Component {
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_app_index_d_.component.html">Component</a>.<a href="_app_index_d_.component.html#shouldcomponentupdate">shouldComponentUpdate</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/react/index.d.ts:621</li>
+									<li>Defined in node_modules/@types/react/index.d.ts:631</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

@@ -60,7 +60,7 @@
 					<a href="_server_index_d_.iresponse.html">IResponse</a>
 				</li>
 			</ul>
-			<h1>Interface IResponse&lt;ResBody&gt;</h1>
+			<h1>Interface IResponse&lt;ResBody, StatusCode&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -79,6 +79,9 @@
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>ResBody</h4>
+					</li>
+					<li>
+						<h4>StatusCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -244,7 +247,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#app">app</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:858</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:857</li>
 						</ul>
 					</aside>
 				</section>
@@ -255,7 +258,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#charset">charset</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:847</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:846</li>
 						</ul>
 					</aside>
 				</section>
@@ -300,7 +303,7 @@
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#headerssent">headersSent</a></p>
 						<p>Overrides OutgoingMessage.headersSent</p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:755</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:754</li>
 						</ul>
 					</aside>
 				</section>
@@ -311,7 +314,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#json">json</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:558</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:557</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -319,10 +322,10 @@
 							<p>Send JSON response.</p>
 						</div>
 						<p>Examples:</p>
-						<pre><code><span class="hljs-selector-tag">res</span><span class="hljs-selector-class">.json</span>(null);
-<span class="hljs-selector-tag">res</span><span class="hljs-selector-class">.json</span>({ <span class="hljs-attribute">user</span>: <span class="hljs-string">&#x27;tj&#x27;</span> });
-<span class="hljs-selector-tag">res</span><span class="hljs-selector-class">.status</span>(<span class="hljs-number">500</span>)<span class="hljs-selector-class">.json</span>(<span class="hljs-string">&#x27;oh noes!&#x27;</span>);
-<span class="hljs-selector-tag">res</span><span class="hljs-selector-class">.status</span>(<span class="hljs-number">404</span>)<span class="hljs-selector-class">.json</span>(<span class="hljs-string">&#x27;I dont have that&#x27;</span>);</code></pre>
+						<pre><code>res.json(<span class="hljs-keyword">null</span>);
+res.json({ <span class="hljs-keyword">user</span>: <span class="hljs-string">&#x27;tj&#x27;</span> });
+res.status(<span class="hljs-number">500</span>).json(<span class="hljs-string">&#x27;oh noes!&#x27;</span>);
+res.status(<span class="hljs-number">404</span>).json(<span class="hljs-string">&#x27;I dont have that&#x27;</span>);</code></pre>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
@@ -332,7 +335,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#jsonp">jsonp</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:570</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:569</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -353,7 +356,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#locals">locals</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:845</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:844</li>
 						</ul>
 					</aside>
 				</section>
@@ -363,7 +366,7 @@
 					<div class="tsd-signature tsd-kind-icon">render<wbr>Layout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><a href="_server_index_d_.irenderlayoutdata.html" class="tsd-signature-type">IRenderLayoutData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L34">src/server/index.d.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L34">src/server/index.d.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -395,7 +398,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#req">req</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:875</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:874</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -412,7 +415,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#send">send</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:546</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:545</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -443,7 +446,7 @@
 					<div class="tsd-signature tsd-kind-icon">set<wbr>Cookie<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">express.CookieOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L35">src/server/index.d.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L35">src/server/index.d.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -1030,7 +1033,7 @@
 					<a name="addtrailers" class="tsd-anchor"></a>
 					<h3>add<wbr>Trailers</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Trailers<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OutgoingHttpHeaders</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Trailers<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OutgoingHttpHeaders</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -1043,7 +1046,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>headers: <span class="tsd-signature-type">OutgoingHttpHeaders</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>headers: <span class="tsd-signature-type">OutgoingHttpHeaders</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1061,7 +1064,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#append">append</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:869</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:868</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1125,7 +1128,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#attachment">attachment</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:734</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:733</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1154,7 +1157,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#clearcookie">clearCookie</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:761</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:760</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1186,7 +1189,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#contenttype">contentType</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:661</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:660</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1224,7 +1227,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#cookie">cookie</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:780</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:779</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1261,7 +1264,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#cookie">cookie</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:781</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:780</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1282,7 +1285,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#cookie">cookie</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:782</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:781</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1377,7 +1380,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#download">download</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:645</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:644</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1387,7 +1390,7 @@
 								<p>Optionally providing an alternate attachment <code>filename</code>,
 									and optional callback <code>fn(err)</code>. The callback is invoked
 									when the data transfer is complete, or when an error has
-								ocurred. Be sure to check <code>res.headerSent</code> if you plan to respond.</p>
+								ocurred. Be sure to check <code>res.headersSent</code> if you plan to respond.</p>
 								<p>The optional options argument passes through to the underlying
 								res.sendFile() call, and takes the exact same parameters.</p>
 								<p>This method uses <code>res.sendfile()</code>.</p>
@@ -1407,7 +1410,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#download">download</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:646</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:645</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1428,7 +1431,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#download">download</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:647</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:646</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1737,7 +1740,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#format">format</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:729</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:728</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1807,7 +1810,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#get">get</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:758</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:757</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1939,7 +1942,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#header">header</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:751</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:750</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1954,7 +1957,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#header">header</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:752</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:751</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1981,7 +1984,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#links">links</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:534</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:533</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2063,7 +2066,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#location">location</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:810</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:809</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3240,7 +3243,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#redirect">redirect</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:828</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:827</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3270,7 +3273,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#redirect">redirect</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:829</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:828</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3288,7 +3291,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#redirect">redirect</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:830</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:829</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3620,7 +3623,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#render">render</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:842</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:841</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3674,7 +3677,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#render">render</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:843</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:842</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3723,7 +3726,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#sendfile">sendFile</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:612</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:611</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3732,7 +3735,7 @@
 								</div>
 								<p>Automatically sets the <em>Content-Type</em> response header field.
 									The callback <code>fn(err)</code> is invoked when the transfer is complete
-									or when an error occurs. Be sure to check <code>res.sentHeader</code>
+									or when an error occurs. Be sure to check <code>res.headersSent</code>
 									if you wish to attempt responding, as the header and some data
 								may have already been transferred.</p>
 								<p>Options:</p>
@@ -3748,11 +3751,11 @@
 									be used as an alternative for the <code>static()</code> middleware for
 									dynamic situations. The code backing <code>res.sendFile()</code> is actually
 								the same code, so HTTP cache support etc is identical.</p>
-								<pre><code>app.get(<span class="hljs-string">&#x27;/user/:uid/photos/:file&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(req, res)</span></span>{
+								<pre><code>app.get(<span class="hljs-string">&#x27;/user/:uid/photos/:file&#x27;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>)</span>{
   <span class="hljs-keyword">var</span> uid = req.params.uid
     , file = req.params.file;
 
-  req.user.mayViewFilesFrom(uid, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(yes)</span></span>{
+  req.user.mayViewFilesFrom(uid, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">yes</span>)</span>{
     <span class="hljs-keyword">if</span> (yes) {
       res.sendFile(<span class="hljs-string">&#x27;/uploads/&#x27;</span> + uid + <span class="hljs-string">&#x27;/&#x27;</span> + file);
     } <span class="hljs-keyword">else</span> {
@@ -3781,7 +3784,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#sendfile">sendFile</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:613</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:612</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3804,14 +3807,14 @@
 					<a name="sendstatus" class="tsd-anchor"></a>
 					<h3>send<wbr>Status</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">send<wbr>Status<span class="tsd-signature-symbol">(</span>code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Status<span class="tsd-signature-symbol">(</span>code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StatusCode</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#sendstatus">sendStatus</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:522</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:521</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3832,7 +3835,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>code: <span class="tsd-signature-type">number</span></h5>
+									<h5>code: <span class="tsd-signature-type">StatusCode</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -3853,7 +3856,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#sendfile-1">sendfile</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:618</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:617</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3875,7 +3878,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#sendfile-1">sendfile</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:622</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:621</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3900,7 +3903,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#sendfile-1">sendfile</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:626</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:625</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3925,7 +3928,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#sendfile-1">sendfile</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:630</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:629</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3963,7 +3966,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#set">set</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:748</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:747</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3989,7 +3992,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#set">set</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:749</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:748</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -4033,7 +4036,7 @@
 					<a name="setheader" class="tsd-anchor"></a>
 					<h3>set<wbr>Header</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Header<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Header<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -4049,7 +4052,7 @@
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>value: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>value: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlyArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -4123,14 +4126,14 @@
 					<a name="status" class="tsd-anchor"></a>
 					<h3>status</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">(</span>code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">(</span>code<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StatusCode</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#status">status</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:509</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:508</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4141,7 +4144,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>code: <span class="tsd-signature-type">number</span></h5>
+									<h5>code: <span class="tsd-signature-type">StatusCode</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -4159,7 +4162,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#type">type</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:675</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:674</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4213,7 +4216,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.iresponse.html">IResponse</a>.<a href="_server_index_d_.iresponse.html#vary">vary</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:856</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:855</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

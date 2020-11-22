@@ -77,7 +77,7 @@
 						<dt>example</dt>
 						<dd><pre><code class="language-javascript"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SocketClass</span> </span>{
     <span class="hljs-comment">// This method will be accessible from the client as user.get event.</span>
-    <span class="hljs-keyword">async</span> get(socket, data) {
+    <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-title">get</span>(<span class="hljs-params">socket, data</span>)</span> {
         <span class="hljs-keyword">return</span> { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;Baf Lek&#x27;</span> };
     }
 }
@@ -132,7 +132,7 @@
 					<div class="tsd-signature tsd-kind-icon">broadcast<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>socket<span class="tsd-signature-symbol">: </span><a href="_server_index_d_.socket.html" class="tsd-signature-type">Socket</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, event<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, includeSelf<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">MethodDecorator</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L540">src/server/index.d.ts:540</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L541">src/server/index.d.ts:541</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -192,7 +192,7 @@
 					<div class="tsd-signature tsd-kind-icon">not<wbr>Socket<wbr>Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MethodDecorator</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L535">src/server/index.d.ts:535</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L536">src/server/index.d.ts:536</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -207,7 +207,7 @@
 					<div class="tsd-signature tsd-kind-icon">require<wbr>Auth<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MethodDecorator</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L530">src/server/index.d.ts:530</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L531">src/server/index.d.ts:531</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -231,7 +231,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L556">src/server/index.d.ts:556</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L557">src/server/index.d.ts:557</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -272,7 +272,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L566">src/server/index.d.ts:566</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L567">src/server/index.d.ts:567</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -319,7 +319,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L577">src/server/index.d.ts:577</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L578">src/server/index.d.ts:578</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -399,7 +399,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6c1ee43/src/server/index.d.ts#L546">src/server/index.d.ts:546</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L547">src/server/index.d.ts:547</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
