@@ -428,7 +428,7 @@ export class Session<T = any> {
 	 *
 	 * @param id ID of the session.
 	 */
-	private constructor(id: string);
+	protected constructor(id: string);
 
 	/**
 	 * Sets the user's data to the session.
