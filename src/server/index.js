@@ -104,9 +104,7 @@ class Server {
 		session: Session,
 		socketMessageMaxSize: (2 ** 20) * 100,
 		auth: (session, next) => next(),
-		error: {
-			handler: (err, req, res, next) => next(),
-		},
+		error: {},
 		// errorHandler: (err, req, res, next) => next(),
 		bundlePathRelative: false,
 		onWebpackProgress: null,
@@ -308,6 +306,7 @@ class Server {
 		if (this._config.errorHandler && this._config.error.handler) {
 			this._warn('Specified deprecated errorHandler with error.handler. Deprecated handler will be ignored.');
 		} else if (this._config.errorHandler) {
+			console.log('Setting legacy error handler');
 			this._config.error.handler = this._config.errorHandler;
 		}
 		if (!(this._config.locale.accepted instanceof Array)) {

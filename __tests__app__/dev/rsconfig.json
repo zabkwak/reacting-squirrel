@@ -72,6 +72,7 @@
 		"page": "page.error",
 		"layout": "./__tests__app__/dev/dist/layout.error"
 	},
+	"errorHandler": "./__tests__app__/dev/dist/error-handler",
     "createMissingComponents": true,
     "mergeStyles": [
         "./node_modules/bootstrap/dist/css/bootstrap.css"

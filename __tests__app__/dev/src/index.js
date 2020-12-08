@@ -70,6 +70,10 @@ app.registerRoute('get', '/error', null, 'Error', false, (req, res, next) => {
 	next({ message: 'Test error', date: new Date(), statusCode: 501 });
 });
 
+app.registerRoute('get', '/error/401', null, 'Error', false, (req, res, next) => {
+	next({ message: 'Unauthorized', date: new Date(), statusCode: 401 });
+});
+
 app
 	.registerRoute('get', '/absolute-test', path.resolve(__dirname, '../../app/absolute-test/page'), 'Absolute page test')
 	.registerComponent(path.resolve(__dirname, '../../app/absolute-test/component'), 'absolute-component')
