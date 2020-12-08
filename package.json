@@ -36,7 +36,7 @@
 		"@types/react": "^16.9.46",
 		"@types/socket.io": "^2.1.11",
 		"args-parser": "^1.1.0",
-		"async": "^3.2.0",
+		"async": "^2.6.3",
 		"autoprefixer": "^9.8.6",
 		"babel-loader": "^8.1.0",
 		"cli-progress": "^3.8.2",

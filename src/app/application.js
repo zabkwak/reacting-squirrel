@@ -166,6 +166,7 @@ class Application extends CallbackEmitter {
 	 */
 	start() {
 		this._checkStartedState();
+		this._registerLayoutNavigationListener();
 		this._started = true;
 		this.logInfo('Application started', {
 			DEV: this.DEV, timestamp: this.getInitialData('timestamp'), version: this.getInitialData('version'),
@@ -369,6 +370,16 @@ class Application extends CallbackEmitter {
 			}
 			const Component = component.component;
 			this.renderComponent(<Component ref={(ref) => this.setRef(ref, component.elementId)} />, target);
+		});
+	}
+
+	_registerLayoutNavigationListener() {
+		Array.from(document.querySelectorAll('.ssr-nav')).forEach((element) => {
+			element.addEventListener('click', (e) => {
+				e.preventDefault();
+				const { href } = e.target;
+				this.navigate(href);
+			});
 		});
 	}
 

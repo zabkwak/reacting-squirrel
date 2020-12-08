@@ -80,7 +80,7 @@ export default class Layout extends Component {
 
 	renderHead() {
 		const {
-			title, scripts, styles, version, charSet, bundle,
+			title, scripts, styles, version, charSet,
 		} = this.props;
 		return (
 			<head>
@@ -88,13 +88,6 @@ export default class Layout extends Component {
 				{this.renderMeta()}
 				<title>{title}</title>
 				{scripts.map((s) => <script key={s} src={this._createPath(s, version)} type="text/javascript" />)}
-				<script
-					type="text/javascript"
-					dangerouslySetInnerHTML={{
-						// eslint-disable-next-line max-len
-						__html: `var req=new XMLHttpRequest;req.addEventListener("progress",function(e){if(e.lengthComputable){var t=e.loaded/e.total;document.getElementById("rs-bundle-progress").textContent=Math.round(100*t)+"%"}},!1),req.addEventListener("load",function(e){e.target;var t=document.createElement("script");t.id="bundle",t.src="${this._createPath(bundle, version)}",document.getElementsByTagName("head")[0].appendChild(t)},!1),req.open("GET","${this._createPath(bundle, version)}"),req.send();`,
-					}}
-				/>
 				{styles.map((s) => <link key={s} href={this._createPath(s, version)} rel="stylesheet" />)}
 			</head>
 		);
@@ -113,9 +106,18 @@ export default class Layout extends Component {
 	renderBundleData() {
 		const {
 			initialData,
+			bundle,
+			version,
 		} = this.props;
 		return (
 			<>
+				<script
+					type="text/javascript"
+					dangerouslySetInnerHTML={{
+						// eslint-disable-next-line max-len
+						__html: `var req=new XMLHttpRequest;req.addEventListener("progress",function(e){if(e.lengthComputable){var t=e.loaded/e.total;document.getElementById("rs-bundle-progress").textContent=Math.round(100*t)+"%"}},!1),req.addEventListener("load",function(e){e.target;var t=document.createElement("script");t.id="bundle",t.src="${this._createPath(bundle, version)}",document.getElementsByTagName("head")[0].appendChild(t)},!1),req.open("GET","${this._createPath(bundle, version)}"),req.send();`,
+					}}
+				/>
 				<script type="text/plain" id="initial-data" data={JSON.stringify(initialData)} />
 				{/* <script type="text/javascript" src={this._createPath(bundle, version)} /> */}
 			</>
