@@ -272,7 +272,7 @@ class Application extends CallbackEmitter {
 	navigate(path, q, refresh = false) {
 		const r = Router.getRoute();
 		const route = Router.findRoute(path);
-		if (route && r.layout === route.layout) {
+		if (route && r && r.layout === route.layout) {
 			this.pushState(path, q);
 			this.render(Router.getRoute(), refresh);
 			return;
