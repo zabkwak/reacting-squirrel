@@ -60,6 +60,10 @@ class Socket {
 				if (!this._chunks[key]) {
 					this._chunks[key] = [];
 				}
+				if (!message.data) {
+					s.disconnect();
+					return;
+				}
 				this._chunks[key][index] = Buffer.from(Object.keys(message.data).map((k) => message.data[k]));
 				const chunks = this._chunks[key];
 				s.emit(`${key}~progress`, { total: size, done: chunks.length });

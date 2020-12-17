@@ -1176,7 +1176,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				if (startServer) {
 					this._startServer(cb);
 				} else {
-					console.log('BUNDLE DONE');
 					cb();
 				}
 			});

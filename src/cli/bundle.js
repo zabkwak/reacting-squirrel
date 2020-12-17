@@ -13,8 +13,8 @@ let bar;
 if (config.rsConfig) {
 	config.rsConfig = path.resolve(config.rsConfig);
 }
-if (!config.onWebPackProgress) {
-	config.onWebPackProgress = (p) => {
+if (!config.onWebpackProgress) {
+	config.onWebpackProgress = (p) => {
 		if (!bar) {
 			bar = new CliProgress.SingleBar({ clearOnComplete: true }, CliProgress.Presets.shades_classic);
 			bar.start(100);
