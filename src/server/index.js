@@ -608,6 +608,7 @@ class Server {
 			this._bundleAndStart(cb);
 			return;
 		}
+		this._bundling = false;
 		this._startServer(cb);
 	}
 
