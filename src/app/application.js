@@ -102,6 +102,10 @@ class Application extends CallbackEmitter {
 		return this._locales;
 	}
 
+	getTitle() {
+		return this._title.textContent;
+	}
+
 	/**
 	 * Gets the reference of the component in the application context.
 	 *

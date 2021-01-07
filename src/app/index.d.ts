@@ -54,6 +54,11 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	public getLocales(): string[];
 
 	/**
+	 * Gets the content of `title` tag.
+	 */
+	public getTitle(): string;
+
+	/**
 	 * Registers the routing map.
 	 * 
 	 * This method is called automatically in after the bundle load.

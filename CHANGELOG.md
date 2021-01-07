@@ -12,6 +12,7 @@
 - `Application` has setters and getters for working with locales.
 - Option to bundle the app without the server start and start the server without bundle.
 - SSR navigation.
+- `Application.getTitle` method.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.
