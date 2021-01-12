@@ -13,6 +13,7 @@
 - Option to bundle the app without the server start and start the server without bundle.
 - SSR navigation.
 - `Application.getTitle` method.
+- Option to get custom initial data.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

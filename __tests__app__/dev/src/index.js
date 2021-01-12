@@ -60,6 +60,7 @@ const app = new Server({
 			bar.stop();
 		}
 	},
+	getInitialData: () => ({ test: 'test' }),
 });
 
 app.registerBeforeExecution('*', async (req, res) => {

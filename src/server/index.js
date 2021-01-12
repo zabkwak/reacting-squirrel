@@ -123,6 +123,7 @@ class Server {
 		},
 		logging: true,
 		bundleAfterServerStart: false,
+		getInitialData: () => ({}),
 	};
 
 	/**
@@ -1020,7 +1021,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 */
 	_setRoute(route) {
 		const {
-			dev, layoutComponent,
+			dev, layoutComponent, getInitialData,
 		} = this._config;
 		this._app[route.method](route.spec, async (req, res, next) => {
 			if (route.requireAuth && req.session.getUser() === null) {
@@ -1053,6 +1054,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					timestamp: Date.now(),
 					version: this._version,
 					locale: req.locale,
+					...getInitialData(req),
 				},
 				layout,
 			};

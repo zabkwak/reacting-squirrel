@@ -47,60 +47,60 @@ export type RouteCallback = (req: IRequest, res: IResponse, next: (err?: Error, 
  * Server configuration.
  */
 export interface IAppConfig {
-    /** Port on which the app listens. 
-     * @default 8080 
-     */
+	/** Port on which the app listens. 
+	 * @default 8080 
+	 */
 	port?: number;
-    /** 
-     * Relative path to the static directory for the express app. 
-     * @default './public'
-     */
+	/** 
+	 * Relative path to the static directory for the express app. 
+	 * @default './public'
+	 */
 	staticDir?: string;
-    /** 
-     * Flag of the dev status of the app. 
-     * @default false
-     */
+	/** 
+	 * Flag of the dev status of the app. 
+	 * @default false
+	 */
 	dev?: boolean;
-    /** 
-     * Name of the directory where the javascript is located in the staticDir.
-     * @default 'js'
-     */
+	/** 
+	 * Name of the directory where the javascript is located in the staticDir.
+	 * @default 'js'
+	 */
 	jsDir?: string;
-    /** 
-     * Name of the directory where the css is located in the staticDir.
-     * @default 'css'
-     */
+	/** 
+	 * Name of the directory where the css is located in the staticDir.
+	 * @default 'css'
+	 */
 	cssDir?: string;
-    /**
-     * Name of the bundle file.
-     * @default 'bundle.js'
-     */
+	/**
+	 * Name of the bundle file.
+	 * @default 'bundle.js'
+	 */
 	filename?: string;
-    /**
-     * Relative path to the app directory.
-     * @default './app'
-     */
+	/**
+	 * Relative path to the app directory.
+	 * @default './app'
+	 */
 	appDir?: string;
-    /**
-     * Relative path to the entry file.
-     * @default null
-     */
+	/**
+	 * Relative path to the entry file.
+	 * @default null
+	 */
 	entryFile?: string;
-    /**
-     * Custom path to rsconfig.json file.
-     * @default null
-     */
+	/**
+	 * Custom path to rsconfig.json file.
+	 * @default null
+	 */
 	rsConfig?: string;
-    /**
-     * React component width default html code.
-     * @default typeof Layout
-     */
+	/**
+	 * React component width default html code.
+	 * @default typeof Layout
+	 */
 	layoutComponent?: typeof Layout;
-    /**
-     * Secret which is used to sign cookies.
-     * @default null
+	/**
+	 * Secret which is used to sign cookies.
+	 * @default null
 	 * @deprecated
-     */
+	 */
 	cookieSecret?: string;
 	/**
 	 * Configuration for cookies.
@@ -108,7 +108,7 @@ export interface IAppConfig {
 	cookies?: {
 		/**
 		 * Secret which is used to sign cookies.
-     	 * @default '[random generated string]'
+		   * @default '[random generated string]'
 		 */
 		secret?: string;
 		/**
@@ -123,36 +123,36 @@ export interface IAppConfig {
 		 */
 		httpOnly?: boolean;
 	};
-    /**
-     * List of scripts loaded in the base html.
-     * @default []
-     */
+	/**
+	 * List of scripts loaded in the base html.
+	 * @default []
+	 */
 	scripts?: Array<string>;
-    /**
-     * List of styles loaded in the base html.
-     * @default []
-     */
+	/**
+	 * List of styles loaded in the base html.
+	 * @default []
+	 */
 	styles?: Array<string>;
-    /**
-     * List of styles to merge to rs-app.css.
-     * @default []
-     */
+	/**
+	 * List of styles to merge to rs-app.css.
+	 * @default []
+	 */
 	mergeStyles?: Array<string>;
-    /**
-     * Class of the session.
-     * @default typeof Session
-     */
+	/**
+	 * Class of the session.
+	 * @default typeof Session
+	 */
 	session?: typeof Session;
-    /**
-     * Maximal size of one socket message.
-     * @default 104857600
-     */
+	/**
+	 * Maximal size of one socket message.
+	 * @default 104857600
+	 */
 	socketMessageMaxSize?: number;
-    /**
-     * Auth function called before the route execution.
-     * @param session Session instance.
-     * @default (session, next) => next()
-     */
+	/**
+	 * Auth function called before the route execution.
+	 * @param session Session instance.
+	 * @default (session, next) => next()
+	 */
 	auth?: (session: Session, next: (err?: any) => void) => void;
 	/** Definition of error handling */
 	error?: {
@@ -166,31 +166,31 @@ export interface IAppConfig {
 		/** Error layout. */
 		layout?: typeof Layout;
 	};
-    /**
-     * Function to handle errors in the route execution.
-     * @default (err, req, res, next) => next()
+	/**
+	 * Function to handle errors in the route execution.
+	 * @default (err, req, res, next) => next()
 	 * @deprecated
-     */
+	 */
 	errorHandler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
-    /**
-     * Indicates if the bundle is loaded relatively in the output html.
-     * @default false
-     */
+	/**
+	 * Indicates if the bundle is loaded relatively in the output html.
+	 * @default false
+	 */
 	bundlePathRelative?: boolean;
-    /**
-     * Function to handle webpack progress.
-     * @default null
-     */
+	/**
+	 * Function to handle webpack progress.
+	 * @default null
+	 */
 	onWebpackProgress?: (percents: number, message: string) => void;
-    /**
-     * Custom webpack config.
-     * @default {}
-     */
+	/**
+	 * Custom webpack config.
+	 * @default {}
+	 */
 	webpack?: any;
-    /**
-     * Custom socketIO config.
-     * @default {}
-     */
+	/**
+	 * Custom socketIO config.
+	 * @default {}
+	 */
 	socketIO?: SocketServerOptions;
 	/**
 	 * Custom autoprefixer config.
@@ -247,6 +247,7 @@ export interface IAppConfig {
 	 * @default: false
 	 */
 	bundleAfterServerStart?: boolean;
+	getInitialData?: (req: IRequest) => { [key: string]: any };
 }
 
 export interface ISocketEvent<S extends Session = Session> {
@@ -485,17 +486,17 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 	public renderComponentWrappers(): JSX.Element;
 
 	/**
-     * Gets the text from the dictionary.
-     *
-     * @param key Key of the text in the dictionary.
-     */
+	 * Gets the text from the dictionary.
+	 *
+	 * @param key Key of the text in the dictionary.
+	 */
 	public getText(key: string): string;
-    /**
-     * Gets the text from the dictionary.
-     *
-     * @param key Key of the text in the dictionary.
-     * @param args Arguments for text format.
-     */
+	/**
+	 * Gets the text from the dictionary.
+	 *
+	 * @param key Key of the text in the dictionary.
+	 * @param args Arguments for text format.
+	 */
 	public getText(key: string, ...args: Array<any>): string;
 
 	/**
@@ -654,19 +655,19 @@ export { HttpSmartError as HttpError };
  * @deprecated Use `rsconfig.json` instead.
  */
 export namespace Utils {
-    /**
-     * Registers socket classes to the server app.
-     * 
-     * @param app Server instance.
-     * @param dir Path to the directory with socket classes.
-     */
+	/**
+	 * Registers socket classes to the server app.
+	 * 
+	 * @param app Server instance.
+	 * @param dir Path to the directory with socket classes.
+	 */
 	export function registerSocketClassDir(app: Server, dir: string): void;
-    /**
-     * Registers routes to the server app.
-     * 
-     * @param app Server instance.
-     * @param routes List of routes to register.
-     */
+	/**
+	 * Registers routes to the server app.
+	 * 
+	 * @param app Server instance.
+	 * @param routes List of routes to register.
+	 */
 	export function registerRoutes(
 		app: Server,
 		routes: Array<{
@@ -678,12 +679,12 @@ export namespace Utils {
 			layout?: string | typeof Layout;
 		}>
 	): void;
-    /**
-     * Registers components to the server app.
-     * 
-     * @param app Server instance.
-     * @param components List of components to register.
-     */
+	/**
+	 * Registers components to the server app.
+	 * 
+	 * @param app Server instance.
+	 * @param components List of components to register.
+	 */
 	export function registerComponents(app: Server, components: Array<{ id: string, component: string, auto?: boolean }>): void;
 }
 
@@ -755,13 +756,13 @@ export default class Server {
 
 	constructor(config?: IAppConfig);
 
-    /**
-     * Gets the instance of the server.
-     */
+	/**
+	 * Gets the instance of the server.
+	 */
 	getServer(): http.Server;
-    /**
-     * Gets the instance of express application.
-     */
+	/**
+	 * Gets the instance of express application.
+	 */
 	getApp(): express.Application;
 
 	/**
@@ -798,14 +799,14 @@ export default class Server {
 	 */
 	getConfig<K extends keyof IAppConfig>(key: K): IAppConfig[K];
 
-    /**
-     * Gets the list of registered socket events.
-     */
+	/**
+	 * Gets the list of registered socket events.
+	 */
 	getSocketEvents(): Array<ISocketEvent>;
 
-    /**
-     * Gets the list of registered socket classes.
-     */
+	/**
+	 * Gets the list of registered socket classes.
+	 */
 	getSocketClasses(): Array<SocketClass>;
 
 	/**
@@ -813,38 +814,38 @@ export default class Server {
 	 */
 	getRegisteredComponents(): Array<{ elementId: string, path: string, auto: boolean }>;
 
-    /**
-     * Authorizes the user.
-     *
-     * @param session Current session.
-     * @param next Callback after the auth process.
-     */
+	/**
+	 * Authorizes the user.
+	 *
+	 * @param session Current session.
+	 * @param next Callback after the auth process.
+	 */
 	auth(session: Session, next: (err?: any) => void): void;
 
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
-    /**
-     * Registers route.
-     *
-     * @param method 
-     * @param route 
-     * @param contentComponent 
-     * @param title 
-     * @param requireAuth 
-     * @param callback 
-     */
+	/**
+	 * Registers route.
+	 *
+	 * @param method 
+	 * @param route 
+	 * @param contentComponent 
+	 * @param title 
+	 * @param requireAuth 
+	 * @param callback 
+	 */
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
-    /**
-     * Registers route.
-     *
-     * @param method 
-     * @param route 
-     * @param contentComponent 
-     * @param title 
-     * @param requireAuth 
-     * @param layout
-     * @param callback 
-     */
+	/**
+	 * Registers route.
+	 *
+	 * @param method 
+	 * @param route 
+	 * @param contentComponent 
+	 * @param title 
+	 * @param requireAuth 
+	 * @param layout
+	 * @param callback 
+	 */
 	registerRoute(
 		method: HttpMethod,
 		route: string,
@@ -864,36 +865,36 @@ export default class Server {
 	registerRouteCallback(route: string, callback: RouteCallback): this;
 
 	registerSocketClass(cls: typeof SocketClass): this;
-    /**
-     * Registers the socket class.
-     *
-     * @param cls Socket class to register.
-     */
+	/**
+	 * Registers the socket class.
+	 *
+	 * @param cls Socket class to register.
+	 */
 	registerSocketClass(cls: new () => SocketClass<Session>): this;
 
-    /**
-     * Registers the socket event.
-     *
-     * @param event Name of the event.
-     * @param listener Listener executed in the event.
-     */
+	/**
+	 * Registers the socket event.
+	 *
+	 * @param event Name of the event.
+	 * @param listener Listener executed in the event.
+	 */
 	registerSocketEvent(event: string, listener: ISocketEvent['listener']): this;
 
-    /**
-     * Registers component.
-     *
-     * @param componentPath Absolute path or relative path to the component from the app directory.
-     * @param elementId Id of the element in the layout where the component should be rendered.
-     */
+	/**
+	 * Registers component.
+	 *
+	 * @param componentPath Absolute path or relative path to the component from the app directory.
+	 * @param elementId Id of the element in the layout where the component should be rendered.
+	 */
 	registerComponent(componentPath: string, elementId: string): this;
 
-	 /**
-     * Registers component.
-     *
-     * @param componentPath Absolute path or relative path to the component from the app directory.
-     * @param elementId Id of the element in the layout where the component should be rendered.
-	 * @param auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
-     */
+	/**
+	* Registers component.
+	*
+	* @param componentPath Absolute path or relative path to the component from the app directory.
+	* @param elementId Id of the element in the layout where the component should be rendered.
+	* @param auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
+	*/
 	registerComponent(componentPath: string, elementId: string, auto: boolean): this;
 
 	/**
@@ -993,11 +994,11 @@ export default class Server {
 	 * Starts the application. It creates bundle in the process.
 	 */
 	public start(): Promise<void>;
-    /**
-     * Starts the application. It creates bundle in the process.
-     *
-     * @param cb Callback called after the application is started.
-     */
+	/**
+	 * Starts the application. It creates bundle in the process.
+	 *
+	 * @param cb Callback called after the application is started.
+	 */
 	public start(cb: (err?: any) => void): Promise<void>;
 	/**
 	 * Starts the application. Bundle creation depends on the `skipBundle` parameter.
@@ -1008,8 +1009,8 @@ export default class Server {
 	public start(skipBundle: boolean, cb: (err?: any) => void): Promise<void>;
 
 	/**
-     * Stops the application.
-     */
+	 * Stops the application.
+	 */
 	public stop(): void;
 	/**
 	 * Stops the application.
