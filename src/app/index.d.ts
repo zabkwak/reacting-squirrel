@@ -1,6 +1,7 @@
 import { Component as BaseComponent, ButtonHTMLAttributes } from 'react';
 import * as url from 'url';
 import Type, { Model } from 'runtime-type';
+import { CookieSetOptions } from 'universal-cookie';
 
 declare type ApplicationEventMap = {
 	'popstate': any;
@@ -228,6 +229,22 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param key Key of the reference.
 	 */
 	public setRef<T = any>(ref: T, key: string): void;
+
+	/**
+	 * Sets the cookie.
+	 *
+	 * @param name Name of the cookie.
+	 * @param value Value of the cookie.
+	 */
+	public setCookie(name: string, value: any): void;
+	/**
+	 * Sets the cookie.
+	 *
+	 * @param name Name of the cookie.
+	 * @param value Value of the cookie.
+	 * @param options Additional options of the cookie.
+	 */
+	public setCookie(name: string, value: any, options: CookieSetOptions): void;
 
 	/**
 	 * Gets the component registered in the application context.

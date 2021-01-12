@@ -14,6 +14,7 @@
 - SSR navigation.
 - `Application.getTitle` method.
 - Option to get custom initial data.
+- `Application.setCookie` method.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

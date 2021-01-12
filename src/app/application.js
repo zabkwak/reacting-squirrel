@@ -316,12 +316,7 @@ class Application extends CallbackEmitter {
 			Text.setDictionary(locale);
 			const expires = new Date();
 			expires.setFullYear(expires.getFullYear() + 1);
-			this._cookies.set(this.LOCALE_COOKIE_NAME, locale, {
-				path: '/',
-				// httpOnly: true,
-				secure: location.protocol === 'https:',
-				expires,
-			});
+			this.setCookie(this.LOCALE_COOKIE_NAME, locale, { expires });
 			this._locale = locale;
 			this._callListener('locale.set', locale);
 		} else {
@@ -337,6 +332,15 @@ class Application extends CallbackEmitter {
 	 */
 	setRef(ref, key) {
 		this._refs[key] = ref;
+	}
+
+	setCookie(name, value, options = {}) {
+		this._cookies.set(name, value, {
+			path: '/',
+			// httpOnly: true,
+			secure: location.protocol === 'https:',
+			...options,
+		});
 	}
 
 	// #endregion
