@@ -251,6 +251,10 @@ export interface IAppConfig {
 	 * Gets the request initial data.
 	 */
 	getInitialData?: (req: IRequest) => { [key: string]: any } | Promise<{ [key: string]: any }>;
+	/**
+	 * Gets the request title.
+	 */
+	getTitle?: (req: IRequest) => string | Promise<string>;
 }
 
 export interface ISocketEvent<S extends Session = Session> {

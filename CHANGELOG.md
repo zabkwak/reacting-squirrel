@@ -15,6 +15,7 @@
 - `Application.getTitle` method.
 - Option to get custom initial data.
 - `Application.setCookie` method.
+- Option to get custom title.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

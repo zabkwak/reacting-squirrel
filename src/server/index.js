@@ -124,6 +124,7 @@ class Server {
 		logging: true,
 		bundleAfterServerStart: false,
 		getInitialData: () => ({}),
+		getTitle: () => null,
 	};
 
 	/**
@@ -1021,7 +1022,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 */
 	_setRoute(route) {
 		const {
-			dev, layoutComponent, getInitialData,
+			dev, layoutComponent, getInitialData, getTitle,
 		} = this._config;
 		this._app[route.method](route.spec, async (req, res, next) => {
 			if (route.requireAuth && req.session.getUser() === null) {
@@ -1046,15 +1047,24 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					layout = route.layout;
 				}
 			}
+			let { title } = route;
+			let additionalData = {};
+			try {
+				title = await getTitle(req) || title;
+				additionalData = await getInitialData(req) || {};
+			} catch (e) {
+				next(e);
+				return;
+			}
 			const data = {
-				title: route.title,
+				title,
 				data: {
 					user: req.session.getUser(),
 					dev,
 					timestamp: Date.now(),
 					version: this._version,
 					locale: req.locale,
-					...(await getInitialData(req)),
+					...additionalData,
 				},
 				layout,
 			};
