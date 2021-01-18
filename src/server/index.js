@@ -1054,7 +1054,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					timestamp: Date.now(),
 					version: this._version,
 					locale: req.locale,
-					...getInitialData(req),
+					...(await getInitialData(req)),
 				},
 				layout,
 			};

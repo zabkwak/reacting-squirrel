@@ -247,7 +247,10 @@ export interface IAppConfig {
 	 * @default: false
 	 */
 	bundleAfterServerStart?: boolean;
-	getInitialData?: (req: IRequest) => { [key: string]: any };
+	/**
+	 * Gets the request initial data.
+	 */
+	getInitialData?: (req: IRequest) => { [key: string]: any } | Promise<{ [key: string]: any }>;
 }
 
 export interface ISocketEvent<S extends Session = Session> {
