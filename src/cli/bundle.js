@@ -28,6 +28,10 @@ if (!config.onWebpackProgress) {
 
 const app = new Server({ ...config, dev: false });
 
+if (config.r) {
+	require(path.resolve(config.r))(app);
+}
+
 (async () => {
 	try {
 		await app.bundle();
