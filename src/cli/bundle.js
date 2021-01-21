@@ -29,7 +29,8 @@ if (!config.onWebpackProgress) {
 const app = new Server({ ...config, dev: false });
 
 if (config.r) {
-	require(path.resolve(config.r))(app);
+	const m = require(path.resolve(config.r));
+	(m.default || m)(app);
 }
 
 (async () => {
