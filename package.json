@@ -1,6 +1,6 @@
 {
 	"name": "reacting-squirrel",
-	"version": "1.0.0-beta.12",
+	"version": "1.0.0-beta.13",
 	"description": "React and Express framework for creating web apps.",
 	"main": "./app/index.js",
 	"types": "./app/index.d.ts",
@@ -61,7 +61,7 @@
 		"prop-types": "^15.7.2",
 		"react-dom": "^16.13.1",
 		"route-parser": "0.0.5",
-		"runtime-type": "^3.8.2",
+		"runtime-type": "^3.8.3",
 		"sass-loader": "^9.0.3",
 		"smart-error": "^3.0.0",
 		"socket.io": "^2.3.0",
