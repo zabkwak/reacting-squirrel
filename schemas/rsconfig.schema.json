@@ -157,6 +157,11 @@
 					"type": "boolean",
 					"title": "HttpOnly flag for the cookies",
 					"default": true
+				},
+				"domain": {
+					"type": "string",
+					"title": "Domain flag for the cookies",
+					"default": null
 				}
 			}
 		},

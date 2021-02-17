@@ -17,6 +17,7 @@ export interface IRequest<S extends Session = Session> extends express.Request {
 	session: S;
 	locale: string;
 	getCookie<T = any>(name: string): T;
+	cookieDomain: string;
 }
 
 export interface IRenderLayoutData {
@@ -122,6 +123,11 @@ export interface IAppConfig {
 		 * @default null
 		 */
 		httpOnly?: boolean;
+		/**
+		 * The domain flag for the cookies.
+		 * @default null
+		 */
+		domain?: string;
 	};
 	/**
 	 * List of scripts loaded in the base html.

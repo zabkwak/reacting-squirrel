@@ -97,6 +97,7 @@ class Server {
 			secret: Math.random().toString(36).substring(7),
 			secure: null,
 			httpOnly: null,
+			domain: null,
 		},
 		scripts: [],
 		styles: [],
