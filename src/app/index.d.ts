@@ -11,6 +11,10 @@ declare type ApplicationEventMap = {
 	'locale.set': string;
 };
 
+declare type SocketEventMap = {
+	'event-error': { event: string, error: any };
+};
+
 /**
  * Base client application.
  */
@@ -416,7 +420,7 @@ declare class Router {
 	 *
 	 * @param q Params to stringify.
 	 */
-	public stringifyQuery(q: {[key: string]: string}): string;
+	public stringifyQuery(q: { [key: string]: string }): string;
 }
 
 /**
@@ -427,7 +431,7 @@ declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
 /**
  * Class for socket communication.
  */
-declare class Socket extends CallbackEmitter {
+declare class Socket extends CallbackEmitter<SocketEventMap> {
 
 	/** Unknown state of the socket. */
 	public readonly STATE_NONE: 'none';
@@ -547,19 +551,19 @@ export class SocketRequest extends CallbackEmitter {
 	public static castResponse: (options: { [key: string]: Type.Type }) => MethodDecorator;
 
 	/**
-     * Registers socket event listener. This method should be called in `componentDidMount`.
-     *
-     * @param event Name of the event.
-     * @param callback Callback for the event.
-     */
+	 * Registers socket event listener. This method should be called in `componentDidMount`.
+	 *
+	 * @param event Name of the event.
+	 * @param callback Callback for the event.
+	 */
 	public on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 
 	/**
-     * Calls the socket event.
-     *
-     * @param event Name of the event.
-     * @typeparam R Type of response.
-     */
+	 * Calls the socket event.
+	 *
+	 * @param event Name of the event.
+	 * @typeparam R Type of response.
+	 */
 	public execute<R = any>(event: string): Promise<R>;
 	/**
 	 * Calls the socket event.
@@ -593,11 +597,11 @@ export class SocketRequest extends CallbackEmitter {
 	public execute<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
 	/**
-     * Emits the socket event. The response can be handled in the `on` method.
-     *
-     * @param event Name of the event.
-     * @typeparam P Type of parameters.
-     */
+	 * Emits the socket event. The response can be handled in the `on` method.
+	 *
+	 * @param event Name of the event.
+	 * @typeparam P Type of parameters.
+	 */
 	public emit(event: string): this;
 	/**
 	 * Emits the socket event. The response can be handled in the `on` method.
@@ -781,7 +785,7 @@ export class CallbackEmitter<T = EventMap> {
 	 * @param event Name of the event.
 	 */
 	public clear<K extends keyof T>(event: K): void;
-	
+
 	/**
 	 * Calls all listeners registered in the event.
 	 *
@@ -1139,10 +1143,10 @@ export interface IPageProps<T = {}, U = any> {
 export class Page<P extends IPageProps = { params: any, query: any, initialData: IInitialDataProps<any> }, S = {}, SS = any> extends SocketComponent<P, S, SS> {
 
 	/**
-     * Sets the page title.
-     *
-     * @param title Title of the page.
-     */
+	 * Sets the page title.
+	 *
+	 * @param title Title of the page.
+	 */
 	public setTitle(title: string): void;
 
 	/**

@@ -200,8 +200,9 @@ class Socket extends CallbackEmitter {
 
 	_handleEvent(event, data) {
 		Application.logInfo(`Handling event '${event}'`, data);
-		if (data && data.errorV) {
+		if (data && data.error) {
 			Application.logError('Socket error', data.error);
+			this._callListener('event-error', { event, error: data.error });
 		}
 		// eslint-disable-next-line no-underscore-dangle
 		if (data && data._deprecated) {
