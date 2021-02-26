@@ -87,5 +87,6 @@
             }
         ],
         "test"
-    ]
+    ],
+	"port": "$env:PORT"
 }

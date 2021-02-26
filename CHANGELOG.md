@@ -16,6 +16,7 @@
 - Option to get custom initial data.
 - `Application.setCookie` method.
 - Option to get custom title.
+- Definition of ENV vars in RSConfig.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

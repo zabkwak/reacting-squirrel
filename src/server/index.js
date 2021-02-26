@@ -25,7 +25,7 @@ import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
 import Utils from './utils';
 import StylesCompiler from './styles-compiler';
-import { TSConfig, RS_DIR } from './constants';
+import { TSConfig, RS_DIR, CONFIG_ENV_PREFIX } from './constants';
 import Plugin from './plugin';
 import {
 	LocaleMiddleware,
@@ -301,11 +301,7 @@ class Server {
 				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.');
 			}
 		}
-		this._config = _.merge(
-			this._config,
-			this._getConfigFromRSConfig(),
-			config,
-		);
+		this._createConfig(config);
 		if (this._config.errorHandler && this._config.error.handler) {
 			this._warn('Specified deprecated errorHandler with error.handler. Deprecated handler will be ignored.');
 		} else if (this._config.errorHandler) {
@@ -635,6 +631,14 @@ class Server {
 	}
 
 	// #region Private methods
+
+	_createConfig(config) {
+		this._config = _.merge(
+			this._config,
+			this._getConfigFromRSConfig(),
+			config,
+		);
+	}
 
 	async _prepare() {
 		const {
@@ -1436,7 +1440,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		}
 		const {
 			routes, components, socketClassDir, errorPage, ...config
-		} = this._rsConfig;
+		} = this._transformEnvVars(this._rsConfig);
 		const {
 			layoutComponent, session, auth, errorHandler, error, onWebpackProgress, webpack, mergeStyles, ...restConfig
 		} = config;
@@ -1466,6 +1470,36 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				? mergeStyles.map((style) => path.resolve(style))
 				: undefined,
 		};
+	}
+
+	_transformEnvVars(config) {
+		if (!config) {
+			return config;
+		}
+		if (typeof config === 'string') {
+			return this._getEnvVar(config);
+		}
+		if (config instanceof Array) {
+			return config.map((item) => this._transformEnvVars(item));
+		}
+		const o = {};
+		Object.keys(config).forEach((key) => {
+			o[key] = this._transformEnvVars(config[key]);
+		});
+		return o;
+	}
+
+	_getEnvVar(value) {
+		if (value && value.indexOf(CONFIG_ENV_PREFIX) === 0) {
+			const envVar = value.replace(CONFIG_ENV_PREFIX, '');
+			if (envVar) {
+				if (process.env[envVar] === undefined) {
+					this._warn(`The env var '${envVar}' from config is undefined.`);
+				}
+				return process.env[envVar];
+			}
+		}
+		return value;
 	}
 
 	_getLocaleText(locale, key, ...args) {

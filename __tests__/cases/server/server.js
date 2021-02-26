@@ -46,6 +46,8 @@ const CONFIG_FIELDS = [
 	'locale',
 	'logging',
 	'bundleAfterServerStart',
+	'getInitialData',
+	'getTitle',
 ];
 
 describe('Server instance', () => {
@@ -175,7 +177,7 @@ describe('Server instance', () => {
 		expect(new session()).to.be.an.instanceOf(Session);
 		expect(auth).to.be.an('function');
 		expect(error).to.have.all.keys([/*'handler',*/ 'layout']);
-		expect(error.handler).to.be.a('function');
+		// expect(error.handler).to.be.a('function');
 		expect(new error.layout()).to.be.an.instanceOf(Layout);
 		expect(webpack).to.be.an('object');
 		expect(locale).to.have.all.keys(['default', 'accepted']);

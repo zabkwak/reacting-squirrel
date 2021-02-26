@@ -224,6 +224,9 @@ The schema for the file is located in `[pathToModule]/schemas/rsconfig.schema.js
 ```
 App config can be also be defined in the rsconfig.
 
+#### ENV vars
+Values in rsconfig that have `$env:[value]` prefix are replaced with `process.env[value]` in the server start.
+
 ### Texts
 In the startup process, the `res` directory is created in `app` directory. In that directory is created default text file `text.json`. The content of the text file is used as default dictionary using [texting-squirrel](https://www.npmjs.com/package/texting-squirrel) module.
 #### Accessing text from the component
