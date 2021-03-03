@@ -1007,6 +1007,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param event Name of the event.
 	 * @param callback Callback function.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 	/**
@@ -1017,6 +1018,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param callback Callback function.
 	 * @typeparam P Type of parameters.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
 	/**
@@ -1028,6 +1030,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param callback Callback function.
 	 * @typeparam P Type of parameters.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
 	/**
@@ -1040,6 +1043,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param onProgress Function called in the progress tick.
 	 * @typeparam P Type of parameters.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void, onProgress: (progress: number) => void): this;
 
