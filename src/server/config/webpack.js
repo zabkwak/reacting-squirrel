@@ -161,6 +161,7 @@ export default (server) => {
 			if (percentage === 1) {
 				webpackDone = true;
 			}
+			server.updateBundlingStatus(percentage * 100);
 		}
 	});
 	p.apply(wp);

@@ -17,6 +17,7 @@
 - `Application.setCookie` method.
 - Option to get custom title.
 - Definition of ENV vars in RSConfig.
+- Bundling status.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

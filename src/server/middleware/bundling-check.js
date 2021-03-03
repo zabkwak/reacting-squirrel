@@ -1,3 +1,4 @@
+import { BUNDLE_STATUS_ROUTE } from '../constants';
 import Layout from '../layout-bundling';
 
 /**
@@ -5,6 +6,10 @@ import Layout from '../layout-bundling';
  */
 export default (server) => (req, res, next) => {
 	if (!server.bundling) {
+		next();
+		return;
+	}
+	if (req.path === BUNDLE_STATUS_ROUTE) {
 		next();
 		return;
 	}

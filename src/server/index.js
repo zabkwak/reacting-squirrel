@@ -25,7 +25,7 @@ import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
 import Utils from './utils';
 import StylesCompiler from './styles-compiler';
-import { TSConfig, RS_DIR, CONFIG_ENV_PREFIX } from './constants';
+import { TSConfig, RS_DIR, CONFIG_ENV_PREFIX, BUNDLE_STATUS_ROUTE } from './constants';
 import Plugin from './plugin';
 import {
 	LocaleMiddleware,
@@ -168,6 +168,8 @@ class Server {
 	_bundling = true;
 
 	_rsFiles = [];
+
+	_bundlingStatus = 0;
 
 	// #endregion
 
@@ -414,6 +416,10 @@ class Server {
 		if (typeof auth === 'function') {
 			auth(session, next);
 		}
+	}
+
+	updateBundlingStatus(percentage) {
+		this._bundlingStatus = percentage;
 	}
 
 	// #region Registers
@@ -765,6 +771,7 @@ class Server {
 		const {
 			appDir, createMissingComponents,
 		} = this._config;
+		this._registerServiceRoutes();
 		const componentsMap = {};
 		this._routes.forEach((route) => {
 			if (!route.contentComponent) {
@@ -797,6 +804,12 @@ class Server {
 			this._setRoute(route);
 		});
 		await this._createRoutingFile(componentsMap);
+	}
+
+	_registerServiceRoutes() {
+		this._app.get(BUNDLE_STATUS_ROUTE, (req, res) => {
+			res.end(this._bundlingStatus.toString());
+		});
 	}
 
 	/**

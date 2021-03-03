@@ -1,6 +1,5 @@
 # TODO
 - sameSite cookie flag
-- progress in bundling page
 - access log
 - register of Page provider
 - register route callback for method
