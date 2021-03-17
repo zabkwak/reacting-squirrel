@@ -1504,10 +1504,13 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 
 	_getEnvVar(value) {
 		if (value && value.indexOf(CONFIG_ENV_PREFIX) === 0) {
-			const envVar = value.replace(CONFIG_ENV_PREFIX, '');
+			const [envVar, defaultValue] = value.replace(CONFIG_ENV_PREFIX, '').split('|');
 			if (envVar) {
 				if (process.env[envVar] === undefined) {
 					this._warn(`The env var '${envVar}' from config is undefined.`);
+					if (defaultValue) {
+						return defaultValue;
+					}
 				}
 				return process.env[envVar];
 			}
