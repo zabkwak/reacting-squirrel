@@ -7,7 +7,7 @@
 	"scripts": {
 		"test": "./node_modules/.bin/mocha __tests__/cases/server __tests__/cases/app --recursive --require @babel/register --require ignore-styles --exit",
 		"test:app:compile": "./node_modules/.bin/babel ./__tests__app__/dev/src --out-dir ./__tests__app__/dev/dist",
-		"test:app:start": "node -r source-map-support/register ./__tests__app__/dev/dist/index.js",
+		"test:app:start": "node -r dotenv/config -r source-map-support/register ./__tests__app__/dev/dist/index.js",
 		"test:app": "npm run build_es6 && npm run test:app:compile && npm run test:app:start",
 		"test:bundle": "npm run build_es6 && npm run test:app:compile && node -r source-map-support/register ./cli/bundle.js --rsConfig=./__tests__app__/dev/rsconfig.json",
 		"posttest": "rm -rf ./__tests__/app/~rs && rm -rf ./__tests__/app/pages && rm -rf ./__tests__/app/components && rm -rf ./__tests__/public",
@@ -85,6 +85,7 @@
 		"bootstrap": "^4.6.0",
 		"chai": "^4.3.1",
 		"chai-enzyme": "^1.0.0-beta.1",
+		"dotenv": "^8.2.0",
 		"enzyme": "^3.11.0",
 		"enzyme-adapter-react-16": "^1.15.6",
 		"eslint": "^7.21.0",

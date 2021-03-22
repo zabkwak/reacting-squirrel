@@ -13,3 +13,4 @@
 /tsconfig.json
 /.vscode
 /_config.yml
+/.env
