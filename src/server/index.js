@@ -668,7 +668,7 @@ class Server {
 	async _registerPlugins() {
 		// Register plugins from RS config
 		if (this._rsConfig) {
-			const { plugins } = this._rsConfig;
+			const { plugins } = this._config;
 			if (plugins) {
 				plugins.forEach((plugin) => {
 					let name = plugin;
