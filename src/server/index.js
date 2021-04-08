@@ -1492,6 +1492,9 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		if (typeof config === 'number') {
 			return config;
 		}
+		if (typeof config === 'boolean') {
+			return config;
+		}
 		if (typeof config === 'string') {
 			return this._getEnvVar(config);
 		}
