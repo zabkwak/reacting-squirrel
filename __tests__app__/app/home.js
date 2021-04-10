@@ -70,6 +70,10 @@ export default class Home extends Page {
 		console.log('PAGE RENDERED');
 	}
 
+	onPopState() {
+		console.log('POP STATE');
+	}
+
 	render() {
 		const { user } = this.state;
 		return (

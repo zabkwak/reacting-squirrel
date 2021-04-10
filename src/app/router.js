@@ -39,6 +39,9 @@ class Router {
 			const p = url.parse(path, true);
 			path = p.path;
 		}
+		if (path.lastIndexOf('/') === path.length -1 && path !== '/') {
+			path = path.substr(0, path.length - 1);
+		}
 		Object.keys(this._routes).forEach((spec) => {
 			if (route) {
 				return;
