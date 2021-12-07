@@ -21,5 +21,6 @@ export default (server) => (req, res, next) => {
 		}
 	}
 	req.session = server.Session.getInstance(sessionId);
+	req.session._server = server;
 	next();
 };
