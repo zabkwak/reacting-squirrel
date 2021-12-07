@@ -7,6 +7,8 @@ export default class Session {
 
 	static _instances = {};
 
+	static _server = null;
+
 	/**
 	 * Generates the random string as a session id.
 	 */
@@ -54,5 +56,10 @@ export default class Session {
 	 */
 	getUser() {
 		return this._user;
+	}
+
+	getServer() {
+		// eslint-disable-next-line no-underscore-dangle
+		return Session._server;
 	}
 }

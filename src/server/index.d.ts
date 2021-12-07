@@ -455,6 +455,11 @@ export class Session<T = any> {
 	 * Gets the user data from the session.
 	 */
 	public getUser(): T;
+
+	/**
+	 * Gets the server instance.
+	 */
+	public getServer(): Server;
 }
 
 /**

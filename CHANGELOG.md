@@ -26,6 +26,7 @@
 - Updated major dependencies.
 - Minimal node.js version is 10.
 - Removed `Server.get` method.
+- Access to the server instance in session.
 
 ## 0.17.3
 ### Updates

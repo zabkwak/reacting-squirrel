@@ -1266,6 +1266,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			cookie: false,
 			...this._config.socketIO,
 		});
+		this.Session._server = this;
 		try {
 			Text.addDictionary(require(path.resolve(appDir, 'res', 'text.json')));
 			locale.accepted
