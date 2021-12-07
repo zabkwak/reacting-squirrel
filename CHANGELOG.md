@@ -18,6 +18,7 @@
 - Option to get custom title.
 - Definition of ENV vars in RSConfig.
 - Bundling status.
+- `Server.getPluginByName` method.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

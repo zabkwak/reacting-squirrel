@@ -25,7 +25,9 @@ import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
 import Utils from './utils';
 import StylesCompiler from './styles-compiler';
-import { TSConfig, RS_DIR, CONFIG_ENV_PREFIX, BUNDLE_STATUS_ROUTE } from './constants';
+import {
+	TSConfig, RS_DIR, CONFIG_ENV_PREFIX, BUNDLE_STATUS_ROUTE,
+} from './constants';
 import Plugin from './plugin';
 import {
 	LocaleMiddleware,
@@ -393,6 +395,10 @@ class Server {
 	 */
 	getSocketClasses() {
 		return this._socketClasses;
+	}
+
+	getPluginByName(name) {
+		return this._plugins.find((plugin) => plugin.getName() === name);
 	}
 
 	// #endregion

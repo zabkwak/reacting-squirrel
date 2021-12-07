@@ -828,6 +828,12 @@ export default class Server {
 	getRegisteredComponents(): Array<{ elementId: string, path: string, auto: boolean }>;
 
 	/**
+	 * Gets the installed plugin by its name.
+	 * @param name Name of the plugin.
+	 */
+	public getPluginByName<T extends Plugin>(name: string): T;
+
+	/**
 	 * Authorizes the user.
 	 *
 	 * @param session Current session.
