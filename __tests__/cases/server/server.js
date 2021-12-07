@@ -109,6 +109,7 @@ describe('Server instance', () => {
 		expect(new server.Layout()).to.be.an.instanceOf(Layout);
 		expect(new server.Session()).to.be.an.instanceOf(Session);
 		expect(server.Session).not.to.be.equal(null);
+		expect(new server.Session()).not.to.be.equal(null);
 	});
 
 	it('checks the set config fields of the server', () => {
@@ -199,6 +200,7 @@ describe('Server instance', () => {
 		expect(new server.Layout()).to.be.an.instanceOf(Layout);
 		expect(new server.Session()).to.be.an.instanceOf(Session);
 		expect(server.Session).not.to.be.equal(null);
+		expect(new server.Session()).not.to.be.equal(null);
 	});
 
 	it('tries to set not Layout child as a layoutComponent', () => {

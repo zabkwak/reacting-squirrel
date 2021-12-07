@@ -60,6 +60,6 @@ export default class Session {
 
 	getServer() {
 		// eslint-disable-next-line no-underscore-dangle
-		return Session._server;
+		return this.prototype._server;
 	}
 }
