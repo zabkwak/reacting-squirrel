@@ -60,7 +60,7 @@
 					<a href="_server_index_d_.irequest.html">IRequest</a>
 				</li>
 			</ul>
-			<h1>Interface IRequest&lt;S, P, ResBody, ReqBody, ReqQuery&gt;</h1>
+			<h1>Interface IRequest&lt;S, P, ResBody, ReqBody, ReqQuery, Locals&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -96,6 +96,9 @@
 					</li>
 					<li>
 						<h4>ReqQuery</h4>
+					</li>
+					<li>
+						<h4>Locals<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -137,6 +140,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#baseurl" class="tsd-kind-icon">base<wbr>Url</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#body" class="tsd-kind-icon">body</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#connection" class="tsd-kind-icon">connection</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_server_index_d_.irequest.html#cookiedomain" class="tsd-kind-icon">cookie<wbr>Domain</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#cookies" class="tsd-kind-icon">cookies</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#fresh" class="tsd-kind-icon">fresh</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#headers" class="tsd-kind-icon">headers</a></li>
@@ -221,6 +225,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#unshift" class="tsd-kind-icon">unshift</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_server_index_d_.irequest.html#wrap" class="tsd-kind-icon">wrap</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static"><a href="_server_index_d_.irequest.html#listenercount-1" class="tsd-kind-icon">listener<wbr>Count</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-static"><a href="_server_index_d_.irequest.html#once-1" class="tsd-kind-icon">once</a></li>
 							</ul>
 						</section>
 					</div>
@@ -240,7 +245,7 @@
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#constructor">constructor</a></p>
 								<p>Overrides Readable.__constructor</p>
 								<ul>
-									<li>Defined in node_modules/@types/node/http.d.ts:180</li>
+									<li>Defined in node_modules/@types/node/http.d.ts:181</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -263,7 +268,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#aborted">aborted</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:183</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:184</li>
 						</ul>
 					</aside>
 				</section>
@@ -274,7 +279,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#accepted">accepted</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:342</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:499</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -291,7 +296,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#app">app</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:485</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:642</li>
 						</ul>
 					</aside>
 				</section>
@@ -302,7 +307,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#baseurl">baseUrl</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:483</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:640</li>
 						</ul>
 					</aside>
 				</section>
@@ -313,7 +318,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#body">body</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:464</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:621</li>
 						</ul>
 					</aside>
 				</section>
@@ -324,7 +329,17 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#connection">connection</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:187</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:188</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="cookiedomain" class="tsd-anchor"></a>
+					<h3>cookie<wbr>Domain</h3>
+					<div class="tsd-signature tsd-kind-icon">cookie<wbr>Domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/server/index.d.ts#L20">src/server/index.d.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -335,7 +350,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#cookies">cookies</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:467</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:624</li>
 						</ul>
 					</aside>
 				</section>
@@ -346,7 +361,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#fresh">fresh</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:449</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:606</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -364,7 +379,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#headers">headers</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:188</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:189</li>
 						</ul>
 					</aside>
 				</section>
@@ -375,7 +390,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#host">host</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:442</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:599</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -393,7 +408,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#hostname">hostname</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:437</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:594</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -409,7 +424,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#httpversion">httpVersion</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:184</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:185</li>
 						</ul>
 					</aside>
 				</section>
@@ -420,7 +435,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#httpversionmajor">httpVersionMajor</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:185</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:186</li>
 						</ul>
 					</aside>
 				</section>
@@ -431,7 +446,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#httpversionminor">httpVersionMinor</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:186</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:187</li>
 						</ul>
 					</aside>
 				</section>
@@ -442,7 +457,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#ip">ip</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:404</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:561</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -460,7 +475,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#ips">ips</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:414</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:571</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -479,7 +494,7 @@
 					<div class="tsd-signature tsd-kind-icon">locale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L18">src/server/index.d.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/server/index.d.ts#L18">src/server/index.d.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -491,18 +506,18 @@
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#method">method</a></p>
 						<p>Overrides IncomingMessage.method</p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:469</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:626</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="next" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> next</h3>
-					<div class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NextFunction</span></div>
+					<div class="tsd-signature tsd-kind-icon">next<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">NextFunction</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#next">next</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:492</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:649</li>
 						</ul>
 					</aside>
 				</section>
@@ -513,7 +528,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#originalurl">originalUrl</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:479</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:636</li>
 						</ul>
 					</aside>
 				</section>
@@ -524,7 +539,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#params">params</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:471</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:628</li>
 						</ul>
 					</aside>
 				</section>
@@ -535,7 +550,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#path">path</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:432</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:589</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -551,7 +566,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#protocol">protocol</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:390</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:547</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -572,7 +587,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#query">query</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:473</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:630</li>
 						</ul>
 					</aside>
 				</section>
@@ -583,7 +598,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#rawheaders">rawHeaders</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:189</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:190</li>
 						</ul>
 					</aside>
 				</section>
@@ -594,7 +609,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#rawtrailers">rawTrailers</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:191</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:192</li>
 						</ul>
 					</aside>
 				</section>
@@ -645,11 +660,11 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="res" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> res</h3>
-					<div class="tsd-signature tsd-kind-icon">res<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ResBody</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">res<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ResBody</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Locals</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#res">res</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:491</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:648</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -666,7 +681,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#route">route</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:475</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:632</li>
 						</ul>
 					</aside>
 				</section>
@@ -677,7 +692,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#secure">secure</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:397</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:554</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -693,7 +708,7 @@
 					<div class="tsd-signature tsd-kind-icon">session<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">S</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L17">src/server/index.d.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/server/index.d.ts#L17">src/server/index.d.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -704,7 +719,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#signedcookies">signedCookies</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:477</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:634</li>
 						</ul>
 					</aside>
 				</section>
@@ -715,7 +730,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#socket">socket</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:209</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:210</li>
 						</ul>
 					</aside>
 				</section>
@@ -726,7 +741,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#stale">stale</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:456</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:613</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -744,7 +759,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#statuscode">statusCode</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:204</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:205</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -760,7 +775,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#statusmessage">statusMessage</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:208</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:209</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -776,7 +791,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#subdomains">subdomains</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:427</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:584</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -798,7 +813,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#trailers">trailers</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/http.d.ts:190</li>
+							<li>Defined in node_modules/@types/node/http.d.ts:191</li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -818,7 +833,7 @@
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#url">url</a></p>
 						<p>Overrides IncomingMessage.url</p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:481</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:638</li>
 						</ul>
 					</aside>
 				</section>
@@ -829,7 +844,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#xhr">xhr</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:461</li>
+							<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:618</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -845,7 +860,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#defaultmaxlisteners">defaultMaxListeners</a></p>
 						<ul>
-							<li>Defined in node_modules/@types/node/events.d.ts:18</li>
+							<li>Defined in node_modules/@types/node/events.d.ts:20</li>
 						</ul>
 					</aside>
 				</section>
@@ -953,7 +968,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#accepts">accepts</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:282</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:439</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -990,7 +1005,8 @@ req.accepts(<span class="hljs-string">&#x27;png&#x27;</span>);
 <span class="hljs-regexp">//</span> Accept: text<span class="hljs-regexp">/*;q=.5, application/</span>json
 req.accepts([<span class="hljs-string">&#x27;html&#x27;</span>, <span class="hljs-string">&#x27;json&#x27;</span>]);
 req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
-<span class="hljs-regexp">//</span> =&gt; <span class="hljs-string">&quot;json&quot;</span></code></pre>
+<span class="hljs-regexp">//</span> =&gt; <span class="hljs-string">&quot;json&quot;</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
@@ -998,7 +1014,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#accepts">accepts</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:283</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:440</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1013,7 +1029,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#accepts">accepts</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:284</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:441</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1028,7 +1044,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#accepts">accepts</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:285</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:442</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1055,7 +1071,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptscharsets">acceptsCharsets</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:294</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:451</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1072,7 +1088,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptscharsets">acceptsCharsets</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:295</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:452</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1087,7 +1103,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptscharsets">acceptsCharsets</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:296</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:453</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1102,7 +1118,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptscharsets">acceptsCharsets</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:297</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:454</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1129,7 +1145,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptsencodings">acceptsEncodings</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:306</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:463</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1146,7 +1162,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptsencodings">acceptsEncodings</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:307</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:464</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1161,7 +1177,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptsencodings">acceptsEncodings</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:308</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:465</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1176,7 +1192,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptsencodings">acceptsEncodings</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:309</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:466</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1203,7 +1219,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptslanguages">acceptsLanguages</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:318</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:475</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1220,7 +1236,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptslanguages">acceptsLanguages</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:319</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:476</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1235,7 +1251,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptslanguages">acceptsLanguages</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:320</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:477</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1250,7 +1266,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#acceptslanguages">acceptsLanguages</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:321</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:478</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1506,7 +1522,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#destroy">destroy</a></p>
 								<p>Overrides Readable.destroy</p>
 								<ul>
-									<li>Defined in node_modules/@types/node/http.d.ts:210</li>
+									<li>Defined in node_modules/@types/node/http.d.ts:211</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1649,7 +1665,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#eventnames">eventNames</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:33</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:569</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1668,7 +1684,7 @@ req.accepts(<span class="hljs-string">&#x27;html, json&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#get">get</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:239</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:396</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1685,7 +1701,8 @@ req.get(<span class="hljs-string">&#x27;content-type&#x27;</span>);
 <span class="hljs-regexp">//</span> =&gt; <span class="hljs-string">&quot;text/plain&quot;</span>
 
 req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
-<span class="hljs-regexp">//</span> =&gt; undefined</code></pre>
+<span class="hljs-regexp">//</span> =&gt; undefined
+</code></pre>
 								<p>Aliased as <code>req.header()</code>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1700,7 +1717,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#get">get</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:240</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:397</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1723,7 +1740,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/6358b69/src/server/index.d.ts#L19">src/server/index.d.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/server/index.d.ts#L19">src/server/index.d.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1753,7 +1770,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#getmaxlisteners">getMaxListeners</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:29</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:561</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
@@ -1772,7 +1789,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#header">header</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:242</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:399</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1787,7 +1804,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#header">header</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:243</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:400</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1811,7 +1828,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#is">is</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:380</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:537</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1833,7 +1850,8 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
  // =&gt; <span class="hljs-keyword">true</span>
 
  req.<span class="hljs-keyword">is</span>(<span class="hljs-string">&#x27;html&#x27;</span>);
- // =&gt; <span class="hljs-keyword">false</span></code></pre>
+ // =&gt; <span class="hljs-keyword">false</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1872,9 +1890,9 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#listenercount-1">listenerCount</a></p>
+								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#listenercount">listenerCount</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:34</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:565</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1898,7 +1916,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#listeners">listeners</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:30</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:562</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1922,7 +1940,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#off">off</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:26</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:558</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2403,7 +2421,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#param">param</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:357</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:514</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2965,7 +2983,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#range">range</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:336</li>
+									<li>Defined in node_modules/@types/express-serve-static-core/index.d.ts:493</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3004,7 +3022,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#rawlisteners">rawListeners</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:31</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:563</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3052,7 +3070,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#removealllisteners">removeAllListeners</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:27</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:559</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3336,7 +3354,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#setmaxlisteners">setMaxListeners</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/events.d.ts:28</li>
+									<li>Defined in node_modules/@types/node/globals.d.ts:560</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3360,7 +3378,7 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#settimeout">setTimeout</a></p>
 								<ul>
-									<li>Defined in node_modules/@types/node/http.d.ts:192</li>
+									<li>Defined in node_modules/@types/node/http.d.ts:193</li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -3494,6 +3512,34 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-static">
+					<a name="once-1" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> once</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>emitter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeEventTarget</span>, event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#once-1">once</a></p>
+								<p>Overrides <a href="_server_index_d_.irequest.html">IRequest</a>.<a href="_server_index_d_.irequest.html#once-1">once</a></p>
+								<ul>
+									<li>Defined in node_modules/@types/node/events.d.ts:13</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>emitter: <span class="tsd-signature-type">NodeEventTarget</span></h5>
+								</li>
+								<li>
+									<h5>event: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">symbol</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -3570,6 +3616,9 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_server_index_d_.irequest.html#connection" class="tsd-kind-icon">connection</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_server_index_d_.irequest.html#cookiedomain" class="tsd-kind-icon">cookie<wbr>Domain</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_server_index_d_.irequest.html#cookies" class="tsd-kind-icon">cookies</a>
@@ -3807,6 +3856,9 @@ req.get(<span class="hljs-string">&#x27;Something&#x27;</span>);
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited tsd-is-static">
 								<a href="_server_index_d_.irequest.html#listenercount-1" class="tsd-kind-icon">listener<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite tsd-is-inherited tsd-is-static">
+								<a href="_server_index_d_.irequest.html#once-1" class="tsd-kind-icon">once</a>
 							</li>
 						</ul>
 					</li>

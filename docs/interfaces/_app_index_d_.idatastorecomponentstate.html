@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IPageProps | reacting-squirrel</title>
+	<title>IDataStoreComponentState | reacting-squirrel</title>
 	<meta name="description" content="Documentation for reacting-squirrel">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -57,41 +57,21 @@
 					<a href="../modules/_app_index_d_.html">&quot;app/index.d&quot;</a>
 				</li>
 				<li>
-					<a href="_app_index_d_.ipageprops.html">IPageProps</a>
+					<a href="_app_index_d_.idatastorecomponentstate.html">IDataStoreComponentState</a>
 				</li>
 			</ul>
-			<h1>Interface IPageProps&lt;T, U&gt;</h1>
+			<h1>Interface IDataStoreComponentState&lt;T&gt;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Interface for Page props.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>T</h4>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Another types for the initial data.</p>
-							</div>
-						</div>
-					</li>
-					<li>
-						<h4>U</h4>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>Type of the user.</p>
-							</div>
-						</div>
 					</li>
 				</ul>
 			</section>
@@ -99,12 +79,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IPageProps</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="_app_index_d_.ierrorpageprops.html" class="tsd-signature-type">IErrorPageProps</a>
-							</li>
-						</ul>
+						<span class="target">IDataStoreComponentState</span>
 					</li>
 				</ul>
 			</section>
@@ -115,9 +90,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_app_index_d_.ipageprops.html#initialdata" class="tsd-kind-icon">initial<wbr>Data</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_app_index_d_.ipageprops.html#params" class="tsd-kind-icon">params</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_app_index_d_.ipageprops.html#query" class="tsd-kind-icon">query</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_app_index_d_.idatastorecomponentstate.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_app_index_d_.idatastorecomponentstate.html#error" class="tsd-kind-icon">error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_app_index_d_.idatastorecomponentstate.html#loading" class="tsd-kind-icon">loading</a></li>
 							</ul>
 						</section>
 					</div>
@@ -126,49 +101,34 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="initialdata" class="tsd-anchor"></a>
-					<h3>initial<wbr>Data</h3>
-					<div class="tsd-signature tsd-kind-icon">initial<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="_app_index_d_.iinitialdataprops.html" class="tsd-signature-type">IInitialDataProps</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span></div>
+					<a name="data" class="tsd-anchor"></a>
+					<h3>data</h3>
+					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/app/index.d.ts#L1141">src/app/index.d.ts:1141</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/app/index.d.ts#L1290">src/app/index.d.ts:1290</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Initial data from the server.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="params" class="tsd-anchor"></a>
-					<h3>params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="error" class="tsd-anchor"></a>
+					<h3>error</h3>
+					<div class="tsd-signature tsd-kind-icon">error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/app/index.d.ts#L1133">src/app/index.d.ts:1133</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/app/index.d.ts#L1291">src/app/index.d.ts:1291</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Route parameters.</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="query" class="tsd-anchor"></a>
-					<h3>query</h3>
-					<div class="tsd-signature tsd-kind-icon">query<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<a name="loading" class="tsd-anchor"></a>
+					<h3>loading</h3>
+					<div class="tsd-signature tsd-kind-icon">loading<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/app/index.d.ts#L1137">src/app/index.d.ts:1137</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/8d22034/src/app/index.d.ts#L1292">src/app/index.d.ts:1292</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Data in query string.</p>
-						</div>
-					</div>
 				</section>
 			</section>
 		</div>
@@ -254,9 +214,24 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_app_index_d_.idatastorecomponentprops.html" class="tsd-kind-icon">IData<wbr>Store<wbr>Component<wbr>Props</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_app_index_d_.idatastorecomponentstate.html" class="tsd-kind-icon">IData<wbr>Store<wbr>Component<wbr>State</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_app_index_d_.idatastorecomponentstate.html#data" class="tsd-kind-icon">data</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_app_index_d_.idatastorecomponentstate.html#error" class="tsd-kind-icon">error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_app_index_d_.idatastorecomponentstate.html#loading" class="tsd-kind-icon">loading</a>
+							</li>
+						</ul>
 					</li>
+				</ul>
+				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
 						<a href="_app_index_d_.ierrorpageprops.html" class="tsd-kind-icon">IError<wbr>Page<wbr>Props</a>
 					</li>
@@ -266,24 +241,9 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_app_index_d_.iloaderprops.html" class="tsd-kind-icon">ILoader<wbr>Props</a>
 					</li>
-				</ul>
-				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_app_index_d_.ipageprops.html" class="tsd-kind-icon">IPage<wbr>Props</a>
-						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_app_index_d_.ipageprops.html#initialdata" class="tsd-kind-icon">initial<wbr>Data</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_app_index_d_.ipageprops.html#params" class="tsd-kind-icon">params</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_app_index_d_.ipageprops.html#query" class="tsd-kind-icon">query</a>
-							</li>
-						</ul>
 					</li>
-				</ul>
-				<ul class="after-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-is-not-exported">
 						<a href="_app_index_d_.iroutedefinition.html" class="tsd-kind-icon">IRoute<wbr>Definition</a>
 					</li>

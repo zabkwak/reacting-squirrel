@@ -78,7 +78,8 @@
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
-				<pre><code class="language-bash">npm install reacting-squirrel --save</code></pre>
+				<pre><code class="language-bash">npm install reacting-squirrel --save
+</code></pre>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
@@ -99,7 +100,7 @@ app.start();
 <span class="hljs-keyword">import</span> { Page } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
 
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Page</span> </span>{
-
+    
     <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> {
         <span class="hljs-keyword">return</span> (
             <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
@@ -107,7 +108,8 @@ app.start();
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
         );
     }
-}</code></pre>
+}
+</code></pre>
 				<p>This code will start simple app on the default port with one page which will be the home page.</p>
 				<a href="#app-using-websockets-for-load-the-user" id="app-using-websockets-for-load-the-user" style="color: inherit; text-decoration: none;">
 					<h3>App using websockets for load the user</h3>
@@ -168,7 +170,7 @@ app.start();
             <span class="hljs-built_in">this</span>.setState({ user });
         });
     }
-
+    
     <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> {
         <span class="hljs-keyword">const</span> { user } = <span class="hljs-built_in">this</span>.state;
         <span class="hljs-keyword">return</span> (
@@ -178,7 +180,8 @@ app.start();
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
         );
     }
-}</code></pre>
+}
+</code></pre>
 				<p>This code will start simple app on the default port. After the page load the <code>user.load</code> event is emitted and <code>UserSocket</code> class is trying to load the logged user and send it back to the page.</p>
 				<a href="#cli" id="cli" style="color: inherit; text-decoration: none;">
 					<h3>CLI</h3>
@@ -202,7 +205,8 @@ app.start();
 <span class="hljs-comment">// On the route &#x27;/&#x27; will be rendered the content component located in {config.appDir}/home with Home title.</span>
 app.registerRoute(<span class="hljs-string">&#x27;get&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
 
-app.start();</code></pre>
+app.start();
+</code></pre>
 				<a href="#socket-events-register" id="socket-events-register" style="color: inherit; text-decoration: none;">
 					<h3>Socket events register</h3>
 				</a>
@@ -214,7 +218,8 @@ app.start();</code></pre>
 <span class="hljs-comment">// Frontend app can emit &#x27;test&#x27; with some data. The event&#x27;s listener emits the data back.</span>
 app.registerSocketEvent(<span class="hljs-string">&#x27;test&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">socket, data, next</span>) =&gt;</span> next(<span class="hljs-literal">null</span>, data));
 
-app.start();</code></pre>
+app.start();
+</code></pre>
 				<a href="#socket-classes-register" id="socket-classes-register" style="color: inherit; text-decoration: none;">
 					<h3>Socket classes register</h3>
 				</a>
@@ -253,7 +258,8 @@ app.start();</code></pre>
 <span class="hljs-comment">// Registeres the socket class</span>
 app.registerSocketClass(UserSocket);
 
-app.start();</code></pre>
+app.start();
+</code></pre>
 				<a href="#components-register" id="components-register" style="color: inherit; text-decoration: none;">
 					<h3>Components register</h3>
 				</a>
@@ -265,7 +271,8 @@ app.start();</code></pre>
 <span class="hljs-comment">// Frontend app tries to render component located at {config.appDir}/test to the DOM element with id &#x27;test&#x27;</span>
 app.registerComponent(<span class="hljs-string">&#x27;test&#x27;</span>, <span class="hljs-string">&#x27;test&#x27;</span>);
 
-app.start();</code></pre>
+app.start();
+</code></pre>
 				<a href="#rsconfig" id="rsconfig" style="color: inherit; text-decoration: none;">
 					<h3>RSConfig</h3>
 				</a>
@@ -290,8 +297,13 @@ app.start();</code></pre>
     ],
     <span class="hljs-attr">&quot;socketClassDir&quot;</span>: <span class="hljs-string">&quot;./dist/network/socket&quot;</span>,
     <span class="hljs-attr">&quot;errorPage&quot;</span>: <span class="hljs-string">&quot;error-page&quot;</span>
-}</code></pre>
+}
+</code></pre>
 				<p>App config can be also be defined in the rsconfig.</p>
+				<a href="#env-vars" id="env-vars" style="color: inherit; text-decoration: none;">
+					<h4>ENV vars</h4>
+				</a>
+				<p>Values in rsconfig that have <code>$env:[value]|[defaultValue]</code> prefix are replaced with <code>process.env[value]</code> in the server start.<br>If the env var is not in the process the default value is used (if specified).</p>
 				<a href="#texts" id="texts" style="color: inherit; text-decoration: none;">
 					<h3>Texts</h3>
 				</a>
@@ -347,7 +359,8 @@ app.start();</code></pre>
 				</a>
 				<p>File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the <code>pingTimeout</code>. The file is sent to the server in chunks and converted to buffer on the server side.</p>
 				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> file = <span class="hljs-string">&#x27;get somehow a File instance&#x27;</span>;
-Socket.emit(<span class="hljs-string">&#x27;file.upload&#x27;</span>, <span class="hljs-literal">undefined</span>, { file }, <span class="hljs-function">(<span class="hljs-params">progress</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(progress));</code></pre>
+Socket.emit(<span class="hljs-string">&#x27;file.upload&#x27;</span>, <span class="hljs-literal">undefined</span>, { file }, <span class="hljs-function">(<span class="hljs-params">progress</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(progress));
+</code></pre>
 				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
 					<h4>Limitations</h4>
 				</a>
