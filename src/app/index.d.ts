@@ -1225,6 +1225,7 @@ interface IDataComponentProps extends React.HTMLProps<DataComponent> {
 
 /**
  * Component to handle rendering of socket data.
+ * @deprecated Use `DataStoreComponent` instead.
  */
 export class DataComponent extends SocketComponent<IDataComponentProps> {
 
@@ -1235,6 +1236,137 @@ export class DataComponent extends SocketComponent<IDataComponentProps> {
 }
 
 //#endregion
+
+// #region DataStoreComponent
+
+export interface IDataStoreComponentProps<T> extends React.HTMLProps<DataStoreComponent<T>> {
+	/**
+	 * The key with which are the data stored in the store.
+	 * The property is required if the component is not inherited.
+	 */
+	dataKey?: string;
+	/**
+	 * Function called when the data are received.
+	 */
+	onData?: (data: T) => void;
+	/**
+	 * Function called if the error occurs during the request.
+	 */
+	onError?: (error: any) => void;
+	/**
+	 * Function to load the data.
+	 * The property is required if the data component is not inherited.
+	 */
+	load?: (component: DataStoreComponent<T>) => Promise<T>;
+	/**
+	 * Function to updated data in the store.
+	 * The property is required if the data component is not inherited.
+	 */
+	update?: (data: T) => Promise<T>;
+	/**
+	 * Indicates if the component should force load the data on mount.
+	 */
+	refresh?: boolean;
+	/**
+	 * The component to render while the data are loading.
+	 */
+	LoaderComponent?: React.ReactNode;
+	/**
+	 * Function for rendering the error.
+	 */
+	renderError?: (error: any) => JSX.Element;
+	/**
+	 * Function as children for rendering the data.
+	 * The property is required if the data component is not inherited.
+	 */
+	children?: (data: T, component: DataStoreComponent<T>) => JSX.Element;
+	/**
+	 * Transforms the data before storing.
+	 */
+	transformData?: (data: T) => T;
+}
+
+export interface IDataStoreComponentState<T> {
+	data: T;
+	error: any;
+	loading: boolean;
+}
+
+/**
+ * Component to handle and store socket data.
+ */
+export class DataStoreComponent<T, P extends IDataStoreComponentProps<T> = IDataStoreComponentProps<T>>
+	extends SocketComponent<P, IDataStoreComponentState<T>> {
+
+	/**
+	 * Renders the loader component.
+	 */
+	public renderLoader(): JSX.Element;
+
+	/**
+	 * Renders the error.
+	 * @param error 
+	 */
+	public renderError(error: any): JSX.Element;
+
+	/**
+	 * Renders the data.
+	 * @param data 
+	 */
+	public renderData(data: T): JSX.Element;
+
+	/**
+	 * Loads the data and stores it in the store.
+	 */
+	public load(): Promise<void>;
+
+	/**
+	 * Updates the data.
+	 */
+	public update(): Promise<void>;
+
+	/**
+	 * Clears the data.
+	 */
+	public clear(): void;
+
+	/**
+	 * The actual request to load the data.
+	 * This can be overridden for custom loader instead of prop.
+	 */
+	protected _load(): Promise<T>;
+
+	/**
+	 * Handles the data.
+	 * @param data 
+	 */
+	protected _handleData(data: T): void;
+
+	/**
+	 * Handlers the error.
+	 * @param error 
+	 */
+	protected _handleError(error: any): void;
+
+	/**
+	 * Transforms the data.
+	 * @param data 
+	 */
+	protected _transformData(data: T): T;
+
+	/**
+	 * Gets the data key.
+	 */
+	protected _getDataKey(): string;
+
+	private _hasStoredData(): boolean;
+
+	private _getStoredData(): T;
+
+	private _storeData(data: T): void;
+}
+
+// #endregion
 
 //#region Text
 

@@ -19,6 +19,8 @@
 - Definition of ENV vars in RSConfig.
 - Bundling status.
 - `Server.getPluginByName` method.
+- React 17.
+- `DataStoreComponent` component.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.
@@ -27,6 +29,7 @@
 - Minimal node.js version is 10.
 - Removed `Server.get` method.
 - Access to the server instance in session.
+- React 17.
 
 ## 0.17.3
 ### Updates

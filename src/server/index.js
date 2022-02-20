@@ -1162,7 +1162,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				this._log('Starting webpack');
 				let listening = false;
 				// eslint-disable-next-line no-shadow
-				this._webpack.watch({ aggregateTimeout: 300 }, (err, stats) => {
+				this._webpack.watch({ aggregateTimeout: 500 }, (err, stats) => {
 					if (err) {
 						this._error(err);
 						return;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DataStoreComponent } from '../../src/app';
 import {
 	Page, Text, Loader, DataComponent, Utils, SocketRequest,
 } from '../../src/app';
@@ -148,6 +149,30 @@ export default class Home extends Page {
 					loaderBlock={false}
 					loaderSize="small"
 					tookDisabled
+				/>
+				<DataStoreComponent
+					dataKey="user"
+					load={(component) => {
+						return component.requestAsync('user.getPromise');
+					}}
+					transformData={(data) => {
+						return {
+							...data,
+							name: 'Transformed data',
+						};
+					}}
+				>
+					{
+						(data, component) => (
+							<h3>{data?.name}</h3>
+						)
+					}
+				</DataStoreComponent>
+				<DataStoreComponent
+					dataKey="user-error"
+					load={(component) => {
+						return component.requestAsync('user.getAsyncError');
+					}}
 				/>
 				<button onClick={() => this.getContext().navigate('/about')} id="navigate-button" type="button">About page</button>
 				<button onClick={() => this.getContext().refreshContent()} id="refresh-button" type="button">Refresh content</button>

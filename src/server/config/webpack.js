@@ -5,6 +5,7 @@ import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import readline from 'readline';
 
 import { BABEL_TRANSPILE_MODULES } from '../constants';
+import { Socket } from '../socket';
 
 const getStylesToWatch = (sourceStylesDir) => {
 	const files = fs.readdirSync(sourceStylesDir);
@@ -162,6 +163,13 @@ export default (server) => {
 				webpackDone = true;
 			}
 			server.updateBundlingStatus(percentage * 100);
+		} else if (dev) {
+			try {
+				webpackProgress(percentage, message);
+				Socket.broadcast('webpack.progress', { percentage, message });
+			} catch (e) { 
+				console.error('WEBPACK PROGRESS ERROR', e);
+			}
 		}
 	});
 	p.apply(wp);

@@ -38,6 +38,7 @@ class Socket extends CallbackEmitter {
 	_events = [
 		'handshake',
 		'webpack.stats',
+		'webpack.progress',
 	];
 
 	_chunkSize = (2 ** 10) * 10;
@@ -199,7 +200,9 @@ class Socket extends CallbackEmitter {
 	}
 
 	_handleEvent(event, data) {
-		Application.logInfo(`Handling event '${event}'`, data);
+		if (event !== 'webpack.progress') {
+			Application.logInfo(`Handling event '${event}'`, data);
+		}
 		if (data && data.error) {
 			Application.logError('Socket error', data.error);
 			this._callListener('event-error', { event, error: data.error });
