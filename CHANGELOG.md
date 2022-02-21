@@ -20,7 +20,7 @@
 - Bundling status.
 - `Server.getPluginByName` method.
 - React 17.
-- `DataStoreComponent` component.
+- `CachedDataComponent` component.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

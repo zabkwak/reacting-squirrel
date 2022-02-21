@@ -1225,7 +1225,7 @@ interface IDataComponentProps extends React.HTMLProps<DataComponent> {
 
 /**
  * Component to handle rendering of socket data.
- * @deprecated Use `DataStoreComponent` instead.
+ * @deprecated Use `CachedDataComponent` instead.
  */
 export class DataComponent extends SocketComponent<IDataComponentProps> {
 
@@ -1237,9 +1237,9 @@ export class DataComponent extends SocketComponent<IDataComponentProps> {
 
 //#endregion
 
-// #region DataStoreComponent
+// #region CachedDataComponent
 
-export interface IDataStoreComponentProps<T> extends React.HTMLProps<DataStoreComponent<T>> {
+export interface ICachedDataComponentProps<T> extends React.HTMLProps<CachedDataComponent<T>> {
 	/**
 	 * The key with which are the data stored in the store.
 	 * The property is required if the component is not inherited.
@@ -1257,7 +1257,7 @@ export interface IDataStoreComponentProps<T> extends React.HTMLProps<DataStoreCo
 	 * Function to load the data.
 	 * The property is required if the data component is not inherited.
 	 */
-	load?: (component: DataStoreComponent<T>) => Promise<T>;
+	load?: (component: CachedDataComponent<T>) => Promise<T>;
 	/**
 	 * Function to updated data in the store.
 	 * The property is required if the data component is not inherited.
@@ -1279,14 +1279,14 @@ export interface IDataStoreComponentProps<T> extends React.HTMLProps<DataStoreCo
 	 * Function as children for rendering the data.
 	 * The property is required if the data component is not inherited.
 	 */
-	children?: (data: T, component: DataStoreComponent<T>) => JSX.Element;
+	children?: (data: T, component: CachedDataComponent<T>) => JSX.Element;
 	/**
 	 * Transforms the data before storing.
 	 */
 	transformData?: (data: T) => T;
 }
 
-export interface IDataStoreComponentState<T> {
+export interface ICachedDataComponentState<T> {
 	data: T;
 	error: any;
 	loading: boolean;
@@ -1295,8 +1295,8 @@ export interface IDataStoreComponentState<T> {
 /**
  * Component to handle and store socket data.
  */
-export class DataStoreComponent<T, P extends IDataStoreComponentProps<T> = IDataStoreComponentProps<T>>
-	extends SocketComponent<P, IDataStoreComponentState<T>> {
+export class CachedDataComponent<T, P extends ICachedDataComponentProps<T> = ICachedDataComponentProps<T>>
+	extends SocketComponent<P, ICachedDataComponentState<T>> {
 
 	/**
 	 * Renders the loader component.

@@ -4,7 +4,7 @@ import Application from './application';
 import Component from './components/component';
 import SocketComponent from './components/component.socket';
 import DataComponent from './components/component.data';
-import DataStoreComponent from './components/component.datastore';
+import CachedDataComponent from './components/component.data-cached';
 import Page from './components/component.page';
 import Text from './components/text';
 import Loader from './components/loader';
@@ -27,7 +27,7 @@ export {
 	Component,
 	SocketComponent,
 	DataComponent,
-	DataStoreComponent,
+	CachedDataComponent,
 	Page,
 	Text,
 	Loader,

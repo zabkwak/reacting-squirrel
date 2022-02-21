@@ -1,7 +1,7 @@
 import React from 'react';
 import { DataStoreComponent } from '../../src/app';
 import {
-	Page, Text, Loader, DataComponent, Utils, SocketRequest,
+	Page, Text, Loader, CachedDataComponent, Utils, SocketRequest, DataComponent,
 } from '../../src/app';
 
 import './home.css';
@@ -150,7 +150,7 @@ export default class Home extends Page {
 					loaderSize="small"
 					tookDisabled
 				/>
-				<DataStoreComponent
+				<CachedDataComponent
 					dataKey="user"
 					load={(component) => {
 						return component.requestAsync('user.getPromise');
@@ -167,8 +167,8 @@ export default class Home extends Page {
 							<h3>{data?.name}</h3>
 						)
 					}
-				</DataStoreComponent>
-				<DataStoreComponent
+				</CachedDataComponent>
+				<CachedDataComponent
 					dataKey="user-error"
 					load={(component) => {
 						return component.requestAsync('user.getAsyncError');
