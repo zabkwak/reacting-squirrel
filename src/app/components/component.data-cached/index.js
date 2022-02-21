@@ -32,7 +32,7 @@ export default class CachedDataComponent extends SocketComponent {
 		super.componentDidMount();
 		const { refresh } = this.props;
 		if (this._hasStoredData() && !refresh) {
-			this.setState({ data: this._getStoredData() });
+			this.setState({ data: this._getStoredData(), loading: false });
 			return;
 		}
 		await this.load();
