@@ -385,7 +385,7 @@ class Application extends CallbackEmitter {
 		Array.from(document.querySelectorAll('.ssr-nav')).forEach((element) => {
 			element.addEventListener('click', (e) => {
 				e.preventDefault();
-				const { href } = e.target;
+				const { href } = e.currentTarget;
 				this.navigate(href);
 			});
 		});
