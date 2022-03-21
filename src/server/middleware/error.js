@@ -35,7 +35,7 @@ export default (server) => (err, req, res, next) => {
 		res.renderLayout({
 			title: err.message,
 			data: {
-				user: req.session.getUser(),
+				user: req.session?.getUser(),
 				dev,
 				timestamp: Date.now(),
 				error: err.toJSON(dev),
