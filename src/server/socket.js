@@ -1,4 +1,4 @@
-import socketIO from 'socket.io';
+import { Server as SocketIOServer } from 'socket.io';
 import cookie from 'cookie';
 import cookieSignature from 'cookie-signature';
 import uniqid from 'uniqid';
@@ -233,7 +233,7 @@ class Socket {
  * @param {Server} server Server instance.
  */
 const func = (server, options = {}) => {
-	const io = socketIO(server.getServer(), options);
+	const io = new SocketIOServer(server.getServer(), options);
 	const { socketMessageMaxSize } = server.getConfig();
 	io.use((socket, next) => {
 		if (!socket.request.headers.cookie) {

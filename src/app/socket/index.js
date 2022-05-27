@@ -1,5 +1,5 @@
 /** @module Socket */
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { encode } from 'msgpack-lite';
 import uniqid from 'uniqid';
 
@@ -83,7 +83,7 @@ class Socket extends CallbackEmitter {
 			Application.logInfo('Socket disconnected', reason);
 			this._setState(this.STATE_DISCONNECTED);
 		});
-		this._socket.on('error', (err) => {
+		this._socket.on('connect_error', (err) => {
 			Application.logError('Socket connection error', err);
 			this._callListener('error', err);
 		});
