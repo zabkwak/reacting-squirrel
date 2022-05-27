@@ -13,6 +13,9 @@ declare type ApplicationEventMap = {
 
 declare type SocketEventMap = {
 	'event-error': { event: string, error: any };
+	'connecting': undefined;
+	'connected': undefined;
+	'disconnected': undefined;
 };
 
 /**
