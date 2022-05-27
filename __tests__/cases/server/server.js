@@ -261,10 +261,12 @@ describe('Start of the server', () => {
 				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/home.tsx`))).to.be.equal(true);
 				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/user.tsx`))).to.be.equal(true);
 				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/components/test.tsx`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.staticDirAbsolute}/js/bundle.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.staticDirAbsolute}/css/rs-app.css`))).to.be.equal(true);
 
 				done();
 			});
-	}).timeout(20000);
+	}).timeout(30000);
 
 	it('checks if the home page is accessible with http request', (done) => {
 		request.get(URL, (err, res, body) => {

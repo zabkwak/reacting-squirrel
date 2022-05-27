@@ -309,7 +309,6 @@ class Server {
 		if (this._config.errorHandler && this._config.error.handler) {
 			this._warn('Specified deprecated errorHandler with error.handler. Deprecated handler will be ignored.');
 		} else if (this._config.errorHandler) {
-			console.log('Setting legacy error handler');
 			this._config.error.handler = this._config.errorHandler;
 		}
 		if (!(this._config.locale.accepted instanceof Array)) {
@@ -1022,7 +1021,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		this._log('Creating postcss config');
 		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/postcss.config.js`,
-			`module.exports={plugins:{autoprefixer:${JSON.stringify(this._config.autoprefixer)}}};`,
+			`module.exports={plugins:[['autoprefixer',${JSON.stringify(this._config.autoprefixer)}]]};`,
 		);
 	}
 
@@ -1320,6 +1319,10 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {function(Error):void} cb Callback after the compilation is finished.
 	 */
 	_compileStyles(cb = () => { }) {
+		this._compileStylesAsync()
+			.then(cb)
+			.catch(cb);
+		/*
 		this._log('Compiling styles');
 		const {
 			cssDir, staticDir, mergeStyles, sourceStylesDir,
@@ -1367,6 +1370,47 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					});
 			});
 		});
+		*/
+	}
+
+	async _compileStylesAsync() {
+		this._log('Compiling styles');
+		const {
+			cssDir, staticDir, mergeStyles, sourceStylesDir,
+		} = this._config;
+		const dir = path.resolve(`${staticDir}/${cssDir}`);
+		const stylesPath = `${dir}/rs-app.css`;
+		try {
+			await fsAsync.access(stylesPath);
+			await fsAsync.unlink(stylesPath);
+		} catch (e) {
+			// ignore
+		}
+		const compiler = new StylesCompiler([
+			path.resolve(__dirname, './assets/loader.scss'),
+			...mergeStyles,
+			sourceStylesDir,
+			dir,
+		], dir, 'rs-app.css');
+		await compiler.compile();
+		const files = await fsAsync.readdir(dir);
+		// eslint-disable-next-line no-restricted-syntax
+		for (const file of files) {
+			try {
+				if (file.indexOf('rs-tmp') >= 0) {
+					await fsAsync.unlink(`${dir}/${file}`);
+				}
+				if (file.indexOf('cs-tmp') >= 0) {
+					await fsAsync.unlink(`${dir}/${file}`);
+				}
+			} catch (e) {
+				this._error(e);
+			}
+		}
+		const css = await fsAsync.readFile(stylesPath);
+		const result = await postcss([autoprefixer(this._config.autoprefixer)])
+			.process(css, { from: stylesPath });
+		await fsAsync.writeFile(stylesPath, result.css);
 	}
 
 	// #region FS helpers
@@ -1604,6 +1648,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 }
 
 export {
+	// eslint-disable-next-line no-restricted-exports
 	Server as default,
 	Session,
 	Layout,

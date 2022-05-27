@@ -13,7 +13,7 @@ export default class CachedDataComponent extends SocketComponent {
 		onData: null,
 		onError: null,
 		load: null,
-	}
+	};
 
 	state = {
 		data: null,
@@ -26,7 +26,7 @@ export default class CachedDataComponent extends SocketComponent {
 		load: null,
 		update: null,
 		renderError: null,
-	}
+	};
 
 	async componentDidMount() {
 		super.componentDidMount();

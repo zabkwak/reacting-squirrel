@@ -23,7 +23,7 @@ export default class Component extends Base {
 	 */
 	__popState__ = (application, event) => {
 		this.onPopState(event);
-	}
+	};
 
 	componentDidMount() {
 		this.getContext().addListener('popstate', this.__popState__);

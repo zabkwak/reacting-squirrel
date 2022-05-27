@@ -20,6 +20,7 @@ import ErrorPage from './page.error';
 import Utils from './utils';
 
 export {
+	// eslint-disable-next-line no-restricted-exports
 	Application as default,
 	Application,
 	Router,

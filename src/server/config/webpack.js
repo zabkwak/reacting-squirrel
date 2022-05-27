@@ -44,9 +44,9 @@ export default (server) => {
 	const postCSSLoader = {
 		loader: 'postcss-loader',
 		options: {
-			config: {
+			postcssOptions: {
 				// eslint-disable-next-line no-underscore-dangle
-				path: `${server._getRSDirPath()}/postcss.config.js`,
+				config: `${server._getRSDirPath()}/postcss.config.js`,
 			},
 		},
 	};
@@ -67,6 +67,10 @@ export default (server) => {
 		},
 		resolve: {
 			extensions: ['.js', '.jsx', '.ts', '.tsx'],
+			fallback: {
+				url: require.resolve('url'),
+				querystring: require.resolve('querystring'),
+			},
 		},
 		resolveLoader: {
 			alias: {
@@ -167,7 +171,8 @@ export default (server) => {
 			try {
 				webpackProgress(percentage, message);
 				Socket.broadcast('webpack.progress', { percentage, message });
-			} catch (e) { 
+			} catch (e) {
+				// eslint-disable-next-line no-console
 				console.error('WEBPACK PROGRESS ERROR', e);
 			}
 		}
