@@ -1157,6 +1157,11 @@ export class Page<P extends IPageProps = { params: any, query: any, initialData:
 	public setTitle(title: string): void;
 
 	/**
+	 * Gets the page title.
+	 */
+	public getTitle(): string;
+
+	/**
 	 * Called after the page is rendered.
 	 */
 	protected onPageRender(): void;

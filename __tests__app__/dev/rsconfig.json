@@ -88,5 +88,9 @@
         ],
         "test"
     ],
-	"port": "$env:PORT"
+	"port": "$env:PORT",
+	"cookies": {
+		"secure": true,
+		"sameSite": "None"
+	}
 }

@@ -5,7 +5,7 @@ import cookieSignature from 'cookie-signature';
  */
 export default (server) => (req, res, next) => {
 	const { cookies } = server.getConfig();
-	const { secret, domain } = cookies;
+	const { secret, domain, sameSite } = cookies;
 	let secure = req.protocol !== 'http';
 	if (typeof cookies.secure === 'boolean') {
 		secure = cookies.secure;
@@ -32,6 +32,7 @@ export default (server) => (req, res, next) => {
 				secure,
 				httpOnly,
 				domain: req.cookieDomain || domain,
+				sameSite,
 				...options,
 			},
 		);

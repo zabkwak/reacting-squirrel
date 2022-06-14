@@ -59,6 +59,7 @@ export default class Component extends Base {
 
 	/**
 	 * Gets the application context.
+	 * @returns {Application}
 	 */
 	getContext() {
 		return Application;

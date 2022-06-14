@@ -21,6 +21,7 @@
 - `Server.getPluginByName` method.
 - React 17.
 - `CachedDataComponent` component.
+- `SameSite` flag in cookies.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.

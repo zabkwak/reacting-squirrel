@@ -100,6 +100,7 @@ class Server {
 			secure: null,
 			httpOnly: null,
 			domain: null,
+			sameSite: null,
 		},
 		scripts: [],
 		styles: [],

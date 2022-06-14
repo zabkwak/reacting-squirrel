@@ -128,6 +128,11 @@ export interface IAppConfig {
 		 * @default null
 		 */
 		domain?: string;
+		/**
+		 * SameSite flag for the cookies.
+		 * @default null
+		 */
+		sameSite?: string;
 	};
 	/**
 	 * List of scripts loaded in the base html.

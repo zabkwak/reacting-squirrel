@@ -38,4 +38,8 @@ export default class Page extends SocketComponent {
 	setTitle(title) {
 		this.getContext().setTitle(title);
 	}
+
+	getTitle() {
+		return this.getContext().getTitle();
+	}
 }
