@@ -1,6 +1,6 @@
 {
 	"name": "reacting-squirrel",
-	"version": "1.0.0-beta.36",
+	"version": "1.0.0-beta.37",
 	"description": "React and Express framework for creating web apps.",
 	"main": "./app/index.js",
 	"types": "./app/index.d.ts",
@@ -25,7 +25,7 @@
 	"author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
-		"@babel/core": "^7.18.2",
+		"@babel/core": "^7.18.5",
 		"@babel/plugin-proposal-decorators": "^7.18.2",
 		"@babel/plugin-proposal-private-property-in-object": "^7.17.12",
 		"@babel/plugin-transform-async-to-generator": "^7.17.12",
@@ -69,11 +69,11 @@
 		"style-loader": "^3.3.1",
 		"texting-squirrel": "^1.0.1",
 		"ts-loader": "^9.3.0",
-		"typescript": "^4.7.2",
+		"typescript": "^4.7.4",
 		"uniqid": "^5.4.0",
 		"universal-cookie": "^4.0.3",
 		"url": "^0.11.0",
-		"webpack": "^5.72.1"
+		"webpack": "^5.73.0"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.17.10",
@@ -83,7 +83,7 @@
 		"@babel/plugin-transform-react-jsx": "^7.17.12",
 		"@babel/register": "^7.17.7",
 		"@material-ui/core": "^4.12.4",
-		"@types/react": "^17.0.45",
+		"@types/react": "^17.0.47",
 		"@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
 		"bootstrap": "^4.6.1",
 		"chai": "^4.3.6",
@@ -91,7 +91,7 @@
 		"dotenv": "^16.0.1",
 		"enzyme": "^3.11.0",
 		"enzyme-adapter-react-16": "^1.15.6",
-		"eslint": "^8.16.0",
+		"eslint": "^8.18.0",
 		"eslint-config-airbnb": "^19.0.4",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-jsx-a11y": "^6.5.1",
@@ -106,7 +106,7 @@
 		"request": "^2.88.2",
 		"run-script-os-fix": "^1.0.4",
 		"source-map-support": "^0.5.21",
-		"typedoc": "^0.22.15"
+		"typedoc": "^0.22.17"
 	},
 	"peerDependencies": {
 		"@types/react": "^17.0.39",
