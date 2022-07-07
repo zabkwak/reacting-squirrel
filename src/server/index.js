@@ -77,7 +77,6 @@ class Server {
 	/** @type {Route[]} */
 	_routes = [];
 
-	/** @type Object.<string, Route> */
 	_routeCallbacks = {};
 
 	_errorPage = null;
@@ -463,8 +462,18 @@ class Server {
 		return this;
 	}
 
-	registerRouteCallback(route, callback) {
-		this._routeCallbacks[route] = callback;
+	registerRouteCallback(method, route, callback) {
+		if (typeof route === 'function') {
+			callback = route;
+			route = method;
+			method = 'get';
+		}
+		const key = `${method || 'get'} ${route}`;
+		this._routeCallbacks[key] = {
+			method,
+			route,
+			callback,
+		};
 		return this;
 	}
 
@@ -720,12 +729,13 @@ class Server {
 				routes, components, socketClassDir, errorPage, componentProvider, error,
 			} = this._rsConfig;
 			if (routes) {
-				Utils.registerRoutes(this, routes.map((route) => (
-					{
+				Utils.registerRoutes(this, routes.map((route) => {
+					const key = `${(route.route || 'GET').toLowerCase()} ${route.route}`;
+					return {
 						...route,
-						callback: this._routeCallbacks[route.route],
-					}
-				)));
+						callback: this._routeCallbacks[key]?.callback,
+					};
+				}));
 			}
 			if (components) {
 				Utils.registerComponents(this, components);
@@ -785,8 +795,9 @@ class Server {
 					this._setRoute(route);
 					return;
 				}
-				if (typeof this._routeCallbacks[route.spec] === 'function') {
-					this._setRoute({ ...route, callback: this._routeCallbacks[route.spec] });
+				const callback = this._routeCallbacks[`${route.method} ${route.spec}`]?.callback;
+				if (typeof callback === 'function') {
+					this._setRoute({ ...route, callback });
 					return;
 				}
 				this._warn(`Content component for ${route.spec} no set.`);

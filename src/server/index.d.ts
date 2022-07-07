@@ -638,7 +638,7 @@ export abstract class Plugin {
 	/**
 	 * Gets the list of route callbacks.
 	 */
-	protected getRouteCallbacks(): Array<{ route: string, callback: RouteCallback }>;
+	protected getRouteCallbacks(): Array<{ route: string, method?: HttpMethod, callback: RouteCallback }>;
 
 	/**
 	 * Gets the list of callbacks called before the route execution.
@@ -886,12 +886,20 @@ export default class Server {
 	): this;
 
 	/**
-	 * Registers callback to route registered with rsconfig.
+	 * Registers callback to route registered with rsconfig for GET method.
 	 *
 	 * @param route Route spec.
 	 * @param callback Callback to call when the route is called.
 	 */
 	registerRouteCallback(route: string, callback: RouteCallback): this;
+	/**
+	 * Registers callback to route registered with rsconfig.
+	 *
+	 * @param method HTTP method.
+	 * @param route Route spec.
+	 * @param callback Callback to call when the route is called.
+	 */
+	 registerRouteCallback(method: HttpMethod, route: string, callback: RouteCallback): this;
 
 	registerSocketClass(cls: typeof SocketClass): this;
 	/**

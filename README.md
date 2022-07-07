@@ -208,6 +208,7 @@ The schema for the file is located in `[pathToModule]/schemas/rsconfig.schema.js
 ```json
 // rsconfig.json
 {
+	"$schema": "./node_modules/reacting-squirrel/schemas/rsconfig.schema.json",
     "routes": [
         {
             "route": "/",
@@ -227,7 +228,7 @@ The schema for the file is located in `[pathToModule]/schemas/rsconfig.schema.js
 	"errorPage": "error-page"
 }
 ```
-App config can be also be defined in the rsconfig.
+Additional app config can be also be defined in the rsconfig.
 
 #### ENV vars
 Values in rsconfig that have `$env:[value]|[defaultValue]` prefix are replaced with `process.env[value]` in the server start.  

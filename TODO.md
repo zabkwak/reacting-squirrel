@@ -1,8 +1,7 @@
 # TODO
-- sameSite cookie flag
 - access log
 - register of Page provider
-- register route callback for method
+- register route callback for HTTP method
 
 ## Backlog
 - Serverless production.

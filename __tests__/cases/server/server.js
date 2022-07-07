@@ -240,9 +240,17 @@ describe('Start of the server', () => {
 		server
 			.registerRoute('get', '/', 'pages/home', 'Home')
 			.registerRoute('get', '/user', 'pages/user', 'User', true)
+			.registerRoute('get', '/callback')
+			.registerRoute('post', '/callback')
 			.registerComponent('components/test', 'test')
 			.registerSocketEvent('test', async () => {
 				return 'test';
+			})
+			.registerRouteCallback('/callback', (req, res) => {
+				res.end('GET callback');
+			})
+			.registerRouteCallback('post', '/callback', (req, res) => {
+				res.end('POST callback');
 			})
 			.start((err) => {
 				expect(err).to.be.undefined;
@@ -309,6 +317,28 @@ describe('Start of the server', () => {
 		}, (err, res, body) => {
 			expect(err).to.be.equal(null);
 			expect(res.statusCode).to.be.equal(200);
+			done();
+		});
+	});
+
+	it('checks if GET callback is correctly registered', (done) => {
+		request.get({
+			url: `${URL}/callback`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body).to.be.equal('GET callback');
+			done();
+		});
+	});
+
+	it('checks if POST callback is correctly registered', (done) => {
+		request.post({
+			url: `${URL}/callback`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body).to.be.equal('POST callback');
 			done();
 		});
 	});

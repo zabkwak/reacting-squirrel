@@ -8,7 +8,8 @@ export default class Plugin {
 		this.getEntryInjections().forEach((injection) => server.injectToEntry(injection));
 		this.getSocketClasses().forEach((cls) => server.registerSocketClass(cls));
 		this.getSocketEvents().forEach(({ event, listener }) => server.registerSocketEvent(event, listener));
-		this.getRouteCallbacks().forEach(({ route, callback }) => server.registerRouteCallback(route, callback));
+		this.getRouteCallbacks()
+			.forEach(({ route, callback, method }) => server.registerRouteCallback(method, route, callback));
 		this.getBeforeExecutions().forEach(({ spec, callback }) => server.registerBeforeExecution(spec, callback));
 		this.getMiddlewares().forEach(({ afterRoutes, callback }) => server.registerMiddleware(callback, afterRoutes));
 		this.getPages().forEach(({
