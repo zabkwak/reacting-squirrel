@@ -127,7 +127,7 @@ import Server from 'reacting-squirrel/server';
 
 const app = new Server();
 
-// On the route '/' will be rendered the content component located in {config.appDir}/home with Home title.
+// On the route '/' will be rendered the content component located in {config.appDir}/home with 'Home' title.
 app.registerRoute('get', '/', 'home', 'Home');
 
 app.start();
@@ -156,6 +156,11 @@ export default class User extends SocketClass {
         // sends the authorized user data after the 'user.load' socket request
         next(null, this.getUser());
     }
+
+	async updateUser(socket, data) {
+		await doSomeAsyncOperation();
+		return this.getUser();
+	}
 }
 
 // ./index.js
@@ -281,7 +286,7 @@ Socket.emit('file.upload', undefined, { file }, (progress) => console.log(progre
 #### Limitations
 The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.
 
-## Decorators (experimental)
+## Decorators
 ### SocketClass
 Decorators are designed for the the `SocketClass` methods.
 #### broadcast
@@ -294,7 +299,7 @@ The method is not registered as socket method and cannot be called from the clie
 #### castResponse
 The response is casted to defined types using [runtime-type](https://www.npmjs.com/package/runtime-type) module.
 
-## Plugins (experimental)
+## Plugins
 The plugins can be registered with `Server.registerPlugin` method. The plugin should extent `Plugin` class in the module.
 Plugin can:
 - Inject script to the entry file.
