@@ -1,7 +1,6 @@
 # TODO
 - access log
 - register of Page provider
-- register route callback for HTTP method
 
 ## Backlog
 - Serverless production.

@@ -119,6 +119,15 @@ The simple server can be started over the CLI using `./node_modules/.bin/rs-star
 ### Providers
 All components rendered by the application can be wrapped with `Provider` such as `Context.Provider` or `ThemeProvider`. Only thing needed is to register the provider with server method, rsconfig or plugin.
 
+### Typescript
+There can be issues with typings in the `app` directory because the IDE can't find `tsconfig.json` in `app/~rs` directory.
+Workaround can be simply create the `tsconfig.json` in `app` directory that extends the generated configuration.
+```json
+{
+	"extends": "./~rs/tsconfig.json"
+}
+```
+
 ## Core functions
 ### Routes register
 The routes are registered on the server-side. The module is using express based routes registering.
@@ -152,14 +161,17 @@ import { SocketClass } from 'reacting-squirrel/server';
 
 export default class User extends SocketClass {
 
+	// This method can be called from the client as 'user.load'
+	// The approach with 'next' callback is not recommended.
     load(socket, data, next) {
         // sends the authorized user data after the 'user.load' socket request
-        next(null, this.getUser());
+        next(null, socket.getSession().getUser());
     }
 
+	// This method can be called from the client as 'user.updateUser'
 	async updateUser(socket, data) {
 		await doSomeAsyncOperation();
-		return this.getUser();
+		return socket.getSession().getUser().getUser();
 	}
 }
 
