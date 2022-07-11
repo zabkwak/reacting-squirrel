@@ -731,9 +731,11 @@ class Server {
 			if (routes) {
 				Utils.registerRoutes(this, routes.map((route) => {
 					const key = `${(route.route || 'GET').toLowerCase()} ${route.route}`;
+					const callback = this._tryRequireModule(route.callback)
+						|| this._routeCallbacks[key]?.callback;
 					return {
 						...route,
-						callback: this._routeCallbacks[key]?.callback,
+						callback,
 					};
 				}));
 			}

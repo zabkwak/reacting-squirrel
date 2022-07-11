@@ -49,6 +49,10 @@
 						"type": "string",
 						"title": "Relative path to the custom layout file from the application root.",
 						"default": null
+					},
+					"callback": {
+						"type": "string",
+						"title": "Relative path to the file containing callback function for the route."
 					}
 				}
 			}

@@ -50,6 +50,12 @@
 			"route": "/large-data",
 			"component": "large-data",
 			"title": "Large data"
+		},
+		{
+			"route": "/callback",
+			"component": null,
+			"title": "Callback",
+			"callback": "__tests__app__/dev/dist/callbacks/callback"
 		}
     ],
     "components": [

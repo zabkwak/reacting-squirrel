@@ -23,6 +23,7 @@
 - `CachedDataComponent` component.
 - `SameSite` flag in cookies.
 - Option to register http method in route callbacks in `Server.registerRouteCallback`.
+- Route callback can be registered as file in `rsconfig.json`.
 ### Breaking changes
 - Removed `Button` component.
 - Removed `res.render` function.
