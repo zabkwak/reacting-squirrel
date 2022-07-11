@@ -1334,55 +1334,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		this._compileStylesAsync()
 			.then(cb)
 			.catch(cb);
-		/*
-		this._log('Compiling styles');
-		const {
-			cssDir, staticDir, mergeStyles, sourceStylesDir,
-		} = this._config;
-		const dir = path.resolve(`${staticDir}/${cssDir}`);
-		const stylesPath = `${dir}/rs-app.css`;
-		if (fs.existsSync(stylesPath)) {
-			fs.unlinkSync(stylesPath);
-		}
-		const compiler = new StylesCompiler([
-			path.resolve(__dirname, './assets/loader.scss'),
-			...mergeStyles,
-			sourceStylesDir,
-			dir,
-		], dir, 'rs-app.css');
-		compiler.compile((err) => {
-			if (err) {
-				cb(err);
-				return;
-			}
-			const files = fs.readdirSync(dir);
-			try {
-				files.forEach((file) => {
-					if (file.indexOf('rs-tmp') >= 0) {
-						fs.unlinkSync(`${dir}/${file}`);
-					}
-					if (file.indexOf('cs-tmp') >= 0) {
-						fs.unlinkSync(`${dir}/${file}`);
-					}
-				});
-			} catch (e) {
-				this._error(e);
-			}
-			fs.readFile(stylesPath, (err, css) => {
-				if (err) {
-					cb(err);
-					return;
-				}
-				postcss([autoprefixer(this._config.autoprefixer)])
-					.process(css, { from: stylesPath })
-					.then((result) => {
-						fs.writeFile(stylesPath, result.css, cb);
-					}).catch((err) => {
-						process.nextTick(() => cb(err));
-					});
-			});
-		});
-		*/
 	}
 
 	async _compileStylesAsync() {
