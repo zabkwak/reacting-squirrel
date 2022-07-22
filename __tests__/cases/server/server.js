@@ -242,6 +242,8 @@ describe('Start of the server', () => {
 			.registerRoute('get', '/user', 'pages/user', 'User', true)
 			.registerRoute('get', '/callback')
 			.registerRoute('post', '/callback')
+			.registerRoute('get', '/callback/promise')
+			.registerRoute('post', '/callback/promise')
 			.registerComponent('components/test', 'test')
 			.registerSocketEvent('test', async () => {
 				return 'test';
@@ -251,6 +253,12 @@ describe('Start of the server', () => {
 			})
 			.registerRouteCallback('post', '/callback', (req, res) => {
 				res.end('POST callback');
+			})
+			.registerRouteCallback('/callback/promise', async () => {
+				return { title: 'Callback promise' };
+			})
+			.registerRouteCallback('post', '/callback/promise', async (req, res) => {
+				res.end('Callback promise');
 			})
 			.start((err) => {
 				expect(err).to.be.undefined;
@@ -339,6 +347,28 @@ describe('Start of the server', () => {
 			expect(err).to.be.equal(null);
 			expect(res.statusCode).to.be.equal(200);
 			expect(body).to.be.equal('POST callback');
+			done();
+		});
+	});
+
+	it('checks if GET callback with promise returns the layout', (done) => {
+		request.get({
+			url: `${URL}/callback/promise`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body.includes('<title>Callback promise</title>'));
+			done();
+		});
+	});
+
+	it('checks if POST callback with promise is correctly registered', (done) => {
+		request.post({
+			url: `${URL}/callback/promise`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body).to.be.equal('Callback promise');
 			done();
 		});
 	});

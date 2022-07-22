@@ -53,7 +53,6 @@
 		},
 		{
 			"route": "/callback",
-			"component": null,
 			"title": "Callback",
 			"callback": "__tests__app__/dev/dist/callbacks/callback"
 		}

@@ -36,13 +36,19 @@ export interface IResponse extends express.Response {
 	setCookie: (name: string, value: any, options?: express.CookieOptions) => void;
 }
 
-export type RouteCallback = (req: IRequest, res: IResponse, next: (err?: Error, data?: {
+export interface IRouteCallbackData {
 	scripts?: Array<string>;
 	styles?: Array<string>;
 	data?: any;
 	title?: string;
 	layout?: typeof Layout;
-}) => void) => void;
+}
+
+export type RouteCallback = (
+	req: IRequest,
+	res: IResponse,
+	next: (err?: Error, data?: IRouteCallbackData) => void,
+) => void | Promise<IRouteCallbackData | void>;
 
 /**
  * Server configuration.
@@ -899,7 +905,7 @@ export default class Server {
 	 * @param route Route spec.
 	 * @param callback Callback to call when the route is called.
 	 */
-	 registerRouteCallback(method: HttpMethod, route: string, callback: RouteCallback): this;
+	registerRouteCallback(method: HttpMethod, route: string, callback: RouteCallback): this;
 
 	registerSocketClass(cls: typeof SocketClass): this;
 	/**

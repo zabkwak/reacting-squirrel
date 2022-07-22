@@ -1109,14 +1109,37 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				res.renderLayout(data);
 				return;
 			}
-			// TODO the callback returning a Promise
-			route.callback(req, res, (err, d = {}) => {
+			let dataSent = false;
+			const p = route.callback(req, res, (err, d = {}) => {
+				this._warn('Using callback functions in the route execution is deprecated. Use Promises.');
+				if (dataSent) {
+					return;
+				}
+				dataSent = true;
 				if (err) {
 					next(err);
 					return;
 				}
+				if (res.headerSent) {
+					return;
+				}
 				res.renderLayout(_.merge(data, d));
 			});
+			if (p instanceof Promise) {
+				try {
+					const d = await p;
+					if (dataSent) {
+						return;
+					}
+					dataSent = true;
+					if (res.headersSent) {
+						return;
+					}
+					res.renderLayout(_.merge(data, d));
+				} catch (error) {
+					next(error);
+				}
+			}
 		});
 	}
 
