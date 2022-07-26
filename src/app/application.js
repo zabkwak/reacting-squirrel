@@ -331,6 +331,7 @@ class Application extends CallbackEmitter {
 
 	setLocale(locale) {
 		if (locale === this._defaultLocale) {
+			// eslint-disable-next-line no-param-reassign
 			locale = 'default';
 		}
 		if (Text.getDictionary(locale)) {

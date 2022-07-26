@@ -13,7 +13,22 @@ npm install reacting-squirrel --save
 ```
 
 ## Usage
+For base simple app is only required to run server (with code or cli) and create one route. If `createMissingComponents` option is set to `true` the components is not needed to be created manually. For development is recommended set `dev` option to `true`.
+
+The server will create all necessary files and starts the webpack process. If the app is in `DEV` mode, watcher is also started.
+
 ### Simple app
+Simple app structure
+```
+project (root)
+|-- app (directory for client app)
+	|-- ~rs (all RS internal files)
+	|-- res (resources)
+		|-- text.json (text dictionary for default locale)
+	|-- home.js (Home page)
+|-- public (directory for static files)
+|-- index.js (the index file which runs the server)
+```
 ```javascript
 // ./index.js
 import Server from 'reacting-squirrel/server';

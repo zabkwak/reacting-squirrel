@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import '@babel/polyfill';
@@ -1378,6 +1379,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * Combines all css files in css directory to rs-app.css in css directory.
 	 *
 	 * @param {function(Error):void} cb Callback after the compilation is finished.
+	 * @deprecated
 	 */
 	_compileStyles(cb = () => { }) {
 		this._compileStylesAsync()
