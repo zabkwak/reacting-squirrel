@@ -154,6 +154,8 @@ class Server {
 
 	_componentProvider = null;
 
+	_componentErrorHandler = null;
+
 	_rsConfig = null;
 
 	_beforeExecution = [];
@@ -523,6 +525,14 @@ class Server {
 		return this;
 	}
 
+	registerComponentErrorHandler(componentPath) {
+		const { appDir } = this._config;
+		this._componentErrorHandler = !path.isAbsolute(componentPath)
+			? path.resolve(`${appDir}/${componentPath}`)
+			: componentPath;
+		return this;
+	}
+
 	registerErrorPage(componentPath) {
 		const { appDir } = this._config;
 		this._errorPage = path.resolve(`${appDir}/${componentPath}`);
@@ -726,7 +736,7 @@ class Server {
 	_registerRsConfig() {
 		if (this._rsConfig) {
 			const {
-				routes, components, socketClassDir, errorPage, componentProvider, error,
+				routes, components, socketClassDir, errorPage, componentProvider, error, componentErrorHandler,
 			} = this._rsConfig;
 			if (routes) {
 				Utils.registerRoutes(this, routes.map((route) => {
@@ -753,6 +763,9 @@ class Server {
 			}
 			if (componentProvider) {
 				this.registerComponentProvider(componentProvider);
+			}
+			if (componentErrorHandler) {
+				this.registerComponentErrorHandler(componentErrorHandler);
 			}
 		}
 	}
@@ -896,6 +909,15 @@ class Server {
 				componentProviderImport = `import ComponentProvider from '${p}'`;
 			}
 		}
+		let errorHandlerImport = '';
+		if (this._componentErrorHandler) {
+			if (!this._componentExists(this._componentErrorHandler, true)) {
+				this._warn(`Provider ${this._componentErrorHandler} doesn't exist.`);
+			} else {
+				const p = path.relative(path.resolve(this._getRSDirPath()), this._componentErrorHandler).replace(/\\/g, '/');
+				errorHandlerImport = `import ErrorHandler from '${p}'`;
+			}
+		}
 		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/entry.js`,
 			`import './nonce';
@@ -906,6 +928,7 @@ import routingMap from './router.map';
 import socketEvents from './socket.map';
 import components from './component.map';
 ${componentProviderImport}
+${errorHandlerImport}
 
 // Import and register default dictionary.
 import defaultDictionary from '../res/text.json';
@@ -921,6 +944,7 @@ if (Application.getCookie(Application.LOCALE_COOKIE_NAME)) {
 }
 Application.setLocale(dictionary);
 ${componentProviderImport ? 'Application.registerComponentProvider(ComponentProvider);' : ''}
+${errorHandlerImport ? 'Application.registerErrorhandler(ErrorHandler);' : ''}
 
 // Register data to application and start it.
 Application

@@ -3,25 +3,35 @@ import * as url from 'url';
 import Type, { Model } from 'runtime-type';
 import { CookieSetOptions } from 'universal-cookie';
 
-declare type ApplicationEventMap = {
+declare type TApplicationEventMap = {
 	'popstate': any;
 	'start': undefined;
 	'refresh': undefined;
 	'pagerender': Page;
 	'locale.set': string;
-};
+	'log': {
+		severity: 'info' | 'warn' | 'error';
+		message: string;
+		args: any;
+		component: boolean;
+	};
+}
 
-declare type SocketEventMap = {
+declare type TSocketEventMap = {
 	'event-error': { event: string, error: any };
 	'connecting': undefined;
 	'connected': undefined;
 	'disconnected': undefined;
-};
+}
+
+declare type TEventMap = {
+	[key: string]: any;
+}
 
 /**
  * Base client application.
  */
-declare class Application extends CallbackEmitter<ApplicationEventMap> {
+declare class Application extends CallbackEmitter<TApplicationEventMap> {
 
 	public LOCALE_COOKIE_NAME: string;
 
@@ -268,6 +278,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 
 	/**
 	 * Logs the message to the console using `console.log` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`.
 	 *
 	 * @param message 
 	 * @param optionalParams 
@@ -276,6 +287,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 
 	/**
 	 * Logs the message to the console using `console.warn` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`.
 	 *
 	 * @param message 
 	 * @param optionalParams 
@@ -284,11 +296,21 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 
 	/**
 	 * Logs the message to the console using `console.error` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`.
 	 *
 	 * @param message 
 	 * @param optionalParams 
 	 */
 	public logError(message: string, ...optionalParams: Array<any>): void;
+
+	/**
+	 * Logs the message to the console using `console.error` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`. The event is flagged as `component: true`.
+	 *
+	 * @param message 
+	 * @param optionalParams 
+	 */
+	public logComponentError(message: string, ...optionalParams: Array<any>): void;
 }
 
 /**
@@ -434,7 +456,7 @@ declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
 /**
  * Class for socket communication.
  */
-declare class Socket extends CallbackEmitter<SocketEventMap> {
+declare class Socket extends CallbackEmitter<TSocketEventMap> {
 
 	/** Unknown state of the socket. */
 	public readonly STATE_NONE: 'none';
@@ -730,9 +752,6 @@ declare class Storage {
 	public clear(): void;
 }
 
-export type EventMap = {
-	[key: string]: any;
-}
 /**
  * Simple class to handle callbacks.
  * @typeparam T Event map for the listeners as object with event name and the type of the arguments in the callback.
@@ -750,7 +769,7 @@ export type EventMap = {
  * })
  * ```
  */
-export class CallbackEmitter<T = EventMap> {
+export class CallbackEmitter<T = TEventMap> {
 
 	/**
 	 * Registers the listener of the event.
@@ -1534,4 +1553,10 @@ export {
 	ST as Storage,
 	Type,
 	Model,
+	// Types
+	TEventMap,
+	/** @deprecated */
+	TEventMap as EventMap,
+	TApplicationEventMap,
+	TSocketEventMap,
 }

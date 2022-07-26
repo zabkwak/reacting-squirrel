@@ -948,6 +948,13 @@ export default class Server {
 	registerComponentProvider(path: string): this;
 
 	/**
+	 * Registers the component error handler. It catches all react errors.
+	 *
+	 * @param path Absolute path or relative path to the error handler.
+	 */
+	 registerComponentErrorHandler(path: string): this;
+
+	/**
 	 * Registers the error page.
 	 * 
 	 * @param componentPath Relative path to the component from the app directory.

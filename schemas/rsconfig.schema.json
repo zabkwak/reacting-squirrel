@@ -95,7 +95,12 @@
 		},
 		"componentProvider": {
 			"type": "string",
-			"title": "Relative path to the ContentProvider from the app directory.",
+			"title": "Relative path to the Component Provider from the app directory.",
+			"default": null
+		},
+		"componentErrorHandler": {
+			"type": "string",
+			"title": "Relative path to the Component Error Handler from the app directory.",
 			"default": null
 		},
 		"port": {

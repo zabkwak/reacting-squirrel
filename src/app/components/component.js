@@ -1,5 +1,6 @@
 import React, { Component as Base } from 'react';
 
+// eslint-disable-next-line import/no-cycle
 import Application from '../application';
 import Text from './text';
 

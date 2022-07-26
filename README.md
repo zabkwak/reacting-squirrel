@@ -290,7 +290,7 @@ The locale can be changed on the client side using `Application.setLocale` metho
 
 ## Socket communication
 The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. 
-### Uploading files (experimental)
+### Uploading files
 File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the `pingTimeout`. The file is sent to the server in chunks and converted to buffer on the server side.
 ```javascript
 const file = 'get somehow a File instance';
@@ -298,6 +298,25 @@ Socket.emit('file.upload', undefined, { file }, (progress) => console.log(progre
 ```
 #### Limitations
 The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.
+
+## Error handling
+### Server
+Route errors are handled in error middleware and sent to `error.handler` from app config. If no handler is defined error page is rendered.
+### App
+#### Webpack watcher
+In `DEV` mode all code error is checked with webpack watcher. All errors (if any) are logged in stdout and sent to client with `webpack.stats` event.
+#### Component
+All components are wrapped in `ErrorHandler` that can be also overridden in app config with `componentErrorHandler`. 
+#### Application
+The application has logging methods (`log[Error|Warning|Info]`) that emits `log` event. All client logging must be done manually.
+##### Example
+```javascript
+Application.addListener('log', ({ severity, component, message, args }) => {
+	if (severity === 'error' && !component) {
+		// Log the error in logging service
+	}
+});
+```
 
 ## Decorators
 ### SocketClass

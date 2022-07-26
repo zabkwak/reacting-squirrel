@@ -4,6 +4,10 @@ import Application, { Text, Socket, SocketRequest } from '../../src/app';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles/app.css';
 
+Application.addListener('log', (app, data) => {
+	console.log('LOG', data.severity, { data });
+});
+
 TagManager.initialize({
 	gtmId: 'GTM-KQ3XSLZ',
 });

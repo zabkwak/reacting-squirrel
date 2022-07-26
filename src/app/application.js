@@ -5,6 +5,8 @@ import Cookies from 'universal-cookie';
 
 import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';
+// eslint-disable-next-line import/no-cycle
+import ErrorHandler from './components/error-handler';
 
 /**
  * Base class for client application context.
@@ -32,6 +34,8 @@ class Application extends CallbackEmitter {
 	_cookies = new Cookies();
 
 	_provider = null;
+
+	_errorHandler = null;
 
 	_locale = 'default';
 
@@ -157,6 +161,12 @@ class Application extends CallbackEmitter {
 		return this;
 	}
 
+	registerErrorHandler(errorHandler) {
+		this._checkStartedState();
+		this._errorHandler = errorHandler;
+		return this;
+	}
+
 	registerLocales(defaultLocale, accepted) {
 		this._defaultLocale = defaultLocale;
 		this._locales = accepted;
@@ -249,7 +259,18 @@ class Application extends CallbackEmitter {
 	 */
 	renderComponent(component, target, callback = () => { }) {
 		const Provider = this._provider || React.Fragment;
-		ReactDOM.render(<Provider>{component}</Provider>, target, callback);
+		const EH = this._errorHandler || ErrorHandler;
+		ReactDOM.render(
+			(
+				<EH>
+					<Provider>
+						{component}
+					</Provider>
+				</EH>
+			),
+			target,
+			callback,
+		);
 	}
 
 	// #endregion
@@ -350,6 +371,8 @@ class Application extends CallbackEmitter {
 			// eslint-disable-next-line no-console
 			console.log(message, ...optionalParams);
 		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'info', message, component: false, args: optionalParams });
 	}
 
 	logWarning(message, ...optionalParams) {
@@ -357,6 +380,8 @@ class Application extends CallbackEmitter {
 			// eslint-disable-next-line no-console
 			console.warn(message, ...optionalParams);
 		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'warn', message, component: false, args: optionalParams });
 	}
 
 	logError(message, ...optionalParams) {
@@ -364,6 +389,17 @@ class Application extends CallbackEmitter {
 			// eslint-disable-next-line no-console
 			console.error(message, ...optionalParams);
 		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'error', message, component: false, args: optionalParams });
+	}
+
+	logComponentError(message, ...optionalParams) {
+		if (this.DEV) {
+			// eslint-disable-next-line no-console
+			console.error(message, ...optionalParams);
+		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'error', message, component: true, args: optionalParams });
 	}
 
 	_renderRegisteredComponents(refresh = false) {
