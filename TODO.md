@@ -1,6 +1,7 @@
 # TODO
 - access log
 - register of Page provider
+- passing metadata to layout
 
 ## Backlog
 - Serverless production.

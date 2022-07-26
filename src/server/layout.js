@@ -113,6 +113,7 @@ export default class Layout extends Component {
 			<>
 				<script
 					type="text/javascript"
+					// eslint-disable-next-line react/no-danger
 					dangerouslySetInnerHTML={{
 						// eslint-disable-next-line max-len
 						__html: `var req=new XMLHttpRequest;req.addEventListener("progress",function(e){if(e.lengthComputable){var t=e.loaded/e.total;document.getElementById("rs-bundle-progress").textContent=Math.round(100*t)+"%"}},!1),req.addEventListener("load",function(e){e.target;var t=document.createElement("script");t.id="bundle",t.src="${this._createPath(bundle, version)}",document.getElementsByTagName("head")[0].appendChild(t)},!1),req.open("GET","${this._createPath(bundle, version)}"),req.send();`,
@@ -163,9 +164,7 @@ export default class Layout extends Component {
 	renderMeta() {
 		const { nonce } = this.props;
 		return (
-			<>
-				<meta property="csp-nonce" content={nonce} />
-			</>
+			<meta property="csp-nonce" content={nonce} />
 		);
 	}
 
