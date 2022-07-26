@@ -77,7 +77,7 @@ export default class Home extends Page {
 
 	render() {
 		const { user } = this.state;
-		throw new Error('test')
+		// throw new Error('test');
 		return (
 			<div className="home-wrapper">
 				<Text tag="h1" dictionaryKey="home" />

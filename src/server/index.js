@@ -629,18 +629,19 @@ class Server {
 		try {
 			this._log(`App starting DEV: ${dev}`);
 			await this._prepare();
+			this._webpack = WebpackConfig(this);
+			this._setMiddlewares(true);
+			if (!skipBundle) {
+				await this._bundleAndStart();
+			} else {
+				this._bundling = false;
+				await this._startServer();
+			}
 		} catch (e) {
 			process.nextTick(() => cb(e));
 			return;
 		}
-		this._webpack = WebpackConfig(this);
-		this._setMiddlewares(true);
-		if (!skipBundle) {
-			this._bundleAndStart(cb);
-			return;
-		}
-		this._bundling = false;
-		this._startServer(cb);
+		cb();
 	}
 
 	/**
@@ -1193,98 +1194,85 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 
 	/**
 	 * Starts the webpack and the express server. If the app is in dev mode the webpack watcher is started.
-	 *
-	 * @param {function} cb Callback to call after the server start.
 	 */
-	_bundleAndStart(cb) {
+	async _bundleAndStart() {
 		const { bundleAfterServerStart } = this._config;
 		if (!bundleAfterServerStart) {
-			this._bundle(true, cb);
+			await this._bundle();
+			await this._startServer();
 			return;
 		}
-		this._startServer((err) => {
-			if (err) {
-				cb(err);
-				return;
-			}
-			this._bundle(false, cb);
-		});
+		await this._bundle();
+		await this._startServer();
 	}
 
-	_bundle(startServer, cb) {
+	async _bundle() {
 		const { dev } = this._config;
 		this._bundling = true;
 		if (dev) {
-			this._compileStyles((err) => {
-				if (err) {
-					cb(err);
-					return;
-				}
-				this._log('Starting webpack');
-				let listening = false;
-				// eslint-disable-next-line no-shadow
-				this._webpack.watch({ aggregateTimeout: 500 }, (err, stats) => {
-					if (err) {
-						this._error(err);
-						return;
-					}
-					if (listening) {
-						// eslint-disable-next-line no-shadow
-						this._compileStyles((err) => {
-							if (err) {
-								this._error(err);
-							}
-						});
-					}
-					this._log(stats.toJson('minimal'));
-					Socket.broadcast('webpack.stats', stats.toJson('minimal'));
-					if (!listening) {
-						listening = true;
-						this._bundling = false;
-						if (startServer) {
-							this._startServer(cb);
-						} else {
-							cb();
-						}
-					}
-				});
-			});
-			return;
+			await this._compileStylesAsync();
+			this._log('Starting webpack');
+			await this._startWatcher();
+		} else {
+			this._log('Starting webpack');
+			await this._startWebpack();
+			await this._compileStylesAsync();
 		}
-		this._log('Starting webpack');
-		// eslint-disable-next-line no-shadow
-		this._webpack.run((err, stats) => {
-			if (err) {
-				cb(err);
-				return;
-			}
-			const minimalStats = stats.toJson('minimal');
-			this._log(minimalStats);
-			const { errors } = minimalStats;
-			if (errors && errors.length) {
-				cb(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
-				return;
-			}
-			this._compileStyles((err) => {
-				if (err) {
-					cb(err);
-					return;
-				}
-				this._bundling = false;
-				if (startServer) {
-					this._startServer(cb);
-				} else {
-					cb();
-				}
+		this._bundling = false;
+	}
+
+	_startServer() {
+		const { port } = this._config;
+		return new Promise((resolve, reject) => {
+			this._server.listen(port, () => {
+				this._log(`App listening on ${port}`);
+				resolve();
 			});
 		});
 	}
 
-	_startServer(cb) {
-		const { port } = this._config;
-		this._server.listen(port, () => {
-			this._log(`App listening on ${port}`);
-			cb();
+	_startWebpack() {
+		return new Promise((resolve, reject) => {
+			this._webpack.run((err, stats) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+				const minimalStats = stats.toJson('minimal');
+				this._log(minimalStats);
+				const { errors } = minimalStats;
+				if (errors && errors.length) {
+					reject(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
+					return;
+				}
+				resolve();
+			});
+		});
+	}
+
+	_startWatcher() {
+		return new Promise((resolve) => {
+			let listening = false;
+			// eslint-disable-next-line no-shadow
+			this._webpack.watch({ aggregateTimeout: 500 }, async (err, stats) => {
+				if (err) {
+					this._error(err);
+					return;
+				}
+				if (listening) {
+					try {
+						await this._compileStylesAsync();
+					} catch (error) {
+						this._error(error);
+					}
+				}
+				this._log(stats.toJson('minimal'));
+				Socket.broadcast('webpack.stats', stats.toJson('minimal'));
+				if (!listening) {
+					listening = true;
+					resolve();
+				}
+			});
 		});
 	}
 
@@ -1327,6 +1315,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			cookie: false,
 			...this._config.socketIO,
 		});
+		// eslint-disable-next-line no-underscore-dangle
 		this.Session._server = this;
 		try {
 			Text.addDictionary(require(path.resolve(appDir, 'res', 'text.json')));
@@ -1373,18 +1362,6 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			.forEach(({ callback }) => this._app.use(callback(this)));
 		this._app.use('*', PageNotFoundMiddleware());
 		this._app.use(ErrorMiddleware(this));
-	}
-
-	/**
-	 * Combines all css files in css directory to rs-app.css in css directory.
-	 *
-	 * @param {function(Error):void} cb Callback after the compilation is finished.
-	 * @deprecated
-	 */
-	_compileStyles(cb = () => { }) {
-		this._compileStylesAsync()
-			.then(cb)
-			.catch(cb);
 	}
 
 	async _compileStylesAsync() {
