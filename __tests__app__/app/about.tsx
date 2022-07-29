@@ -4,6 +4,8 @@ import { Page } from '../../src/app';
 
 import TSComponent from './ts-component';
 
+import T from './res/text.json';
+
 interface IState {
 	test: string;
 }
@@ -24,6 +26,7 @@ export default class About extends Page {
 			<div className="about-wrapper">
 				<h1>About 3</h1>
 				<TSComponent />
+				{this.getText<typeof T>('test')}
 			</div>
 		);
 	}

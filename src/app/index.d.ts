@@ -28,6 +28,8 @@ declare type TEventMap = {
 	[key: string]: any;
 }
 
+declare type TextType = any;
+
 /**
  * Base client application.
  */
@@ -862,29 +864,33 @@ export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS>
 	 * Gets the text from the dictionary.
 	 *
 	 * @param key Key of the text in the dictionary.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getText(key: string): string;
+	public getText<T = any>(key: keyof T): string;
 	/**
 	 * Gets the text from the dictionary.
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getText(key: string, ...args: Array<any>): string;
+	public getText<T = any>(key: keyof T, ...args: Array<any>): string;
 
 	/**
 	 * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
 	 *
 	 * @param key Key of the text in the dictionary.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getJSXText(key: string): JSX.Element;
+	public getJSXText<T = any>(key: keyof T): JSX.Element;
 	/**
 	 * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getJSXText(key: string, ...args: Array<any>): JSX.Element;
+	public getJSXText<T = any>(key: keyof T, ...args: Array<any>): JSX.Element;
 
 	/**
 	 * Method called after `window.onpopstate` event is triggered.
@@ -1449,16 +1455,18 @@ export class Text extends BaseComponent<ITextProps> {
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	static get(key: string, ...args: any[]): string;
+	static get<T = any>(key: keyof T, ...args: any[]): string;
 
 	/**
 	 * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	static getJSX(key: string, ...args: any[]): JSX.Element;
+	static getJSX<T = any>(key: keyof T, ...args: any[]): JSX.Element;
 
 	/**
 	 * Formats the text.
