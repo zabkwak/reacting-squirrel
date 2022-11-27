@@ -1,4 +1,4 @@
-import { SocketClass } from '../../../server';
+import { SocketClass } from '../../../../server';
 
 export default class Update extends SocketClass {
 

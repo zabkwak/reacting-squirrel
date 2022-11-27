@@ -20,6 +20,7 @@ export default (server) => (req, res, next) => {
 			setSession();
 		}
 	}
-	req.session = new server.Session(sessionId);
+	req.session = server.Session.getInstance(sessionId);
+	req.session._server = server;
 	next();
 };

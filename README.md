@@ -13,14 +13,29 @@ npm install reacting-squirrel --save
 ```
 
 ## Usage
+For base simple app is only required to run server (with code or cli) and create one route. If `createMissingComponents` option is set to `true` the components is not needed to be created manually. For development is recommended set `dev` option to `true`.
+
+The server will create all necessary files and starts the webpack process. If the app is in `DEV` mode, watcher is also started.
+
 ### Simple app
+Simple app structure
+```
+project (root)
+|-- app (directory for client app)
+	|-- ~rs (all RS internal files)
+	|-- res (resources)
+		|-- text.json (text dictionary for default locale)
+	|-- home.js (Home page)
+|-- public (directory for static files)
+|-- index.js (the index file which runs the server)
+```
 ```javascript
 // ./index.js
 import Server from 'reacting-squirrel/server';
 
 const app = new Server();
 
-app.get('/', 'home', 'Home');
+app.registerRoute('get', '/', 'home', 'Home');
 
 app.start();
 
@@ -63,7 +78,7 @@ const app = new Server({
     }
 });
 
-app.get('/', 'home', 'Home');
+app.registerRoute('get', '/', 'home', 'Home');
 
 app.registerSocketClass(UserSocket);
 
@@ -119,6 +134,15 @@ The simple server can be started over the CLI using `./node_modules/.bin/rs-star
 ### Providers
 All components rendered by the application can be wrapped with `Provider` such as `Context.Provider` or `ThemeProvider`. Only thing needed is to register the provider with server method, rsconfig or plugin.
 
+### Typescript
+There can be issues with typings in the `app` directory because the IDE can't find `tsconfig.json` in `app/~rs` directory.
+Workaround can be simply create the `tsconfig.json` in `app` directory that extends the generated configuration.
+```json
+{
+	"extends": "./~rs/tsconfig.json"
+}
+```
+
 ## Core functions
 ### Routes register
 The routes are registered on the server-side. The module is using express based routes registering.
@@ -127,8 +151,8 @@ import Server from 'reacting-squirrel/server';
 
 const app = new Server();
 
-// On the route '/' will be rendered the content copmponent located in {config.appDir}/home with Home title.
-app.get('/', 'home', 'Home');
+// On the route '/' will be rendered the content component located in {config.appDir}/home with 'Home' title.
+app.registerRoute('get', '/', 'home', 'Home');
 
 app.start();
 ```
@@ -152,10 +176,18 @@ import { SocketClass } from 'reacting-squirrel/server';
 
 export default class User extends SocketClass {
 
+	// This method can be called from the client as 'user.load'
+	// The approach with 'next' callback is not recommended.
     load(socket, data, next) {
         // sends the authorized user data after the 'user.load' socket request
-        next(null, this.getUser());
+        next(null, socket.getSession().getUser());
     }
+
+	// This method can be called from the client as 'user.updateUser'
+	async updateUser(socket, data) {
+		await doSomeAsyncOperation();
+		return socket.getSession().getUser().getUser();
+	}
 }
 
 // ./index.js
@@ -203,6 +235,7 @@ The schema for the file is located in `[pathToModule]/schemas/rsconfig.schema.js
 ```json
 // rsconfig.json
 {
+	"$schema": "./node_modules/reacting-squirrel/schemas/rsconfig.schema.json",
     "routes": [
         {
             "route": "/",
@@ -222,7 +255,11 @@ The schema for the file is located in `[pathToModule]/schemas/rsconfig.schema.js
 	"errorPage": "error-page"
 }
 ```
-App config can be also be defined in the rsconfig.
+Additional app config can be also be defined in the rsconfig.
+
+#### ENV vars
+Values in rsconfig that have `$env:[value]|[defaultValue]` prefix are replaced with `process.env[value]` in the server start.  
+If the env var is not in the process the default value is used (if specified).
 
 ### Texts
 In the startup process, the `res` directory is created in `app` directory. In that directory is created default text file `text.json`. The content of the text file is used as default dictionary using [texting-squirrel](https://www.npmjs.com/package/texting-squirrel) module.
@@ -268,7 +305,7 @@ The locale can be changed on the client side using `Application.setLocale` metho
 
 ## Socket communication
 The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. 
-### Uploading files (experimental)
+### Uploading files
 File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the `pingTimeout`. The file is sent to the server in chunks and converted to buffer on the server side.
 ```javascript
 const file = 'get somehow a File instance';
@@ -277,7 +314,26 @@ Socket.emit('file.upload', undefined, { file }, (progress) => console.log(progre
 #### Limitations
 The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.
 
-## Decorators (experimental)
+## Error handling
+### Server
+Route errors are handled in error middleware and sent to `error.handler` from app config. If no handler is defined error page is rendered.
+### App
+#### Webpack watcher
+In `DEV` mode all code error is checked with webpack watcher. All errors (if any) are logged in stdout and sent to client with `webpack.stats` event.
+#### Component
+All components are wrapped in `ErrorHandler` that can be also overridden in app config with `componentErrorHandler`. 
+#### Application
+The application has logging methods (`log[Error|Warning|Info]`) that emits `log` event. All client logging must be done manually.
+##### Example
+```javascript
+Application.addListener('log', ({ severity, component, message, args }) => {
+	if (severity === 'error' && !component) {
+		// Log the error in logging service
+	}
+});
+```
+
+## Decorators
 ### SocketClass
 Decorators are designed for the the `SocketClass` methods.
 #### broadcast
@@ -290,7 +346,7 @@ The method is not registered as socket method and cannot be called from the clie
 #### castResponse
 The response is casted to defined types using [runtime-type](https://www.npmjs.com/package/runtime-type) module.
 
-## Plugins (experimental)
+## Plugins
 The plugins can be registered with `Server.registerPlugin` method. The plugin should extent `Plugin` class in the module.
 Plugin can:
 - Inject script to the entry file.

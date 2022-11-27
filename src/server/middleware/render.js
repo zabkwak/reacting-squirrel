@@ -30,11 +30,10 @@ export default (server) => (req, res, next) => {
 			}}
 			getText={(key, ...args) => server.getLocaleText(req.locale, key, ...args)}
 			nonce={server.nonce}
+			componentWrappers={
+				server.getRegisteredComponents().filter(({ auto }) => auto).map(({ elementId }) => elementId)
+			}
 		/>)}`);
-	};
-	res.render = (data) => {
-		server.logWarning('RS', 'res.render is deprecated and will be removed in future major release.');
-		res.renderLayout(data);
 	};
 	next();
 };

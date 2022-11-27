@@ -1,5 +1,5 @@
 {
-	"parser": "babel-eslint",
+	"parser": "@babel/eslint-parser",
 	"extends": [
 		"airbnb"
 	],
@@ -57,11 +57,11 @@
 		],
 		"react/static-property-placement": 0,
 		"react/jsx-props-no-spreading": 0,
+		"react/no-unused-class-component-methods": "warn",
 		"no-unused-vars": [
 			"error",
 			{
 				"ignoreRestSiblings": true,
-				"ignoreDestructuringVars": true,
 				"args": "none"
 			}
 		],
@@ -101,7 +101,9 @@
 			2,
 			"event"
 		],
-		"no-tabs": 0
+		"no-tabs": 0,
+		"no-await-in-loop": 0,
+		"no-continue": 0
 	},
 	"plugins": [
 		"react",

@@ -49,6 +49,10 @@
 						"type": "string",
 						"title": "Relative path to the custom layout file from the application root.",
 						"default": null
+					},
+					"callback": {
+						"type": "string",
+						"title": "Relative path to the file containing callback function for the route."
 					}
 				}
 			}
@@ -70,6 +74,11 @@
 					"component": {
 						"type": "string",
 						"title": "Relative path to the component from app directory."
+					},
+					"auto": {
+						"type": "boolean",
+						"title": "Indicates if the component's wrapper should be automatically rendered in the layout's body.",
+						"default": false
 					}
 				}
 			}
@@ -86,7 +95,12 @@
 		},
 		"componentProvider": {
 			"type": "string",
-			"title": "Relative path to the ContentProvider from the app directory.",
+			"title": "Relative path to the Component Provider from the app directory.",
+			"default": null
+		},
+		"componentErrorHandler": {
+			"type": "string",
+			"title": "Relative path to the Component Error Handler from the app directory.",
 			"default": null
 		},
 		"port": {
@@ -152,6 +166,16 @@
 					"type": "boolean",
 					"title": "HttpOnly flag for the cookies",
 					"default": true
+				},
+				"domain": {
+					"type": "string",
+					"title": "Domain flag for the cookies",
+					"default": null
+				},
+				"sameSite": {
+					"type": "string",
+					"title": "SameSite flag for the cookies",
+					"default": null
 				}
 			}
 		},
@@ -307,6 +331,32 @@
 			"type": "boolean",
 			"title": "Indicates if the server logs to the console.",
 			"default": true
+		},
+		"error": {
+			"type": "object",
+			"title": "Configuration for error handling.",
+			"properties": {
+				"handler": {
+					"type": "string",
+					"title": "Relative path to the file with exported error handler function.",
+					"default": null
+				},
+				"page": {
+					"type": "string",
+					"title": "Relative path to the error page from the app directory.",
+					"default": null
+				},
+				"layout": {
+					"type": "string",
+					"title": "Relative path to the layout file.",
+					"default": null
+				}
+			}
+		},
+		"bundleAfterServerStart": {
+			"type": "boolean",
+			"title": "Indicates if the server should be started before the webpack bundle. In that case bundling info page is rendered.",
+			"default": false
 		}
 	}
 }

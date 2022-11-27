@@ -5,11 +5,17 @@ import uniqid from 'uniqid';
  */
 export default class Session {
 
+	static _instances = {};
+
 	/**
 	 * Generates the random string as a session id.
 	 */
 	static generateId() {
 		return uniqid();
+	}
+
+	static getInstance(id) {
+		return this._instances[id] || new this(id);
 	}
 
 	/**
@@ -20,13 +26,21 @@ export default class Session {
 
 	_user = null;
 
+	_server = null;
+
 	/**
 	 * Creates new session instance.
 	 *
 	 * @param {string} id Identificator of the session.
 	 */
 	constructor(id) {
-		this.id = id;
+		if (Session._instances[id]) {
+			throw new Error('Session instance already exist.');
+		}
+		if (id) {
+			this.id = id;
+			Session._instances[id] = this;
+		}
 	}
 
 	/**
@@ -42,5 +56,9 @@ export default class Session {
 	 */
 	getUser() {
 		return this._user;
+	}
+
+	getServer() {
+		return this._server;
 	}
 }

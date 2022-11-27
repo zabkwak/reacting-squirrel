@@ -25,7 +25,8 @@ const CONFIG_FIELDS = [
 	'styles',
 	'session',
 	'auth',
-	'errorHandler',
+	'error',
+	// 'errorHandler',
 	'webpack',
 	'moduleDev',
 	'bundlePathRelative',
@@ -44,6 +45,9 @@ const CONFIG_FIELDS = [
 	'connectSocketAutomatically',
 	'locale',
 	'logging',
+	'bundleAfterServerStart',
+	'getInitialData',
+	'getTitle',
 ];
 
 describe('Server instance', () => {
@@ -64,9 +68,10 @@ describe('Server instance', () => {
 			styles,
 			session,
 			auth,
-			errorHandler,
+			error,
 			webpack,
 			locale,
+			bundleAfterServerStart,
 		} = server.getConfig();
 		expect(port).to.be.equal(8080);
 		expect(staticDir).to.be.equal('./public');
@@ -85,11 +90,12 @@ describe('Server instance', () => {
 		expect(session).to.be.an('function');
 		expect(new session()).to.be.an.instanceOf(Session);
 		expect(auth).to.be.an('function');
-		expect(errorHandler).to.be.an('function');
+		// expect(error).to.have.all.keys(['handler']);
 		expect(webpack).to.be.an('object');
 		expect(locale).to.have.all.keys(['default', 'accepted']);
 		expect(locale.default).to.be.equal('en-US');
 		expect(locale.accepted).to.be.deep.equal(['en-US']);
+		expect(bundleAfterServerStart).to.be.false;
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
@@ -102,6 +108,7 @@ describe('Server instance', () => {
 		expect(server.path).to.be.equal(path.resolve(PROJECT_PATH, `${staticDir}/${jsDir}`));
 		expect(new server.Layout()).to.be.an.instanceOf(Layout);
 		expect(new server.Session()).to.be.an.instanceOf(Session);
+		expect(new server.Session().getServer()).to.be.equal(null);
 	});
 
 	it('checks the set config fields of the server', () => {
@@ -125,6 +132,10 @@ describe('Server instance', () => {
 				accepted: ['en-US'],
 			},
 			logging: false,
+			error: {
+				layout: Layout,
+			},
+			bundleAfterServerStart: true,
 		});
 		expect(server._config).to.have.all.keys(CONFIG_FIELDS);
 		const {
@@ -141,10 +152,11 @@ describe('Server instance', () => {
 			styles,
 			session,
 			auth,
-			errorHandler,
+			error,
 			webpack,
 			locale,
 			logging,
+			bundleAfterServerStart,
 		} = server._config;
 		expect(port).to.be.equal(9000);
 		expect(staticDir).to.be.equal('./__static__');
@@ -165,12 +177,15 @@ describe('Server instance', () => {
 		expect(session).to.be.an('function');
 		expect(new session()).to.be.an.instanceOf(Session);
 		expect(auth).to.be.an('function');
-		expect(errorHandler).to.be.an('function');
+		expect(error).to.have.all.keys([/*'handler',*/ 'layout']);
+		// expect(error.handler).to.be.a('function');
+		expect(new error.layout()).to.be.an.instanceOf(Layout);
 		expect(webpack).to.be.an('object');
 		expect(locale).to.have.all.keys(['default', 'accepted']);
 		expect(locale.default).to.be.equal('cs-CZ');
 		expect(locale.accepted).to.be.deep.equal(['cs-CZ', 'en-US']);
 		expect(logging).to.be.false;
+		expect(bundleAfterServerStart).to.be.true;
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
@@ -183,6 +198,7 @@ describe('Server instance', () => {
 		expect(server.path).to.be.equal(path.resolve(PROJECT_PATH, `${staticDir}/${jsDir}`));
 		expect(new server.Layout()).to.be.an.instanceOf(Layout);
 		expect(new server.Session()).to.be.an.instanceOf(Session);
+		expect(new server.Session().getServer()).to.be.equal(null);
 	});
 
 	it('tries to set not Layout child as a layoutComponent', () => {
@@ -222,11 +238,27 @@ describe('Start of the server', () => {
 		const RS_DIR = server._getRSDirPathAbsolute();
 
 		server
-			.get('/', 'pages/home', 'Home')
-			.get('/user', 'pages/user', 'User', true)
+			.registerRoute('get', '/', 'pages/home', 'Home')
+			.registerRoute('get', '/user', 'pages/user', 'User', true)
+			.registerRoute('get', '/callback')
+			.registerRoute('post', '/callback')
+			.registerRoute('get', '/callback/promise')
+			.registerRoute('post', '/callback/promise')
 			.registerComponent('components/test', 'test')
 			.registerSocketEvent('test', async () => {
 				return 'test';
+			})
+			.registerRouteCallback('/callback', (req, res) => {
+				res.end('GET callback');
+			})
+			.registerRouteCallback('post', '/callback', (req, res) => {
+				res.end('POST callback');
+			})
+			.registerRouteCallback('/callback/promise', async () => {
+				return { title: 'Callback promise' };
+			})
+			.registerRouteCallback('post', '/callback/promise', async (req, res) => {
+				res.end('Callback promise');
 			})
 			.start((err) => {
 				expect(err).to.be.undefined;
@@ -245,10 +277,12 @@ describe('Start of the server', () => {
 				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/home.tsx`))).to.be.equal(true);
 				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/pages/user.tsx`))).to.be.equal(true);
 				expect(fs.existsSync(path.normalize(`${server.appDirAbsolute}/components/test.tsx`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.staticDirAbsolute}/js/bundle.js`))).to.be.equal(true);
+				expect(fs.existsSync(path.normalize(`${server.staticDirAbsolute}/css/rs-app.css`))).to.be.equal(true);
 
 				done();
 			});
-	}).timeout(20000);
+	}).timeout(30000);
 
 	it('checks if the home page is accessible with http request', (done) => {
 		request.get(URL, (err, res, body) => {
@@ -291,6 +325,50 @@ describe('Start of the server', () => {
 		}, (err, res, body) => {
 			expect(err).to.be.equal(null);
 			expect(res.statusCode).to.be.equal(200);
+			done();
+		});
+	});
+
+	it('checks if GET callback is correctly registered', (done) => {
+		request.get({
+			url: `${URL}/callback`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body).to.be.equal('GET callback');
+			done();
+		});
+	});
+
+	it('checks if POST callback is correctly registered', (done) => {
+		request.post({
+			url: `${URL}/callback`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body).to.be.equal('POST callback');
+			done();
+		});
+	});
+
+	it('checks if GET callback with promise returns the layout', (done) => {
+		request.get({
+			url: `${URL}/callback/promise`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body.includes('<title>Callback promise</title>'));
+			done();
+		});
+	});
+
+	it('checks if POST callback with promise is correctly registered', (done) => {
+		request.post({
+			url: `${URL}/callback/promise`,
+		}, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body).to.be.equal('Callback promise');
 			done();
 		});
 	});

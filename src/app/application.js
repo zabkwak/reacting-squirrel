@@ -5,6 +5,8 @@ import Cookies from 'universal-cookie';
 
 import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';
+// eslint-disable-next-line import/no-cycle
+import ErrorHandler from './components/error-handler';
 
 /**
  * Base class for client application context.
@@ -32,6 +34,14 @@ class Application extends CallbackEmitter {
 	_cookies = new Cookies();
 
 	_provider = null;
+
+	_errorHandler = null;
+
+	_locale = 'default';
+
+	_locales = [];
+
+	_defaultLocale = null;
 
 	/**
 	 * @returns {boolean}
@@ -84,6 +94,37 @@ class Application extends CallbackEmitter {
 		return this._initialData;
 	}
 
+	getLocale() {
+		return this._locale;
+	}
+
+	getDefaultLocale() {
+		return this._defaultLocale;
+	}
+
+	getLocales() {
+		return this._locales;
+	}
+
+	getTitle() {
+		return this._title.textContent;
+	}
+
+	/**
+	 * Gets the reference of the component in the application context.
+	 *
+	 * @param {string} key Key of the reference in the application context.
+	 */
+	getRef(key) {
+		return this._refs[key];
+	}
+
+	getCookie(name) {
+		return this._cookies.get(name);
+	}
+
+	// #region Registers
+
 	/**
 	 * Registers the map of routes to the Router.
 	 *
@@ -120,11 +161,26 @@ class Application extends CallbackEmitter {
 		return this;
 	}
 
+	registerErrorHandler(errorHandler) {
+		this._checkStartedState();
+		this._errorHandler = errorHandler;
+		return this;
+	}
+
+	registerLocales(defaultLocale, accepted) {
+		this._defaultLocale = defaultLocale;
+		this._locales = accepted;
+		return this;
+	}
+
+	// #endregion
+
 	/**
 	 * Starts the application. The application can be started only once.
 	 */
 	start() {
 		this._checkStartedState();
+		this._registerLayoutNavigationListener();
 		this._started = true;
 		this.logInfo('Application started', {
 			DEV: this.DEV, timestamp: this.getInitialData('timestamp'), version: this.getInitialData('version'),
@@ -132,6 +188,13 @@ class Application extends CallbackEmitter {
 		this._callListener('start');
 		this._renderRegisteredComponents();
 		this.render(Router.getRoute());
+	}
+
+	// #region Renderers
+
+	refresh() {
+		this.refreshContent();
+		this.refreshComponents();
 	}
 
 	/**
@@ -180,7 +243,10 @@ class Application extends CallbackEmitter {
 		if (refresh) {
 			ReactDOM.unmountComponentAtNode(this._content);
 		}
-		const page = route.getComponent();
+		this.renderPage(route.getComponent());
+	}
+
+	renderPage(page) {
 		this.renderComponent(page, this._content, () => this._callListener('pagerender', page));
 	}
 
@@ -193,8 +259,23 @@ class Application extends CallbackEmitter {
 	 */
 	renderComponent(component, target, callback = () => { }) {
 		const Provider = this._provider || React.Fragment;
-		ReactDOM.render(<Provider>{component}</Provider>, target, callback);
+		const EH = this._errorHandler || ErrorHandler;
+		ReactDOM.render(
+			(
+				<EH>
+					<Provider>
+						{component}
+					</Provider>
+				</EH>
+			),
+			target,
+			callback,
+		);
 	}
+
+	// #endregion
+
+	// #region Navigators
 
 	/**
 	 * Pushes the state to the history and forces to render the content.
@@ -214,8 +295,15 @@ class Application extends CallbackEmitter {
 	 * @param {boolean} refresh
 	 */
 	navigate(path, q, refresh = false) {
-		this.pushState(path, q);
-		this.render(Router.getRoute(), refresh);
+		const r = Router.getRoute();
+		const route = Router.findRoute(path);
+		if (route && r && r.layout === route.layout) {
+			this.pushState(path, q);
+			this.render(Router.getRoute(), refresh);
+			return;
+		}
+		const s = Router.stringifyQuery(q);
+		location.href = s ? `${path}${s}` : path;
 	}
 
 	/**
@@ -228,6 +316,10 @@ class Application extends CallbackEmitter {
 		Router.pushState(path, q);
 	}
 
+	// #endregion
+
+	// #region Setters
+
 	/**
 	 * Updates the page title in the HTML header.
 	 *
@@ -238,16 +330,16 @@ class Application extends CallbackEmitter {
 	}
 
 	setLocale(locale) {
+		if (locale === this._defaultLocale) {
+			// eslint-disable-next-line no-param-reassign
+			locale = 'default';
+		}
 		if (Text.getDictionary(locale)) {
 			Text.setDictionary(locale);
 			const expires = new Date();
 			expires.setFullYear(expires.getFullYear() + 1);
-			this._cookies.set(this.LOCALE_COOKIE_NAME, locale, {
-				path: '/',
-				// httpOnly: true,
-				secure: location.protocol === 'https:',
-				expires,
-			});
+			this.setCookie(this.LOCALE_COOKIE_NAME, locale, { expires });
+			this._locale = locale;
 			this._callListener('locale.set', locale);
 		} else {
 			this.logWarning(`Locale ${locale} dictionary not registered.`);
@@ -264,24 +356,24 @@ class Application extends CallbackEmitter {
 		this._refs[key] = ref;
 	}
 
-	/**
-	 * Gets the reference of the component in the application context.
-	 *
-	 * @param {string} key Key of the reference in the application context.
-	 */
-	getRef(key) {
-		return this._refs[key];
+	setCookie(name, value, options = {}) {
+		this._cookies.set(name, value, {
+			path: '/',
+			// httpOnly: true,
+			secure: location.protocol === 'https:',
+			...options,
+		});
 	}
 
-	getCookie(name) {
-		return this._cookies.get(name);
-	}
+	// #endregion
 
 	logInfo(message, ...optionalParams) {
 		if (this.DEV) {
 			// eslint-disable-next-line no-console
 			console.log(message, ...optionalParams);
 		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'info', message, component: false, args: optionalParams });
 	}
 
 	logWarning(message, ...optionalParams) {
@@ -289,6 +381,8 @@ class Application extends CallbackEmitter {
 			// eslint-disable-next-line no-console
 			console.warn(message, ...optionalParams);
 		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'warn', message, component: false, args: optionalParams });
 	}
 
 	logError(message, ...optionalParams) {
@@ -296,6 +390,17 @@ class Application extends CallbackEmitter {
 			// eslint-disable-next-line no-console
 			console.error(message, ...optionalParams);
 		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'error', message, component: false, args: optionalParams });
+	}
+
+	logComponentError(message, ...optionalParams) {
+		if (this.DEV) {
+			// eslint-disable-next-line no-console
+			console.error(message, ...optionalParams);
+		}
+		// eslint-disable-next-line object-curly-newline
+		this._callListener('log', { severity: 'error', message, component: true, args: optionalParams });
 	}
 
 	_renderRegisteredComponents(refresh = false) {
@@ -310,6 +415,16 @@ class Application extends CallbackEmitter {
 			}
 			const Component = component.component;
 			this.renderComponent(<Component ref={(ref) => this.setRef(ref, component.elementId)} />, target);
+		});
+	}
+
+	_registerLayoutNavigationListener() {
+		Array.from(document.querySelectorAll('.ssr-nav')).forEach((element) => {
+			element.addEventListener('click', (e) => {
+				e.preventDefault();
+				const { href } = e.currentTarget;
+				this.navigate(href);
+			});
 		});
 	}
 

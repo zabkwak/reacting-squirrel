@@ -1,5 +1,41 @@
 # CHANGELOG
 
+## 1.0.0
+### Features
+- Redirecting the page if the layouts are changed during navigation.
+- Registering layout for rendering errors.
+- `Plugin.register` is async.
+- Bundle loaded with javascript for loading progress.
+- Bundle can be created after the server start and bundling info page is rendered (instead of webserver error).
+- Option to auto-generate component wrappers in the layout.
+- Custom files can be saved in RS directory.
+- `Application` has setters and getters for working with locales.
+- Option to bundle the app without the server start and start the server without bundle.
+- SSR navigation.
+- `Application.getTitle` method.
+- Option to get custom initial data.
+- `Application.setCookie` method.
+- Option to get custom title.
+- Definition of ENV vars in RSConfig.
+- Bundling status.
+- `Server.getPluginByName` method.
+- React 17.
+- `CachedDataComponent` component.
+- `SameSite` flag in cookies.
+- Option to register http method in route callbacks in `Server.registerRouteCallback`.
+- Route callback can be registered as file in `rsconfig.json`.
+- Using promises in route callbacks.
+- Client error handling.
+### Breaking changes
+- Removed `Button` component.
+- Removed `res.render` function.
+- `Session` is a singleton.
+- Updated major dependencies.
+- Minimal node.js version is 10.
+- Removed `Server.get` method.
+- Access to the server instance in session.
+- React 17.
+
 ## 0.17.3
 ### Updates
 - Creating app & rs dirs before all registrations.

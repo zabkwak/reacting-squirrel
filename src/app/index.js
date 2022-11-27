@@ -4,8 +4,8 @@ import Application from './application';
 import Component from './components/component';
 import SocketComponent from './components/component.socket';
 import DataComponent from './components/component.data';
+import CachedDataComponent from './components/component.data-cached';
 import Page from './components/component.page';
-import Button from './components/button';
 import Text from './components/text';
 import Loader from './components/loader';
 import CallbackEmitter from './callback-emitter';
@@ -20,6 +20,7 @@ import ErrorPage from './page.error';
 import Utils from './utils';
 
 export {
+	// eslint-disable-next-line no-restricted-exports
 	Application as default,
 	Application,
 	Router,
@@ -27,8 +28,8 @@ export {
 	Component,
 	SocketComponent,
 	DataComponent,
+	CachedDataComponent,
 	Page,
-	Button,
 	Text,
 	Loader,
 	Socket,

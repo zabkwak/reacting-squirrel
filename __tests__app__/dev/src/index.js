@@ -3,6 +3,7 @@ import React from 'react';
 import '@babel/polyfill';
 import fs from 'fs';
 import path from 'path';
+import CliProgress from 'cli-progress';
 
 import Server, { Layout, Socket, Plugin } from '../../../server';
 
@@ -21,11 +22,15 @@ class CustomLayout extends Layout {
 	}
 }
 
+const dev = true;
+
+let bar;
+
 const app = new Server({
 	appDir: './__tests__app__/app',
 	staticDir: './__tests__app__/public',
 	moduleDev: true,
-	dev: true,
+	dev,
 	layoutComponent: CustomLayout,
 	entryFile: 'entry.js',
 	styles: ['/css/main.css'],
@@ -37,11 +42,6 @@ const app = new Server({
 	// createMissingComponents: true,
 	// autoprefixer: { grid: 'autoplace' },
 	// cookieSecret: 'dev-secret',
-	/*
-    onWebpackProgress: (percents, message) => {
-        console.log(`${percents * 100}%`, message);
-    },
-    */
 	// socketMessageMaxSize: 1,
 	// babelTranspileModules: ['react'],
 	// connectSocketAutomatically: false,
@@ -49,14 +49,30 @@ const app = new Server({
 		default: 'en-US',
 		accepted: ['cs-CZ'],
 	},
+	bundleAfterServerStart: true,
+	onWebpackProgress: dev ? undefined : (p) => {
+		if (!bar) {
+			bar = new CliProgress.SingleBar({ clearOnComplete: true }, CliProgress.Presets.shades_classic);
+			bar.start(100);
+		}
+		bar.update(Math.round(p * 100));
+		if (p === 1) {
+			bar.stop();
+		}
+	},
+	getInitialData: () => ({ test: 'test' }),
 });
 
 app.registerBeforeExecution('*', async (req, res) => {
 	res.header('Content-Security-Policy', `style-src 'self' 'nonce-${app.nonce}'`);
 });
 
-app.get('/error', null, 'Error', false, (req, res, next) => {
+app.registerRoute('get', '/error', null, 'Error', false, (req, res, next) => {
 	next({ message: 'Test error', date: new Date(), statusCode: 501 });
+});
+
+app.registerRoute('get', '/error/401', null, 'Error', false, (req, res, next) => {
+	next({ message: 'Unauthorized', date: new Date(), statusCode: 401 });
 });
 
 app
@@ -73,6 +89,15 @@ app.registerSocketEvent('socket.test', async (socket, data) => data);
 app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 	fs.writeFileSync(`./tmp/${name}`, file);
 });
+
+app
+	.createRSFile('custom-file.ts', 'console.log(\'custom-file\', new Date());')
+	.injectToEntry('import \'./custom-file\';')
+	// eslint-disable-next-line arrow-body-style
+	.createRSFile('custom-file.fn.ts', async () => {
+		return 'console.log(\'custom-file.fn\', new Date());';
+	})
+	.injectToEntry('import \'./custom-file.fn\';');
 
 class CustomPlugin extends Plugin {
 
@@ -110,12 +135,22 @@ app.registerPlugin(new CustomPlugin());
 
 // app.Text.addDictionary('cs-CZ', require(path.resolve(app.appDirAbsolute, 'res', 'text_cs-CZ.json')));
 
-app.start((err) => {
-	if (err) {
-		console.error(err);
+(async () => {
+	/*
+	try {
+		await app.bundle();
+	} catch (e) {
+		console.error(e);
 		return;
 	}
-	console.log('App started');
-});
+	*/
+	app.start((err) => {
+		if (err) {
+			console.error(err);
+			return;
+		}
+		console.log('App started');
+	});
 
-Socket.on('connection', (socket) => console.log('SOCKET CONNECTED'));
+	Socket.on('connection', (socket) => console.log('SOCKET CONNECTED'));
+})();

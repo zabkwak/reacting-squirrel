@@ -1,14 +1,14 @@
 import Processor from 'combine-styles-processor';
-import { getOptions } from 'loader-utils';
 import md5 from 'md5';
 
-export default async function (content) {
+export default async function styleLoader(content) {
 	const callback = this.async();
 	const key = md5(this.resourcePath);
-	const { outDir } = getOptions(this);
+	const { outDir } = this.getOptions();
 	const outFile = `${outDir}/rs-tmp-${key}.css`;
 	const processor = new Processor(
-		[this.resourcePath], outFile,
+		[this.resourcePath],
+		outFile,
 	);
 	try {
 		await processor.process();

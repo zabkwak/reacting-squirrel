@@ -5,6 +5,7 @@ import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
 import readline from 'readline';
 
 import { BABEL_TRANSPILE_MODULES } from '../constants';
+import { Socket } from '../socket';
 
 const getStylesToWatch = (sourceStylesDir) => {
 	const files = fs.readdirSync(sourceStylesDir);
@@ -43,9 +44,9 @@ export default (server) => {
 	const postCSSLoader = {
 		loader: 'postcss-loader',
 		options: {
-			config: {
+			postcssOptions: {
 				// eslint-disable-next-line no-underscore-dangle
-				path: `${server._getRSDirPath()}/postcss.config.js`,
+				config: `${server._getRSDirPath()}/postcss.config.js`,
 			},
 		},
 	};
@@ -66,6 +67,10 @@ export default (server) => {
 		},
 		resolve: {
 			extensions: ['.js', '.jsx', '.ts', '.tsx'],
+			fallback: {
+				url: require.resolve('url'),
+				querystring: require.resolve('querystring'),
+			},
 		},
 		resolveLoader: {
 			alias: {
@@ -160,6 +165,15 @@ export default (server) => {
 			}
 			if (percentage === 1) {
 				webpackDone = true;
+			}
+			server.updateBundlingStatus(percentage * 100);
+		} else if (dev) {
+			try {
+				webpackProgress(percentage, message);
+				Socket.broadcast('webpack.progress', { percentage, message });
+			} catch (e) {
+				// eslint-disable-next-line no-console
+				console.error('WEBPACK PROGRESS ERROR', e);
 			}
 		}
 	});

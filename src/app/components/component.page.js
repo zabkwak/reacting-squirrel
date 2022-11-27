@@ -15,7 +15,7 @@ export default class Page extends SocketComponent {
 		query: PropTypes.any.isRequired,
 		// eslint-disable-next-line react/forbid-prop-types
 		initialData: PropTypes.any.isRequired,
-	}
+	};
 
 	__pageRender__ = () => this.onPageRender();
 
@@ -37,5 +37,9 @@ export default class Page extends SocketComponent {
 
 	setTitle(title) {
 		this.getContext().setTitle(title);
+	}
+
+	getTitle() {
+		return this.getContext().getTitle();
 	}
 }

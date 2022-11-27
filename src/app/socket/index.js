@@ -1,5 +1,5 @@
 /** @module Socket */
-import io from 'socket.io-client';
+import { io } from 'socket.io-client';
 import { encode } from 'msgpack-lite';
 import uniqid from 'uniqid';
 
@@ -38,6 +38,7 @@ class Socket extends CallbackEmitter {
 	_events = [
 		'handshake',
 		'webpack.stats',
+		'webpack.progress',
 	];
 
 	_chunkSize = (2 ** 10) * 10;
@@ -82,7 +83,7 @@ class Socket extends CallbackEmitter {
 			Application.logInfo('Socket disconnected', reason);
 			this._setState(this.STATE_DISCONNECTED);
 		});
-		this._socket.on('error', (err) => {
+		this._socket.on('connect_error', (err) => {
 			Application.logError('Socket connection error', err);
 			this._callListener('error', err);
 		});
@@ -199,9 +200,12 @@ class Socket extends CallbackEmitter {
 	}
 
 	_handleEvent(event, data) {
-		Application.logInfo(`Handling event '${event}'`, data);
-		if (data && data.errorV) {
+		if (event !== 'webpack.progress') {
+			Application.logInfo(`Handling event '${event}'`, data);
+		}
+		if (data && data.error) {
 			Application.logError('Socket error', data.error);
+			this._callListener('event-error', { event, error: data.error });
 		}
 		// eslint-disable-next-line no-underscore-dangle
 		if (data && data._deprecated) {

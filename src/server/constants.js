@@ -26,3 +26,5 @@ export const TSConfig = {
 };
 export const BABEL_TRANSPILE_MODULES = ['debug', 'uniqid', 'texting-squirrel'];
 export const RS_DIR = '~rs';
+export const CONFIG_ENV_PREFIX = '$env:';
+export const BUNDLE_STATUS_ROUTE = '/bundle-status';

@@ -1,6 +1,7 @@
 import React from 'react';
+import { DataStoreComponent } from '../../src/app';
 import {
-	Page, Button, Text, Loader, DataComponent, Utils, SocketRequest,
+	Page, Text, Loader, CachedDataComponent, Utils, SocketRequest, DataComponent,
 } from '../../src/app';
 
 import './home.css';
@@ -70,8 +71,13 @@ export default class Home extends Page {
 		console.log('PAGE RENDERED');
 	}
 
+	onPopState() {
+		console.log('POP STATE');
+	}
+
 	render() {
 		const { user } = this.state;
+		// throw new Error('test');
 		return (
 			<div className="home-wrapper">
 				<Text tag="h1" dictionaryKey="home" />
@@ -145,18 +151,69 @@ export default class Home extends Page {
 					loaderSize="small"
 					tookDisabled
 				/>
-				<Button href="/about" id="navigate-button">About page</Button>
-				<Button href="/" id="refresh-button" refreshContent>Refresh content</Button>
-				<Button href="/test" id="test-button">Invalid page</Button>
-				<Button id="state-button" onClick={() => this.getContext().pushState(null, { test: 1 })}>Push state query</Button>
-				<Button
+				<CachedDataComponent
+					dataKey="user"
+					load={(component) => {
+						return component.requestAsync('user.getPromise');
+					}}
+					transformData={(data) => {
+						return {
+							...data,
+							name: 'Transformed data',
+						};
+					}}
+				>
+					{
+						(data, component) => (
+							<h3>{data?.name}</h3>
+						)
+					}
+				</CachedDataComponent>
+				<CachedDataComponent
+					dataKey="user-error"
+					load={(component) => {
+						return component.requestAsync('user.getAsyncError');
+					}}
+				/>
+				<button onClick={() => this.getContext().navigate('/about')} id="navigate-button" type="button">About page</button>
+				<button onClick={() => this.getContext().refreshContent()} id="refresh-button" type="button">Refresh content</button>
+				<button onClick={() => this.getContext().navigate('/test')} id="test-button" type="button">Invalid page</button>
+				<button onClick={() => this.getContext().navigate('/layout-test')} id="layout-button" type="button">Different layout</button>
+				<button onClick={() => this.getContext().navigate('/large-data')} id="layout-button" type="button">Large data</button>
+				<button
+					id="state-button"
+					onClick={() => this.getContext().pushState(null, { test: 1 })}
+					type="button"
+				>
+					Push state query
+				</button>
+				<button
 					onClick={async () => {
 						console.log(await this.call('user.getAsyncError'));
 					}}
+					type="button"
 				>
 					Async request
-				</Button>
+				</button>
 				<a href="/about" onClick={Utils.anchorNavigation}>About page anchor</a>
+				<div>
+					<label htmlFor="locale">Locale: </label>
+					<select
+						id="locale"
+						value={this.getContext().getLocale()}
+						onChange={({ target }) => {
+							this.getContext().setLocale(target.value);
+							this.getContext().refreshComponents();
+							this.getContext().refreshContent();
+						}}
+					>
+						{
+							this.getContext().getLocales().map((locale) => (
+								<option value={locale} key={locale}>{locale}</option>
+							))
+						}
+					</select>
+				</div>
 				<div>
 					<Text tag="p" dictionaryKey="args" args={['one', 'two', 'three']} />
 				</div>

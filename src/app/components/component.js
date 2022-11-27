@@ -1,5 +1,6 @@
 import React, { Component as Base } from 'react';
 
+// eslint-disable-next-line import/no-cycle
 import Application from '../application';
 import Text from './text';
 
@@ -23,7 +24,7 @@ export default class Component extends Base {
 	 */
 	__popState__ = (application, event) => {
 		this.onPopState(event);
-	}
+	};
 
 	componentDidMount() {
 		this.getContext().addListener('popstate', this.__popState__);
@@ -59,6 +60,7 @@ export default class Component extends Base {
 
 	/**
 	 * Gets the application context.
+	 * @returns {Application}
 	 */
 	getContext() {
 		return Application;

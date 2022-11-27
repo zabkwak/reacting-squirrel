@@ -1,42 +1,80 @@
 import { Component as BaseComponent, ButtonHTMLAttributes } from 'react';
 import * as url from 'url';
 import Type, { Model } from 'runtime-type';
+import { CookieSetOptions } from 'universal-cookie';
 
-declare type ApplicationEventMap = {
+declare type TApplicationEventMap = {
 	'popstate': any;
 	'start': undefined;
 	'refresh': undefined;
 	'pagerender': Page;
 	'locale.set': string;
-};
+	'log': {
+		severity: 'info' | 'warn' | 'error';
+		message: string;
+		args: any;
+		component: boolean;
+	};
+}
+
+declare type TSocketEventMap = {
+	'event-error': { event: string, error: any };
+	'connecting': undefined;
+	'connected': undefined;
+	'disconnected': undefined;
+}
+
+declare type TEventMap = {
+	[key: string]: any;
+}
 
 /**
  * Base client application.
  */
-declare class Application extends CallbackEmitter<ApplicationEventMap> {
+declare class Application extends CallbackEmitter<TApplicationEventMap> {
 
-	LOCALE_COOKIE_NAME: string;
+	public LOCALE_COOKIE_NAME: string;
 
 	/**
 	 * Indicates if the application is in dev mode.
 	 */
-	DEV: boolean;
+	public DEV: boolean;
 	/** @deprecated */
-	initialData: any;
+	public initialData: any;
 
 	/**
 	 * Gets the initial data registered to the app.
 	 *
 	 * @typeparam T Definition of the returned data.
 	 */
-	getInitialData<T = any>(): T;
+	public getInitialData<T = any>(): T;
 	/**
 	 * Gets the initial data value by its key.
 	 *
 	 * @typeparam T Definition of the returned data.
 	 * @param key Key in the initial data.
 	 */
-	getInitialData<T = any>(key: string): T;
+	public getInitialData<T = any>(key: string): T;
+
+	/**
+	 * Gets the current set locale.
+	 */
+	public getLocale(): string;
+
+	/**
+	 * Gets the code of the default locale.
+	 */
+	public getDefaultLocale(): string;
+
+	/**
+	 * Gets the list of all accepted locales.
+	 */
+	public getLocales(): string[];
+
+	/**
+	 * Gets the content of `title` tag.
+	 */
+	public getTitle(): string;
 
 	/**
 	 * Registers the routing map.
@@ -45,7 +83,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 *
 	 * @param routingMap Map of routes.
 	 */
-	registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
+	public registerRoutingMap(routingMap: Array<{ spec: string, component: Page, title: string }>): this;
 
 	/**
 	 * Registers socket events.
@@ -54,7 +92,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 *
 	 * @param events List of socket events.
 	 */
-	registerSocketEvents(events: Array<string>): this;
+	public registerSocketEvents(events: Array<string>): this;
 
 	/**
 	 * Registers custom components.
@@ -63,7 +101,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * 
 	 * @param components List of components.
 	 */
-	registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
+	public registerComponents(components: Array<{ elementId: string, component: BaseComponent }>): this;
 
 	/**
 	 * Registers error page for rendering errors.
@@ -72,38 +110,58 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * 
 	 * @param errorPage ErrorPage component to register.
 	 */
-	registerErrorPage(errorPage: typeof ErrorPage): this;
+	public registerErrorPage(errorPage: typeof ErrorPage): this;
+
+	/**
+	 * Registers the configuration of locale.
+	 *
+	 * @param defaultLocale The code of the default locale.
+	 * @param accepted List of all accepted locale codes.
+	 */
+	public registerLocales(defaultLocale: string, accepted: string[]): this;
 
 	/**
 	 * Starts the application.
 	 *
 	 * This method is called automatically in after the bundle load.
 	 */
-	start(): void;
+	public start(): void;
+
+	/**
+	 * Forces content and components to refresh.
+	 */
+	public refresh(): void;
 
 	/**
 	 * Forces the content refresh.
 	 */
-	refreshContent(): void;
+	public refreshContent(): void;
 
 	/**
 	 * Forces all registered component to refresh.
 	 */
-	refreshComponents(): void;
+	public refreshComponents(): void;
 
 	/**
 	 * Renders the route's component.
 	 * 
 	 * @param route Route to render.
 	 */
-	render(route: Route): void;
+	public render(route: Route): void;
 	/**
 	 * Renders the route's component.
 	 * 
 	 * @param route Route to render.
 	 * @param refresh Indicates if the component of the route should be refreshed if the route is currently rendered.
 	 */
-	render(route: Route, refresh: boolean): void;
+	public render(route: Route, refresh: boolean): void;
+
+	/**
+	 * Renders the page component.
+	 *
+	 * @param page Page component.
+	 */
+	public renderPage(page: Page): void;
 
 	/**
 	 * Renders the component to the target.
@@ -111,7 +169,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param component The component.
 	 * @param target The target DOM element
 	 */
-	renderComponent(component: JSX.Element, target: HTMLElement): void;
+	public renderComponent(component: JSX.Element, target: HTMLElement): void;
 	/**
 	 * Renders the component to the target.
 	 * 
@@ -119,28 +177,28 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param target The target DOM element
 	 * @param callback Function called after the render.
 	 */
-	renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
+	public renderComponent(component: JSX.Element, target: HTMLElement, callback: () => void): void;
 
 	/**
 	 * Alias for the `navigate` method with the refreshing the content.
 	 * 
 	 * @param path URL path.
 	 */
-	redirect(path: string): void;
+	public redirect(path: string): void;
 	/**
 	 * Alias for the `navigate` method with the refreshing the content.
 	 * 
 	 * @param path URL path.
 	 * @param q Query string data.
 	 */
-	redirect(path: string, q: { [key: string]: string }): void;
+	public redirect(path: string, q: { [key: string]: string }): void;
 
 	/**
 	 * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
 	 * 
 	 * @param path URL path.
 	 */
-	navigate(path: string): void;
+	public navigate(path: string): void;
 	/**
 	 * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
 	 * 
@@ -148,7 +206,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param q Query string data.
 	 * 
 	 */
-	navigate(path: string, q: { [key: string]: string }): void;
+	public navigate(path: string, q: { [key: string]: string }): void;
 	/**
 	 * Pushes the state to the history and renders the route if it's not the current route and refresh is false.
 	 * 
@@ -156,7 +214,7 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param q Query string data.
 	 * @param refresh Indicates if the route should be refreshed if the route is currently rendered.
 	 */
-	navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
+	public navigate(path: string, q: { [key: string]: string }, refresh: boolean): void;
 
 	/**
 	 * Pushes the state to the history.
@@ -164,21 +222,21 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param path URL path.
 	 * @param q Query string data.
 	 */
-	pushState(path: string, q: { [key: string]: string }): void;
+	public pushState(path: string, q: { [key: string]: string }): void;
 
 	/**
 	 * Sets the page title.
 	 *
 	 * @param title Title of the page.
 	 */
-	setTitle(title: string): void;
+	public setTitle(title: string): void;
 
 	/**
 	 * Sets the locale as a dictionary.
 	 *
 	 * @param locale Locale dictionary to set.
 	 */
-	setLocale(locale: string): void;
+	public setLocale(locale: string): void;
 
 	/**
 	 * Registers the component as the context reference.
@@ -187,7 +245,23 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @param ref Component's reference.
 	 * @param key Key of the reference.
 	 */
-	setRef<T = any>(ref: T, key: string): void;
+	public setRef<T = any>(ref: T, key: string): void;
+
+	/**
+	 * Sets the cookie.
+	 *
+	 * @param name Name of the cookie.
+	 * @param value Value of the cookie.
+	 */
+	public setCookie(name: string, value: any): void;
+	/**
+	 * Sets the cookie.
+	 *
+	 * @param name Name of the cookie.
+	 * @param value Value of the cookie.
+	 * @param options Additional options of the cookie.
+	 */
+	public setCookie(name: string, value: any, options: CookieSetOptions): void;
 
 	/**
 	 * Gets the component registered in the application context.
@@ -195,36 +269,48 @@ declare class Application extends CallbackEmitter<ApplicationEventMap> {
 	 * @typparam T Type of the component.
 	 * @param key Key of the reference.
 	 */
-	getRef<T = any>(key: string): T;
+	public getRef<T = any>(key: string): T;
 
 	/**
 	 * Gets the cookie by its name.
 	 */
-	getCookie(name: string): any;
+	public getCookie(name: string): any;
 
 	/**
 	 * Logs the message to the console using `console.log` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`.
 	 *
 	 * @param message 
 	 * @param optionalParams 
 	 */
-	logInfo(message: string, ...optionalParams: Array<any>): void;
+	public logInfo(message: string, ...optionalParams: Array<any>): void;
 
 	/**
 	 * Logs the message to the console using `console.warn` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`.
 	 *
 	 * @param message 
 	 * @param optionalParams 
 	 */
-	logWarning(message: string, ...optionalParams: Array<any>): void;
+	public logWarning(message: string, ...optionalParams: Array<any>): void;
 
 	/**
 	 * Logs the message to the console using `console.error` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`.
 	 *
 	 * @param message 
 	 * @param optionalParams 
 	 */
-	logError(message: string, ...optionalParams: Array<any>): void;
+	public logError(message: string, ...optionalParams: Array<any>): void;
+
+	/**
+	 * Logs the message to the console using `console.error` if the app is in DEV mode.
+	 * Also sends `log` event of the `Application`. The event is flagged as `component: true`.
+	 *
+	 * @param message 
+	 * @param optionalParams 
+	 */
+	public logComponentError(message: string, ...optionalParams: Array<any>): void;
 }
 
 /**
@@ -239,6 +325,8 @@ interface IRouteDefinition {
 	title: string;
 	/** Initital data of the page. */
 	initialData?: any;
+	/** Hash of the layout. */
+	layout?: string;
 }
 
 declare class Route {
@@ -251,6 +339,8 @@ declare class Route {
 	public title: string;
 	/** Initital data of the page. */
 	public initialData: any;
+	/** Hash of the layout. */
+	public layout: string;
 
 	/**
 	 * Creates new route instance from definition.
@@ -306,6 +396,13 @@ declare class Router {
 	public getRoute(): Route;
 
 	/**
+	 * Finds the route based on the path.
+	 *
+	 * @param path The path of the route.
+	 */
+	public findRoute(path: string): Route;
+
+	/**
 	 * Pushes the state to the history.
 	 */
 	public pushState(): void;
@@ -338,6 +435,17 @@ declare class Router {
 	 * Gets current route params.
 	 */
 	public getParams(): { [key: string]: string };
+
+	/**
+	 * Stringifies actual query with additional params.
+	 */
+	public stringifyQuery(): string;
+	/**
+	 * Stringifies actual query with additional params.
+	 *
+	 * @param q Params to stringify.
+	 */
+	public stringifyQuery(q: { [key: string]: string }): string;
 }
 
 /**
@@ -348,7 +456,7 @@ declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
 /**
  * Class for socket communication.
  */
-declare class Socket extends CallbackEmitter {
+declare class Socket extends CallbackEmitter<TSocketEventMap> {
 
 	/** Unknown state of the socket. */
 	public readonly STATE_NONE: 'none';
@@ -468,19 +576,19 @@ export class SocketRequest extends CallbackEmitter {
 	public static castResponse: (options: { [key: string]: Type.Type }) => MethodDecorator;
 
 	/**
-     * Registers socket event listener. This method should be called in `componentDidMount`.
-     *
-     * @param event Name of the event.
-     * @param callback Callback for the event.
-     */
+	 * Registers socket event listener. This method should be called in `componentDidMount`.
+	 *
+	 * @param event Name of the event.
+	 * @param callback Callback for the event.
+	 */
 	public on<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 
 	/**
-     * Calls the socket event.
-     *
-     * @param event Name of the event.
-     * @typeparam R Type of response.
-     */
+	 * Calls the socket event.
+	 *
+	 * @param event Name of the event.
+	 * @typeparam R Type of response.
+	 */
 	public execute<R = any>(event: string): Promise<R>;
 	/**
 	 * Calls the socket event.
@@ -514,11 +622,11 @@ export class SocketRequest extends CallbackEmitter {
 	public execute<P = any, R = any>(event: string, data: P, timeout: number, onProgress: (progress: number) => void): Promise<R>;
 
 	/**
-     * Emits the socket event. The response can be handled in the `on` method.
-     *
-     * @param event Name of the event.
-     * @typeparam P Type of parameters.
-     */
+	 * Emits the socket event. The response can be handled in the `on` method.
+	 *
+	 * @param event Name of the event.
+	 * @typeparam P Type of parameters.
+	 */
 	public emit(event: string): this;
 	/**
 	 * Emits the socket event. The response can be handled in the `on` method.
@@ -644,9 +752,6 @@ declare class Storage {
 	public clear(): void;
 }
 
-export type EventMap = {
-	[key: string]: any;
-}
 /**
  * Simple class to handle callbacks.
  * @typeparam T Event map for the listeners as object with event name and the type of the arguments in the callback.
@@ -664,7 +769,7 @@ export type EventMap = {
  * })
  * ```
  */
-export class CallbackEmitter<T = EventMap> {
+export class CallbackEmitter<T = TEventMap> {
 
 	/**
 	 * Registers the listener of the event.
@@ -702,7 +807,7 @@ export class CallbackEmitter<T = EventMap> {
 	 * @param event Name of the event.
 	 */
 	public clear<K extends keyof T>(event: K): void;
-	
+
 	/**
 	 * Calls all listeners registered in the event.
 	 *
@@ -757,29 +862,33 @@ export class Component<P = {}, S = {}, SS = any> extends BaseComponent<P, S, SS>
 	 * Gets the text from the dictionary.
 	 *
 	 * @param key Key of the text in the dictionary.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getText(key: string): string;
+	public getText<T = any>(key: keyof T): string;
 	/**
 	 * Gets the text from the dictionary.
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getText(key: string, ...args: Array<any>): string;
+	public getText<T = any>(key: keyof T, ...args: Array<any>): string;
 
 	/**
 	 * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
 	 *
 	 * @param key Key of the text in the dictionary.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getJSXText(key: string): JSX.Element;
+	public getJSXText<T = any>(key: keyof T): JSX.Element;
 	/**
 	 * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	public getJSXText(key: string, ...args: Array<any>): JSX.Element;
+	public getJSXText<T = any>(key: keyof T, ...args: Array<any>): JSX.Element;
 
 	/**
 	 * Method called after `window.onpopstate` event is triggered.
@@ -924,6 +1033,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param event Name of the event.
 	 * @param callback Callback function.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<R = any>(event: string, callback: (error?: any, data?: R) => void): this;
 	/**
@@ -934,6 +1044,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param callback Callback function.
 	 * @typeparam P Type of parameters.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<P = any, R = any>(event: string, data: P, callback: (error?: any, data?: R) => void): this;
 	/**
@@ -945,6 +1056,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param callback Callback function.
 	 * @typeparam P Type of parameters.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void): this;
 	/**
@@ -957,6 +1069,7 @@ export class SocketComponent<P = {}, S = {}, SS = any> extends Component<P, S, S
 	 * @param onProgress Function called in the progress tick.
 	 * @typeparam P Type of parameters.
 	 * @typeparam R Type of response.
+	 * @deprecated
 	 */
 	protected request<P = any, R = any>(event: string, data: P, timeout: number, callback: (error?: any, data?: R) => void, onProgress: (progress: number) => void): this;
 
@@ -1060,11 +1173,16 @@ export interface IPageProps<T = {}, U = any> {
 export class Page<P extends IPageProps = { params: any, query: any, initialData: IInitialDataProps<any> }, S = {}, SS = any> extends SocketComponent<P, S, SS> {
 
 	/**
-     * Sets the page title.
-     *
-     * @param title Title of the page.
-     */
+	 * Sets the page title.
+	 *
+	 * @param title Title of the page.
+	 */
 	public setTitle(title: string): void;
+
+	/**
+	 * Gets the page title.
+	 */
+	public getTitle(): string;
 
 	/**
 	 * Called after the page is rendered.
@@ -1138,6 +1256,7 @@ interface IDataComponentProps extends React.HTMLProps<DataComponent> {
 
 /**
  * Component to handle rendering of socket data.
+ * @deprecated Use `CachedDataComponent` instead.
  */
 export class DataComponent extends SocketComponent<IDataComponentProps> {
 
@@ -1149,20 +1268,136 @@ export class DataComponent extends SocketComponent<IDataComponentProps> {
 
 //#endregion
 
-//#region Button
+// #region CachedDataComponent
 
-interface IButtonProps {
-	href?: string;
-	refreshContent?: boolean;
+export interface ICachedDataComponentProps<T> extends React.HTMLProps<CachedDataComponent<T>> {
+	/**
+	 * The key with which are the data stored in the store.
+	 * The property is required if the component is not inherited.
+	 */
+	dataKey?: string;
+	/**
+	 * Function called when the data are received.
+	 */
+	onData?: (data: T) => void;
+	/**
+	 * Function called if the error occurs during the request.
+	 */
+	onError?: (error: any) => void;
+	/**
+	 * Function to load the data.
+	 * The property is required if the data component is not inherited.
+	 */
+	load?: (component: CachedDataComponent<T>) => Promise<T>;
+	/**
+	 * Function to updated data in the store.
+	 * The property is required if the data component is not inherited.
+	 */
+	update?: (data: T) => Promise<T>;
+	/**
+	 * Indicates if the component should force load the data on mount.
+	 */
+	refresh?: boolean;
+	/**
+	 * The component to render while the data are loading.
+	 */
+	LoaderComponent?: React.ReactNode;
+	/**
+	 * Function for rendering the error.
+	 */
+	renderError?: (error: any) => JSX.Element;
+	/**
+	 * Function as children for rendering the data.
+	 * The property is required if the data component is not inherited.
+	 */
+	children?: (data: T, component: CachedDataComponent<T>) => JSX.Element;
+	/**
+	 * Transforms the data before storing.
+	 */
+	transformData?: (data: T) => T;
+}
+
+export interface ICachedDataComponentState<T> {
+	data: T;
+	error: any;
+	loading: boolean;
 }
 
 /**
- * Component for navigation throught the application. The click event calls {Application.navigate} method.
- * @deprecated
+ * Component to handle and store socket data.
  */
-export class Button extends BaseComponent<IButtonProps & React.ButtonHTMLAttributes<Button>> { }
+export class CachedDataComponent<T, P extends ICachedDataComponentProps<T> = ICachedDataComponentProps<T>>
+	extends SocketComponent<P, ICachedDataComponentState<T>> {
 
-//#endregion
+	/**
+	 * Renders the loader component.
+	 */
+	public renderLoader(): JSX.Element;
+
+	/**
+	 * Renders the error.
+	 * @param error 
+	 */
+	public renderError(error: any): JSX.Element;
+
+	/**
+	 * Renders the data.
+	 * @param data 
+	 */
+	public renderData(data: T): JSX.Element;
+
+	/**
+	 * Loads the data and stores it in the store.
+	 */
+	public load(): Promise<void>;
+
+	/**
+	 * Updates the data.
+	 */
+	public update(): Promise<void>;
+
+	/**
+	 * Clears the data.
+	 */
+	public clear(): void;
+
+	/**
+	 * The actual request to load the data.
+	 * This can be overridden for custom loader instead of prop.
+	 */
+	protected _load(): Promise<T>;
+
+	/**
+	 * Handles the data.
+	 * @param data 
+	 */
+	protected _handleData(data: T): void;
+
+	/**
+	 * Handlers the error.
+	 * @param error 
+	 */
+	protected _handleError(error: any): void;
+
+	/**
+	 * Transforms the data.
+	 * @param data 
+	 */
+	protected _transformData(data: T): T;
+
+	/**
+	 * Gets the data key.
+	 */
+	protected _getDataKey(): string;
+
+	private _hasStoredData(): boolean;
+
+	private _getStoredData(): T;
+
+	private _storeData(data: T): void;
+}
+
+// #endregion
 
 //#region Text
 
@@ -1218,16 +1453,18 @@ export class Text extends BaseComponent<ITextProps> {
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	static get(key: string, ...args: any[]): string;
+	static get<T = any>(key: keyof T, ...args: any[]): string;
 
 	/**
 	 * Gets the text from the dictionary as JSX object. All HTML in the text is converted to JSX.
 	 *
 	 * @param key Key of the text in the dictionary.
 	 * @param args Arguments for text format.
+	 * @typeparam `T` - Type of the dictionary object -> `typeof { key: 'value' }`.
 	 */
-	static getJSX(key: string, ...args: any[]): JSX.Element;
+	static getJSX<T = any>(key: keyof T, ...args: any[]): JSX.Element;
 
 	/**
 	 * Formats the text.
@@ -1322,4 +1559,10 @@ export {
 	ST as Storage,
 	Type,
 	Model,
+	// Types
+	TEventMap,
+	/** @deprecated */
+	TEventMap as EventMap,
+	TApplicationEventMap,
+	TSocketEventMap,
 }

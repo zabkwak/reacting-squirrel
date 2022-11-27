@@ -1,4 +1,4 @@
-import socketIO from 'socket.io';
+import { Server as SocketIOServer } from 'socket.io';
 import cookie from 'cookie';
 import cookieSignature from 'cookie-signature';
 import uniqid from 'uniqid';
@@ -59,6 +59,10 @@ class Socket {
 				}
 				if (!this._chunks[key]) {
 					this._chunks[key] = [];
+				}
+				if (!message.data) {
+					s.disconnect();
+					return;
 				}
 				this._chunks[key][index] = Buffer.from(Object.keys(message.data).map((k) => message.data[k]));
 				const chunks = this._chunks[key];
@@ -229,7 +233,7 @@ class Socket {
  * @param {Server} server Server instance.
  */
 const func = (server, options = {}) => {
-	const io = socketIO(server.getServer(), options);
+	const io = new SocketIOServer(server.getServer(), options);
 	const { socketMessageMaxSize } = server.getConfig();
 	io.use((socket, next) => {
 		if (!socket.request.headers.cookie) {
@@ -248,7 +252,7 @@ const func = (server, options = {}) => {
 			return;
 		}
 		// eslint-disable-next-line no-param-reassign
-		socket.session = new server.Session(sessionId);
+		socket.session = server.Session.getInstance(sessionId);
 		server.auth(socket.session, next);
 	});
 

@@ -34,7 +34,6 @@ export default class SocketClass {
 	 * @property {function} listener
 	 */
 
-
 	/** @type {Socket} */
 	_socket = null;
 
@@ -91,6 +90,7 @@ export default class SocketClass {
 	 * Sets the current socket.
 	 *
 	 * @param {Socket} socket Current requesting socket.
+	 * @deprecated
 	 */
 	setSocket(socket) {
 		this._socket = socket;
@@ -100,6 +100,7 @@ export default class SocketClass {
 	 * Gets the session from the socket.
 	 *
 	 * @returns {Session}
+	 * @deprecated
 	 */
 	getSession() {
 		return this._socket.getSession();
@@ -107,6 +108,7 @@ export default class SocketClass {
 
 	/**
 	 * Gets the user from the session.
+	 * @deprecated
 	 */
 	getUser() {
 		return this.getSession().getUser();

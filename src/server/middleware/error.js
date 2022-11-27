@@ -4,7 +4,7 @@ import HttpError from 'http-smart-error';
  * @param {import('../').default} server
  */
 export default (server) => (err, req, res, next) => {
-	const { dev, errorHandler } = server.getConfig();
+	const { dev, error } = server.getConfig();
 	if (!(err instanceof HttpError)) {
 		if (typeof err === 'string') {
 			// eslint-disable-next-line no-param-reassign
@@ -35,18 +35,19 @@ export default (server) => (err, req, res, next) => {
 		res.renderLayout({
 			title: err.message,
 			data: {
-				user: req.session.getUser(),
+				user: req.session?.getUser(),
 				dev,
 				timestamp: Date.now(),
 				error: err.toJSON(dev),
 				// eslint-disable-next-line no-underscore-dangle
 				version: server._version,
 			},
+			layout: error.layout,
 		});
 	};
-	if (typeof errorHandler !== 'function') {
+	if (!error || typeof error.handler !== 'function') {
 		render();
 		return;
 	}
-	errorHandler(err, req, res, () => render());
+	error.handler(err, req, res, () => render());
 };

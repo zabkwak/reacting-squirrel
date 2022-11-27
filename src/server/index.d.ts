@@ -17,6 +17,7 @@ export interface IRequest<S extends Session = Session> extends express.Request {
 	session: S;
 	locale: string;
 	getCookie<T = any>(name: string): T;
+	cookieDomain: string;
 }
 
 export interface IRenderLayoutData {
@@ -35,72 +36,78 @@ export interface IResponse extends express.Response {
 	setCookie: (name: string, value: any, options?: express.CookieOptions) => void;
 }
 
-export type RouteCallback = (req: IRequest, res: IResponse, next: (err?: Error, data?: {
+export interface IRouteCallbackData {
 	scripts?: Array<string>;
 	styles?: Array<string>;
 	data?: any;
 	title?: string;
 	layout?: typeof Layout;
-}) => void) => void;
+}
+
+export type RouteCallback = (
+	req: IRequest,
+	res: IResponse,
+	next: (err?: Error, data?: IRouteCallbackData) => void,
+) => void | Promise<IRouteCallbackData | void>;
 
 /**
  * Server configuration.
  */
 export interface IAppConfig {
-    /** Port on which the app listens. 
-     * @default 8080 
-     */
+	/** Port on which the app listens. 
+	 * @default 8080 
+	 */
 	port?: number;
-    /** 
-     * Relative path to the static directory for the express app. 
-     * @default './public'
-     */
+	/** 
+	 * Relative path to the static directory for the express app. 
+	 * @default './public'
+	 */
 	staticDir?: string;
-    /** 
-     * Flag of the dev status of the app. 
-     * @default false
-     */
+	/** 
+	 * Flag of the dev status of the app. 
+	 * @default false
+	 */
 	dev?: boolean;
-    /** 
-     * Name of the directory where the javascript is located in the staticDir.
-     * @default 'js'
-     */
+	/** 
+	 * Name of the directory where the javascript is located in the staticDir.
+	 * @default 'js'
+	 */
 	jsDir?: string;
-    /** 
-     * Name of the directory where the css is located in the staticDir.
-     * @default 'css'
-     */
+	/** 
+	 * Name of the directory where the css is located in the staticDir.
+	 * @default 'css'
+	 */
 	cssDir?: string;
-    /**
-     * Name of the bundle file.
-     * @default 'bundle.js'
-     */
+	/**
+	 * Name of the bundle file.
+	 * @default 'bundle.js'
+	 */
 	filename?: string;
-    /**
-     * Relative path to the app directory.
-     * @default './app'
-     */
+	/**
+	 * Relative path to the app directory.
+	 * @default './app'
+	 */
 	appDir?: string;
-    /**
-     * Relative path to the entry file.
-     * @default null
-     */
+	/**
+	 * Relative path to the entry file.
+	 * @default null
+	 */
 	entryFile?: string;
-    /**
-     * Custom path to rsconfig.json file.
-     * @default null
-     */
+	/**
+	 * Custom path to rsconfig.json file.
+	 * @default null
+	 */
 	rsConfig?: string;
-    /**
-     * React component width default html code.
-     * @default typeof Layout
-     */
+	/**
+	 * React component width default html code.
+	 * @default typeof Layout
+	 */
 	layoutComponent?: typeof Layout;
-    /**
-     * Secret which is used to sign cookies.
-     * @default null
+	/**
+	 * Secret which is used to sign cookies.
+	 * @default null
 	 * @deprecated
-     */
+	 */
 	cookieSecret?: string;
 	/**
 	 * Configuration for cookies.
@@ -108,7 +115,7 @@ export interface IAppConfig {
 	cookies?: {
 		/**
 		 * Secret which is used to sign cookies.
-     	 * @default '[random generated string]'
+		   * @default '[random generated string]'
 		 */
 		secret?: string;
 		/**
@@ -122,62 +129,85 @@ export interface IAppConfig {
 		 * @default null
 		 */
 		httpOnly?: boolean;
+		/**
+		 * The domain flag for the cookies.
+		 * @default null
+		 */
+		domain?: string;
+		/**
+		 * SameSite flag for the cookies.
+		 * @default null
+		 */
+		sameSite?: string;
 	};
-    /**
-     * List of scripts loaded in the base html.
-     * @default []
-     */
+	/**
+	 * List of scripts loaded in the base html.
+	 * @default []
+	 */
 	scripts?: Array<string>;
-    /**
-     * List of styles loaded in the base html.
-     * @default []
-     */
+	/**
+	 * List of styles loaded in the base html.
+	 * @default []
+	 */
 	styles?: Array<string>;
-    /**
-     * List of styles to merge to rs-app.css.
-     * @default []
-     */
+	/**
+	 * List of styles to merge to rs-app.css.
+	 * @default []
+	 */
 	mergeStyles?: Array<string>;
-    /**
-     * Class of the session.
-     * @default typeof Session
-     */
+	/**
+	 * Class of the session.
+	 * @default typeof Session
+	 */
 	session?: typeof Session;
-    /**
-     * Maximal size of one socket message.
-     * @default 104857600
-     */
+	/**
+	 * Maximal size of one socket message.
+	 * @default 104857600
+	 */
 	socketMessageMaxSize?: number;
-    /**
-     * Auth function called before the route execution.
-     * @param session Session instance.
-     * @default (session, next) => next()
-     */
+	/**
+	 * Auth function called before the route execution.
+	 * @param session Session instance.
+	 * @default (session, next) => next()
+	 */
 	auth?: (session: Session, next: (err?: any) => void) => void;
-    /**
-     * Function to handle errors in the route execution.
-     * @default (err, req, res, next) => next()
-     */
+	/** Definition of error handling */
+	error?: {
+		/**
+		 * Function to handle errors in the route execution.
+		 * @default (err, req, res, next) => next()
+		 */
+		handler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
+		/** Error page. */
+		page?: any; // TODO
+		/** Error layout. */
+		layout?: typeof Layout;
+	};
+	/**
+	 * Function to handle errors in the route execution.
+	 * @default (err, req, res, next) => next()
+	 * @deprecated
+	 */
 	errorHandler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
-    /**
-     * Indicates if the bundle is loaded relatively in the output html.
-     * @default false
-     */
+	/**
+	 * Indicates if the bundle is loaded relatively in the output html.
+	 * @default false
+	 */
 	bundlePathRelative?: boolean;
-    /**
-     * Function to handle webpack progress.
-     * @default null
-     */
+	/**
+	 * Function to handle webpack progress.
+	 * @default null
+	 */
 	onWebpackProgress?: (percents: number, message: string) => void;
-    /**
-     * Custom webpack config.
-     * @default {}
-     */
+	/**
+	 * Custom webpack config.
+	 * @default {}
+	 */
 	webpack?: any;
-    /**
-     * Custom socketIO config.
-     * @default {}
-     */
+	/**
+	 * Custom socketIO config.
+	 * @default {}
+	 */
 	socketIO?: SocketServerOptions;
 	/**
 	 * Custom autoprefixer config.
@@ -229,6 +259,19 @@ export interface IAppConfig {
 	 * @default true
 	 */
 	logging?: boolean;
+	/**
+	 * Indicates if the server should be started before the webpack bundle. In that case bundling info page is rendered.
+	 * @default: false
+	 */
+	bundleAfterServerStart?: boolean;
+	/**
+	 * Gets the request initial data.
+	 */
+	getInitialData?: (req: IRequest) => { [key: string]: any } | Promise<{ [key: string]: any }>;
+	/**
+	 * Gets the request title.
+	 */
+	getTitle?: (req: IRequest) => string | Promise<string>;
 }
 
 export interface ISocketEvent<S extends Session = Session> {
@@ -244,6 +287,7 @@ interface ILayoutPropsInitialData<U = any> {
 	dev: boolean;
 	timestamp: number;
 	version: string;
+	locale: string;
 }
 
 /**
@@ -267,6 +311,8 @@ export interface ILayoutProps<T = {}, U = any> {
 	bundle: string;
 	charSet?: string;
 	lang?: string;
+	/** List of ids of the wrappers for rendering components. */
+	componentWrappers?: Array<string>;
 }
 
 export interface IMiddleware {
@@ -395,6 +441,8 @@ export class Session<T = any> {
 	 */
 	public static generateId(): string;
 
+	public static getInstance<T = any>(id: string): Session<T>;
+
 	/**
 	 * ID of the session.
 	 */
@@ -405,7 +453,7 @@ export class Session<T = any> {
 	 *
 	 * @param id ID of the session.
 	 */
-	public constructor(id: string);
+	protected constructor(id: string);
 
 	/**
 	 * Sets the user's data to the session.
@@ -418,6 +466,11 @@ export class Session<T = any> {
 	 * Gets the user data from the session.
 	 */
 	public getUser(): T;
+
+	/**
+	 * Gets the server instance.
+	 */
+	public getServer(): Server;
 }
 
 /**
@@ -457,17 +510,22 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 	public renderMeta(): JSX.Element;
 
 	/**
-     * Gets the text from the dictionary.
-     *
-     * @param key Key of the text in the dictionary.
-     */
+	 * Renders the wrappers for the components in the HTML body.
+	 */
+	public renderComponentWrappers(): JSX.Element;
+
+	/**
+	 * Gets the text from the dictionary.
+	 *
+	 * @param key Key of the text in the dictionary.
+	 */
 	public getText(key: string): string;
-    /**
-     * Gets the text from the dictionary.
-     *
-     * @param key Key of the text in the dictionary.
-     * @param args Arguments for text format.
-     */
+	/**
+	 * Gets the text from the dictionary.
+	 *
+	 * @param key Key of the text in the dictionary.
+	 * @param args Arguments for text format.
+	 */
 	public getText(key: string, ...args: Array<any>): string;
 
 	/**
@@ -526,7 +584,7 @@ export class SocketClass<S extends Session = Session> {
 	 * @typeparam T Type of the data.
 	 * @deprecated
 	 */
-	broadcast<T = any>(event: string, data: T): void;
+	public broadcast<T = any>(event: string, data: T): void;
 	/**
 	 * Broadcasts the event and data to the clients.
 	 *
@@ -536,7 +594,7 @@ export class SocketClass<S extends Session = Session> {
 	 * @typeparam T Type of the data.
 	 * @deprecated
 	 */
-	broadcast<T = any>(event: string, data: T, includeSelf: boolean): void;
+	public broadcast<T = any>(event: string, data: T, includeSelf: boolean): void;
 	/**
 	 * Broadcasts the event and data to the clients passed the filter.
 	 *
@@ -547,8 +605,7 @@ export class SocketClass<S extends Session = Session> {
 	 * @typeparam T Type of the data.
 	 * @deprecated
 	 */
-	broadcast<T = any>(event: string, data: T, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
-
+	public broadcast<T = any>(event: string, data: T, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
 }
 
 /**
@@ -561,7 +618,7 @@ export abstract class Plugin {
 	 *
 	 * @param server The server instance.
 	 */
-	public register(server: Server): void;
+	public register(server: Server): Promise<void>;
 
 	/**
 	 * Gets the name of the plugin.
@@ -586,12 +643,12 @@ export abstract class Plugin {
 	/**
 	 * Gets the list of route callbacks.
 	 */
-	protected getRouteCallbacks(): Array<{ route: string, callback: RouteCallback }>;
+	protected getRouteCallbacks(): Array<{ route: string, method?: HttpMethod, callback: RouteCallback }>;
 
 	/**
 	 * Gets the list of callbacks called before the route execution.
 	 */
-	protected getBeforeExecutions(): Array<{spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
+	protected getBeforeExecutions(): Array<{ spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
 
 	/**
 	 * Gets the list of scripts to require in the html header.
@@ -626,19 +683,19 @@ export { HttpSmartError as HttpError };
  * @deprecated Use `rsconfig.json` instead.
  */
 export namespace Utils {
-    /**
-     * Registers socket classes to the server app.
-     * 
-     * @param app Server instance.
-     * @param dir Path to the directory with socket classes.
-     */
+	/**
+	 * Registers socket classes to the server app.
+	 * 
+	 * @param app Server instance.
+	 * @param dir Path to the directory with socket classes.
+	 */
 	export function registerSocketClassDir(app: Server, dir: string): void;
-    /**
-     * Registers routes to the server app.
-     * 
-     * @param app Server instance.
-     * @param routes List of routes to register.
-     */
+	/**
+	 * Registers routes to the server app.
+	 * 
+	 * @param app Server instance.
+	 * @param routes List of routes to register.
+	 */
 	export function registerRoutes(
 		app: Server,
 		routes: Array<{
@@ -650,13 +707,13 @@ export namespace Utils {
 			layout?: string | typeof Layout;
 		}>
 	): void;
-    /**
-     * Registers components to the server app.
-     * 
-     * @param app Server instance.
-     * @param components List of components to register.
-     */
-	export function registerComponents(app: Server, components: Array<{ id: string, component: string }>): void;
+	/**
+	 * Registers components to the server app.
+	 * 
+	 * @param app Server instance.
+	 * @param components List of components to register.
+	 */
+	export function registerComponents(app: Server, components: Array<{ id: string, component: string, auto?: boolean }>): void;
 }
 
 /**
@@ -720,16 +777,20 @@ export default class Server {
 	 * App version.
 	 */
 	version: string;
+	/**
+	 * Indicates if the webpack is bundling.
+	 */
+	bundling: boolean;
 
 	constructor(config?: IAppConfig);
 
-    /**
-     * Gets the instance of the server.
-     */
+	/**
+	 * Gets the instance of the server.
+	 */
 	getServer(): http.Server;
-    /**
-     * Gets the instance of express application.
-     */
+	/**
+	 * Gets the instance of express application.
+	 */
 	getApp(): express.Application;
 
 	/**
@@ -766,61 +827,59 @@ export default class Server {
 	 */
 	getConfig<K extends keyof IAppConfig>(key: K): IAppConfig[K];
 
-    /**
-     * Gets the list of registered socket events.
-     */
+	/**
+	 * Gets the list of registered socket events.
+	 */
 	getSocketEvents(): Array<ISocketEvent>;
 
-    /**
-     * Gets the list of registered socket classes.
-     */
+	/**
+	 * Gets the list of registered socket classes.
+	 */
 	getSocketClasses(): Array<SocketClass>;
 
-    /**
-     * Authorizes the user.
-     *
-     * @param session Current session.
-     * @param next Callback after the auth process.
-     */
-	auth(session: Session, next: (err?: any) => void): void;
+	/**
+	 * Gets the list of registered components.
+	 */
+	getRegisteredComponents(): Array<{ elementId: string, path: string, auto: boolean }>;
 
-	get(route: string, contentComponent: string, title: string): this;
-	get(route: string, contentComponent: string, title: string, requireAuth: boolean): this;
-    /**
-     * Registers the GET route.
-     * @param route
-     * @param contentComponent 
-     * @param title 
-     * @param requireAuth 
-     * @param callback 
-     * @deprecated
-     */
-	get(route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
+	/**
+	 * Gets the installed plugin by its name.
+	 * @param name Name of the plugin.
+	 */
+	public getPluginByName<T extends Plugin>(name: string): T;
+
+	/**
+	 * Authorizes the user.
+	 *
+	 * @param session Current session.
+	 * @param next Callback after the auth process.
+	 */
+	auth(session: Session, next: (err?: any) => void): void;
 
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
-    /**
-     * Registers route.
-     *
-     * @param method 
-     * @param route 
-     * @param contentComponent 
-     * @param title 
-     * @param requireAuth 
-     * @param callback 
-     */
+	/**
+	 * Registers route.
+	 *
+	 * @param method 
+	 * @param route 
+	 * @param contentComponent 
+	 * @param title 
+	 * @param requireAuth 
+	 * @param callback 
+	 */
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
-    /**
-     * Registers route.
-     *
-     * @param method 
-     * @param route 
-     * @param contentComponent 
-     * @param title 
-     * @param requireAuth 
-     * @param layout
-     * @param callback 
-     */
+	/**
+	 * Registers route.
+	 *
+	 * @param method 
+	 * @param route 
+	 * @param contentComponent 
+	 * @param title 
+	 * @param requireAuth 
+	 * @param layout
+	 * @param callback 
+	 */
 	registerRoute(
 		method: HttpMethod,
 		route: string,
@@ -832,36 +891,53 @@ export default class Server {
 	): this;
 
 	/**
-	 * Registers callback to route registered with rsconfig.
+	 * Registers callback to route registered with rsconfig for GET method.
 	 *
 	 * @param route Route spec.
 	 * @param callback Callback to call when the route is called.
 	 */
 	registerRouteCallback(route: string, callback: RouteCallback): this;
+	/**
+	 * Registers callback to route registered with rsconfig.
+	 *
+	 * @param method HTTP method.
+	 * @param route Route spec.
+	 * @param callback Callback to call when the route is called.
+	 */
+	registerRouteCallback(method: HttpMethod, route: string, callback: RouteCallback): this;
 
 	registerSocketClass(cls: typeof SocketClass): this;
-    /**
-     * Registers the socket class.
-     *
-     * @param cls Socket class to register.
-     */
+	/**
+	 * Registers the socket class.
+	 *
+	 * @param cls Socket class to register.
+	 */
 	registerSocketClass(cls: new () => SocketClass<Session>): this;
 
-    /**
-     * Registers the socket event.
-     *
-     * @param event Name of the event.
-     * @param listener Listener executed in the event.
-     */
+	/**
+	 * Registers the socket event.
+	 *
+	 * @param event Name of the event.
+	 * @param listener Listener executed in the event.
+	 */
 	registerSocketEvent(event: string, listener: ISocketEvent['listener']): this;
 
-    /**
-     * Registers component.
-     *
-     * @param componentPath Absolute path or relative path to the component from the app directory.
-     * @param elementId Id of the element in the layout where the component should be rendered.
-     */
+	/**
+	 * Registers component.
+	 *
+	 * @param componentPath Absolute path or relative path to the component from the app directory.
+	 * @param elementId Id of the element in the layout where the component should be rendered.
+	 */
 	registerComponent(componentPath: string, elementId: string): this;
+
+	/**
+	* Registers component.
+	*
+	* @param componentPath Absolute path or relative path to the component from the app directory.
+	* @param elementId Id of the element in the layout where the component should be rendered.
+	* @param auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
+	*/
+	registerComponent(componentPath: string, elementId: string, auto: boolean): this;
 
 	/**
 	 * Registers the component provider. All components rendered with the application are wrapped with this provider.
@@ -871,9 +947,17 @@ export default class Server {
 	registerComponentProvider(path: string): this;
 
 	/**
+	 * Registers the component error handler. It catches all react errors.
+	 *
+	 * @param path Absolute path or relative path to the error handler.
+	 */
+	 registerComponentErrorHandler(path: string): this;
+
+	/**
 	 * Registers the error page.
 	 * 
 	 * @param componentPath Relative path to the component from the app directory.
+	 * @deprecated
 	 */
 	registerErrorPage(componentPath: string): this;
 
@@ -916,6 +1000,14 @@ export default class Server {
 	injectToEntry(code: string): this;
 
 	/**
+	 * Creates a file in RS directory.
+	 *
+	 * @param filename Name of the file.
+	 * @param data File content of async function to get the content.
+	 */
+	createRSFile(filename: string, data: string | Buffer | (() => Promise<string | Buffer>)): this;
+
+	/**
 	 * Logs the info in the stdout.
 	 * 
 	 * @param tag Tag of the message.
@@ -942,21 +1034,37 @@ export default class Server {
 	 */
 	logError(tag: string, message: string, ...args: Array<any>): void;
 
-    /**
-     * Starts the application.
-     *
-     * @param cb Callback called after the application is started.
-     */
-	start(cb?: (err?: any) => void): Promise<void>;
+	/**
+	 * Prepares and bundles the app.
+	 */
+	public bundle(): Promise<void>;
 
 	/**
-     * Stops the application.
-     */
-	stop(): void;
+	 * Starts the application. It creates bundle in the process.
+	 */
+	public start(): Promise<void>;
+	/**
+	 * Starts the application. It creates bundle in the process.
+	 *
+	 * @param cb Callback called after the application is started.
+	 */
+	public start(cb: (err?: any) => void): Promise<void>;
+	/**
+	 * Starts the application. Bundle creation depends on the `skipBundle` parameter.
+	 *
+	 * @param skipBundle Indicates if the bundle creation should be skipped in the start process. It means bundle is already created with `bundle` method.
+	 * @param cb Callback called after the application is started.
+	 */
+	public start(skipBundle: boolean, cb: (err?: any) => void): Promise<void>;
+
+	/**
+	 * Stops the application.
+	 */
+	public stop(): void;
 	/**
 	 * Stops the application.
 	 * 
 	 * @param cb Callback called after the server stopped.
 	 */
-	stop(cb?: (err?: Error) => void): void;
+	public stop(cb?: (err?: Error) => void): void;
 }

@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Server | reacting-squirrel - v0.16.6</title>
-	<meta name="description" content="">
+	<title>Server | reacting-squirrel</title>
+	<meta name="description" content="Documentation for reacting-squirrel">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">reacting-squirrel - v0.16.6</a>
+					<a href="../index.html" class="title">reacting-squirrel</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -102,6 +102,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_server_index_d_.server.html#appdirabsolute" class="tsd-kind-icon">app<wbr>Dir<wbr>Absolute</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_server_index_d_.server.html#bundlepath" class="tsd-kind-icon">bundle<wbr>Path</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_server_index_d_.server.html#bundlepathabsolute" class="tsd-kind-icon">bundle<wbr>Path<wbr>Absolute</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_server_index_d_.server.html#bundling" class="tsd-kind-icon">bundling</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_server_index_d_.server.html#dev" class="tsd-kind-icon">dev</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_server_index_d_.server.html#nonce" class="tsd-kind-icon">nonce</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_server_index_d_.server.html#path" class="tsd-kind-icon">path</a></li>
@@ -115,11 +116,14 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#auth" class="tsd-kind-icon">auth</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#bundle" class="tsd-kind-icon">bundle</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#creatersfile" class="tsd-kind-icon">createRSFile</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#getapp" class="tsd-kind-icon">get<wbr>App</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_server_index_d_.server.html#getconfig" class="tsd-kind-icon">get<wbr>Config</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#getlocalefilename" class="tsd-kind-icon">get<wbr>Locale<wbr>File<wbr>Name</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#getlocaletext" class="tsd-kind-icon">get<wbr>Locale<wbr>Text</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_server_index_d_.server.html#getpluginbyname" class="tsd-kind-icon">get<wbr>Plugin<wbr>ByName</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#getregisteredcomponents" class="tsd-kind-icon">get<wbr>Registered<wbr>Components</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#getserver" class="tsd-kind-icon">get<wbr>Server</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#getsocketclasses" class="tsd-kind-icon">get<wbr>Socket<wbr>Classes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#getsocketevents" class="tsd-kind-icon">get<wbr>Socket<wbr>Events</a></li>
@@ -130,6 +134,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#logwarning" class="tsd-kind-icon">log<wbr>Warning</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_server_index_d_.server.html#registerbeforeexecution" class="tsd-kind-icon">register<wbr>Before<wbr>Execution</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#registercomponent" class="tsd-kind-icon">register<wbr>Component</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#registercomponentprovider" class="tsd-kind-icon">register<wbr>Component<wbr>Provider</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#registererrorpage" class="tsd-kind-icon">register<wbr>Error<wbr>Page</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#registermiddleware" class="tsd-kind-icon">register<wbr>Middleware</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_server_index_d_.server.html#registerplugin" class="tsd-kind-icon">register<wbr>Plugin</a></li>
@@ -156,7 +161,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L718">src/server/index.d.ts:718</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L778">src/server/index.d.ts:778</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -178,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">Layout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Element</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L702">src/server/index.d.ts:702</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L758">src/server/index.d.ts:758</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -190,10 +195,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="session" class="tsd-anchor"></a>
 					<h3>Session</h3>
-					<div class="tsd-signature tsd-kind-icon">Session<span class="tsd-signature-symbol">:</span> <a href="_server_index_d_.session.html" class="tsd-signature-type">Session</a></div>
+					<div class="tsd-signature tsd-kind-icon">Session<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="_server_index_d_.session.html" class="tsd-signature-type">Session</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L706">src/server/index.d.ts:706</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L762">src/server/index.d.ts:762</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -208,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">Text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TextType</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L710">src/server/index.d.ts:710</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L766">src/server/index.d.ts:766</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -223,7 +228,7 @@
 					<div class="tsd-signature tsd-kind-icon">app<wbr>Dir<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L694">src/server/index.d.ts:694</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L750">src/server/index.d.ts:750</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -238,7 +243,7 @@
 					<div class="tsd-signature tsd-kind-icon">app<wbr>Dir<wbr>Absolute<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L698">src/server/index.d.ts:698</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L754">src/server/index.d.ts:754</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -253,7 +258,7 @@
 					<div class="tsd-signature tsd-kind-icon">bundle<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L686">src/server/index.d.ts:686</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L742">src/server/index.d.ts:742</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -268,7 +273,7 @@
 					<div class="tsd-signature tsd-kind-icon">bundle<wbr>Path<wbr>Absolute<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L690">src/server/index.d.ts:690</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L746">src/server/index.d.ts:746</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -278,12 +283,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="bundling" class="tsd-anchor"></a>
+					<h3>bundling</h3>
+					<div class="tsd-signature tsd-kind-icon">bundling<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L778">src/server/index.d.ts:778</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Indicates if the webpack is bundling.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="dev" class="tsd-anchor"></a>
 					<h3>dev</h3>
 					<div class="tsd-signature tsd-kind-icon">dev<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L678">src/server/index.d.ts:678</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L734">src/server/index.d.ts:734</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -298,7 +318,7 @@
 					<div class="tsd-signature tsd-kind-icon">nonce<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L714">src/server/index.d.ts:714</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L770">src/server/index.d.ts:770</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -313,7 +333,7 @@
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L682">src/server/index.d.ts:682</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L738">src/server/index.d.ts:738</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -328,7 +348,7 @@
 					<div class="tsd-signature tsd-kind-icon">port<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L666">src/server/index.d.ts:666</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L722">src/server/index.d.ts:722</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -343,7 +363,7 @@
 					<div class="tsd-signature tsd-kind-icon">static<wbr>Dir<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L670">src/server/index.d.ts:670</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L726">src/server/index.d.ts:726</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -358,7 +378,7 @@
 					<div class="tsd-signature tsd-kind-icon">static<wbr>Dir<wbr>Absolute<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L674">src/server/index.d.ts:674</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L730">src/server/index.d.ts:730</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -373,7 +393,7 @@
 					<div class="tsd-signature tsd-kind-icon">version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L718">src/server/index.d.ts:718</a></li>
+							<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L774">src/server/index.d.ts:774</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -389,13 +409,13 @@
 					<a name="auth" class="tsd-anchor"></a>
 					<h3>auth</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">auth<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="_server_index_d_.session.html" class="tsd-signature-type">Session</a>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">auth<span class="tsd-signature-symbol">(</span>session<span class="tsd-signature-symbol">: </span><a href="_server_index_d_.session.html" class="tsd-signature-type">Session</a>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L781">src/server/index.d.ts:781</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L852">src/server/index.d.ts:852</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -412,13 +432,13 @@
 									</div>
 								</li>
 								<li>
-									<h5>next: <span class="tsd-signature-type">function</span></h5>
+									<h5>next: <span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Callback after the auth process.</p>
 									</div>
 									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
 												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
@@ -441,88 +461,58 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="get" class="tsd-anchor"></a>
-					<h3>get</h3>
+					<a name="bundle" class="tsd-anchor"></a>
+					<h3>bundle</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, requireAuth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">(</span>route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, requireAuth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">bundle<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L783">src/server/index.d.ts:783</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>route: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>contentComponent: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>title: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L784">src/server/index.d.ts:784</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>route: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>contentComponent: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>title: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>requireAuth: <span class="tsd-signature-type">boolean</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L794">src/server/index.d.ts:794</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1020">src/server/index.d.ts:1020</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Registers the GET route.</p>
+									<p>Prepares and bundles the app.</p>
 								</div>
-								<dl class="tsd-comment-tags">
-									<dt>deprecated</dt>
-									<dd></dd>
-								</dl>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="creatersfile" class="tsd-anchor"></a>
+					<h3>createRSFile</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">createRSFile<span class="tsd-signature-symbol">(</span>filename<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L988">src/server/index.d.ts:988</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a file in RS directory.</p>
+								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>route: <span class="tsd-signature-type">string</span></h5>
+									<h5>filename: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the file.</p>
+									</div>
 								</li>
 								<li>
-									<h5>contentComponent: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>title: <span class="tsd-signature-type">string</span></h5>
-								</li>
-								<li>
-									<h5>requireAuth: <span class="tsd-signature-type">boolean</span></h5>
-								</li>
-								<li>
-									<h5>callback: <span class="tsd-signature-type">Function</span></h5>
+									<h5>data: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>File content of async function to get the content.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -539,7 +529,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L729">src/server/index.d.ts:729</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L789">src/server/index.d.ts:789</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -556,13 +546,13 @@
 					<h3>get<wbr>Config</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 						<li class="tsd-signature tsd-kind-icon">get<wbr>Config<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_server_index_d_.iappconfig.html" class="tsd-signature-type">IAppConfig</a></li>
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Config&lt;K&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IAppConfig[K]</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Config&lt;K&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IAppConfig</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L757">src/server/index.d.ts:757</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L817">src/server/index.d.ts:817</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -575,7 +565,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L763">src/server/index.d.ts:763</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L823">src/server/index.d.ts:823</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -586,7 +576,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">keyof IAppConfig</span></h4>
+									<h4>K<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">keyof </span><a href="../interfaces/_server_index_d_.iappconfig.html" class="tsd-signature-type">IAppConfig</a></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -598,7 +588,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IAppConfig[K]</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IAppConfig</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -612,7 +602,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L745">src/server/index.d.ts:745</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L805">src/server/index.d.ts:805</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -643,7 +633,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L738">src/server/index.d.ts:738</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L798">src/server/index.d.ts:798</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -669,6 +659,65 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+					<a name="getpluginbyname" class="tsd-anchor"></a>
+					<h3>get<wbr>Plugin<wbr>ByName</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Plugin<wbr>ByName&lt;T&gt;<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L844">src/server/index.d.ts:844</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the installed plugin by its name.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>T<span class="tsd-signature-symbol">: </span><a href="_server_index_d_.plugin.html" class="tsd-signature-type">Plugin</a></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Name of the plugin.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getregisteredcomponents" class="tsd-anchor"></a>
+					<h3>get<wbr>Registered<wbr>Components</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Registered<wbr>Components<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>auto<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>elementId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L838">src/server/index.d.ts:838</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the list of registered components.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>auto<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>elementId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="getserver" class="tsd-anchor"></a>
 					<h3>get<wbr>Server</h3>
@@ -679,7 +728,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L725">src/server/index.d.ts:725</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L785">src/server/index.d.ts:785</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -701,7 +750,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L773">src/server/index.d.ts:773</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L833">src/server/index.d.ts:833</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -723,7 +772,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L768">src/server/index.d.ts:768</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L828">src/server/index.d.ts:828</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -745,7 +794,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L905">src/server/index.d.ts:905</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L980">src/server/index.d.ts:980</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -776,7 +825,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L752">src/server/index.d.ts:752</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L812">src/server/index.d.ts:812</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -807,7 +856,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L932">src/server/index.d.ts:932</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1015">src/server/index.d.ts:1015</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -850,7 +899,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L914">src/server/index.d.ts:914</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L997">src/server/index.d.ts:997</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -893,7 +942,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L923">src/server/index.d.ts:923</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1006">src/server/index.d.ts:1006</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -930,13 +979,13 @@
 					<a name="registerbeforeexecution" class="tsd-anchor"></a>
 					<h3>register<wbr>Before<wbr>Execution</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Before<wbr>Execution&lt;R&gt;<span class="tsd-signature-symbol">(</span>spec<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Before<wbr>Execution&lt;R&gt;<span class="tsd-signature-symbol">(</span>spec<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span>, res<span class="tsd-signature-symbol">: </span><a href="../interfaces/_server_index_d_.iresponse.html" class="tsd-signature-type">IResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L875">src/server/index.d.ts:875</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L950">src/server/index.d.ts:950</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -947,7 +996,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>R<span class="tsd-signature-symbol">: </span><a href="../interfaces/_server_index_d_.irequest.html" class="tsd-signature-type">IRequest</a></h4>
+									<h4>R<span class="tsd-signature-symbol">: </span><a href="../interfaces/_server_index_d_.irequest.html" class="tsd-signature-type">IRequest</a> = <span class="tsd-signature-type">IRequest</span></h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -959,13 +1008,13 @@
 									</div>
 								</li>
 								<li>
-									<h5>callback: <span class="tsd-signature-type">function</span></h5>
+									<h5>callback: <span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span>, res<span class="tsd-signature-symbol">: </span><a href="../interfaces/_server_index_d_.iresponse.html" class="tsd-signature-type">IResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Callback to execute before the route execution.</p>
 									</div>
 									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
 												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>req<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">R</span>, res<span class="tsd-signature-symbol">: </span><a href="../interfaces/_server_index_d_.iresponse.html" class="tsd-signature-type">IResponse</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
@@ -995,12 +1044,13 @@
 					<h3>register<wbr>Component</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">register<wbr>Component<span class="tsd-signature-symbol">(</span>componentPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, elementId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Component<span class="tsd-signature-symbol">(</span>componentPath<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, elementId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, auto<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L860">src/server/index.d.ts:860</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L918">src/server/index.d.ts:918</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1025,6 +1075,71 @@
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
 						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L927">src/server/index.d.ts:927</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers component.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>componentPath: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Absolute path or relative path to the component from the app directory.</p>
+									</div>
+								</li>
+								<li>
+									<h5>elementId: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Id of the element in the layout where the component should be rendered.</p>
+									</div>
+								</li>
+								<li>
+									<h5>auto: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Indicates if the component&#39;s wrapper should be automatically rendered in the layout&#39;s body.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="registercomponentprovider" class="tsd-anchor"></a>
+					<h3>register<wbr>Component<wbr>Provider</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Component<wbr>Provider<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L934">src/server/index.d.ts:934</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers the component provider. All components rendered with the application are wrapped with this provider.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Absolute path or relative path to the component provider.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
@@ -1037,13 +1152,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L867">src/server/index.d.ts:867</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L942">src/server/index.d.ts:942</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Registers the error page.</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd></dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -1062,14 +1181,14 @@
 					<a name="registermiddleware" class="tsd-anchor"></a>
 					<h3>register<wbr>Middleware</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Middleware<span class="tsd-signature-symbol">(</span>middleware<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IMiddleware[&quot;callback&quot;]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Middleware<span class="tsd-signature-symbol">(</span>middleware<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IMiddleware[&quot;callback&quot;]</span>, afterRoutes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Middleware<span class="tsd-signature-symbol">(</span>middleware<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IMiddleware</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"callback"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Middleware<span class="tsd-signature-symbol">(</span>middleware<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IMiddleware</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"callback"</span><span class="tsd-signature-symbol">]</span>, afterRoutes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L891">src/server/index.d.ts:891</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L966">src/server/index.d.ts:966</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1080,7 +1199,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>middleware: <span class="tsd-signature-type">IMiddleware[&quot;callback&quot;]</span></h5>
+									<h5>middleware: <span class="tsd-signature-type">IMiddleware</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"callback"</span><span class="tsd-signature-symbol">]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Middleware to register.</p>
 									</div>
@@ -1091,7 +1210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L898">src/server/index.d.ts:898</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L973">src/server/index.d.ts:973</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1102,7 +1221,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>middleware: <span class="tsd-signature-type">IMiddleware[&quot;callback&quot;]</span></h5>
+									<h5>middleware: <span class="tsd-signature-type">IMiddleware</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"callback"</span><span class="tsd-signature-symbol">]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Middleware to register.</p>
 									</div>
@@ -1128,7 +1247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L884">src/server/index.d.ts:884</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L959">src/server/index.d.ts:959</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1156,13 +1275,13 @@
 						<li class="tsd-signature tsd-kind-icon">register<wbr>Route<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><a href="../modules/_server_index_d_.html#httpmethod" class="tsd-signature-type">HttpMethod</a>, route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">register<wbr>Route<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><a href="../modules/_server_index_d_.html#httpmethod" class="tsd-signature-type">HttpMethod</a>, route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, requireAuth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">register<wbr>Route<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><a href="../modules/_server_index_d_.html#httpmethod" class="tsd-signature-type">HttpMethod</a>, route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, requireAuth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Route<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><a href="../modules/_server_index_d_.html#httpmethod" class="tsd-signature-type">HttpMethod</a>, route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, requireAuth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, layout<span class="tsd-signature-symbol">: </span><a href="_server_index_d_.layout.html" class="tsd-signature-type">Layout</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Route<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><a href="../modules/_server_index_d_.html#httpmethod" class="tsd-signature-type">HttpMethod</a>, route<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, contentComponent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, title<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, requireAuth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, layout<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="_server_index_d_.layout.html" class="tsd-signature-type">Layout</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L796">src/server/index.d.ts:796</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L854">src/server/index.d.ts:854</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1185,7 +1304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L797">src/server/index.d.ts:797</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L855">src/server/index.d.ts:855</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1211,7 +1330,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L808">src/server/index.d.ts:808</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L866">src/server/index.d.ts:866</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1247,7 +1366,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L820">src/server/index.d.ts:820</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L878">src/server/index.d.ts:878</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1273,7 +1392,7 @@
 									<h5>requireAuth: <span class="tsd-signature-type">boolean</span></h5>
 								</li>
 								<li>
-									<h5>layout: <a href="_server_index_d_.layout.html" class="tsd-signature-type">Layout</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5>layout: <span class="tsd-signature-symbol">typeof </span><a href="_server_index_d_.layout.html" class="tsd-signature-type">Layout</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
 									<h5>callback: <span class="tsd-signature-type">Function</span></h5>
@@ -1295,7 +1414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L836">src/server/index.d.ts:836</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L894">src/server/index.d.ts:894</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1326,20 +1445,20 @@
 					<a name="registersocketclass" class="tsd-anchor"></a>
 					<h3>register<wbr>Socket<wbr>Class</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Socket<wbr>Class<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><a href="_server_index_d_.socketclass.html" class="tsd-signature-type">SocketClass</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Socket<wbr>Class<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Socket<wbr>Class<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">typeof </span><a href="_server_index_d_.socketclass.html" class="tsd-signature-type">SocketClass</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Socket<wbr>Class<span class="tsd-signature-symbol">(</span>cls<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L838">src/server/index.d.ts:838</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L896">src/server/index.d.ts:896</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>cls: <a href="_server_index_d_.socketclass.html" class="tsd-signature-type">SocketClass</a></h5>
+									<h5>cls: <span class="tsd-signature-symbol">typeof </span><a href="_server_index_d_.socketclass.html" class="tsd-signature-type">SocketClass</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -1347,7 +1466,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L844">src/server/index.d.ts:844</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L902">src/server/index.d.ts:902</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1358,7 +1477,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>cls: <span class="tsd-signature-type">object</span></h5>
+									<h5>cls: <span class="tsd-signature-symbol">{}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Socket class to register.</p>
 									</div>
@@ -1374,13 +1493,13 @@
 					<a name="registersocketevent" class="tsd-anchor"></a>
 					<h3>register<wbr>Socket<wbr>Event</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">register<wbr>Socket<wbr>Event<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISocketEvent[&quot;listener&quot;]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">register<wbr>Socket<wbr>Event<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, listener<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ISocketEvent</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"listener"</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L852">src/server/index.d.ts:852</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L910">src/server/index.d.ts:910</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1397,7 +1516,7 @@
 									</div>
 								</li>
 								<li>
-									<h5>listener: <span class="tsd-signature-type">ISocketEvent[&quot;listener&quot;]</span></h5>
+									<h5>listener: <span class="tsd-signature-type">ISocketEvent</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"listener"</span><span class="tsd-signature-symbol">]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Listener executed in the event.</p>
 									</div>
@@ -1411,30 +1530,91 @@
 					<a name="start" class="tsd-anchor"></a>
 					<h3>start</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>skipBundle<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span>, cb<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L939">src/server/index.d.ts:939</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1025">src/server/index.d.ts:1025</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Starts the application.</p>
+									<p>Starts the application. It creates bundle in the process.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1031">src/server/index.d.ts:1031</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Starts the application. It creates bundle in the process.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> cb: <span class="tsd-signature-type">function</span></h5>
+									<h5>cb: <span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Callback called after the application is started.</p>
 									</div>
 									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5><span class="tsd-flag ts-flagOptional">Optional</span> err: <span class="tsd-signature-type">any</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1038">src/server/index.d.ts:1038</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Starts the application. Bundle creation depends on the <code>skipBundle</code> parameter.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>skipBundle: <span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Indicates if the bundle creation should be skipped in the start process. It means bundle is already created with <code>bundle</code> method.</p>
+									</div>
+								</li>
+								<li>
+									<h5>cb: <span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Callback called after the application is started.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
 												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
@@ -1461,13 +1641,13 @@
 					<h3>stop</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-						<li class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L944">src/server/index.d.ts:944</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1043">src/server/index.d.ts:1043</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1480,7 +1660,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/d688cef/src/server/index.d.ts#L950">src/server/index.d.ts:950</a></li>
+									<li>Defined in <a href="https://github.com/zabkwak/reacting-squirrel/blob/39f8be2/src/server/index.d.ts#L1049">src/server/index.d.ts:1049</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1491,13 +1671,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> cb: <span class="tsd-signature-type">function</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> cb: <span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Callback called after the server stopped.</p>
 									</div>
 									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
 												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
@@ -1527,25 +1707,25 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_app_index_d_.html">&quot;app/index.d&quot;</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_server_index_d_.html">&quot;server/index.d&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_server_index_d_.layout.html" class="tsd-kind-icon">Layout</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="_server_index_d_.plugin.html" class="tsd-kind-icon">Plugin</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="_server_index_d_.server.html" class="tsd-kind-icon">Server</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
@@ -1573,6 +1753,9 @@
 								<a href="_server_index_d_.server.html#bundlepathabsolute" class="tsd-kind-icon">bundle<wbr>Path<wbr>Absolute</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="_server_index_d_.server.html#bundling" class="tsd-kind-icon">bundling</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_server_index_d_.server.html#dev" class="tsd-kind-icon">dev</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -1597,7 +1780,10 @@
 								<a href="_server_index_d_.server.html#auth" class="tsd-kind-icon">auth</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_server_index_d_.server.html#get" class="tsd-kind-icon">get</a>
+								<a href="_server_index_d_.server.html#bundle" class="tsd-kind-icon">bundle</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_server_index_d_.server.html#creatersfile" class="tsd-kind-icon">createRSFile</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_index_d_.server.html#getapp" class="tsd-kind-icon">get<wbr>App</a>
@@ -1610,6 +1796,12 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_index_d_.server.html#getlocaletext" class="tsd-kind-icon">get<wbr>Locale<wbr>Text</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
+								<a href="_server_index_d_.server.html#getpluginbyname" class="tsd-kind-icon">get<wbr>Plugin<wbr>ByName</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_server_index_d_.server.html#getregisteredcomponents" class="tsd-kind-icon">get<wbr>Registered<wbr>Components</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_index_d_.server.html#getserver" class="tsd-kind-icon">get<wbr>Server</a>
@@ -1642,6 +1834,9 @@
 								<a href="_server_index_d_.server.html#registercomponent" class="tsd-kind-icon">register<wbr>Component</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_server_index_d_.server.html#registercomponentprovider" class="tsd-kind-icon">register<wbr>Component<wbr>Provider</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_server_index_d_.server.html#registererrorpage" class="tsd-kind-icon">register<wbr>Error<wbr>Page</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1672,43 +1867,43 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_server_index_d_.session.html" class="tsd-kind-icon">Session</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_server_index_d_.socket.html" class="tsd-kind-icon">Socket</a>
 					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_server_index_d_.socketclass.html" class="tsd-kind-icon">Socket<wbr>Class</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_server_index_d_.iappconfig.html" class="tsd-kind-icon">IApp<wbr>Config</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/_server_index_d_.ilayoutprops.html" class="tsd-kind-icon">ILayout<wbr>Props</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter tsd-is-not-exported">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter tsd-is-not-exported">
 						<a href="../interfaces/_server_index_d_.ilayoutpropsinitialdata.html" class="tsd-kind-icon">ILayout<wbr>Props<wbr>Initial<wbr>Data</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_server_index_d_.imiddleware.html" class="tsd-kind-icon">IMiddleware</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_server_index_d_.irenderlayoutdata.html" class="tsd-kind-icon">IRender<wbr>Layout<wbr>Data</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/_server_index_d_.irequest.html" class="tsd-kind-icon">IRequest</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/_server_index_d_.iresponse.html" class="tsd-kind-icon">IResponse</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/_server_index_d_.isocketevent.html" class="tsd-kind-icon">ISocket<wbr>Event</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/_server_index_d_.html#httpmethod" class="tsd-kind-icon">Http<wbr>Method</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="../modules/_server_index_d_.html#routecallback" class="tsd-kind-icon">Route<wbr>Callback</a>
 					</li>
 				</ul>
@@ -1721,57 +1916,20 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 		</div>
 	</div>
@@ -1781,6 +1939,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

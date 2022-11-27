@@ -45,7 +45,17 @@
         {
             "route": "/no-component",
             "title": "No component"
-        }
+		},
+		{
+			"route": "/large-data",
+			"component": "large-data",
+			"title": "Large data"
+		},
+		{
+			"route": "/callback",
+			"title": "Callback",
+			"callback": "__tests__app__/dev/dist/callbacks/callback"
+		}
     ],
     "components": [
         {
@@ -58,11 +68,16 @@
         },
         {
             "id": "generated",
-            "component": "generated-component"
+			"component": "generated-component",
+			"auto": true
         }
     ],
-    "socketClassDir": "__tests__app__/dev/dist",
-	"errorPage": "page.error",
+	"socketClassDir": "__tests__app__/dev/dist/socket",
+	"error": {
+		"page": "page.error",
+		"layout": "./__tests__app__/dev/dist/layout.error"
+	},
+	"errorHandler": "./__tests__app__/dev/dist/error-handler",
     "createMissingComponents": true,
     "mergeStyles": [
         "./node_modules/bootstrap/dist/css/bootstrap.css"
@@ -77,5 +92,10 @@
             }
         ],
         "test"
-    ]
+    ],
+	"port": "$env:PORT",
+	"cookies": {
+		"secure": true,
+		"sameSite": "None"
+	}
 }
