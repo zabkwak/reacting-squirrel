@@ -28,8 +28,6 @@ declare type TEventMap = {
 	[key: string]: any;
 }
 
-declare type TextType = any;
-
 /**
  * Base client application.
  */

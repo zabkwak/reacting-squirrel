@@ -584,7 +584,7 @@ export class SocketClass<S extends Session = Session> {
 	 * @typeparam T Type of the data.
 	 * @deprecated
 	 */
-	broadcast<T = any>(event: string, data: T): void;
+	public broadcast<T = any>(event: string, data: T): void;
 	/**
 	 * Broadcasts the event and data to the clients.
 	 *
@@ -594,7 +594,7 @@ export class SocketClass<S extends Session = Session> {
 	 * @typeparam T Type of the data.
 	 * @deprecated
 	 */
-	broadcast<T = any>(event: string, data: T, includeSelf: boolean): void;
+	public broadcast<T = any>(event: string, data: T, includeSelf: boolean): void;
 	/**
 	 * Broadcasts the event and data to the clients passed the filter.
 	 *
@@ -605,8 +605,7 @@ export class SocketClass<S extends Session = Session> {
 	 * @typeparam T Type of the data.
 	 * @deprecated
 	 */
-	broadcast<T = any>(event: string, data: T, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
-
+	public broadcast<T = any>(event: string, data: T, includeSelf: boolean, filter: (socket: Socket) => boolean): void;
 }
 
 /**
