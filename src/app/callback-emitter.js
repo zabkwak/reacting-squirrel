@@ -2,7 +2,6 @@
  * Emitter to emit callback for the components.
  */
 export default class CallbackEmitter {
-
 	/**
 	 * Map of all events with their registered listeners.
 	 * @type {Object.<string, function[]>}
@@ -58,9 +57,10 @@ export default class CallbackEmitter {
 	 */
 	_callListener(event, args = {}) {
 		if (!this._hasEventRegistered(event)) {
-			return;
+			return this;
 		}
 		this._listeners[event].forEach((listener) => listener(this, args));
+		return this;
 	}
 
 	/**

@@ -7,7 +7,6 @@ import SocketComponent from './component.socket';
  * All pages registered to the Router has to extends this class.
  */
 export default class Page extends SocketComponent {
-
 	static propTypes = {
 		// eslint-disable-next-line react/forbid-prop-types
 		params: PropTypes.any.isRequired,
@@ -22,6 +21,7 @@ export default class Page extends SocketComponent {
 	componentDidMount() {
 		super.componentDidMount();
 		this.getContext()
+			._callListener('pagerender', this)
 			.addListener('pagerender', this.__pageRender__)
 			.logInfo(`Page '${this.constructor.name}' did mount`, this.props);
 	}
@@ -33,7 +33,7 @@ export default class Page extends SocketComponent {
 			.logInfo(`Page '${this.constructor.name}' will unmount`);
 	}
 
-	onPageRender() { }
+	onPageRender() {}
 
 	setTitle(title) {
 		this.getContext().setTitle(title);

@@ -13,7 +13,6 @@ import ErrorHandler from './components/error-handler';
  * Base class for client application context.
  */
 class Application extends CallbackEmitter {
-
 	LOCALE_COOKIE_NAME = 'rs~locale';
 
 	_container = null;
@@ -184,7 +183,9 @@ class Application extends CallbackEmitter {
 		this._registerLayoutNavigationListener();
 		this._started = true;
 		this.logInfo('Application started', {
-			DEV: this.DEV, timestamp: this.getInitialData('timestamp'), version: this.getInitialData('version'),
+			DEV: this.DEV,
+			timestamp: this.getInitialData('timestamp'),
+			version: this.getInitialData('version'),
 		});
 		this._callListener('start');
 		this._renderRegisteredComponents();
@@ -248,7 +249,7 @@ class Application extends CallbackEmitter {
 	}
 
 	renderPage(page) {
-		this.renderComponent(page, this._content, () => this._callListener('pagerender', page));
+		this.renderComponent(page, this._content);
 	}
 
 	/**
@@ -258,18 +259,14 @@ class Application extends CallbackEmitter {
 	 * @param {HTMLElement} target
 	 * @param {function} callback
 	 */
-	renderComponent(component, target, callback = () => { }) {
+	renderComponent(component, target, callback) {
 		const Provider = this._provider || React.Fragment;
 		const EH = this._errorHandler || ErrorHandler;
 		const root = createRoot(target);
 		root.render(
-			(
-				<EH>
-					<Provider>
-						{component}
-					</Provider>
-				</EH>
-			),
+			<EH>
+				<Provider>{component}</Provider>
+			</EH>,
 			callback,
 		);
 	}

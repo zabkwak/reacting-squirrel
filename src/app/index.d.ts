@@ -31,7 +31,7 @@ declare type TEventMap = {
 /**
  * Base client application.
  */
-export declare class Application extends CallbackEmitter<TApplicationEventMap> {
+declare class Application extends CallbackEmitter<TApplicationEventMap> {
 	public LOCALE_COOKIE_NAME: string;
 
 	/**
@@ -328,7 +328,7 @@ export interface IRouteDefinition {
 	layout?: string;
 }
 
-export declare class Route {
+declare class Route {
 	/** Specification of the route. */
 	public spec: string;
 	/** Page component to render. */
@@ -374,7 +374,7 @@ export declare class Route {
 /**
  * Base application router.
  */
-export declare class Router {
+declare class Router {
 	/**
 	 * Defined routes.
 	 */
@@ -448,12 +448,12 @@ export declare class Router {
 /**
  * Socket states.
  */
-export declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
+declare type SocketState = 'none' | 'connected' | 'connecting' | 'disconnected';
 
 /**
  * Class for socket communication.
  */
-export declare class Socket extends CallbackEmitter<TSocketEventMap> {
+declare class Socket extends CallbackEmitter<TSocketEventMap> {
 	/** Unknown state of the socket. */
 	public readonly STATE_NONE: 'none';
 
@@ -714,7 +714,7 @@ export class SocketModel extends Model {
 /**
  * Wrapper for `LocalStorage`.
  */
-export declare class Storage {
+declare class Storage {
 	/**
 	 * Gets the size of storage.
 	 */
