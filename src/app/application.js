@@ -1,10 +1,11 @@
-import ReactDOM from 'react-dom';
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Text from 'texting-squirrel';
 import Cookies from 'universal-cookie';
 
-import Router, { Route } from './router';
 import CallbackEmitter from './callback-emitter';
+import Router, { Route } from './router';
 // eslint-disable-next-line import/no-cycle
 import ErrorHandler from './components/error-handler';
 
@@ -260,7 +261,8 @@ class Application extends CallbackEmitter {
 	renderComponent(component, target, callback = () => { }) {
 		const Provider = this._provider || React.Fragment;
 		const EH = this._errorHandler || ErrorHandler;
-		ReactDOM.render(
+		const root = createRoot(target);
+		root.render(
 			(
 				<EH>
 					<Provider>
@@ -268,7 +270,6 @@ class Application extends CallbackEmitter {
 					</Provider>
 				</EH>
 			),
-			target,
 			callback,
 		);
 	}

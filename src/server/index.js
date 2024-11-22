@@ -2,47 +2,43 @@
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable global-require */
 import '@babel/polyfill';
-import express from 'express';
-import http from 'http';
-import path from 'path';
-import cookieParser from 'cookie-parser';
-import md5 from 'md5';
-import fs from 'fs';
-import Error from 'smart-error';
-import HttpError from 'http-smart-error';
-import compression from 'compression';
-import mkdirp from 'mkdirp';
-import _ from 'lodash';
-import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
+import express from 'express';
+import fs from 'fs';
+import http from 'http';
+import HttpError from 'http-smart-error';
+import _ from 'lodash';
+import md5 from 'md5';
+import mkdirp from 'mkdirp';
+import path from 'path';
+import postcss from 'postcss';
 import RouteParser from 'route-parser';
-import uniqid from 'uniqid';
+import Error from 'smart-error';
 import Text from 'texting-squirrel';
+import uniqid from 'uniqid';
 
+import { WebpackConfig } from './config';
+import { BUNDLE_STATUS_ROUTE, CONFIG_ENV_PREFIX, RS_DIR, TSConfig } from './constants';
 import Layout from './layout';
-import Session from './session';
+import {
+	AuthMiddleware,
+	BundlingMiddleware,
+	CookiesMiddleware,
+	ErrorMiddleware,
+	LocaleMiddleware,
+	PageNotFoundMiddleware,
+	RenderMiddleware,
+	SessionMiddleware,
+} from './middleware';
+import Plugin from './plugin';
 import Route from './route';
+import Session from './session';
 import socket, { Socket } from './socket';
 import SocketClass from './socket-class';
-import Utils from './utils';
 import StylesCompiler from './styles-compiler';
-import {
-	TSConfig, RS_DIR, CONFIG_ENV_PREFIX, BUNDLE_STATUS_ROUTE,
-} from './constants';
-import Plugin from './plugin';
-import {
-	LocaleMiddleware,
-	SessionMiddleware,
-	RenderMiddleware,
-	PageNotFoundMiddleware,
-	ErrorMiddleware,
-	AuthMiddleware,
-	CookiesMiddleware,
-	BundlingMiddleware,
-} from './middleware';
-import {
-	WebpackConfig,
-} from './config';
+import Utils from './utils';
 
 const fsAsync = fs.promises;
 
@@ -106,7 +102,7 @@ class Server {
 		styles: [],
 		mergeStyles: [],
 		session: Session,
-		socketMessageMaxSize: (2 ** 20) * 100,
+		socketMessageMaxSize: 2 ** 20 * 100,
 		auth: (session, next) => next(),
 		error: {},
 		// errorHandler: (err, req, res, next) => next(),
@@ -129,6 +125,8 @@ class Server {
 		bundleAfterServerStart: false,
 		getInitialData: () => ({}),
 		getTitle: () => null,
+		tsCompilerOptions: {},
+		envVars: {},
 	};
 
 	/**
@@ -305,7 +303,9 @@ class Server {
 				// eslint-disable-next-line no-param-reassign
 				config.cookies = { secret: config.cookieSecret };
 			} else if (config.logging !== false) {
-				this._warn('Using default cookie secret. It\'s a random string which changes every server start. It should be overriden in config.');
+				this._warn(
+					"Using default cookie secret. It's a random string which changes every server start. It should be overriden in config.",
+				);
 			}
 		}
 		this._createConfig(config);
@@ -321,7 +321,9 @@ class Server {
 			this._config.locale.accepted.unshift(this._config.locale.default);
 		}
 		if (!this._config.sourceStylesDir) {
-			this._warn('Using default sourceStylesDir. It\'s in the express static directory and all sources are accessible over the http.');
+			this._warn(
+				"Using default sourceStylesDir. It's in the express static directory and all sources are accessible over the http.",
+			);
 			this._config.sourceStylesDir = path.resolve(`${this._config.staticDir}/${this._config.cssDir}`);
 		} else {
 			this._config.sourceStylesDir = !path.isAbsolute(this._config.sourceStylesDir)
@@ -338,9 +340,9 @@ class Server {
 			throw new Error('Cannot create instance of Layout.');
 		}
 		this._path = path.resolve(`${this._config.staticDir}/${this._config.jsDir}`);
-		this._bundlePath = `${this._config.bundlePathRelative
-			? ''
-			: '/'}${this._config.jsDir}/${this._config.filename}`;
+		this._bundlePath = `${this._config.bundlePathRelative ? '' : '/'}${this._config.jsDir}/${
+			this._config.filename
+		}`;
 		const pkg = require(path.resolve('./package.json'));
 		this._version = pkg.version;
 		this._setApp();
@@ -509,9 +511,7 @@ class Server {
 	registerComponent(componentPath, elementId, auto = false) {
 		const { appDir } = this._config;
 		this._components.push({
-			path: !path.isAbsolute(componentPath)
-				? path.resolve(`${appDir}/${componentPath}`)
-				: componentPath,
+			path: !path.isAbsolute(componentPath) ? path.resolve(`${appDir}/${componentPath}`) : componentPath,
 			elementId,
 			auto,
 		});
@@ -620,7 +620,7 @@ class Server {
 	 *
 	 * @param {function=} cb Callback to call after the server start.
 	 */
-	async start(skipBundle, cb = () => { }) {
+	async start(skipBundle, cb = () => {}) {
 		const { dev } = this._config;
 		if (typeof skipBundle === 'function') {
 			cb = skipBundle;
@@ -648,7 +648,7 @@ class Server {
 	 * Stops the application.
 	 * @param {function} cb
 	 */
-	stop(cb = () => { }) {
+	stop(cb = () => {}) {
 		if (!this._server) {
 			this._warn('Server cannot be stopped because it was not started.');
 			return;
@@ -666,19 +666,13 @@ class Server {
 	// #region Private methods
 
 	_createConfig(config) {
-		this._config = _.merge(
-			this._config,
-			this._getConfigFromRSConfig(),
-			config,
-		);
+		this._config = _.merge(this._config, this._getConfigFromRSConfig(), config);
 	}
 
 	async _prepare() {
-		const {
-			appDir, staticDir, cssDir,
-		} = this._config;
+		const { appDir, staticDir, cssDir } = this._config;
 		this._log('Validating directories');
-		await this._validateDir(appDir, 'App directory doesn\'t exist. Creating.', 'warn');
+		await this._validateDir(appDir, "App directory doesn't exist. Creating.", 'warn');
 		await this._validateDir(this._getRSDirPath(), 'Creating RS directory.');
 		await this._validateDir(path.resolve(`${staticDir}/${cssDir}`), 'Creating CSS directory.');
 		await this._registerPlugins();
@@ -737,19 +731,20 @@ class Server {
 	 */
 	_registerRsConfig() {
 		if (this._rsConfig) {
-			const {
-				routes, components, socketClassDir, errorPage, componentProvider, error, componentErrorHandler,
-			} = this._rsConfig;
+			const { routes, components, socketClassDir, errorPage, componentProvider, error, componentErrorHandler } =
+				this._rsConfig;
 			if (routes) {
-				Utils.registerRoutes(this, routes.map((route) => {
-					const key = `${(route.route || 'GET').toLowerCase()} ${route.route}`;
-					const callback = this._tryRequireModule(route.callback)
-						|| this._routeCallbacks[key]?.callback;
-					return {
-						...route,
-						callback,
-					};
-				}));
+				Utils.registerRoutes(
+					this,
+					routes.map((route) => {
+						const key = `${(route.route || 'GET').toLowerCase()} ${route.route}`;
+						const callback = this._tryRequireModule(route.callback) || this._routeCallbacks[key]?.callback;
+						return {
+							...route,
+							callback,
+						};
+					}),
+				);
 			}
 			if (components) {
 				Utils.registerComponents(this, components);
@@ -801,9 +796,7 @@ class Server {
 	 */
 	async _setRoutes() {
 		this._log('Setting routes');
-		const {
-			appDir, createMissingComponents,
-		} = this._config;
+		const { appDir, createMissingComponents } = this._config;
 		this._registerServiceRoutes();
 		const componentsMap = {};
 		this._routes.forEach((route) => {
@@ -879,10 +872,7 @@ class Server {
 
 	async _createNonceFile() {
 		this._log('Creating nonce file');
-		await fsAsync.writeFile(
-			`${this._getRSDirPath()}/nonce.js`,
-			`__webpack_nonce__ = '${this._nonce}'`,
-		);
+		await fsAsync.writeFile(`${this._getRSDirPath()}/nonce.js`, `__webpack_nonce__ = '${this._nonce}'`);
 	}
 
 	/**
@@ -890,24 +880,28 @@ class Server {
 	 */
 	async _createEntryFile() {
 		this._log('Creating entry file');
-		const {
-			entryFile, appDir, connectSocketAutomatically, locale,
-		} = this._config;
+		const { entryFile, appDir, connectSocketAutomatically, locale } = this._config;
 		const pathToTheModule = this._getPathToModule(path.resolve(this._getRSDirPath()));
 		let entryFileImport = null;
 		if (entryFile) {
-			const pathToTheEntryFile = path.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, entryFile)).replace(/\\/g, '/');
+			const pathToTheEntryFile = path
+				.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, entryFile))
+				.replace(/\\/g, '/');
 			entryFileImport = `import '${pathToTheEntryFile.replace(/\.js/, '')}';`;
 		}
 		const errorPageImport = this._errorPage
-			? `import ErrorPage from '${path.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, this._errorPage)).replace(/\\/g, '/')}';`
+			? `import ErrorPage from '${path
+					.relative(path.resolve(this._getRSDirPath()), path.resolve(appDir, this._errorPage))
+					.replace(/\\/g, '/')}';`
 			: `import { ErrorPage } from '${pathToTheModule}'`;
 		let componentProviderImport = '';
 		if (this._componentProvider) {
 			if (!this._componentExists(this._componentProvider, true)) {
 				this._warn(`Provider ${this._componentProvider} doesn't exist.`);
 			} else {
-				const p = path.relative(path.resolve(this._getRSDirPath()), this._componentProvider).replace(/\\/g, '/');
+				const p = path
+					.relative(path.resolve(this._getRSDirPath()), this._componentProvider)
+					.replace(/\\/g, '/');
 				componentProviderImport = `import ComponentProvider from '${p}'`;
 			}
 		}
@@ -916,7 +910,9 @@ class Server {
 			if (!this._componentExists(this._componentErrorHandler, true)) {
 				this._warn(`Provider ${this._componentErrorHandler} doesn't exist.`);
 			} else {
-				const p = path.relative(path.resolve(this._getRSDirPath()), this._componentErrorHandler).replace(/\\/g, '/');
+				const p = path
+					.relative(path.resolve(this._getRSDirPath()), this._componentErrorHandler)
+					.replace(/\\/g, '/');
 				errorHandlerImport = `import ErrorHandler from '${p}'`;
 			}
 		}
@@ -936,7 +932,10 @@ ${errorHandlerImport}
 import defaultDictionary from '../res/text.json';
 Text.addDictionary(defaultDictionary);
 // Import and register accepted locale dictionaries.
-${locale.accepted.filter((l) => !this.isLocaleDefault(l)).map((l) => `Text.addDictionary('${l}', require('../res/${this.getLocaleFileName(l)}'));`).join('\n')}
+${locale.accepted
+	.filter((l) => !this.isLocaleDefault(l))
+	.map((l) => `Text.addDictionary('${l}', require('../res/${this.getLocaleFileName(l)}'));`)
+	.join('\n')}
 // Set the dictionary from locale
 let dictionary = 'default';
 if (Application.getCookie(Application.LOCALE_COOKIE_NAME)) {
@@ -992,15 +991,22 @@ ${this._entryInjections.join('\n')}
 				await mkdirp(dirName);
 				const fileName = path.basename(route.path);
 				const filePath = `${route.path}.${generatedComponentsExtension}`;
-				await fsAsync.writeFile(filePath, `import { Page } from '${this._getPathToModule(dirName)}';
+				await fsAsync.writeFile(
+					filePath,
+					`import { Page } from '${this._getPathToModule(dirName)}';
 
 export default class ${this._createClassName(fileName, 'Page')} extends Page {}
-`);
+`,
+				);
 			}
 			const p = path.relative(path.resolve(this._getRSDirPath()), route.path).replace(/\\/g, '/');
 			a.push(`import ${key} from '${p}';`);
 			// eslint-disable-next-line max-len
-			b.push(`{spec: '${route.spec}', component: ${key}, title: '${route.title}', layout: ${route.layout ? `'${md5(route.layout)}'` : null}}`);
+			b.push(
+				`{spec: '${route.spec}', component: ${key}, title: '${route.title}', layout: ${
+					route.layout ? `'${md5(route.layout)}'` : null
+				}}`,
+			);
 		}
 		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/router.map.js`,
@@ -1019,7 +1025,10 @@ export default class ${this._createClassName(fileName, 'Page')} extends Page {}
 		for (let i = 0; i < this._components.length; i++) {
 			const component = this._components[i];
 			if (!this._componentExists(component.path)) {
-				this._warn(`Component ${component.path} doesn't exist.`, createMissingComponents ? 'GENERATING' : 'SKIPPING');
+				this._warn(
+					`Component ${component.path} doesn't exist.`,
+					createMissingComponents ? 'GENERATING' : 'SKIPPING',
+				);
 				if (!createMissingComponents) {
 					continue;
 				}
@@ -1027,10 +1036,13 @@ export default class ${this._createClassName(fileName, 'Page')} extends Page {}
 				await mkdirp(dirName);
 				const fileName = path.basename(component.path);
 				const filePath = `${component.path}.${generatedComponentsExtension}`;
-				await fsAsync.writeFile(filePath, `import { Component } from '${this._getPathToModule(dirName)}';
+				await fsAsync.writeFile(
+					filePath,
+					`import { Component } from '${this._getPathToModule(dirName)}';
 
 export default class ${this._createClassName(fileName, 'Component')} extends Component {}
-`);
+`,
+				);
 			}
 			const key = `__${md5(`${component.path}${component.elementId}}`)}__`;
 			const p = path.relative(path.resolve(this._getRSDirPath()), component.path).replace(/\\/g, '/');
@@ -1068,11 +1080,19 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	/**
 	 * Creates tsconfig.json in the RS directory.
 	 */
-	async _createTSConfig() {
+	async _createTSConfig(tsConfig = {}) {
 		this._log('Creating TS config');
+		const { tsCompilerOptions } = this._config;
 		await fsAsync.writeFile(
 			`${this._getRSDirPath()}/tsconfig.json`,
-			JSON.stringify(TSConfig, null, 4),
+			JSON.stringify(
+				{
+					...TSConfig,
+					compilerOptions: _.merge(TSConfig.compilerOptions, tsCompilerOptions),
+				},
+				null,
+				4,
+			),
 		);
 	}
 
@@ -1084,9 +1104,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {*} route
 	 */
 	_setRoute(route) {
-		const {
-			dev, layoutComponent, getInitialData, getTitle,
-		} = this._config;
+		const { dev, layoutComponent, getInitialData, getTitle, envVars } = this._config;
 		this._app[route.method](route.spec, async (req, res, next) => {
 			if (route.requireAuth && req.session.getUser() === null) {
 				next(HttpError.create(401));
@@ -1113,8 +1131,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			let { title } = route;
 			let additionalData = {};
 			try {
-				title = await getTitle(req) || title;
-				additionalData = await getInitialData(req) || {};
+				title = (await getTitle(req)) || title;
+				additionalData = (await getInitialData(req)) || {};
 			} catch (e) {
 				next(e);
 				return;
@@ -1128,6 +1146,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 					version: this._version,
 					locale: req.locale,
 					...additionalData,
+					envVars: envVars || {},
 				},
 				layout,
 			};
@@ -1202,8 +1221,8 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			await this._startServer();
 			return;
 		}
-		await this._bundle();
 		await this._startServer();
+		await this._bundle();
 	}
 
 	async _bundle() {
@@ -1242,7 +1261,11 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 				this._log(minimalStats);
 				const { errors } = minimalStats;
 				if (errors && errors.length) {
-					reject(new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', { errors }));
+					reject(
+						new Error(`Webpack bundle cannot be created. ${errors.length} errors found.`, 'bundle', {
+							errors,
+						}),
+					);
 					return;
 				}
 				resolve();
@@ -1321,10 +1344,12 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			Text.addDictionary(require(path.resolve(appDir, 'res', 'text.json')));
 			locale.accepted
 				.filter((l) => l !== locale.default)
-				.forEach((acceptedLocale) => Text.addDictionary(
-					acceptedLocale,
-					require(path.resolve(appDir, 'res', this.getLocaleFileName(acceptedLocale))),
-				));
+				.forEach((acceptedLocale) =>
+					Text.addDictionary(
+						acceptedLocale,
+						require(path.resolve(appDir, 'res', this.getLocaleFileName(acceptedLocale))),
+					),
+				);
 		} catch (e) {
 			this._warn(e.message);
 		}
@@ -1336,9 +1361,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 	 * @param {boolean} afterRoutes If true the middlewares are registered after the routes registration.
 	 */
 	_setMiddlewares(afterRoutes = false) {
-		const {
-			staticDir, cookies,
-		} = this._config;
+		const { staticDir, cookies } = this._config;
 		const { secret } = cookies;
 		if (!afterRoutes) {
 			this._app.use(express.static(staticDir));
@@ -1366,9 +1389,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 
 	async _compileStylesAsync() {
 		this._log('Compiling styles');
-		const {
-			cssDir, staticDir, mergeStyles, sourceStylesDir,
-		} = this._config;
+		const { cssDir, staticDir, mergeStyles, sourceStylesDir } = this._config;
 		const dir = path.resolve(`${staticDir}/${cssDir}`);
 		const stylesPath = `${dir}/rs-app.css`;
 		try {
@@ -1377,12 +1398,11 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		} catch (e) {
 			// ignore
 		}
-		const compiler = new StylesCompiler([
-			path.resolve(__dirname, './assets/loader.scss'),
-			...mergeStyles,
-			sourceStylesDir,
+		const compiler = new StylesCompiler(
+			[path.resolve(__dirname, './assets/loader.scss'), ...mergeStyles, sourceStylesDir, dir],
 			dir,
-		], dir, 'rs-app.css');
+			'rs-app.css',
+		);
 		await compiler.compile();
 		const files = await fsAsync.readdir(dir);
 		// eslint-disable-next-line no-restricted-syntax
@@ -1399,8 +1419,7 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			}
 		}
 		const css = await fsAsync.readFile(stylesPath);
-		const result = await postcss([autoprefixer(this._config.autoprefixer)])
-			.process(css, { from: stylesPath });
+		const result = await postcss([autoprefixer(this._config.autoprefixer)]).process(css, { from: stylesPath });
 		await fsAsync.writeFile(stylesPath, result.css);
 	}
 
@@ -1493,11 +1512,17 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 		if (!this._rsConfig) {
 			return {};
 		}
+		const { routes, components, socketClassDir, errorPage, ...config } = this._transformEnvVars(this._rsConfig);
 		const {
-			routes, components, socketClassDir, errorPage, ...config
-		} = this._transformEnvVars(this._rsConfig);
-		const {
-			layoutComponent, session, auth, errorHandler, error, onWebpackProgress, webpack, mergeStyles, ...restConfig
+			layoutComponent,
+			session,
+			auth,
+			errorHandler,
+			error,
+			onWebpackProgress,
+			webpack,
+			mergeStyles,
+			...restConfig
 		} = config;
 		return {
 			...restConfig,
@@ -1505,25 +1530,22 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 			session: session ? this._tryRequireModule(session) : undefined,
 			auth: auth ? this._tryRequireModule(auth) : undefined,
 			errorHandler: errorHandler ? this._tryRequireModule(errorHandler) : undefined,
-			error: error ? {
-				handler: error.handler ? this._tryRequireModule(error.handler) : undefined,
-				// eslint-disable-next-line no-nested-ternary
-				layout: error.layout
-					? typeof error.layout === 'string'
-						? this._tryRequireModule(error.layout)
-						: error.layout
-					: undefined,
-			} : undefined,
+			error: error
+				? {
+						handler: error.handler ? this._tryRequireModule(error.handler) : undefined,
+						// eslint-disable-next-line no-nested-ternary
+						layout: error.layout
+							? typeof error.layout === 'string'
+								? this._tryRequireModule(error.layout)
+								: error.layout
+							: undefined,
+				  }
+				: undefined,
 			onWebpackProgress: onWebpackProgress ? this._tryRequireModule(onWebpackProgress) : undefined,
 			// eslint-disable-next-line no-nested-ternary
-			webpack: webpack
-				? typeof webpack === 'string'
-					? this._tryRequireModule(webpack)
-					: webpack
-				: undefined,
-			mergeStyles: mergeStyles && mergeStyles.length
-				? mergeStyles.map((style) => path.resolve(style))
-				: undefined,
+			webpack: webpack ? (typeof webpack === 'string' ? this._tryRequireModule(webpack) : webpack) : undefined,
+			mergeStyles:
+				mergeStyles && mergeStyles.length ? mergeStyles.map((style) => path.resolve(style)) : undefined,
 		};
 	}
 
@@ -1641,11 +1663,11 @@ export default class ${this._createClassName(fileName, 'Component')} extends Com
 export {
 	// eslint-disable-next-line no-restricted-exports
 	Server as default,
-	Session,
-	Layout,
-	SocketClass,
 	HttpError,
-	Socket,
-	Utils,
+	Layout,
 	Plugin,
+	Session,
+	Socket,
+	SocketClass,
+	Utils,
 };

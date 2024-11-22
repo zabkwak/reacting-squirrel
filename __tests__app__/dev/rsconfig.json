@@ -1,50 +1,50 @@
 {
-    "$schema": "../../schemas/rsconfig.schema.json",
-    "routes": [
-        {
-            "route": "/",
-            "component": "home",
-            "title": ":home"
-        },
-        {
-            "route": "/about",
-            "component": "about",
-            "title": "About"
-        },
-        {
-            "route": "/socket",
-            "component": "socket",
-            "title": "Socket"
-        },
-        {
-            "route": "/decorators",
-            "component": "decorators",
-            "title": "Decorators"
-        },
-        {
-            "route": "/models",
-            "component": "models",
-            "title": "Models"
-        },
-        {
-            "route": "/layout-test",
-            "component": "home",
-            "title": "Layout test",
-            "layout": "__tests__app__/dev/dist/layout"
-        },
-        {
-            "route": "/generated-page",
-            "component": "generated",
-            "title": "Generated page"
-        },
-        {
-            "route": "/ui",
-            "component": "ui",
-            "title": "UI"
-        },
-        {
-            "route": "/no-component",
-            "title": "No component"
+	"$schema": "../../schemas/rsconfig.schema.json",
+	"routes": [
+		{
+			"route": "/",
+			"component": "home",
+			"title": ":home"
+		},
+		{
+			"route": "/about",
+			"component": "about",
+			"title": "About"
+		},
+		{
+			"route": "/socket",
+			"component": "socket",
+			"title": "Socket"
+		},
+		{
+			"route": "/decorators",
+			"component": "decorators",
+			"title": "Decorators"
+		},
+		{
+			"route": "/models",
+			"component": "models",
+			"title": "Models"
+		},
+		{
+			"route": "/layout-test",
+			"component": "home",
+			"title": "Layout test",
+			"layout": "__tests__app__/dev/dist/layout"
+		},
+		{
+			"route": "/generated-page",
+			"component": "generated",
+			"title": "Generated page"
+		},
+		{
+			"route": "/ui",
+			"component": "ui",
+			"title": "UI"
+		},
+		{
+			"route": "/no-component",
+			"title": "No component"
 		},
 		{
 			"route": "/large-data",
@@ -56,43 +56,41 @@
 			"title": "Callback",
 			"callback": "__tests__app__/dev/dist/callbacks/callback"
 		}
-    ],
-    "components": [
-        {
-            "id": "test",
-            "component": "test"
-        },
-        {
-            "id": "socket-status",
-            "component": "socket-status"
-        },
-        {
-            "id": "generated",
+	],
+	"components": [
+		{
+			"id": "test",
+			"component": "test"
+		},
+		{
+			"id": "socket-status",
+			"component": "socket-status"
+		},
+		{
+			"id": "generated",
 			"component": "generated-component",
 			"auto": true
-        }
-    ],
+		}
+	],
 	"socketClassDir": "__tests__app__/dev/dist/socket",
 	"error": {
 		"page": "page.error",
 		"layout": "./__tests__app__/dev/dist/layout.error"
 	},
 	"errorHandler": "./__tests__app__/dev/dist/error-handler",
-    "createMissingComponents": true,
-    "mergeStyles": [
-        "./node_modules/bootstrap/dist/css/bootstrap.css"
-    ],
-    "layoutComponent": "./__tests__app__/dev/dist/layout",
-    "sourceStylesDir": "./__tests__app__/dev/src/styles",
-    "plugins": [
-        [
-            "./__tests__app__/dev/dist/plugin",
-            {
-                "test": "test"
-            }
-        ],
-        "test"
-    ],
+	"createMissingComponents": true,
+	"mergeStyles": ["./node_modules/bootstrap/dist/css/bootstrap.css"],
+	"layoutComponent": "./__tests__app__/dev/dist/layout",
+	"sourceStylesDir": "./__tests__app__/dev/src/styles",
+	"plugins": [
+		[
+			"./__tests__app__/dev/dist/plugin",
+			{
+				"test": "test"
+			}
+		],
+		"test"
+	],
 	"port": "$env:PORT",
 	"cookies": {
 		"secure": true,

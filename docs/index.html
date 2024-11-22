@@ -1,482 +1,108 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>reacting-squirrel</title>
-	<meta name="description" content="Documentation for reacting-squirrel">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">reacting-squirrel</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-only-exported" />
-							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
-			<h1>reacting-squirrel</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#reacting-squirrel" id="reacting-squirrel" style="color: inherit; text-decoration: none;">
-					<h1>Reacting Squirrel</h1>
-				</a>
-				<p>Framework for creation of the <a href="https://reactjs.org/">React</a> apps using <a href="https://expressjs.com/">Express</a> and <a href="https://socket.io/">Socket.io</a>.
-				Sample app can be cloned from <a href="https://github.com/zabkwak/reacting-squirrel-sample">GitHub</a>.</p>
-				<a href="#requirements" id="requirements" style="color: inherit; text-decoration: none;">
-					<h2>Requirements</h2>
-				</a>
-				<ul>
-					<li>The module needs to be able to write in the app directory (config.appDir). It creates the directory where are stored the frontend maps.</li>
-					<li>The module needs to be able to write in the css directory (config.cssDir). It creates one app style.</li>
-					<li>The frontend needs the possibility to work with websockets (connection upgrade in nginx).</li>
-				</ul>
-				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
-					<h2>Installation</h2>
-				</a>
-				<pre><code class="language-bash">npm install reacting-squirrel --save
-</code></pre>
-				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
-					<h2>Usage</h2>
-				</a>
-				<a href="#simple-app" id="simple-app" style="color: inherit; text-decoration: none;">
-					<h3>Simple app</h3>
-				</a>
-				<pre><code class="language-javascript"><span class="hljs-comment">// ./index.js</span>
-<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>reacting-squirrel</title><meta name="description" content="Documentation for reacting-squirrel"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">reacting-squirrel</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>reacting-squirrel</h1></div><div class="tsd-panel tsd-typography"><a id="md:reacting-squirrel" class="tsd-anchor"></a><h1 class="tsd-anchor-link">Reacting Squirrel<a href="#md:reacting-squirrel" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><p>Framework for creation of the <a href="https://reactjs.org/" target="_blank" class="external">React</a> apps using <a href="https://expressjs.com/" target="_blank" class="external">Express</a> and <a href="https://socket.io/" target="_blank" class="external">Socket.io</a>.
+Sample app can be cloned from <a href="https://github.com/zabkwak/reacting-squirrel-sample" target="_blank" class="external">GitHub</a>.</p>
+<a id="md:requirements" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Requirements<a href="#md:requirements" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>The module needs to be able to write in the app directory (config.appDir). It creates the directory where are stored the frontend maps.</li>
+<li>The module needs to be able to write in the css directory (config.cssDir). It creates one app style.</li>
+<li>The frontend needs the possibility to work with websockets (connection upgrade in nginx).</li>
+</ul>
+<a id="md:installation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Installation<a href="#md:installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">reacting-squirrel</span><span class="hl-1"> </span><span class="hl-3">--save</span>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
+<a id="md:usage" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Usage<a href="#md:usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>For base simple app is only required to run server (with code or cli) and create one route. If <code>createMissingComponents</code> option is set to <code>true</code> the components is not needed to be created manually. For development is recommended set <code>dev</code> option to <code>true</code>.</p>
+<p>The server will create all necessary files and starts the webpack process. If the app is in <code>DEV</code> mode, watcher is also started.</p>
+<a id="md:simple-app" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Simple app<a href="#md:simple-app" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Simple app structure</p>
+<pre><code><span class="hl-0">project</span><span class="hl-1"> (</span><span class="hl-4">root</span><span class="hl-1">)</span><br/><span class="hl-1">|-- </span><span class="hl-0">app</span><span class="hl-1"> (</span><span class="hl-4">directory</span><span class="hl-1"> </span><span class="hl-4">for</span><span class="hl-1"> </span><span class="hl-4">client</span><span class="hl-1"> </span><span class="hl-4">app</span><span class="hl-1">)</span><br/><span class="hl-1">	|-- ~</span><span class="hl-0">rs</span><span class="hl-1"> (</span><span class="hl-4">all</span><span class="hl-1"> </span><span class="hl-5">RS</span><span class="hl-1"> </span><span class="hl-4">internal</span><span class="hl-1"> </span><span class="hl-4">files</span><span class="hl-1">)</span><br/><span class="hl-1">	|-- </span><span class="hl-0">res</span><span class="hl-1"> (</span><span class="hl-4">resources</span><span class="hl-1">)</span><br/><span class="hl-1">		|-- </span><span class="hl-4">text</span><span class="hl-1">.</span><span class="hl-0">json</span><span class="hl-1"> (</span><span class="hl-4">text</span><span class="hl-1"> </span><span class="hl-4">dictionary</span><span class="hl-1"> </span><span class="hl-4">for</span><span class="hl-1"> </span><span class="hl-4">default</span><span class="hl-1"> </span><span class="hl-4">locale</span><span class="hl-1">)</span><br/><span class="hl-1">	|-- </span><span class="hl-4">home</span><span class="hl-1">.</span><span class="hl-0">js</span><span class="hl-1"> (</span><span class="hl-4">Home</span><span class="hl-1"> </span><span class="hl-4">page</span><span class="hl-1">)</span><br/><span class="hl-1">|-- </span><span class="hl-0">public</span><span class="hl-1"> (</span><span class="hl-4">directory</span><span class="hl-1"> </span><span class="hl-4">for</span><span class="hl-1"> </span><span class="hl-4">static</span><span class="hl-1"> </span><span class="hl-4">files</span><span class="hl-1">)</span><br/><span class="hl-1">|-- </span><span class="hl-4">index</span><span class="hl-1">.</span><span class="hl-0">js</span><span class="hl-1"> (</span><span class="hl-4">the</span><span class="hl-1"> </span><span class="hl-4">index</span><span class="hl-1"> </span><span class="hl-4">file</span><span class="hl-1"> </span><span class="hl-4">which</span><span class="hl-1"> </span><span class="hl-4">runs</span><span class="hl-1"> </span><span class="hl-4">the</span><span class="hl-1"> </span><span class="hl-4">server</span><span class="hl-1">)</span>
+</code><button>Copy</button></pre>
 
-app.registerRoute(<span class="hljs-string">&#x27;get&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
+<pre><code class="javascript"><span class="hl-6">// ./index.js</span><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">Server</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-5">app</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-0">Server</span><span class="hl-1">();</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">registerRoute</span><span class="hl-1">(</span><span class="hl-2">&#39;get&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;/&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;home&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;Home&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">start</span><span class="hl-1">();</span><br/><br/><span class="hl-6">// ./app/home.js</span><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">React</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;react&#39;</span><span class="hl-1">;</span><br/><span class="hl-7">import</span><span class="hl-1"> { </span><span class="hl-4">Page</span><span class="hl-1"> } </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">export</span><span class="hl-1"> </span><span class="hl-7">default</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-8">HomePage</span><span class="hl-1"> </span><span class="hl-3">extends</span><span class="hl-1"> </span><span class="hl-8">Page</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><br/><span class="hl-1">    </span><span class="hl-0">render</span><span class="hl-1">() {</span><br/><span class="hl-1">        </span><span class="hl-7">return</span><span class="hl-1"> (</span><br/><span class="hl-1">            </span><span class="hl-9">&lt;</span><span class="hl-10">div</span><span class="hl-9">&gt;</span><br/><span class="hl-1">                </span><span class="hl-9">&lt;</span><span class="hl-10">h1</span><span class="hl-9">&gt;</span><span class="hl-1">Home</span><span class="hl-9">&lt;/</span><span class="hl-10">h1</span><span class="hl-9">&gt;</span><br/><span class="hl-1">            </span><span class="hl-9">&lt;/</span><span class="hl-10">div</span><span class="hl-9">&gt;</span><br/><span class="hl-1">        );</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
 
-app.start();
+<p>This code will start simple app on the default port with one page which will be the home page.</p>
+<a id="md:app-using-websockets-for-load-the-user" class="tsd-anchor"></a><h3 class="tsd-anchor-link">App using websockets for load the user<a href="#md:app-using-websockets-for-load-the-user" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="javascript"><span class="hl-6">// ./index.js</span><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">Server</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">UserSocket</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;./socket.user&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">UserStore</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;./user-store&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-5">app</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-0">Server</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-0">auth</span><span class="hl-4">:</span><span class="hl-1"> (</span><span class="hl-4">session</span><span class="hl-1">, </span><span class="hl-4">next</span><span class="hl-1">) </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">UserStore</span><span class="hl-1">.</span><span class="hl-0">load</span><span class="hl-1">(</span><span class="hl-4">session</span><span class="hl-1">.</span><span class="hl-4">id</span><span class="hl-1">, (</span><span class="hl-4">err</span><span class="hl-1">, </span><span class="hl-4">user</span><span class="hl-1">) </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">            </span><span class="hl-7">if</span><span class="hl-1"> (</span><span class="hl-4">err</span><span class="hl-1">) {</span><br/><span class="hl-1">                </span><span class="hl-0">next</span><span class="hl-1">(</span><span class="hl-4">err</span><span class="hl-1">);</span><br/><span class="hl-1">                </span><span class="hl-7">return</span><span class="hl-1">;</span><br/><span class="hl-1">            }</span><br/><span class="hl-1">            </span><span class="hl-4">session</span><span class="hl-1">.</span><span class="hl-0">setUser</span><span class="hl-1">(</span><span class="hl-4">user</span><span class="hl-1">);</span><br/><span class="hl-1">            </span><span class="hl-0">next</span><span class="hl-1">();</span><br/><span class="hl-1">        });</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">registerRoute</span><span class="hl-1">(</span><span class="hl-2">&#39;get&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;/&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;home&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;Home&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">registerSocketClass</span><span class="hl-1">(</span><span class="hl-4">UserSocket</span><span class="hl-1">);</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">start</span><span class="hl-1">();</span><br/><br/><span class="hl-6">// ./socket.user.js</span><br/><span class="hl-7">import</span><span class="hl-1"> { </span><span class="hl-4">SocketClass</span><span class="hl-1"> } </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">export</span><span class="hl-1"> </span><span class="hl-7">default</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-8">User</span><span class="hl-1"> </span><span class="hl-3">extends</span><span class="hl-1"> </span><span class="hl-8">SocketClass</span><span class="hl-1"> {</span><br/><br/><span class="hl-1">    </span><span class="hl-0">load</span><span class="hl-1">(</span><span class="hl-4">socket</span><span class="hl-1">, </span><span class="hl-4">data</span><span class="hl-1">, </span><span class="hl-4">next</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-0">next</span><span class="hl-1">(</span><span class="hl-3">null</span><span class="hl-1">, </span><span class="hl-3">this</span><span class="hl-1">.</span><span class="hl-0">getUser</span><span class="hl-1">());</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-6">// ./app/home.js</span><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">React</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;react&#39;</span><span class="hl-1">;</span><br/><span class="hl-7">import</span><span class="hl-1"> { </span><span class="hl-4">Page</span><span class="hl-1"> } </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">export</span><span class="hl-1"> </span><span class="hl-7">default</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-8">HomePage</span><span class="hl-1"> </span><span class="hl-3">extends</span><span class="hl-1"> </span><span class="hl-8">Page</span><span class="hl-1"> {</span><br/><br/><span class="hl-1">    </span><span class="hl-4">state</span><span class="hl-1"> = {</span><br/><span class="hl-1">        </span><span class="hl-4">user:</span><span class="hl-1"> </span><span class="hl-3">null</span><span class="hl-1">,</span><br/><span class="hl-1">    };</span><br/><br/><span class="hl-1">    </span><span class="hl-0">componentDidMount</span><span class="hl-1">() {</span><br/><span class="hl-1">        </span><span class="hl-3">super</span><span class="hl-1">.</span><span class="hl-0">componentDidMount</span><span class="hl-1">();</span><br/><span class="hl-1">        </span><span class="hl-3">this</span><span class="hl-1">.</span><span class="hl-0">request</span><span class="hl-1">(</span><span class="hl-2">&#39;user.load&#39;</span><span class="hl-1">, (</span><span class="hl-4">err</span><span class="hl-1">, </span><span class="hl-4">user</span><span class="hl-1">) </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">            </span><span class="hl-7">if</span><span class="hl-1"> (</span><span class="hl-4">err</span><span class="hl-1">) {</span><br/><span class="hl-1">                </span><span class="hl-0">alert</span><span class="hl-1">(</span><span class="hl-4">err</span><span class="hl-1">.</span><span class="hl-4">message</span><span class="hl-1">);</span><br/><span class="hl-1">                </span><span class="hl-7">return</span><span class="hl-1">;</span><br/><span class="hl-1">            }</span><br/><span class="hl-1">            </span><span class="hl-3">this</span><span class="hl-1">.</span><span class="hl-0">setState</span><span class="hl-1">({ </span><span class="hl-4">user</span><span class="hl-1"> });</span><br/><span class="hl-1">        });</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">    </span><br/><span class="hl-1">    </span><span class="hl-0">render</span><span class="hl-1">() {</span><br/><span class="hl-1">        </span><span class="hl-3">const</span><span class="hl-1"> { </span><span class="hl-5">user</span><span class="hl-1"> } = </span><span class="hl-3">this</span><span class="hl-1">.</span><span class="hl-4">state</span><span class="hl-1">;</span><br/><span class="hl-1">        </span><span class="hl-7">return</span><span class="hl-1"> (</span><br/><span class="hl-1">            </span><span class="hl-9">&lt;</span><span class="hl-10">div</span><span class="hl-9">&gt;</span><br/><span class="hl-1">                </span><span class="hl-9">&lt;</span><span class="hl-10">h1</span><span class="hl-9">&gt;</span><span class="hl-1">Home</span><span class="hl-9">&lt;/</span><span class="hl-10">h1</span><span class="hl-9">&gt;</span><br/><span class="hl-1">                </span><span class="hl-9">&lt;</span><span class="hl-10">h2</span><span class="hl-9">&gt;</span><span class="hl-3">{</span><span class="hl-4">user</span><span class="hl-11"> </span><span class="hl-1">?</span><span class="hl-11"> </span><span class="hl-4">user</span><span class="hl-11">.</span><span class="hl-4">name</span><span class="hl-11"> </span><span class="hl-1">:</span><span class="hl-11"> </span><span class="hl-2">&#39;Loading...&#39;</span><span class="hl-3">}</span><span class="hl-9">&lt;/</span><span class="hl-10">h2</span><span class="hl-9">&gt;</span><br/><span class="hl-1">            </span><span class="hl-9">&lt;/</span><span class="hl-10">div</span><span class="hl-9">&gt;</span><br/><span class="hl-1">        );</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-comment">// ./app/home.js</span>
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
-<span class="hljs-keyword">import</span> { Page } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
+<p>This code will start simple app on the default port. After the page load the <code>user.load</code> event is emitted and <code>UserSocket</code> class is trying to load the logged user and send it back to the page.</p>
+<a id="md:cli" class="tsd-anchor"></a><h3 class="tsd-anchor-link">CLI<a href="#md:cli" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The simple server can be started over the CLI using <code>./node_modules/.bin/rs-start-server</code> and creating <code>rsconfig.json</code> in application root.</p>
+<a id="md:providers" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Providers<a href="#md:providers" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>All components rendered by the application can be wrapped with <code>Provider</code> such as <code>Context.Provider</code> or <code>ThemeProvider</code>. Only thing needed is to register the provider with server method, rsconfig or plugin.</p>
+<a id="md:typescript" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Typescript<a href="#md:typescript" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>There can be issues with typings in the <code>app</code> directory because the IDE can't find <code>tsconfig.json</code> in <code>app/~rs</code> directory.
+Workaround can be simply create the <code>tsconfig.json</code> in <code>app</code> directory that extends the generated configuration.</p>
+<pre><code class="json"><span class="hl-1">{</span><br/><span class="hl-1">	</span><span class="hl-12">&quot;extends&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;./~rs/tsconfig.json&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Page</span> </span>{
-    
-    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> {
-        <span class="hljs-keyword">return</span> (
-            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-        );
-    }
-}
-</code></pre>
-				<p>This code will start simple app on the default port with one page which will be the home page.</p>
-				<a href="#app-using-websockets-for-load-the-user" id="app-using-websockets-for-load-the-user" style="color: inherit; text-decoration: none;">
-					<h3>App using websockets for load the user</h3>
-				</a>
-				<pre><code class="language-javascript"><span class="hljs-comment">// ./index.js</span>
-<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
+<a id="md:core-functions" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Core functions<a href="#md:core-functions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="md:routes-register" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Routes register<a href="#md:routes-register" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The routes are registered on the server-side. The module is using express based routes registering.</p>
+<pre><code class="javascript"><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">Server</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-5">app</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-0">Server</span><span class="hl-1">();</span><br/><br/><span class="hl-6">// On the route &#39;/&#39; will be rendered the content component located in {config.appDir}/home with &#39;Home&#39; title.</span><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">registerRoute</span><span class="hl-1">(</span><span class="hl-2">&#39;get&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;/&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;home&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;Home&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">start</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-keyword">import</span> UserSocket <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./socket.user&#x27;</span>;
+<a id="md:socket-events-register" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Socket events register<a href="#md:socket-events-register" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The socket events can be directly registered. It should be used for simple socket events which don't need authorization.</p>
+<pre><code class="javascript"><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">Server</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-5">app</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-0">Server</span><span class="hl-1">();</span><br/><br/><span class="hl-6">// Frontend app can emit &#39;test&#39; with some data. The event&#39;s listener emits the data back.</span><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">registerSocketEvent</span><span class="hl-1">(</span><span class="hl-2">&#39;test&#39;</span><span class="hl-1">, (</span><span class="hl-4">socket</span><span class="hl-1">, </span><span class="hl-4">data</span><span class="hl-1">, </span><span class="hl-4">next</span><span class="hl-1">) </span><span class="hl-3">=&gt;</span><span class="hl-1"> </span><span class="hl-0">next</span><span class="hl-1">(</span><span class="hl-3">null</span><span class="hl-1">, </span><span class="hl-4">data</span><span class="hl-1">));</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">start</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-keyword">import</span> UserStore <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./user-store&#x27;</span>;
+<a id="md:socket-classes-register" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Socket classes register<a href="#md:socket-classes-register" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The socket classes can handle multiple socket events prefixed by the class name. After the registration of the socket class socket events are automatically registered to the server app.</p>
+<pre><code class="javascript"><span class="hl-6">// ./socket.user.js</span><br/><span class="hl-7">import</span><span class="hl-1"> { </span><span class="hl-4">SocketClass</span><span class="hl-1"> } </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">export</span><span class="hl-1"> </span><span class="hl-7">default</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-8">User</span><span class="hl-1"> </span><span class="hl-3">extends</span><span class="hl-1"> </span><span class="hl-8">SocketClass</span><span class="hl-1"> {</span><br/><br/><span class="hl-1">	</span><span class="hl-6">// This method can be called from the client as &#39;user.load&#39;</span><br/><span class="hl-1">	</span><span class="hl-6">// The approach with &#39;next&#39; callback is not recommended.</span><br/><span class="hl-1">    </span><span class="hl-0">load</span><span class="hl-1">(</span><span class="hl-4">socket</span><span class="hl-1">, </span><span class="hl-4">data</span><span class="hl-1">, </span><span class="hl-4">next</span><span class="hl-1">) {</span><br/><span class="hl-1">        </span><span class="hl-6">// sends the authorized user data after the &#39;user.load&#39; socket request</span><br/><span class="hl-1">        </span><span class="hl-0">next</span><span class="hl-1">(</span><span class="hl-3">null</span><span class="hl-1">, </span><span class="hl-4">socket</span><span class="hl-1">.</span><span class="hl-0">getSession</span><span class="hl-1">().</span><span class="hl-0">getUser</span><span class="hl-1">());</span><br/><span class="hl-1">    }</span><br/><br/><span class="hl-1">	</span><span class="hl-6">// This method can be called from the client as &#39;user.updateUser&#39;</span><br/><span class="hl-1">	</span><span class="hl-3">async</span><span class="hl-1"> </span><span class="hl-0">updateUser</span><span class="hl-1">(</span><span class="hl-4">socket</span><span class="hl-1">, </span><span class="hl-4">data</span><span class="hl-1">) {</span><br/><span class="hl-1">		</span><span class="hl-7">await</span><span class="hl-1"> </span><span class="hl-0">doSomeAsyncOperation</span><span class="hl-1">();</span><br/><span class="hl-1">		</span><span class="hl-7">return</span><span class="hl-1"> </span><span class="hl-4">socket</span><span class="hl-1">.</span><span class="hl-0">getSession</span><span class="hl-1">().</span><span class="hl-0">getUser</span><span class="hl-1">().</span><span class="hl-0">getUser</span><span class="hl-1">();</span><br/><span class="hl-1">	}</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-6">// ./index.js</span><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">Server</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">UserSocket</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;./socket.user&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">UserStore</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;./user-store&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-5">app</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-0">Server</span><span class="hl-1">({</span><br/><span class="hl-1">    </span><span class="hl-0">auth</span><span class="hl-4">:</span><span class="hl-1"> (</span><span class="hl-4">session</span><span class="hl-1">, </span><span class="hl-4">next</span><span class="hl-1">) </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">        </span><span class="hl-4">UserStore</span><span class="hl-1">.</span><span class="hl-0">load</span><span class="hl-1">(</span><span class="hl-4">session</span><span class="hl-1">.</span><span class="hl-4">id</span><span class="hl-1">, (</span><span class="hl-4">err</span><span class="hl-1">, </span><span class="hl-4">user</span><span class="hl-1">) </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">            </span><span class="hl-7">if</span><span class="hl-1"> (</span><span class="hl-4">err</span><span class="hl-1">) {</span><br/><span class="hl-1">                </span><span class="hl-0">next</span><span class="hl-1">(</span><span class="hl-4">err</span><span class="hl-1">);</span><br/><span class="hl-1">                </span><span class="hl-7">return</span><span class="hl-1">;</span><br/><span class="hl-1">            }</span><br/><span class="hl-1">            </span><span class="hl-4">session</span><span class="hl-1">.</span><span class="hl-0">setUser</span><span class="hl-1">(</span><span class="hl-4">user</span><span class="hl-1">);</span><br/><span class="hl-1">            </span><span class="hl-0">next</span><span class="hl-1">();</span><br/><span class="hl-1">        });</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-6">// Registeres the socket class</span><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">registerSocketClass</span><span class="hl-1">(</span><span class="hl-4">UserSocket</span><span class="hl-1">);</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">start</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server({
-    <span class="hljs-attr">auth</span>: <span class="hljs-function">(<span class="hljs-params">session, next</span>) =&gt;</span> {
-        UserStore.load(session.id, <span class="hljs-function">(<span class="hljs-params">err, user</span>) =&gt;</span> {
-            <span class="hljs-keyword">if</span> (err) {
-                next(err);
-                <span class="hljs-keyword">return</span>;
-            }
-            session.setUser(user);
-            next();
-        });
-    }
-});
+<a id="md:components-register" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Components register<a href="#md:components-register" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The module can register custom components which are rendered in custom DOM element in the layout.</p>
+<pre><code class="javascript"><span class="hl-7">import</span><span class="hl-1"> </span><span class="hl-4">Server</span><span class="hl-1"> </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel/server&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-5">app</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-0">Server</span><span class="hl-1">();</span><br/><br/><span class="hl-6">// Frontend app tries to render component located at {config.appDir}/test to the DOM element with id &#39;test&#39;</span><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">registerComponent</span><span class="hl-1">(</span><span class="hl-2">&#39;test&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;test&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">app</span><span class="hl-1">.</span><span class="hl-0">start</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
 
-app.registerRoute(<span class="hljs-string">&#x27;get&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
+<a id="md:rsconfig" class="tsd-anchor"></a><h3 class="tsd-anchor-link">RSConfig<a href="#md:rsconfig" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>RSConfig file can contain list of routes, list of components and the directory with the socket classes. By default the file <code>rsconfig.json</code> is searched in the <code>process.cwd()</code> directory. If the file doesn't exist nothing happens. The path to the file can by changed with config.rsConfig option.</p>
+<p>The schema for the file is located in <code>[pathToModule]/schemas/rsconfig.schema.json</code>.</p>
+<pre><code class="json"><span class="hl-6">// rsconfig.json</span><br/><span class="hl-1">{</span><br/><span class="hl-1">	</span><span class="hl-12">&quot;$schema&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;./node_modules/reacting-squirrel/schemas/rsconfig.schema.json&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-12">&quot;routes&quot;</span><span class="hl-1">: [</span><br/><span class="hl-1">        {</span><br/><span class="hl-1">            </span><span class="hl-12">&quot;route&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;/&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-12">&quot;component&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;home&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-12">&quot;title&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;Home&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-12">&quot;requiredAuth&quot;</span><span class="hl-1">: </span><span class="hl-3">false</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-12">&quot;method&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;GET&quot;</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    ],</span><br/><span class="hl-1">    </span><span class="hl-12">&quot;components&quot;</span><span class="hl-1">: [</span><br/><span class="hl-1">        {</span><br/><span class="hl-1">            </span><span class="hl-12">&quot;id&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;test&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-12">&quot;component&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;test&quot;</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    ],</span><br/><span class="hl-1">	</span><span class="hl-12">&quot;socketClassDir&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;./dist/network/socket&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">	</span><span class="hl-12">&quot;errorPage&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;error-page&quot;</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
 
-app.registerSocketClass(UserSocket);
+<p>Additional app config can be also be defined in the rsconfig.</p>
+<a id="md:env-vars" class="tsd-anchor"></a><h4 class="tsd-anchor-link">ENV vars<a href="#md:env-vars" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Values in rsconfig that have <code>$env:[value]|[defaultValue]</code> prefix are replaced with <code>process.env[value]</code> in the server start.<br>
+If the env var is not in the process the default value is used (if specified).</p>
+<a id="md:texts" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Texts<a href="#md:texts" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>In the startup process, the <code>res</code> directory is created in <code>app</code> directory. In that directory is created default text file <code>text.json</code>. The content of the text file is used as default dictionary using <a href="https://www.npmjs.com/package/texting-squirrel" target="_blank" class="external">texting-squirrel</a> module.</p>
+<a id="md:accessing-text-from-the-component" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Accessing text from the component<a href="#md:accessing-text-from-the-component" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>All components have <code>getText</code> method to access the text from the dictionary.</p>
+<pre><code class="javascript"><span class="hl-7">import</span><span class="hl-1"> { </span><span class="hl-4">Component</span><span class="hl-1"> } </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">export</span><span class="hl-1"> </span><span class="hl-7">default</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-8">CustomComponent</span><span class="hl-1"> </span><span class="hl-3">extends</span><span class="hl-1"> </span><span class="hl-8">Component</span><span class="hl-1"> {</span><br/><br/><span class="hl-1">    </span><span class="hl-0">render</span><span class="hl-1">() {</span><br/><span class="hl-1">        </span><span class="hl-7">return</span><span class="hl-1"> </span><span class="hl-9">&lt;</span><span class="hl-10">h1</span><span class="hl-9">&gt;</span><span class="hl-3">{this</span><span class="hl-11">.</span><span class="hl-0">getText</span><span class="hl-11">(</span><span class="hl-2">&#39;title&#39;</span><span class="hl-11">)</span><span class="hl-3">}</span><span class="hl-9">&lt;/</span><span class="hl-10">h1</span><span class="hl-9">&gt;</span><span class="hl-1">;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/>
+</code><button type="button">Copy</button></pre>
 
-app.start();
+<a id="md:using-text-component" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Using Text component<a href="#md:using-text-component" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The module contains a text component to handle dictionary directly from the JSX code.</p>
+<pre><code class="javascript"><span class="hl-7">import</span><span class="hl-1"> { </span><span class="hl-4">Component</span><span class="hl-1">, </span><span class="hl-4">Text</span><span class="hl-1"> } </span><span class="hl-7">from</span><span class="hl-1"> </span><span class="hl-2">&#39;reacting-squirrel&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-7">export</span><span class="hl-1"> </span><span class="hl-7">default</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-8">CustomComponent</span><span class="hl-1"> </span><span class="hl-3">extends</span><span class="hl-1"> </span><span class="hl-8">Component</span><span class="hl-1"> {</span><br/><br/><span class="hl-1">    </span><span class="hl-0">render</span><span class="hl-1">() {</span><br/><span class="hl-1">        </span><span class="hl-7">return</span><span class="hl-1"> </span><span class="hl-9">&lt;</span><span class="hl-8">Text</span><span class="hl-1"> </span><span class="hl-13">dictionaryKey</span><span class="hl-1">=</span><span class="hl-2">&quot;title&quot;</span><span class="hl-1"> </span><span class="hl-13">tag</span><span class="hl-1">=</span><span class="hl-2">&quot;h1&quot;</span><span class="hl-1"> </span><span class="hl-9">/&gt;</span><br/><span class="hl-1">    }</span><br/><span class="hl-1">}</span><br/>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-comment">// ./socket.user.js</span>
-<span class="hljs-keyword">import</span> { SocketClass } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
+<a id="md:using-texts-on-the-server-side-experimental" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Using texts on the server side (experimental)<a href="#md:using-texts-on-the-server-side-experimental" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The instance of the server has a property <code>Text</code> which is just <code>texting-squirrel</code> module with registered directories.<br>
+Server option <code>locale</code> defines supported locales and dictionary text files are created (if not exist) and registered in the server startup.</p>
+<a id="md:page-titles" class="tsd-anchor"></a><h5 class="tsd-anchor-link">Page titles<a href="#md:page-titles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h5><p>If the page title starts with the <code>:</code> the key (without the first character) is searched in the locale dictionary.</p>
+<a id="md:translations" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Translations<a href="#md:translations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The dictionaries can be registered for different languages. The accepted languages should be set with the <code>locale.accepted</code> option on the server and dictionaries will be created in the <code>res</code> directory. The default language is taken from the browser (the dictionary must exist).</p>
+<a id="md:changing-the-locale" class="tsd-anchor"></a><h5 class="tsd-anchor-link">Changing the locale<a href="#md:changing-the-locale" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h5><p>The locale can be changed on the client side using <code>Application.setLocale</code> method and it's handled on the server side (still experimental) with cookie <code>rs~locale</code>.<br>
+<b>NOTE:</b> In case of setting locale to the default dictionary it has to be the <code>default</code> keyword instead of the value.</p>
+<a id="md:socket-communication" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Socket communication<a href="#md:socket-communication" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The module is using <a href="http://socket.io" target="_blank" class="external">socket.io</a> as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server.</p>
+<a id="md:uploading-files" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Uploading files<a href="#md:uploading-files" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the <code>pingTimeout</code>. The file is sent to the server in chunks and converted to buffer on the server side.</p>
+<pre><code class="javascript"><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-5">file</span><span class="hl-1"> = </span><span class="hl-2">&#39;get somehow a File instance&#39;</span><span class="hl-1">;</span><br/><span class="hl-4">Socket</span><span class="hl-1">.</span><span class="hl-0">emit</span><span class="hl-1">(</span><span class="hl-2">&#39;file.upload&#39;</span><span class="hl-1">, </span><span class="hl-3">undefined</span><span class="hl-1">, { </span><span class="hl-4">file</span><span class="hl-1"> }, (</span><span class="hl-4">progress</span><span class="hl-1">) </span><span class="hl-3">=&gt;</span><span class="hl-1"> </span><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">progress</span><span class="hl-1">));</span>
+</code><button type="button">Copy</button></pre>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SocketClass</span> </span>{
+<a id="md:limitations" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Limitations<a href="#md:limitations" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.</p>
+<a id="md:error-handling" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Error handling<a href="#md:error-handling" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="md:server" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Server<a href="#md:server" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Route errors are handled in error middleware and sent to <code>error.handler</code> from app config. If no handler is defined error page is rendered.</p>
+<a id="md:app" class="tsd-anchor"></a><h3 class="tsd-anchor-link">App<a href="#md:app" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><a id="md:webpack-watcher" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Webpack watcher<a href="#md:webpack-watcher" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>In <code>DEV</code> mode all code error is checked with webpack watcher. All errors (if any) are logged in stdout and sent to client with <code>webpack.stats</code> event.</p>
+<a id="md:component" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Component<a href="#md:component" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>All components are wrapped in <code>ErrorHandler</code> that can be also overridden in app config with <code>componentErrorHandler</code>.</p>
+<a id="md:application" class="tsd-anchor"></a><h4 class="tsd-anchor-link">Application<a href="#md:application" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The application has logging methods (<code>log[Error|Warning|Info]</code>) that emits <code>log</code> event. All client logging must be done manually.</p>
+<a id="md:example" class="tsd-anchor"></a><h5 class="tsd-anchor-link">Example<a href="#md:example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h5><pre><code class="javascript"><span class="hl-4">Application</span><span class="hl-1">.</span><span class="hl-0">addListener</span><span class="hl-1">(</span><span class="hl-2">&#39;log&#39;</span><span class="hl-1">, ({ </span><span class="hl-4">severity</span><span class="hl-1">, </span><span class="hl-4">component</span><span class="hl-1">, </span><span class="hl-4">message</span><span class="hl-1">, </span><span class="hl-4">args</span><span class="hl-1"> }) </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">	</span><span class="hl-7">if</span><span class="hl-1"> (</span><span class="hl-4">severity</span><span class="hl-1"> === </span><span class="hl-2">&#39;error&#39;</span><span class="hl-1"> &amp;&amp; !</span><span class="hl-4">component</span><span class="hl-1">) {</span><br/><span class="hl-1">		</span><span class="hl-6">// Log the error in logging service</span><br/><span class="hl-1">	}</span><br/><span class="hl-1">});</span>
+</code><button type="button">Copy</button></pre>
 
-    <span class="hljs-function"><span class="hljs-title">load</span>(<span class="hljs-params">socket, data, next</span>)</span> {
-        next(<span class="hljs-literal">null</span>, <span class="hljs-built_in">this</span>.getUser());
-    }
-}
-
-<span class="hljs-comment">// ./app/home.js</span>
-<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;
-<span class="hljs-keyword">import</span> { Page } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Page</span> </span>{
-
-    state = {
-        <span class="hljs-attr">user</span>: <span class="hljs-literal">null</span>,
-    };
-
-    <span class="hljs-function"><span class="hljs-title">componentDidMount</span>(<span class="hljs-params"></span>)</span> {
-        <span class="hljs-built_in">super</span>.componentDidMount();
-        <span class="hljs-built_in">this</span>.request(<span class="hljs-string">&#x27;user.load&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">err, user</span>) =&gt;</span> {
-            <span class="hljs-keyword">if</span> (err) {
-                alert(err.message);
-                <span class="hljs-keyword">return</span>;
-            }
-            <span class="hljs-built_in">this</span>.setState({ user });
-        });
-    }
-    
-    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> {
-        <span class="hljs-keyword">const</span> { user } = <span class="hljs-built_in">this</span>.state;
-        <span class="hljs-keyword">return</span> (
-            <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Home<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
-                <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>{user ? user.name : &#x27;Loading...&#x27;}<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
-            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-        );
-    }
-}
-</code></pre>
-				<p>This code will start simple app on the default port. After the page load the <code>user.load</code> event is emitted and <code>UserSocket</code> class is trying to load the logged user and send it back to the page.</p>
-				<a href="#cli" id="cli" style="color: inherit; text-decoration: none;">
-					<h3>CLI</h3>
-				</a>
-				<p>The simple server can be started over the CLI using <code>./node_modules/.bin/rs-start-server</code> and creating <code>rsconfig.json</code> in application root.</p>
-				<a href="#providers" id="providers" style="color: inherit; text-decoration: none;">
-					<h3>Providers</h3>
-				</a>
-				<p>All components rendered by the application can be wrapped with <code>Provider</code> such as <code>Context.Provider</code> or <code>ThemeProvider</code>. Only thing needed is to register the provider with server method, rsconfig or plugin.</p>
-				<a href="#core-functions" id="core-functions" style="color: inherit; text-decoration: none;">
-					<h2>Core functions</h2>
-				</a>
-				<a href="#routes-register" id="routes-register" style="color: inherit; text-decoration: none;">
-					<h3>Routes register</h3>
-				</a>
-				<p>The routes are registered on the server-side. The module is using express based routes registering.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
-
-<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
-
-<span class="hljs-comment">// On the route &#x27;/&#x27; will be rendered the content component located in {config.appDir}/home with &#x27;Home&#x27; title.</span>
-app.registerRoute(<span class="hljs-string">&#x27;get&#x27;</span>, <span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-string">&#x27;home&#x27;</span>, <span class="hljs-string">&#x27;Home&#x27;</span>);
-
-app.start();
-</code></pre>
-				<a href="#socket-events-register" id="socket-events-register" style="color: inherit; text-decoration: none;">
-					<h3>Socket events register</h3>
-				</a>
-				<p>The socket events can be directly registered. It should be used for simple socket events which don&#39;t need authorization.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
-
-<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
-
-<span class="hljs-comment">// Frontend app can emit &#x27;test&#x27; with some data. The event&#x27;s listener emits the data back.</span>
-app.registerSocketEvent(<span class="hljs-string">&#x27;test&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">socket, data, next</span>) =&gt;</span> next(<span class="hljs-literal">null</span>, data));
-
-app.start();
-</code></pre>
-				<a href="#socket-classes-register" id="socket-classes-register" style="color: inherit; text-decoration: none;">
-					<h3>Socket classes register</h3>
-				</a>
-				<p>The socket classes can handle multiple socket events prefixed by the class name. After the registration of the socket class socket events are automatically registered to the server app.</p>
-				<pre><code class="language-javascript"><span class="hljs-comment">// ./socket.user.js</span>
-<span class="hljs-keyword">import</span> { SocketClass } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SocketClass</span> </span>{
-
-    <span class="hljs-function"><span class="hljs-title">load</span>(<span class="hljs-params">socket, data, next</span>)</span> {
-        <span class="hljs-comment">// sends the authorized user data after the &#x27;user.load&#x27; socket request</span>
-        next(<span class="hljs-literal">null</span>, <span class="hljs-built_in">this</span>.getUser());
-    }
-
-    <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-title">updateUser</span>(<span class="hljs-params">socket, data</span>)</span> {
-        <span class="hljs-keyword">await</span> doSomeAsyncOperation();
-        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.getUser();
-    }
-}
-
-<span class="hljs-comment">// ./index.js</span>
-<span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
-
-<span class="hljs-keyword">import</span> UserSocket <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./socket.user&#x27;</span>;
-
-<span class="hljs-keyword">import</span> UserStore <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./user-store&#x27;</span>;
-
-<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server({
-    <span class="hljs-attr">auth</span>: <span class="hljs-function">(<span class="hljs-params">session, next</span>) =&gt;</span> {
-        UserStore.load(session.id, <span class="hljs-function">(<span class="hljs-params">err, user</span>) =&gt;</span> {
-            <span class="hljs-keyword">if</span> (err) {
-                next(err);
-                <span class="hljs-keyword">return</span>;
-            }
-            session.setUser(user);
-            next();
-        });
-    }
-});
-
-<span class="hljs-comment">// Registeres the socket class</span>
-app.registerSocketClass(UserSocket);
-
-app.start();
-</code></pre>
-				<a href="#components-register" id="components-register" style="color: inherit; text-decoration: none;">
-					<h3>Components register</h3>
-				</a>
-				<p>The module can register custom components which are rendered in custom DOM element in the layout. </p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> Server <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel/server&#x27;</span>;
-
-<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Server();
-
-<span class="hljs-comment">// Frontend app tries to render component located at {config.appDir}/test to the DOM element with id &#x27;test&#x27;</span>
-app.registerComponent(<span class="hljs-string">&#x27;test&#x27;</span>, <span class="hljs-string">&#x27;test&#x27;</span>);
-
-app.start();
-</code></pre>
-				<a href="#rsconfig" id="rsconfig" style="color: inherit; text-decoration: none;">
-					<h3>RSConfig</h3>
-				</a>
-				<p>RSConfig file can contain list of routes, list of components and the directory with the socket classes. By default the file <code>rsconfig.json</code> is searched in the <code>process.cwd()</code> directory. If the file doesn&#39;t exist nothing happens. The path to the file can by changed with config.rsConfig option.  </p>
-				<p>The schema for the file is located in <code>[pathToModule]/schemas/rsconfig.schema.json</code>.</p>
-				<pre><code class="language-json"><span class="hljs-comment">// rsconfig.json</span>
-{
-    <span class="hljs-attr">&quot;routes&quot;</span>: [
-        {
-            <span class="hljs-attr">&quot;route&quot;</span>: <span class="hljs-string">&quot;/&quot;</span>,
-            <span class="hljs-attr">&quot;component&quot;</span>: <span class="hljs-string">&quot;home&quot;</span>,
-            <span class="hljs-attr">&quot;title&quot;</span>: <span class="hljs-string">&quot;Home&quot;</span>,
-            <span class="hljs-attr">&quot;requiredAuth&quot;</span>: <span class="hljs-literal">false</span>,
-            <span class="hljs-attr">&quot;method&quot;</span>: <span class="hljs-string">&quot;GET&quot;</span>
-        }
-    ],
-    <span class="hljs-attr">&quot;components&quot;</span>: [
-        {
-            <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-string">&quot;test&quot;</span>,
-            <span class="hljs-attr">&quot;component&quot;</span>: <span class="hljs-string">&quot;test&quot;</span>
-        }
-    ],
-    <span class="hljs-attr">&quot;socketClassDir&quot;</span>: <span class="hljs-string">&quot;./dist/network/socket&quot;</span>,
-    <span class="hljs-attr">&quot;errorPage&quot;</span>: <span class="hljs-string">&quot;error-page&quot;</span>
-}
-</code></pre>
-				<p>App config can be also be defined in the rsconfig.</p>
-				<a href="#env-vars" id="env-vars" style="color: inherit; text-decoration: none;">
-					<h4>ENV vars</h4>
-				</a>
-				<p>Values in rsconfig that have <code>$env:[value]|[defaultValue]</code> prefix are replaced with <code>process.env[value]</code> in the server start.<br>If the env var is not in the process the default value is used (if specified).</p>
-				<a href="#texts" id="texts" style="color: inherit; text-decoration: none;">
-					<h3>Texts</h3>
-				</a>
-				<p>In the startup process, the <code>res</code> directory is created in <code>app</code> directory. In that directory is created default text file <code>text.json</code>. The content of the text file is used as default dictionary using <a href="https://www.npmjs.com/package/texting-squirrel">texting-squirrel</a> module.</p>
-				<a href="#accessing-text-from-the-component" id="accessing-text-from-the-component" style="color: inherit; text-decoration: none;">
-					<h4>Accessing text from the component</h4>
-				</a>
-				<p>All components have <code>getText</code> method to access the text from the dictionary.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
-
-    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> {
-        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>{this.getText(&#x27;title&#x27;)}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>;
-    }
-}
-</code></pre>
-				<a href="#using-text-component" id="using-text-component" style="color: inherit; text-decoration: none;">
-					<h4>Using Text component</h4>
-				</a>
-				<p>The module contains a text component to handle dictionary directly from the JSX code.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> { Component, Text } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;reacting-squirrel&#x27;</span>;
-
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
-
-    <span class="hljs-function"><span class="hljs-title">render</span>(<span class="hljs-params"></span>)</span> {
-        <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Text</span> <span class="hljs-attr">dictionaryKey</span>=<span class="hljs-string">&quot;title&quot;</span> <span class="hljs-attr">tag</span>=<span class="hljs-string">&quot;h1&quot;</span> /&gt;</span></span>
-    }
-}
-</code></pre>
-				<a href="#using-texts-on-the-server-side-experimental" id="using-texts-on-the-server-side-experimental" style="color: inherit; text-decoration: none;">
-					<h4>Using texts on the server side (experimental)</h4>
-				</a>
-				<p>The instance of the server has a property <code>Text</code> which is just <code>texting-squirrel</code> module with registered directories.<br>Server option <code>locale</code> defines supported locales and dictionary text files are created (if not exist) and registered in the server startup.</p>
-				<a href="#page-titles" id="page-titles" style="color: inherit; text-decoration: none;">
-					<h5>Page titles</h5>
-				</a>
-				<p>If the page title starts with the <code>:</code> the key (without the first character) is searched in the locale dictionary.</p>
-				<a href="#translations" id="translations" style="color: inherit; text-decoration: none;">
-					<h4>Translations</h4>
-				</a>
-				<p>The dictionaries can be registered for different languages. The accepted languages should be set with the <code>locale.accepted</code> option on the server and dictionaries will be created in the <code>res</code> directory. The default language is taken from the browser (the dictionary must exist). </p>
-				<a href="#changing-the-locale" id="changing-the-locale" style="color: inherit; text-decoration: none;">
-					<h5>Changing the locale</h5>
-				</a>
-				<p>The locale can be changed on the client side using <code>Application.setLocale</code> method and it&#39;s handled on the server side (still experimental) with cookie <code>rs~locale</code>.<br><b>NOTE:</b> In case of setting locale to the default dictionary it has to be the <code>default</code> keyword instead of the value.</p>
-				<a href="#socket-communication" id="socket-communication" style="color: inherit; text-decoration: none;">
-					<h2>Socket communication</h2>
-				</a>
-				<p>The module is using socket.io as a default communication protocol. The payload is chunked (default 10kB per chunk) and sent to the server. </p>
-				<a href="#uploading-files-experimental" id="uploading-files-experimental" style="color: inherit; text-decoration: none;">
-					<h3>Uploading files (experimental)</h3>
-				</a>
-				<p>File upload can be diffucult over websocket. Without chunks big files disconnects the socket because of the <code>pingTimeout</code>. The file is sent to the server in chunks and converted to buffer on the server side.</p>
-				<pre><code class="language-javascript"><span class="hljs-keyword">const</span> file = <span class="hljs-string">&#x27;get somehow a File instance&#x27;</span>;
-Socket.emit(<span class="hljs-string">&#x27;file.upload&#x27;</span>, <span class="hljs-literal">undefined</span>, { file }, <span class="hljs-function">(<span class="hljs-params">progress</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(progress));
-</code></pre>
-				<a href="#limitations" id="limitations" style="color: inherit; text-decoration: none;">
-					<h4>Limitations</h4>
-				</a>
-				<p>The server limits the message size. If the size is bigger than allowed limit, the socket is disconnected. The module has 100MB cap for the message size.</p>
-				<a href="#decorators" id="decorators" style="color: inherit; text-decoration: none;">
-					<h2>Decorators</h2>
-				</a>
-				<a href="#socketclass" id="socketclass" style="color: inherit; text-decoration: none;">
-					<h3>SocketClass</h3>
-				</a>
-				<p>Decorators are designed for the the <code>SocketClass</code> methods.</p>
-				<a href="#broadcast" id="broadcast" style="color: inherit; text-decoration: none;">
-					<h4>broadcast</h4>
-				</a>
-				<p>Data returned in the method are broadcasted to the client side.</p>
-				<a href="#requireauth" id="requireauth" style="color: inherit; text-decoration: none;">
-					<h4>requireAuth</h4>
-				</a>
-				<p>Before the method execution is checked the logged user in the session. If it&#39;s not the error is thrown.</p>
-				<a href="#notsocketmethod" id="notsocketmethod" style="color: inherit; text-decoration: none;">
-					<h4>notSocketMethod</h4>
-				</a>
-				<p>The method is not registered as socket method and cannot be called from the client side.</p>
-				<a href="#socketrequest" id="socketrequest" style="color: inherit; text-decoration: none;">
-					<h3>SocketRequest</h3>
-				</a>
-				<a href="#castresponse" id="castresponse" style="color: inherit; text-decoration: none;">
-					<h4>castResponse</h4>
-				</a>
-				<p>The response is casted to defined types using <a href="https://www.npmjs.com/package/runtime-type">runtime-type</a> module.</p>
-				<a href="#plugins" id="plugins" style="color: inherit; text-decoration: none;">
-					<h2>Plugins</h2>
-				</a>
-				<p>The plugins can be registered with <code>Server.registerPlugin</code> method. The plugin should extent <code>Plugin</code> class in the module.
-				Plugin can:</p>
-				<ul>
-					<li>Inject script to the entry file.</li>
-					<li>Add socket events.</li>
-					<li>Add socket classes.</li>
-					<li>Register route callbacks.</li>
-					<li>Register before execution functions.</li>
-					<li>Register scripts.</li>
-					<li>Register styles.</li>
-					<li>Register styles to merge.</li>
-					<li>Add middleware.</li>
-					<li>Register pages.</li>
-					<li>Register components.
-						<a href="#pages" id="pages" style="color: inherit; text-decoration: none;">
-							<h3>Pages</h3>
-						</a>
-						The pages can be register using <code>getPages</code> method. The path to the component can be absolute so it must not be in the <code>app</code> directory.
-						<a href="#components" id="components" style="color: inherit; text-decoration: none;">
-							<h3>Components</h3>
-						</a>
-					The components can be register using <code>getComponents</code> method. The path to the component can be also absolute. </li>
-				</ul>
-				<a href="#docs" id="docs" style="color: inherit; text-decoration: none;">
-					<h2>Docs</h2>
-				</a>
-				<p>Checkout the documentation <a href="https://zabkwak.github.io/reacting-squirrel/">here</a>.</p>
-				<a href="#deprecated" id="deprecated" style="color: inherit; text-decoration: none;">
-					<h3>Deprecated</h3>
-				</a>
-				<p><a href="https://trello.com/b/FepP7DPC/reacting-squirrel">https://trello.com/b/FepP7DPC/reacting-squirrel</a></p>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_app_index_d_.html">&quot;app/index.d&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_server_index_d_.html">&quot;server/index.d&quot;</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+<a id="md:decorators" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Decorators<a href="#md:decorators" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><a id="md:socketclass" class="tsd-anchor"></a><h3 class="tsd-anchor-link">SocketClass<a href="#md:socketclass" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>Decorators are designed for the the <code>SocketClass</code> methods.</p>
+<a id="md:broadcast" class="tsd-anchor"></a><h4 class="tsd-anchor-link">broadcast<a href="#md:broadcast" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Data returned in the method are broadcasted to the client side.</p>
+<a id="md:requireauth" class="tsd-anchor"></a><h4 class="tsd-anchor-link">requireAuth<a href="#md:requireauth" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Before the method execution is checked the logged user in the session. If it's not the error is thrown.</p>
+<a id="md:notsocketmethod" class="tsd-anchor"></a><h4 class="tsd-anchor-link">notSocketMethod<a href="#md:notsocketmethod" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The method is not registered as socket method and cannot be called from the client side.</p>
+<a id="md:socketrequest" class="tsd-anchor"></a><h3 class="tsd-anchor-link">SocketRequest<a href="#md:socketrequest" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><a id="md:castresponse" class="tsd-anchor"></a><h4 class="tsd-anchor-link">castResponse<a href="#md:castresponse" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>The response is casted to defined types using <a href="https://www.npmjs.com/package/runtime-type" target="_blank" class="external">runtime-type</a> module.</p>
+<a id="md:plugins" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Plugins<a href="#md:plugins" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The plugins can be registered with <code>Server.registerPlugin</code> method. The plugin should extent <code>Plugin</code> class in the module.
+Plugin can:</p>
+<ul>
+<li>Inject script to the entry file.</li>
+<li>Add socket events.</li>
+<li>Add socket classes.</li>
+<li>Register route callbacks.</li>
+<li>Register before execution functions.</li>
+<li>Register scripts.</li>
+<li>Register styles.</li>
+<li>Register styles to merge.</li>
+<li>Add middleware.</li>
+<li>Register pages.</li>
+<li>Register components.</li>
+</ul>
+<a id="md:pages" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Pages<a href="#md:pages" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The pages can be register using <code>getPages</code> method. The path to the component can be absolute so it must not be in the <code>app</code> directory.</p>
+<a id="md:components" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Components<a href="#md:components" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The components can be register using <code>getComponents</code> method. The path to the component can be also absolute.</p>
+<a id="md:docs" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Docs<a href="#md:docs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Checkout the documentation <a href="https://zabkwak.github.io/reacting-squirrel/" target="_blank" class="external">here</a>.</p>
+<a id="md:deprecated" class="tsd-anchor"></a><h3 class="tsd-anchor-link">Deprecated<a href="#md:deprecated" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p><a href="https://trello.com/b/FepP7DPC/reacting-squirrel" target="_blank" class="external">https://trello.com/b/FepP7DPC/reacting-squirrel</a></p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#md:reacting-squirrel"><span>Reacting <wbr/>Squirrel</span></a><ul><li><a href="#md:requirements"><span>Requirements</span></a></li><li><a href="#md:installation"><span>Installation</span></a></li><li><a href="#md:usage"><span>Usage</span></a></li><li><ul><li><a href="#md:simple-app"><span>Simple app</span></a></li><li><a href="#md:app-using-websockets-for-load-the-user"><span>App using websockets for load the user</span></a></li><li><a href="#md:cli"><span>CLI</span></a></li><li><a href="#md:providers"><span>Providers</span></a></li><li><a href="#md:typescript"><span>Typescript</span></a></li></ul></li><li><a href="#md:core-functions"><span>Core functions</span></a></li><li><ul><li><a href="#md:routes-register"><span>Routes register</span></a></li><li><a href="#md:socket-events-register"><span>Socket events register</span></a></li><li><a href="#md:socket-classes-register"><span>Socket classes register</span></a></li><li><a href="#md:components-register"><span>Components register</span></a></li><li><a href="#md:rsconfig"><span>RSConfig</span></a></li><li><ul><li><a href="#md:env-vars"><span>ENV vars</span></a></li></ul></li><li><a href="#md:texts"><span>Texts</span></a></li><li><ul><li><a href="#md:accessing-text-from-the-component"><span>Accessing text from the component</span></a></li><li><a href="#md:using-text-component"><span>Using <wbr/>Text component</span></a></li><li><a href="#md:using-texts-on-the-server-side-experimental"><span>Using texts on the server side (experimental)</span></a></li><li><ul><li><a href="#md:page-titles"><span>Page titles</span></a></li></ul></li><li><a href="#md:translations"><span>Translations</span></a></li><li><ul><li><a href="#md:changing-the-locale"><span>Changing the locale</span></a></li></ul></li></ul></li></ul></li><li><a href="#md:socket-communication"><span>Socket communication</span></a></li><li><ul><li><a href="#md:uploading-files"><span>Uploading files</span></a></li><li><ul><li><a href="#md:limitations"><span>Limitations</span></a></li></ul></li></ul></li><li><a href="#md:error-handling"><span>Error handling</span></a></li><li><ul><li><a href="#md:server"><span>Server</span></a></li><li><a href="#md:app"><span>App</span></a></li><li><ul><li><a href="#md:webpack-watcher"><span>Webpack watcher</span></a></li><li><a href="#md:component"><span>Component</span></a></li><li><a href="#md:application"><span>Application</span></a></li><li><ul><li><a href="#md:example"><span>Example</span></a></li></ul></li></ul></li></ul></li><li><a href="#md:decorators"><span>Decorators</span></a></li><li><ul><li><a href="#md:socketclass"><span>Socket<wbr/>Class</span></a></li><li><ul><li><a href="#md:broadcast"><span>broadcast</span></a></li><li><a href="#md:requireauth"><span>require<wbr/>Auth</span></a></li><li><a href="#md:notsocketmethod"><span>not<wbr/>Socket<wbr/>Method</span></a></li></ul></li><li><a href="#md:socketrequest"><span>Socket<wbr/>Request</span></a></li><li><ul><li><a href="#md:castresponse"><span>cast<wbr/>Response</span></a></li></ul></li></ul></li><li><a href="#md:plugins"><span>Plugins</span></a></li><li><ul><li><a href="#md:pages"><span>Pages</span></a></li><li><a href="#md:components"><span>Components</span></a></li></ul></li><li><a href="#md:docs"><span>Docs</span></a></li><li><ul><li><a href="#md:deprecated"><span>Deprecated</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="assets/icons.svg#icon-1"></use></svg><span>reacting-squirrel</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

@@ -1,12 +1,12 @@
 import { expect } from 'chai';
-import path from 'path';
-import fs from 'fs';
-import request from 'request';
 import cookieSignature from 'cookie-signature';
+import fs from 'fs';
+import path from 'path';
+import request from 'request';
 
 import Server from '../../../src/server';
-import Session from '../../../src/server/session';
 import Layout from '../../../src/server/layout';
+import Session from '../../../src/server/session';
 
 const PROJECT_PATH = path.resolve(__dirname, '../../../');
 const TEST_SESSION_ID = 'test-session-id';
@@ -48,10 +48,11 @@ const CONFIG_FIELDS = [
 	'bundleAfterServerStart',
 	'getInitialData',
 	'getTitle',
+	'tsCompilerOptions',
+	'envVars',
 ];
 
 describe('Server instance', () => {
-
 	it('checks default config fields of the server', () => {
 		const server = new Server({ logging: false });
 		expect(server.getConfig()).to.have.all.keys(CONFIG_FIELDS);
@@ -72,6 +73,8 @@ describe('Server instance', () => {
 			webpack,
 			locale,
 			bundleAfterServerStart,
+			tsCompilerOptions,
+			envVars,
 		} = server.getConfig();
 		expect(port).to.be.equal(8080);
 		expect(staticDir).to.be.equal('./public');
@@ -96,6 +99,8 @@ describe('Server instance', () => {
 		expect(locale.default).to.be.equal('en-US');
 		expect(locale.accepted).to.be.deep.equal(['en-US']);
 		expect(bundleAfterServerStart).to.be.false;
+		expect(tsCompilerOptions).to.deep.equal({});
+		expect(envVars).to.deep.equal({});
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
@@ -136,6 +141,12 @@ describe('Server instance', () => {
 				layout: Layout,
 			},
 			bundleAfterServerStart: true,
+			envVars: {
+				key: 'value',
+			},
+			tsCompilerOptions: {
+				target: 'es6',
+			},
 		});
 		expect(server._config).to.have.all.keys(CONFIG_FIELDS);
 		const {
@@ -157,6 +168,8 @@ describe('Server instance', () => {
 			locale,
 			logging,
 			bundleAfterServerStart,
+			tsCompilerOptions,
+			envVars,
 		} = server._config;
 		expect(port).to.be.equal(9000);
 		expect(staticDir).to.be.equal('./__static__');
@@ -186,6 +199,8 @@ describe('Server instance', () => {
 		expect(locale.accepted).to.be.deep.equal(['cs-CZ', 'en-US']);
 		expect(logging).to.be.false;
 		expect(bundleAfterServerStart).to.be.true;
+		expect(tsCompilerOptions).to.deep.equal({ target: 'es6' });
+		expect(envVars).to.deep.equal({ key: 'value' });
 
 		expect(server.port).to.be.equal(port);
 		expect(server.staticDir).to.be.equal(staticDir);
@@ -202,11 +217,17 @@ describe('Server instance', () => {
 	});
 
 	it('tries to set not Layout child as a layoutComponent', () => {
-		expect(() => new Server({ layoutComponent: class { }, logging: false })).to.throw(Error, 'Cannot create instance of Layout.');
+		expect(() => new Server({ layoutComponent: class {}, logging: false })).to.throw(
+			Error,
+			'Cannot create instance of Layout.',
+		);
 	});
 
 	it('tries to set not Session child as a session', () => {
-		expect(() => new Server({ session: class { }, logging: false })).to.throw(Error, 'Cannot create instance of Session.');
+		expect(() => new Server({ session: class {}, logging: false })).to.throw(
+			Error,
+			'Cannot create instance of Session.',
+		);
 	});
 
 	it('checks if the auth method is called', (done) => {
@@ -216,7 +237,6 @@ describe('Server instance', () => {
 });
 
 describe('Start of the server', () => {
-
 	const URL = 'http://localhost:8080';
 	let server;
 
@@ -292,6 +312,15 @@ describe('Start of the server', () => {
 		});
 	});
 
+	it('checks if the home page returns the layout', (done) => {
+		request.get(URL, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body.includes('<title>Home</title>'));
+			done();
+		});
+	});
+
 	it('checks if the bundle.js is accessible with http request', (done) => {
 		request.get(`${URL}${server.bundlePath}`, (err, res, body) => {
 			expect(err).to.be.equal(null);
@@ -317,59 +346,74 @@ describe('Start of the server', () => {
 	});
 
 	it('checks if the user is logged on the test session id and the user page returns 200 http code', (done) => {
-		request.get({
-			url: `${URL}/user`,
-			headers: {
-				cookie: `session_id=${cookieSignature.sign(TEST_SESSION_ID, server._config.cookies.secret)}`,
+		request.get(
+			{
+				url: `${URL}/user`,
+				headers: {
+					cookie: `session_id=${cookieSignature.sign(TEST_SESSION_ID, server._config.cookies.secret)}`,
+				},
 			},
-		}, (err, res, body) => {
-			expect(err).to.be.equal(null);
-			expect(res.statusCode).to.be.equal(200);
-			done();
-		});
+			(err, res, body) => {
+				expect(err).to.be.equal(null);
+				expect(res.statusCode).to.be.equal(200);
+				done();
+			},
+		);
 	});
 
 	it('checks if GET callback is correctly registered', (done) => {
-		request.get({
-			url: `${URL}/callback`,
-		}, (err, res, body) => {
-			expect(err).to.be.equal(null);
-			expect(res.statusCode).to.be.equal(200);
-			expect(body).to.be.equal('GET callback');
-			done();
-		});
+		request.get(
+			{
+				url: `${URL}/callback`,
+			},
+			(err, res, body) => {
+				expect(err).to.be.equal(null);
+				expect(res.statusCode).to.be.equal(200);
+				expect(body).to.be.equal('GET callback');
+				done();
+			},
+		);
 	});
 
 	it('checks if POST callback is correctly registered', (done) => {
-		request.post({
-			url: `${URL}/callback`,
-		}, (err, res, body) => {
-			expect(err).to.be.equal(null);
-			expect(res.statusCode).to.be.equal(200);
-			expect(body).to.be.equal('POST callback');
-			done();
-		});
+		request.post(
+			{
+				url: `${URL}/callback`,
+			},
+			(err, res, body) => {
+				expect(err).to.be.equal(null);
+				expect(res.statusCode).to.be.equal(200);
+				expect(body).to.be.equal('POST callback');
+				done();
+			},
+		);
 	});
 
 	it('checks if GET callback with promise returns the layout', (done) => {
-		request.get({
-			url: `${URL}/callback/promise`,
-		}, (err, res, body) => {
-			expect(err).to.be.equal(null);
-			expect(res.statusCode).to.be.equal(200);
-			expect(body.includes('<title>Callback promise</title>'));
-			done();
-		});
+		request.get(
+			{
+				url: `${URL}/callback/promise`,
+			},
+			(err, res, body) => {
+				expect(err).to.be.equal(null);
+				expect(res.statusCode).to.be.equal(200);
+				expect(body.includes('<title>Callback promise</title>'));
+				done();
+			},
+		);
 	});
 
 	it('checks if POST callback with promise is correctly registered', (done) => {
-		request.post({
-			url: `${URL}/callback/promise`,
-		}, (err, res, body) => {
-			expect(err).to.be.equal(null);
-			expect(res.statusCode).to.be.equal(200);
-			expect(body).to.be.equal('Callback promise');
-			done();
-		});
+		request.post(
+			{
+				url: `${URL}/callback/promise`,
+			},
+			(err, res, body) => {
+				expect(err).to.be.equal(null);
+				expect(res.statusCode).to.be.equal(200);
+				expect(body).to.be.equal('Callback promise');
+				done();
+			},
+		);
 	});
 });

@@ -3,19 +3,14 @@
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"type": "object",
 	"additionalProperties": true,
-	"required": [
-		"routes"
-	],
+	"required": ["routes"],
 	"properties": {
 		"routes": {
 			"type": "array",
 			"title": "Definition of routes.",
 			"items": {
 				"type": "object",
-				"required": [
-					"route",
-					"title"
-				],
+				"required": ["route", "title"],
 				"properties": {
 					"route": {
 						"type": "string",
@@ -36,12 +31,7 @@
 					},
 					"method": {
 						"type": "string",
-						"enum": [
-							"GET",
-							"POST",
-							"PUT",
-							"DELETE"
-						],
+						"enum": ["GET", "POST", "PUT", "DELETE"],
 						"title": "HTTP method.",
 						"default": "GET"
 					},
@@ -62,10 +52,7 @@
 			"title": "Definition of components rendered in server DOM.",
 			"items": {
 				"type": "object",
-				"required": [
-					"id",
-					"component"
-				],
+				"required": ["id", "component"],
 				"properties": {
 					"id": {
 						"type": "string",
@@ -104,7 +91,7 @@
 			"default": null
 		},
 		"port": {
-			"type": "integer",
+			"type": ["integer", "string"],
 			"title": "Port on which the app listens.",
 			"default": 8080
 		},
@@ -232,10 +219,7 @@
 			"default": null
 		},
 		"webpack": {
-			"type": [
-				"string",
-				"object"
-			],
+			"type": ["string", "object"],
 			"title": "Custom webpack config. It can be object or relative path to the webpack config file."
 		},
 		"socketIO": {
@@ -261,12 +245,7 @@
 		"generatedComponentsExtension": {
 			"type": "string",
 			"title": "Extension of the generated components.",
-			"enum": [
-				"js",
-				"jsx",
-				"ts",
-				"tsx"
-			],
+			"enum": ["js", "jsx", "ts", "tsx"],
 			"default": "tsx"
 		},
 		"sourceStylesDir": {
@@ -357,6 +336,16 @@
 			"type": "boolean",
 			"title": "Indicates if the server should be started before the webpack bundle. In that case bundling info page is rendered.",
 			"default": false
+		},
+		"tsCompilerOptions": {
+			"type": "object",
+			"title": "Custom TypeScript compiler options.",
+			"default": {}
+		},
+		"envVars": {
+			"type": "object",
+			"title": "Environment variables.",
+			"default": {}
 		}
 	}
 }

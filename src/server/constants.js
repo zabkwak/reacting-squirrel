@@ -16,6 +16,7 @@ export const TSConfig = {
 		experimentalDecorators: true,
 		esModuleInterop: true,
 		allowSyntheticDefaultImports: true,
+		skipLibCheck: true,
 	},
 	include: [
 		'../**/*',

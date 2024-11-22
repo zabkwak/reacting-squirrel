@@ -1,22 +1,19 @@
 /* eslint-disable max-classes-per-file */
-import React from 'react';
 import '@babel/polyfill';
+import CliProgress from 'cli-progress';
 import fs from 'fs';
 import path from 'path';
-import CliProgress from 'cli-progress';
+import React from 'react';
 
-import Server, { Layout, Socket, Plugin } from '../../../server';
+import Server, { Layout, Plugin, Socket } from '../../../server';
 
 class CustomLayout extends Layout {
-
 	renderContainer() {
 		return (
 			<div id="container">
 				<div id="test" />
 				<div id="socket-status" />
-				<div id="content">
-					{this.renderLoader()}
-				</div>
+				<div id="content">{this.renderLoader()}</div>
 			</div>
 		);
 	}
@@ -50,21 +47,23 @@ const app = new Server({
 		accepted: ['cs-CZ'],
 	},
 	bundleAfterServerStart: true,
-	onWebpackProgress: dev ? undefined : (p) => {
-		if (!bar) {
-			bar = new CliProgress.SingleBar({ clearOnComplete: true }, CliProgress.Presets.shades_classic);
-			bar.start(100);
-		}
-		bar.update(Math.round(p * 100));
-		if (p === 1) {
-			bar.stop();
-		}
-	},
+	onWebpackProgress: dev
+		? undefined
+		: (p) => {
+				if (!bar) {
+					bar = new CliProgress.SingleBar({ clearOnComplete: true }, CliProgress.Presets.shades_classic);
+					bar.start(100);
+				}
+				bar.update(Math.round(p * 100));
+				if (p === 1) {
+					bar.stop();
+				}
+		  },
 	getInitialData: () => ({ test: 'test' }),
 });
 
 app.registerBeforeExecution('*', async (req, res) => {
-	res.header('Content-Security-Policy', `style-src 'self' 'nonce-${app.nonce}'`);
+	// res.header('Content-Security-Policy', `style-src 'self' 'nonce-${app.nonce}'`);
 });
 
 app.registerRoute('get', '/error', null, 'Error', false, (req, res, next) => {
@@ -75,8 +74,12 @@ app.registerRoute('get', '/error/401', null, 'Error', false, (req, res, next) =>
 	next({ message: 'Unauthorized', date: new Date(), statusCode: 401 });
 });
 
-app
-	.registerRoute('get', '/absolute-test', path.resolve(__dirname, '../../app/absolute-test/page'), 'Absolute page test')
+app.registerRoute(
+	'get',
+	'/absolute-test',
+	path.resolve(__dirname, '../../app/absolute-test/page'),
+	'Absolute page test',
+)
 	.registerComponent(path.resolve(__dirname, '../../app/absolute-test/component'), 'absolute-component')
 	.registerRouteCallback('/no-component', (req, res) => res.end('OVERRIDE SEND'));
 
@@ -90,17 +93,15 @@ app.registerSocketEvent('socket.file', async (socket, { file, name }) => {
 	fs.writeFileSync(`./tmp/${name}`, file);
 });
 
-app
-	.createRSFile('custom-file.ts', 'console.log(\'custom-file\', new Date());')
-	.injectToEntry('import \'./custom-file\';')
+app.createRSFile('custom-file.ts', "console.log('custom-file', new Date());")
+	.injectToEntry("import './custom-file';")
 	// eslint-disable-next-line arrow-body-style
 	.createRSFile('custom-file.fn.ts', async () => {
-		return 'console.log(\'custom-file.fn\', new Date());';
+		return "console.log('custom-file.fn', new Date());";
 	})
-	.injectToEntry('import \'./custom-file.fn\';');
+	.injectToEntry("import './custom-file.fn';");
 
 class CustomPlugin extends Plugin {
-
 	getName() {
 		return 'custom-plugin';
 	}
@@ -110,7 +111,7 @@ class CustomPlugin extends Plugin {
 	}
 
 	getEntryInjections() {
-		return ['console.log(\'custom plugin\');'];
+		return ["console.log('custom plugin');"];
 	}
 
 	getStyles() {

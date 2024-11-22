@@ -1,8 +1,8 @@
-import path from 'path';
-import fs from 'fs';
-import webpack from 'webpack';
 import ExtraWatchWebpackPlugin from 'extra-watch-webpack-plugin';
+import fs from 'fs';
+import path from 'path';
 import readline from 'readline';
+import webpack from 'webpack';
 
 import { BABEL_TRANSPILE_MODULES } from '../constants';
 import { Socket } from '../socket';
@@ -37,9 +37,8 @@ const webpackProgress = (percentage, message) => {
  * @param {import('../').default} server
  */
 export default (server) => {
-	const {
-		dev, filename, staticDir, cssDir, babelTranspileModules, sourceStylesDir, onWebpackProgress,
-	} = server.getConfig();
+	const { dev, filename, staticDir, cssDir, babelTranspileModules, sourceStylesDir, onWebpackProgress } =
+		server.getConfig();
 	const { plugins, ...config } = server.getConfig().webpack;
 	const postCSSLoader = {
 		loader: 'postcss-loader',
@@ -92,18 +91,16 @@ export default (server) => {
 					},
 				},
 				// eslint-disable-next-line arrow-body-style
-				...([...BABEL_TRANSPILE_MODULES, ...babelTranspileModules].map((m) => {
+				...[...BABEL_TRANSPILE_MODULES, ...babelTranspileModules].map((m) => {
 					return {
 						test: /\.js$/,
-						include: [
-							new RegExp(`node_modules\\${path.sep}${m}`),
-						],
+						include: [new RegExp(`node_modules\\${path.sep}${m}`)],
 						loader: 'babel-loader',
 						options: {
 							presets: ['@babel/preset-env'],
 						},
 					};
-				})),
+				}),
 				{
 					test: /\.ts$|\.tsx$/,
 					// exclude: /node_modules/,
@@ -114,34 +111,38 @@ export default (server) => {
 				},
 				{
 					test: /\.css?$/,
-					use: dev ? [
-						{
-							loader: 'style-loader',
-							options: {
-								attributes: {
-									nonce: server.nonce,
+					use: dev
+						? [
+								{
+									loader: 'style-loader',
+									options: {
+										attributes: {
+											nonce: server.nonce,
+										},
+									},
 								},
-							},
-						},
-						'css-loader',
-						postCSSLoader,
-					] : prodStyleLoader,
+								'css-loader',
+								postCSSLoader,
+						  ]
+						: prodStyleLoader,
 				},
 				{
 					test: /\.scss?$/,
-					use: dev ? [
-						{
-							loader: 'style-loader',
-							options: {
-								attributes: {
-									nonce: server.nonce,
+					use: dev
+						? [
+								{
+									loader: 'style-loader',
+									options: {
+										attributes: {
+											nonce: server.nonce,
+										},
+									},
 								},
-							},
-						},
-						'css-loader',
-						postCSSLoader,
-						'sass-loader',
-					] : prodStyleLoader,
+								'css-loader',
+								postCSSLoader,
+								'sass-loader',
+						  ]
+						: prodStyleLoader,
 				},
 			],
 		},

@@ -1,10 +1,11 @@
-import * as http from 'http';
-import * as net from 'net';
 import * as express from 'express';
-import { Component } from 'react';
+import * as http from 'http';
 import HttpSmartError from 'http-smart-error';
+import * as net from 'net';
+import { Component } from 'react';
 import { ServerOptions as SocketServerOptions } from 'socket.io';
 import { TextType } from 'texting-squirrel';
+import { CompilerOptions } from 'typescript';
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
@@ -54,26 +55,26 @@ export type RouteCallback = (
  * Server configuration.
  */
 export interface IAppConfig {
-	/** Port on which the app listens. 
-	 * @default 8080 
+	/** Port on which the app listens.
+	 * @default 8080
 	 */
 	port?: number;
-	/** 
-	 * Relative path to the static directory for the express app. 
+	/**
+	 * Relative path to the static directory for the express app.
 	 * @default './public'
 	 */
 	staticDir?: string;
-	/** 
-	 * Flag of the dev status of the app. 
+	/**
+	 * Flag of the dev status of the app.
 	 * @default false
 	 */
 	dev?: boolean;
-	/** 
+	/**
 	 * Name of the directory where the javascript is located in the staticDir.
 	 * @default 'js'
 	 */
 	jsDir?: string;
-	/** 
+	/**
 	 * Name of the directory where the css is located in the staticDir.
 	 * @default 'css'
 	 */
@@ -115,11 +116,11 @@ export interface IAppConfig {
 	cookies?: {
 		/**
 		 * Secret which is used to sign cookies.
-		   * @default '[random generated string]'
+		 * @default '[random generated string]'
 		 */
 		secret?: string;
 		/**
-		 * Secure flag for the cookies. 
+		 * Secure flag for the cookies.
 		 * @default null
 		 */
 		secure?: boolean;
@@ -177,7 +178,12 @@ export interface IAppConfig {
 		 * Function to handle errors in the route execution.
 		 * @default (err, req, res, next) => next()
 		 */
-		handler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
+		handler?: <S extends Session = Session>(
+			err: any,
+			req: IRequest<S>,
+			res: IResponse,
+			next: (err?: any) => void,
+		) => void;
 		/** Error page. */
 		page?: any; // TODO
 		/** Error layout. */
@@ -188,7 +194,12 @@ export interface IAppConfig {
 	 * @default (err, req, res, next) => next()
 	 * @deprecated
 	 */
-	errorHandler?: <S extends Session = Session>(err: any, req: IRequest<S>, res: IResponse, next: (err?: any) => void) => void;
+	errorHandler?: <S extends Session = Session>(
+		err: any,
+		req: IRequest<S>,
+		res: IResponse,
+		next: (err?: any) => void,
+	) => void;
 	/**
 	 * Indicates if the bundle is loaded relatively in the output html.
 	 * @default false
@@ -249,7 +260,7 @@ export interface IAppConfig {
 		 */
 		default?: string;
 		/**
-		 * List of accepted locales. 
+		 * List of accepted locales.
 		 * @default []
 		 */
 		accepted?: Array<string>;
@@ -272,6 +283,14 @@ export interface IAppConfig {
 	 * Gets the request title.
 	 */
 	getTitle?: (req: IRequest) => string | Promise<string>;
+	/**
+	 * Additional TS compiler options.
+	 */
+	tsCompilerOptions?: CompilerOptions;
+	/**
+	 * Client env variables.
+	 */
+	envVars?: Record<string, any>;
 }
 
 export interface ISocketEvent<S extends Session = Session> {
@@ -282,7 +301,7 @@ export interface ISocketEvent<S extends Session = Session> {
 /**
  * @typeparam U Type of user prop.
  */
-interface ILayoutPropsInitialData<U = any> {
+export interface ILayoutPropsInitialData<U = any> {
 	user: U;
 	dev: boolean;
 	timestamp: number;
@@ -325,7 +344,6 @@ export interface IMiddleware {
  * @typeparam S Session type.
  */
 export class Socket<S extends Session = Session> {
-
 	/**
 	 * Adds new socket and registers all socket events.
 	 * This method is called automatically after the socket connection.
@@ -354,21 +372,23 @@ export class Socket<S extends Session = Session> {
 
 	/**
 	 * Registers listener for socket state events.
-	 * 
+	 *
 	 * @param event Socket event.
 	 * @param listener Listener to execute after the socket state event.
 	 */
 	public static on<S extends Session = Session>(
-		event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>) => void,
+		event: 'connection' | 'error' | 'disconnect',
+		listener: (socket: Socket<S>) => void,
 	): void;
 	/**
 	 * Registers listener for socket state events.
-	 * 
+	 *
 	 * @param event Socket event.
 	 * @param listener Function to execute after the socket state event.
 	 */
 	public static on<S extends Session = Session>(
-		event: 'connection' | 'error' | 'disconnect', listener: (socket: Socket<S>, ...args: Array<any>) => void,
+		event: 'connection' | 'error' | 'disconnect',
+		listener: (socket: Socket<S>, ...args: Array<any>) => void,
 	): void;
 
 	/**
@@ -435,7 +455,6 @@ export class Socket<S extends Session = Session> {
  * @typeparam T User type.
  */
 export class Session<T = any> {
-
 	/**
 	 * Generates new session ID.
 	 */
@@ -477,7 +496,6 @@ export class Session<T = any> {
  * Server layout component.
  */
 export class Layout<P = ILayoutProps> extends Component<P> {
-
 	/**
 	 * Renders `<head>` tag with charset, metas, title, scripts and styles.
 	 */
@@ -530,7 +548,7 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 
 	/**
 	 * Creates path with version parameter.
-	 * 
+	 *
 	 * @param path Path of the loaded link.
 	 * @param version Version of the app.
 	 */
@@ -538,11 +556,11 @@ export class Layout<P = ILayoutProps> extends Component<P> {
 }
 
 /**
- * Base class for grouping socket events. The event can be called from the client `[lowerCasedClassName].[method]`. 
+ * Base class for grouping socket events. The event can be called from the client `[lowerCasedClassName].[method]`.
  * All underscored methods and methods of the base class are ignored in the event list.
- * 
+ *
  * @example
- * 
+ *
  * ```javascript
  * class User extends SocketClass {
  * 	// This method will be accessible from the client as user.get event.
@@ -550,11 +568,10 @@ export class Layout<P = ILayoutProps> extends Component<P> {
  * 		return { id: 1, name: 'Baf Lek' };
  * 	}
  * }
- * 
+ *
  * ```
  */
 export class SocketClass<S extends Session = Session> {
-
 	/**
 	 * Decorator for the methods to check the logged user before the execution.
 	 */
@@ -568,10 +585,14 @@ export class SocketClass<S extends Session = Session> {
 	/**
 	 * Decorator for the methods to broadcast the response after the execution.
 	 */
-	public static broadcast: (filter?: (socket: Socket) => boolean, event?: string, includeSelf?: boolean) => MethodDecorator;
+	public static broadcast: (
+		filter?: (socket: Socket) => boolean,
+		event?: string,
+		includeSelf?: boolean,
+	) => MethodDecorator;
 
 	/**
-	 * Converts the methods to the list of events. 
+	 * Converts the methods to the list of events.
 	 * The method is called automatically from the `Server`.
 	 */
 	public getEvents(): Array<ISocketEvent<S>>;
@@ -612,7 +633,6 @@ export class SocketClass<S extends Session = Session> {
  * Base class for plugins. The plugin must extend this class.
  */
 export abstract class Plugin {
-
 	/**
 	 * Registers the plugin to the server instance.
 	 *
@@ -643,12 +663,15 @@ export abstract class Plugin {
 	/**
 	 * Gets the list of route callbacks.
 	 */
-	protected getRouteCallbacks(): Array<{ route: string, method?: HttpMethod, callback: RouteCallback }>;
+	protected getRouteCallbacks(): Array<{ route: string; method?: HttpMethod; callback: RouteCallback }>;
 
 	/**
 	 * Gets the list of callbacks called before the route execution.
 	 */
-	protected getBeforeExecutions(): Array<{ spec: string, callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void> }>;
+	protected getBeforeExecutions(): Array<{
+		spec: string;
+		callback: <R extends IRequest>(req: R, res: IResponse) => Promise<void>;
+	}>;
 
 	/**
 	 * Gets the list of scripts to require in the html header.
@@ -685,14 +708,14 @@ export { HttpSmartError as HttpError };
 export namespace Utils {
 	/**
 	 * Registers socket classes to the server app.
-	 * 
+	 *
 	 * @param app Server instance.
 	 * @param dir Path to the directory with socket classes.
 	 */
 	export function registerSocketClassDir(app: Server, dir: string): void;
 	/**
 	 * Registers routes to the server app.
-	 * 
+	 *
 	 * @param app Server instance.
 	 * @param routes List of routes to register.
 	 */
@@ -705,22 +728,24 @@ export namespace Utils {
 			title: string;
 			requireAuth?: boolean;
 			layout?: string | typeof Layout;
-		}>
+		}>,
 	): void;
 	/**
 	 * Registers components to the server app.
-	 * 
+	 *
 	 * @param app Server instance.
 	 * @param components List of components to register.
 	 */
-	export function registerComponents(app: Server, components: Array<{ id: string, component: string, auto?: boolean }>): void;
+	export function registerComponents(
+		app: Server,
+		components: Array<{ id: string; component: string; auto?: boolean }>,
+	): void;
 }
 
 /**
  * Base server application.
  */
 export default class Server {
-
 	/**
 	 * Port number where the app listens.
 	 */
@@ -797,8 +822,8 @@ export default class Server {
 	 * Gets the text from the locale dictionary.
 	 *
 	 * @param locale
-	 * @param key 
-	 * @param args 
+	 * @param key
+	 * @param args
 	 */
 	getLocaleText(locale: string, key: string, ...args: Array<any>): string;
 
@@ -840,7 +865,7 @@ export default class Server {
 	/**
 	 * Gets the list of registered components.
 	 */
-	getRegisteredComponents(): Array<{ elementId: string, path: string, auto: boolean }>;
+	getRegisteredComponents(): Array<{ elementId: string; path: string; auto: boolean }>;
 
 	/**
 	 * Gets the installed plugin by its name.
@@ -857,28 +882,41 @@ export default class Server {
 	auth(session: Session, next: (err?: any) => void): void;
 
 	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string): this;
-	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean): this;
+	registerRoute(
+		method: HttpMethod,
+		route: string,
+		contentComponent: string,
+		title: string,
+		requireAuth: boolean,
+	): this;
 	/**
 	 * Registers route.
 	 *
-	 * @param method 
-	 * @param route 
-	 * @param contentComponent 
-	 * @param title 
-	 * @param requireAuth 
-	 * @param callback 
+	 * @param method
+	 * @param route
+	 * @param contentComponent
+	 * @param title
+	 * @param requireAuth
+	 * @param callback
 	 */
-	registerRoute(method: HttpMethod, route: string, contentComponent: string, title: string, requireAuth: boolean, callback: Function): this;
+	registerRoute(
+		method: HttpMethod,
+		route: string,
+		contentComponent: string,
+		title: string,
+		requireAuth: boolean,
+		callback: Function,
+	): this;
 	/**
 	 * Registers route.
 	 *
-	 * @param method 
-	 * @param route 
-	 * @param contentComponent 
-	 * @param title 
-	 * @param requireAuth 
+	 * @param method
+	 * @param route
+	 * @param contentComponent
+	 * @param title
+	 * @param requireAuth
 	 * @param layout
-	 * @param callback 
+	 * @param callback
 	 */
 	registerRoute(
 		method: HttpMethod,
@@ -887,7 +925,7 @@ export default class Server {
 		title: string,
 		requireAuth: boolean,
 		layout: typeof Layout | string,
-		callback: Function
+		callback: Function,
 	): this;
 
 	/**
@@ -931,12 +969,12 @@ export default class Server {
 	registerComponent(componentPath: string, elementId: string): this;
 
 	/**
-	* Registers component.
-	*
-	* @param componentPath Absolute path or relative path to the component from the app directory.
-	* @param elementId Id of the element in the layout where the component should be rendered.
-	* @param auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
-	*/
+	 * Registers component.
+	 *
+	 * @param componentPath Absolute path or relative path to the component from the app directory.
+	 * @param elementId Id of the element in the layout where the component should be rendered.
+	 * @param auto Indicates if the component's wrapper should be automatically rendered in the layout's body.
+	 */
 	registerComponent(componentPath: string, elementId: string, auto: boolean): this;
 
 	/**
@@ -951,11 +989,11 @@ export default class Server {
 	 *
 	 * @param path Absolute path or relative path to the error handler.
 	 */
-	 registerComponentErrorHandler(path: string): this;
+	registerComponentErrorHandler(path: string): this;
 
 	/**
 	 * Registers the error page.
-	 * 
+	 *
 	 * @param componentPath Relative path to the component from the app directory.
 	 * @deprecated
 	 */
@@ -968,7 +1006,8 @@ export default class Server {
 	 * @param callback Callback to execute before the route execution.
 	 */
 	registerBeforeExecution<R extends IRequest = IRequest>(
-		spec: string, callback: (req: R, res: IResponse) => Promise<void>,
+		spec: string,
+		callback: (req: R, res: IResponse) => Promise<void>,
 	): this;
 
 	/**
@@ -1009,7 +1048,7 @@ export default class Server {
 
 	/**
 	 * Logs the info in the stdout.
-	 * 
+	 *
 	 * @param tag Tag of the message.
 	 * @param message Message.
 	 * @param args Another arguments to log.
@@ -1018,7 +1057,7 @@ export default class Server {
 
 	/**
 	 * Logs the warning in the stdout.
-	 * 
+	 *
 	 * @param tag Tag of the message.
 	 * @param message Message.
 	 * @param args Another arguments to log.
@@ -1027,7 +1066,7 @@ export default class Server {
 
 	/**
 	 * Logs the error in the stderr.
-	 * 
+	 *
 	 * @param tag Tag of the message.
 	 * @param message Message.
 	 * @param args Another arguments to log.
@@ -1063,7 +1102,7 @@ export default class Server {
 	public stop(): void;
 	/**
 	 * Stops the application.
-	 * 
+	 *
 	 * @param cb Callback called after the server stopped.
 	 */
 	public stop(cb?: (err?: Error) => void): void;

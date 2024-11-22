@@ -4,7 +4,6 @@ import uniqid from 'uniqid';
  * Base session class.
  */
 export default class Session {
-
 	static _instances = {};
 
 	/**
