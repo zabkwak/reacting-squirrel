@@ -837,6 +837,9 @@ class Server {
 		this._app.get(BUNDLE_STATUS_ROUTE, (req, res) => {
 			res.end(this._bundlingStatus.toString());
 		});
+		this._app.get('/ping', (req, res) => {
+			res.status(200).end('pong');
+		});
 	}
 
 	/**

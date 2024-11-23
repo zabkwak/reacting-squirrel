@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.1.0
+
+### Features
+
+-   Automatic `/ping` route.
+
 ## 1.0.0
 
 ### Features

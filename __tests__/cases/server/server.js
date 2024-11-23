@@ -304,6 +304,15 @@ describe('Start of the server', () => {
 			});
 	}).timeout(30000);
 
+	it('checks the /ping route', (done) => {
+		request.get(`${URL}/ping`, (err, res, body) => {
+			expect(err).to.be.equal(null);
+			expect(res.statusCode).to.be.equal(200);
+			expect(body).to.be.equal('pong');
+			done();
+		});
+	});
+
 	it('checks if the home page is accessible with http request', (done) => {
 		request.get(URL, (err, res, body) => {
 			expect(err).to.be.equal(null);
