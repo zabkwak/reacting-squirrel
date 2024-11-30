@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import Text from 'texting-squirrel';
 import Cookies from 'universal-cookie';
@@ -42,6 +41,8 @@ class Application extends CallbackEmitter {
 	_locales = [];
 
 	_defaultLocale = null;
+
+	_roots = {};
 
 	/**
 	 * @returns {boolean}
@@ -92,6 +93,10 @@ class Application extends CallbackEmitter {
 			return this._initialData[key];
 		}
 		return this._initialData;
+	}
+
+	getLocaleCode() {
+		return this._locale === 'default' ? this._defaultLocale : this._locale;
 	}
 
 	getLocale() {
@@ -243,7 +248,7 @@ class Application extends CallbackEmitter {
 			this.setTitle(route.title.indexOf(':') === 0 ? Text.get(route.title.substr(1)) : route.title);
 		}
 		if (refresh) {
-			ReactDOM.unmountComponentAtNode(this._content);
+			this._unmountRoot(this._content);
 		}
 		this.renderPage(route.getComponent());
 	}
@@ -262,7 +267,7 @@ class Application extends CallbackEmitter {
 	renderComponent(component, target, callback) {
 		const Provider = this._provider || React.Fragment;
 		const EH = this._errorHandler || ErrorHandler;
-		const root = createRoot(target);
+		const root = this._getRoot(target);
 		root.render(
 			<EH>
 				<Provider>{component}</Provider>
@@ -409,7 +414,7 @@ class Application extends CallbackEmitter {
 				return;
 			}
 			if (refresh) {
-				ReactDOM.unmountComponentAtNode(target);
+				this._unmountRoot(target);
 			}
 			const Component = component.component;
 			this.renderComponent(<Component ref={(ref) => this.setRef(ref, component.elementId)} />, target);
@@ -430,6 +435,19 @@ class Application extends CallbackEmitter {
 		if (this._started) {
 			throw new Error('Application already started');
 		}
+	}
+
+	_unmountRoot(target) {
+		const root = this._getRoot(target);
+		root.unmount();
+		delete this._roots[target.id];
+	}
+
+	_getRoot(target) {
+		if (!this._roots[target.id]) {
+			this._roots[target.id] = createRoot(target);
+		}
+		return this._roots[target.id];
 	}
 }
 

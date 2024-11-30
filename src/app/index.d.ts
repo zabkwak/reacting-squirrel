@@ -56,6 +56,14 @@ declare class Application extends CallbackEmitter<TApplicationEventMap> {
 	public getInitialData<T = any>(key: string): T;
 
 	/**
+	 * Retrieves the current locale code, formatted as a combination of
+	 * ISO 639-1 (language code) and ISO 3166-1 alpha-2 (country/region code).
+	 *
+	 * @example "en-US" for English (United States).
+	 */
+	public getLocaleCode(): string;
+
+	/**
 	 * Gets the current set locale.
 	 */
 	public getLocale(): string;

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 1.2.0
+
+### Features
+
+-   added `Application.getLocaleCode` method.
+
+### Fixes
+
+-   unmounting of components using created root from ReactDOM 18.
+
 ## 1.1.0
 
 ### Features
@@ -27,7 +37,7 @@
 -   Definition of ENV vars in RSConfig.
 -   Bundling status.
 -   `Server.getPluginByName` method.
--   React 17.
+-   React 18.
 -   `CachedDataComponent` component.
 -   `SameSite` flag in cookies.
 -   Option to register http method in route callbacks in `Server.registerRouteCallback`.
