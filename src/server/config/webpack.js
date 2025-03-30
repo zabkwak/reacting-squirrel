@@ -40,6 +40,12 @@ export default (server) => {
 	const { dev, filename, staticDir, cssDir, babelTranspileModules, sourceStylesDir, onWebpackProgress } =
 		server.getConfig();
 	const { plugins, ...config } = server.getConfig().webpack;
+	const cssLoader = {
+		loader: 'css-loader',
+		options: {
+			url: false,
+		},
+	}
 	const postCSSLoader = {
 		loader: 'postcss-loader',
 		options: {
@@ -121,7 +127,7 @@ export default (server) => {
 										},
 									},
 								},
-								'css-loader',
+								cssLoader,
 								postCSSLoader,
 						  ]
 						: prodStyleLoader,
@@ -138,7 +144,7 @@ export default (server) => {
 										},
 									},
 								},
-								'css-loader',
+								cssLoader,
 								postCSSLoader,
 								'sass-loader',
 						  ]
